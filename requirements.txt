@@ -1,8 +1,8 @@
 # NFL Score Predictor — Python Dependencies
 # Python 3.11+ required
+# Note: nfl-data-py removed — data fetched directly from nflverse GitHub URLs
 
 # ── Data Ingestion ──────────────────────────────────────────────
-nfl-data-py==0.3.3
 requests==2.31.0
 beautifulsoup4==4.12.3
 
