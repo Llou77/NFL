@@ -1,16 +1,18 @@
 """
 data_loader.py
 ==============
-Downloads and caches every available nflverse / nfl_data_py table.
+Downloads and caches every available nflverse / nfldata table.
+Calls nflverse GitHub release URLs directly — no nfl-data-py dependency,
+which means no pandas version conflicts.
+
 All data is stored as parquet files in data/raw/ for fast reloads.
 """
 
-import os
 import json
 import logging
 import time
 from pathlib import Path
-from datetime import datetime, date
+from datetime import datetime
 from typing import Optional
 
 import pandas as pd
@@ -19,356 +21,314 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 # ── paths ──────────────────────────────────────────────────────────────────────
-ROOT = Path(__file__).resolve().parent.parent
+ROOT    = Path(__file__).resolve().parent.parent
 RAW_DIR = ROOT / "data" / "raw"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 
-# ── seasons we care about ──────────────────────────────────────────────────────
-WINDOW_SEASONS = [2023, 2024, 2025]          # 3-season training window
-CURRENT_SEASON = 2026                         # prediction target
-ALL_SEASONS = WINDOW_SEASONS + [CURRENT_SEASON]
-EXTENDED_SEASONS = list(range(2014, 2027))   # for H2H lookback (10 yrs)
-BACKTEST_SEASONS = list(range(2020, 2027))   # for backtesting framework
+# ── seasons ────────────────────────────────────────────────────────────────────
+WINDOW_SEASONS   = [2023, 2024, 2025]
+CURRENT_SEASON   = 2026
+ALL_SEASONS      = WINDOW_SEASONS + [CURRENT_SEASON]
+EXTENDED_SEASONS = list(range(2014, 2027))   # for H2H 10-year lookback
+BACKTEST_SEASONS = list(range(2020, 2027))
 
+# ── nflverse base URL ──────────────────────────────────────────────────────────
+BASE = "https://github.com/nflverse/nflverse-data/releases/download"
+RAW_GH = "https://raw.githubusercontent.com"
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  CACHE HELPERS
+# ══════════════════════════════════════════════════════════════════════════════
 
 def _save(df: pd.DataFrame, name: str) -> Path:
-    """Save a DataFrame as parquet and return its path."""
     path = RAW_DIR / f"{name}.parquet"
     df.to_parquet(path, index=False, engine="pyarrow", compression="snappy")
-    logger.info(f"  Saved {name}.parquet  ({len(df):,} rows)")
+    logger.info("  Saved %-40s %8d rows", name + ".parquet", len(df))
     return path
 
 
 def _load(name: str) -> Optional[pd.DataFrame]:
-    """Load a parquet file if it exists."""
     path = RAW_DIR / f"{name}.parquet"
     if path.exists():
         return pd.read_parquet(path)
     return None
 
 
-def _fresh_enough(name: str, max_hours: float = 24.0) -> bool:
-    """Return True if the parquet file is younger than max_hours."""
+def _fresh(name: str, max_hours: float = 24.0) -> bool:
     path = RAW_DIR / f"{name}.parquet"
     if not path.exists():
         return False
-    age = time.time() - path.stat().st_mtime
-    return age < (max_hours * 3600)
+    return (time.time() - path.stat().st_mtime) < max_hours * 3600
+
+
+def _fetch(url: str, fmt: str = "parquet") -> Optional[pd.DataFrame]:
+    """Download a parquet or CSV from a URL. Returns None on failure."""
+    try:
+        if fmt == "parquet":
+            return pd.read_parquet(url, engine="pyarrow")
+        else:
+            return pd.read_csv(url)
+    except Exception as e:
+        logger.warning("  Could not fetch %s — %s", url, e)
+        return None
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  PRIMARY LOADER
+#  MASTER LOADER
 # ══════════════════════════════════════════════════════════════════════════════
 
 def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
     """
     Download / reload every available data table.
-    Returns a dict of {table_name: DataFrame}.
-    Set force_refresh=True to re-download even if cache is fresh.
+    Returns dict {table_name: DataFrame}.
     """
-    try:
-        import nfl_data_py as nfl
-    except ImportError:
-        raise ImportError(
-            "nfl_data_py not installed. Run: pip install nfl_data_py"
-        )
-
     tables: dict[str, pd.DataFrame] = {}
 
-    # ── 1. Schedules (game-level metadata + results) ───────────────────────
-    key = "schedules"
-    if force_refresh or not _fresh_enough(key, max_hours=6):
-        logger.info("Fetching schedules …")
-        df = nfl.import_schedules(ALL_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # Extended schedules for H2H (back to 2014)
-    key = "schedules_extended"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching extended schedules (H2H history) …")
-        df = nfl.import_schedules(EXTENDED_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 2. Play-by-play (the richest table) ───────────────────────────────
-    # Contains EPA, WPA, CPOE, air_yards, success, etc.
-    for season in ALL_SEASONS:
-        key = f"pbp_{season}"
-        if force_refresh or not _fresh_enough(key, max_hours=12):
-            logger.info(f"Fetching PBP {season} …")
-            df = nfl.import_pbp_data([season], downcast=True)
+    def _get(key, url, fmt="parquet", max_hours=24.0):
+        """Fetch-and-cache helper."""
+        if not force_refresh and _fresh(key, max_hours):
+            df = _load(key)
+            if df is not None:
+                tables[key] = df
+                return
+        logger.info("Fetching %s …", key)
+        df = _fetch(url, fmt)
+        if df is not None:
             _save(df, key)
-        tables[key] = _load(key)
+            tables[key] = df
+        else:
+            existing = _load(key)
+            if existing is not None:
+                tables[key] = existing
 
-    # Extended PBP for H2H lookback
-    for season in EXTENDED_SEASONS:
-        if season in ALL_SEASONS:
-            continue
-        key = f"pbp_{season}"
-        if force_refresh or not _fresh_enough(key, max_hours=72):
-            logger.info(f"Fetching PBP {season} (H2H) …")
-            try:
-                df = nfl.import_pbp_data([season], downcast=True)
+    def _get_yearly(key_tpl, url_tpl, seasons, fmt="parquet", max_hours=24.0):
+        """Fetch per-season files and cache individually."""
+        frames = []
+        for s in seasons:
+            key = key_tpl.format(s)
+            if not force_refresh and _fresh(key, max_hours):
+                df = _load(key)
+            else:
+                logger.info("Fetching %s …", key)
+                df = _fetch(url_tpl.format(s), fmt)
+                if df is not None:
+                    _save(df, key)
+            if df is not None:
+                frames.append(df)
+        return frames
+
+    # ── 1. Schedules ──────────────────────────────────────────────────────────
+    _get("schedules",
+         "http://www.habitatring.com/games.csv",
+         fmt="csv", max_hours=6)
+
+    # ── 2. Play-by-play (current + window seasons) ────────────────────────────
+    for s in ALL_SEASONS:
+        key = f"pbp_{s}"
+        url = f"{BASE}/pbp/play_by_play_{s}.parquet"
+        if not force_refresh and _fresh(key, max_hours=12):
+            df = _load(key)
+        else:
+            logger.info("Fetching PBP %d …", s)
+            df = _fetch(url)
+            if df is not None:
                 _save(df, key)
-            except Exception as e:
-                logger.warning(f"  Could not fetch PBP {season}: {e}")
-        if (RAW_DIR / f"{key}.parquet").exists():
-            tables[key] = _load(key)
+        if df is not None:
+            tables[key] = df
 
-    # ── 3. Weekly player stats ──────────────────────────────────────────────
-    key = "player_stats_weekly"
-    if force_refresh or not _fresh_enough(key, max_hours=12):
-        logger.info("Fetching weekly player stats …")
-        df = nfl.import_weekly_data(ALL_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 4. Seasonal player stats ────────────────────────────────────────────
-    key = "player_stats_seasonal"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching seasonal player stats …")
-        df = nfl.import_seasonal_data(ALL_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 5. Rosters (weekly depth chart + snap counts) ──────────────────────
-    key = "rosters"
-    if force_refresh or not _fresh_enough(key, max_hours=12):
-        logger.info("Fetching rosters …")
-        df = nfl.import_rosters(ALL_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 6. Snap counts ──────────────────────────────────────────────────────
-    key = "snap_counts"
-    if force_refresh or not _fresh_enough(key, max_hours=12):
-        logger.info("Fetching snap counts …")
-        df = nfl.import_snap_counts(ALL_SEASONS)
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 7. Draft picks ──────────────────────────────────────────────────────
-    key = "draft_picks"
-    if force_refresh or not _fresh_enough(key, max_hours=168):   # weekly
-        logger.info("Fetching draft picks …")
-        df = nfl.import_draft_picks()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 8. Draft pick values (historical trade chart) ──────────────────────
-    key = "draft_values"
-    if force_refresh or not _fresh_enough(key, max_hours=168):
-        logger.info("Fetching draft pick values …")
-        df = nfl.import_draft_values()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 9. Combine results ──────────────────────────────────────────────────
-    key = "combine"
-    if force_refresh or not _fresh_enough(key, max_hours=168):
-        logger.info("Fetching combine results …")
-        df = nfl.import_combine_data()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 10. Pre-season Vegas win totals ─────────────────────────────────────
-    key = "win_totals"
-    if force_refresh or not _fresh_enough(key, max_hours=168):
-        logger.info("Fetching Vegas win totals …")
-        df = nfl.import_win_totals()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 11. Scoring lines / spreads ─────────────────────────────────────────
-    key = "scoring_lines"
-    if force_refresh or not _fresh_enough(key, max_hours=6):
-        logger.info("Fetching scoring lines …")
-        df = nfl.import_sc_lines()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 12. Officials (referee assignments) ─────────────────────────────────
-    key = "officials"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching officials …")
-        df = nfl.import_officials()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 13. Team descriptors (colors, logos, stadium info) ──────────────────
-    key = "team_desc"
-    if force_refresh or not _fresh_enough(key, max_hours=168):
-        logger.info("Fetching team descriptors …")
-        df = nfl.import_team_desc()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 14. ID mappings (cross-reference player IDs across platforms) ────────
-    key = "id_map"
-    if force_refresh or not _fresh_enough(key, max_hours=168):
-        logger.info("Fetching player ID map …")
-        df = nfl.import_ids()
-        _save(df, key)
-    tables[key] = _load(key)
-
-    # ── 15. NGS passing stats (Next Gen Stats) ───────────────────────────────
-    key = "ngs_passing"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching NGS passing …")
-        try:
-            df = nfl.import_ngs_data("passing", ALL_SEASONS)
+    # Extended PBP for H2H (older seasons, refresh rarely)
+    for s in EXTENDED_SEASONS:
+        if s in ALL_SEASONS:
+            continue
+        key = f"pbp_{s}"
+        if not force_refresh and _fresh(key, max_hours=168):  # 1 week
+            df = _load(key)
+            if df is not None:
+                tables[key] = df
+            continue
+        logger.info("Fetching PBP %d (H2H history) …", s)
+        df = _fetch(f"{BASE}/pbp/play_by_play_{s}.parquet")
+        if df is not None:
             _save(df, key)
-        except Exception as e:
-            logger.warning(f"  NGS passing unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+            tables[key] = df
 
-    # ── 16. NGS rushing stats ────────────────────────────────────────────────
-    key = "ngs_rushing"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching NGS rushing …")
-        try:
-            df = nfl.import_ngs_data("rushing", ALL_SEASONS)
+    # ── 3. Weekly player stats ────────────────────────────────────────────────
+    frames = _get_yearly(
+        "player_stats_weekly_{}", 
+        f"{BASE}/player_stats/player_stats_{{0}}.parquet",
+        ALL_SEASONS, max_hours=12
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "player_stats_weekly")
+        tables["player_stats_weekly"] = combined
+
+    # ── 4. Seasonal player stats ──────────────────────────────────────────────
+    frames = _get_yearly(
+        "player_stats_season_{}",
+        f"{BASE}/player_stats/player_stats_season_{{0}}.parquet",
+        ALL_SEASONS, max_hours=24
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "player_stats_seasonal")
+        tables["player_stats_seasonal"] = combined
+
+    # ── 5. Rosters (seasonal) ─────────────────────────────────────────────────
+    frames = _get_yearly(
+        "rosters_{}",
+        f"{BASE}/rosters/roster_{{0}}.parquet",
+        ALL_SEASONS, max_hours=12
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "rosters")
+        tables["rosters"] = combined
+
+    # ── 6. Weekly rosters ─────────────────────────────────────────────────────
+    frames = _get_yearly(
+        "rosters_weekly_{}",
+        f"{BASE}/weekly_rosters/roster_weekly_{{0}}.parquet",
+        ALL_SEASONS, max_hours=12
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "rosters_weekly")
+        tables["rosters_weekly"] = combined
+
+    # ── 7. Snap counts ────────────────────────────────────────────────────────
+    frames = _get_yearly(
+        "snap_counts_{}",
+        f"{BASE}/snap_counts/snap_counts_{{0}}.parquet",
+        ALL_SEASONS, max_hours=12
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "snap_counts")
+        tables["snap_counts"] = combined
+
+    # ── 8. Injuries ───────────────────────────────────────────────────────────
+    frames = _get_yearly(
+        "injuries_{}",
+        f"{BASE}/injuries/injuries_{{0}}.parquet",
+        ALL_SEASONS, max_hours=6  # very fresh — injury reports update daily
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "injuries")
+        tables["injuries"] = combined
+
+    # ── 9. Depth charts ───────────────────────────────────────────────────────
+    frames = _get_yearly(
+        "depth_charts_{}",
+        f"{BASE}/depth_charts/depth_charts_{{0}}.parquet",
+        ALL_SEASONS, max_hours=12
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "depth_charts")
+        tables["depth_charts"] = combined
+
+    # ── 10. FTN charting data ─────────────────────────────────────────────────
+    frames = _get_yearly(
+        "ftn_charting_{}",
+        f"{BASE}/ftn_charting/ftn_charting_{{0}}.parquet",
+        ALL_SEASONS, max_hours=24
+    )
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
+        _save(combined, "ftn_charting")
+        tables["ftn_charting"] = combined
+
+    # ── 11. Next Gen Stats ────────────────────────────────────────────────────
+    for stat_type in ["passing", "rushing", "receiving"]:
+        key = f"ngs_{stat_type}"
+        url = f"{BASE}/nextgen_stats/ngs_{stat_type}.parquet"
+        if not force_refresh and _fresh(key, max_hours=24):
+            df = _load(key)
+            if df is not None:
+                tables[key] = df
+            continue
+        logger.info("Fetching NGS %s …", stat_type)
+        df = _fetch(url)
+        if df is not None:
             _save(df, key)
-        except Exception as e:
-            logger.warning(f"  NGS rushing unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+            tables[key] = df
 
-    # ── 17. NGS receiving stats ──────────────────────────────────────────────
-    key = "ngs_receiving"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching NGS receiving …")
-        try:
-            df = nfl.import_ngs_data("receiving", ALL_SEASONS)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  NGS receiving unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 12. PFR advanced stats (weekly) ───────────────────────────────────────
+    for stat_type in ["pass", "rush", "rec", "def"]:
+        frames = []
+        for s in ALL_SEASONS:
+            key = f"pfr_{stat_type}_{s}"
+            url = f"{BASE}/pfr_advstats/advstats_week_{stat_type}_{s}.parquet"
+            if not force_refresh and _fresh(key, max_hours=24):
+                df = _load(key)
+            else:
+                logger.info("Fetching PFR %s %d …", stat_type, s)
+                df = _fetch(url)
+                if df is not None:
+                    _save(df, key)
+            if df is not None:
+                frames.append(df)
+        if frames:
+            combined = pd.concat(frames, ignore_index=True)
+            _save(combined, f"pfr_{stat_type}")
+            tables[f"pfr_{stat_type}"] = combined
 
-    # ── 18. PFR passing weekly ───────────────────────────────────────────────
-    key = "pfr_passing"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching PFR weekly passing …")
-        try:
-            df = nfl.import_pfr_advstats(ALL_SEASONS, stat_type="pass", s_type="week")
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  PFR passing unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 13. Draft picks ───────────────────────────────────────────────────────
+    _get("draft_picks",
+         f"{BASE}/draft_picks/draft_picks.parquet",
+         max_hours=168)
 
-    # ── 19. PFR rushing weekly ───────────────────────────────────────────────
-    key = "pfr_rushing"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching PFR weekly rushing …")
-        try:
-            df = nfl.import_pfr_advstats(ALL_SEASONS, stat_type="rush", s_type="week")
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  PFR rushing unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 14. Draft values ──────────────────────────────────────────────────────
+    _get("draft_values",
+         f"{RAW_GH}/nflverse/nfldata/master/data/draft_values.csv",
+         fmt="csv", max_hours=168)
 
-    # ── 20. PFR receiving weekly ─────────────────────────────────────────────
-    key = "pfr_receiving"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching PFR weekly receiving …")
-        try:
-            df = nfl.import_pfr_advstats(ALL_SEASONS, stat_type="rec", s_type="week")
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  PFR receiving unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 15. Combine data ──────────────────────────────────────────────────────
+    _get("combine",
+         f"{BASE}/combine/combine.parquet",
+         max_hours=168)
 
-    # ── 21. PFR defensive weekly ─────────────────────────────────────────────
-    key = "pfr_defense"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching PFR weekly defense …")
-        try:
-            df = nfl.import_pfr_advstats(ALL_SEASONS, stat_type="def", s_type="week")
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  PFR defense unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 16. Vegas win totals ──────────────────────────────────────────────────
+    _get("win_totals",
+         f"{BASE}/misc/win_totals.csv",
+         fmt="csv", max_hours=168)
 
-    # ── 22. FTN charting data (blocking, pressure, route running) ────────────
-    key = "ftn_charting"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching FTN charting data …")
-        try:
-            df = nfl.import_ftn_data(ALL_SEASONS)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  FTN charting unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 17. Scoring lines / spreads ───────────────────────────────────────────
+    _get("scoring_lines",
+         f"{RAW_GH}/nflverse/nfldata/master/data/sc_lines.csv",
+         fmt="csv", max_hours=6)
 
-    # ── 23. Participation / tracking data ────────────────────────────────────
-    key = "participation"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching participation data …")
-        try:
-            df = nfl.import_participation(ALL_SEASONS, include_pbp=False)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  Participation data unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 18. Officials / referees ──────────────────────────────────────────────
+    _get("officials",
+         f"{RAW_GH}/nflverse/nfldata/master/data/officials.csv",
+         fmt="csv", max_hours=168)
 
-    # ── 24. Injuries ──────────────────────────────────────────────────────────
-    key = "injuries"
-    if force_refresh or not _fresh_enough(key, max_hours=6):   # very fresh
-        logger.info("Fetching injury reports …")
-        try:
-            df = nfl.import_injuries(ALL_SEASONS)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  Injuries unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 19. Team descriptors (colors, logos, stadium) ─────────────────────────
+    _get("team_desc",
+         f"{RAW_GH}/nflverse/nflfastR-data/master/teams_colors_logos.csv",
+         fmt="csv", max_hours=168)
 
-    # ── 25. Contracts / depth charts (nflverse supplemental) ─────────────────
-    key = "depth_charts"
-    if force_refresh or not _fresh_enough(key, max_hours=12):
-        logger.info("Fetching depth charts …")
-        try:
-            df = nfl.import_depth_charts(ALL_SEASONS)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  Depth charts unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 20. Player ID mapping ─────────────────────────────────────────────────
+    _get("id_map",
+         f"{RAW_GH}/dynastyprocess/data/master/files/db_playerids.csv",
+         fmt="csv", max_hours=168)
 
-    # ── 26. Expected points + win probability seasonal totals ─────────────────
-    key = "ep_seasonal"
-    if force_refresh or not _fresh_enough(key, max_hours=24):
-        logger.info("Fetching EP/WP seasonal aggregates …")
-        try:
-            df = nfl.import_seasonal_pfr(ALL_SEASONS)
-            _save(df, key)
-        except Exception as e:
-            logger.warning(f"  EP seasonal unavailable: {e}")
-    if (RAW_DIR / f"{key}.parquet").exists():
-        tables[key] = _load(key)
+    # ── 21. Players (static descriptors) ─────────────────────────────────────
+    _get("players",
+         f"{BASE}/players/players.parquet",
+         max_hours=168)
 
-    logger.info(f"\nData loading complete. {len(tables)} tables loaded.")
+    # ── 22. Historical contracts ──────────────────────────────────────────────
+    _get("contracts",
+         f"{BASE}/contracts/historical_contracts.parquet",
+         max_hours=168)
+
+    logger.info("\nData loading complete — %d tables loaded.", len(tables))
     _save_manifest(tables)
     return tables
-
-
-def _save_manifest(tables: dict) -> None:
-    """Write a JSON manifest of loaded tables with row counts."""
-    manifest = {
-        "generated_at": datetime.utcnow().isoformat(),
-        "tables": {k: len(v) for k, v in tables.items() if v is not None},
-    }
-    with open(RAW_DIR / "manifest.json", "w") as f:
-        json.dump(manifest, f, indent=2)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -376,10 +336,13 @@ def _save_manifest(tables: dict) -> None:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def get_schedules(extended: bool = False) -> pd.DataFrame:
-    key = "schedules_extended" if extended else "schedules"
-    df = _load(key)
+    """Return the schedules DataFrame (loaded from cache)."""
+    df = _load("schedules")
     if df is None:
-        raise FileNotFoundError(f"Run load_all() first — {key}.parquet not found.")
+        raise FileNotFoundError("Run load_all() first — schedules.parquet not found.")
+    if not extended:
+        return df
+    # For extended H2H lookback, schedules CSV already covers all years
     return df
 
 
@@ -401,34 +364,29 @@ def get_table(name: str) -> Optional[pd.DataFrame]:
 
 
 def get_game_type_flag(game_type: str) -> float:
-    """
-    Return the training sample weight for a given game_type string.
-    Used by feature_engineering and train modules.
-    """
-    weights = {
-        "REG": 1.0,
-        "WC":  0.70,
-        "DIV": 0.75,
-        "CON": 0.75,
-        "SB":  0.60,
-        "POST": 0.70,   # generic fallback for any other playoff label
-    }
-    return weights.get(game_type.upper(), 1.0)
+    """Return default training sample weight for a game_type string."""
+    return {
+        "REG": 1.00, "WC": 0.70, "DIV": 0.75,
+        "CON": 0.75, "SB": 0.60, "POST": 0.70,
+    }.get(str(game_type).upper(), 1.0)
 
 
 def list_available_tables() -> list[str]:
-    """List all parquet files currently saved in data/raw/."""
-    return sorted([p.stem for p in RAW_DIR.glob("*.parquet")])
+    return sorted(p.stem for p in RAW_DIR.glob("*.parquet"))
+
+
+def _save_manifest(tables: dict) -> None:
+    manifest = {
+        "generated_at": datetime.utcnow().isoformat(),
+        "tables": {k: len(v) for k, v in tables.items() if v is not None},
+    }
+    with open(RAW_DIR / "manifest.json", "w") as f:
+        json.dump(manifest, f, indent=2)
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    print("=== NFL Data Loader ===")
-    print(f"Seasons: {ALL_SEASONS}")
-    print(f"Extended H2H seasons: {EXTENDED_SEASONS[0]}–{EXTENDED_SEASONS[-1]}")
-    print()
     tables = load_all(force_refresh=False)
-    print()
-    print("Available tables:")
-    for name in sorted(tables.keys()):
-        print(f"  {name:40s} {len(tables[name]):>8,} rows")
+    print(f"\nLoaded {len(tables)} tables:")
+    for name in sorted(tables):
+        print(f"  {name:45s} {len(tables[name]):>8,} rows")
