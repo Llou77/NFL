@@ -1,0 +1,41 @@
+name: Thursday Night Game Update
+
+on:
+  schedule:
+    # Every Wednesday at 22:00 UTC (6:00 PM ET) to update TNF predictions
+    - cron: '0 22 * * 3'
+  workflow_dispatch:
+
+jobs:
+  thursday-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - run: pip install -r requirements.txt
+
+      - name: Refresh injury data and regenerate predictions
+        run: |
+          cd model
+          python pipeline.py --mode predict
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Commit updated predictions
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "bot@nfl-predictor.local"
+          git add data/predictions/
+          git diff --cached --quiet || git commit -m "chore: TNF prediction refresh $(date -u '+%Y-%m-%d')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
