@@ -2,8 +2,7 @@ name: Pre-Season Training
 
 on:
   schedule:
-    # First Tuesday of August at 12:00 UTC
-    - cron: '0 12 1-7 8 2'
+    - cron: '0 12 1-7 8 2'   # First Tuesday of August
   workflow_dispatch:
     inputs:
       run_backtest:
@@ -12,10 +11,13 @@ on:
         default: 'true'
         type: boolean
 
+permissions:
+  contents: write
+
 jobs:
   preseason-train:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
       - uses: actions/checkout@v4
@@ -30,45 +32,34 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Create data directories
-        run: mkdir -p data/raw data/processed data/predictions/archive model/saved
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets
 
-      - name: Step 1 — Bayesian weight optimisation
-        run: |
-          cd model
-          python pipeline.py --mode optimize
+      - name: Step 1 — Bayesian optimisation
+        run: python model/pipeline.py --mode optimize --force-data
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
-      - name: Step 2 — Full training + predictions
-        run: |
-          cd model
-          python pipeline.py --mode full
+      - name: Step 2 — Full train + predict
+        run: python model/pipeline.py --mode full
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
-      - name: Step 3 — Backtesting (optional)
+      - name: Step 3 — Backtesting
         if: ${{ github.event.inputs.run_backtest != 'false' }}
-        run: |
-          cd model
-          python pipeline.py --mode backtest
+        run: python model/pipeline.py --mode backtest
         env:
           PYTHONPATH: ${{ github.workspace }}/model
+        continue-on-error: true   # don't fail the whole job if backtest fails
 
-      - name: Copy predictions to docs
-        run: |
-          cp data/predictions/predictions_latest.json docs/assets/predictions_latest.json || true
-          cp data/predictions/performance.json docs/assets/performance.json || true
-          cp data/predictions/backtest_results.json docs/assets/backtest_results.json || true
-
-      - name: Commit all artifacts
+      - name: Commit artifacts
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          git add docs/assets/
-          git add data/predictions/ || true
+          git add docs/assets/ || true
           git add model/saved/optimal_weights.json || true
-          git diff --staged --quiet || git commit -m "Pre-season training complete — $(date -u '+%Y-%m-%d')"
+          git add data/predictions/predictions_latest.json || true
+          git add data/predictions/performance.json || true
+          git add data/predictions/backtest_results.json || true
+          git diff --staged --quiet || git commit -m "Pre-season training — $(date -u '+%Y-%m-%d')"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
