@@ -1,0 +1,16 @@
+{
+  "updated_at": "2026-09-08T10:00:00Z",
+  "games": [],
+  "summary": {
+    "n_games": 0,
+    "mae_home": null,
+    "mae_away": null,
+    "mae_total": null,
+    "mae_spread": null,
+    "ats_record": "0-0",
+    "ats_pct": 0,
+    "ou_record": "0-0",
+    "ou_pct": 0,
+    "confidence_breakdown": {}
+  }
+}

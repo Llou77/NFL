@@ -1,1 +1,8 @@
-
+{
+  "generated_at": "2026-09-08T10:00:00Z",
+  "model_version": "v1.0-pre",
+  "season": 2026,
+  "n_games": 0,
+  "predictions": [],
+  "_note": "This file will be replaced automatically by the GitHub Actions pipeline every Tuesday during the NFL season. First real predictions will be generated in August 2026 after the pre-season training run."
+}
