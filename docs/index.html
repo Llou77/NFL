@@ -1,1 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFL Score Predictor 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #0a0c0f;
+      --surface:   #111318;
+      --surface2:  #181c24;
+      --border:    rgba(255,255,255,0.07);
+      --accent:    #00d4ff;
+      --accent2:   #ff6b35;
+      --text:      #e8ecf0;
+      --muted:     #6b7280;
+      --high:      #22c55e;
+      --medium:    #eab308;
+      --low:       #f97316;
+      --weak:      #ef4444;
+      --over:      #3b82f6;
+      --under:     #8b5cf6;
+      --home-c:    #00d4ff;
+      --away-c:    #ff6b35;
+    }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ───────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; position: sticky; top: 0; z-index: 100;
+      background: rgba(10,12,15,0.92); backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 1.4rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .logo span { font-weight: 300; opacity: 0.6; }
+
+    .header-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--muted);
+      text-align: right; line-height: 1.4;
+    }
+
+    .status-dot {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--high);
+      margin-right: 6px; animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border);
+      padding: 0 2rem; overflow-x: auto;
+    }
+
+    .nav-btn {
+      background: none; border: none; color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em;
+      text-transform: uppercase; cursor: pointer;
+      padding: 14px 20px 12px; position: relative;
+      transition: color 0.2s; white-space: nowrap;
+    }
+
+    .nav-btn.active { color: var(--accent); }
+
+    .nav-btn.active::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--accent);
+    }
+
+    .nav-btn:hover:not(.active) { color: var(--text); }
+
+    /* ── MAIN ────────────────────────────────────────────── */
+    main { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    .page { display: none; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* ── CONTROLS BAR ────────────────────────────────────── */
+    .controls {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+
+    .week-selector {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+    }
+
+    .week-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em;
+      text-transform: uppercase; cursor: pointer; padding: 6px 12px;
+      border-radius: 4px; transition: all 0.15s;
+    }
+
+    .week-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .week-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+    .filter-group { display: flex; gap: 0.5rem; margin-left: auto; align-items: center; }
+
+    .filter-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; font-size: 0.75rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .toggle-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.75rem; cursor: pointer;
+      padding: 5px 10px; border-radius: 4px; transition: all 0.15s;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .toggle-btn.on { background: rgba(0,212,255,0.1); border-color: var(--accent); color: var(--accent); }
+
+    /* ── GAME CARD ───────────────────────────────────────── */
+    .games-grid { display: flex; flex-direction: column; gap: 2px; }
+
+    .game-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .game-card:hover { border-color: rgba(0,212,255,0.25); }
+
+    .game-card.completed { opacity: 0.7; }
+
+    .game-main {
+      display: grid;
+      grid-template-columns: 90px 1fr auto 1fr 120px;
+      align-items: center; padding: 14px 16px; gap: 12px;
+      cursor: pointer;
+    }
+
+    .game-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; color: var(--muted); line-height: 1.6;
+    }
+
+    .game-meta .date { font-weight: 600; color: var(--text); font-size: 0.7rem; }
+    .game-meta .time { color: var(--muted); }
+    .game-meta .type-badge {
+      display: inline-block; padding: 1px 6px;
+      background: rgba(255,255,255,0.06); border-radius: 2px;
+      font-size: 0.6rem; letter-spacing: 0.1em; margin-top: 2px;
+    }
+
+    .team-block { display: flex; align-items: center; gap: 10px; }
+
+    .team-block.away { flex-direction: row-reverse; text-align: right; }
+
+    .team-logo {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--surface2); display: flex; align-items: center;
+      justify-content: center; font-weight: 900; font-size: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em;
+      flex-shrink: 0; color: var(--muted); border: 1px solid var(--border);
+    }
+
+    .team-info { min-width: 0; }
+
+    .team-abbr {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em;
+      color: var(--text);
+    }
+
+    .team-name {
+      font-size: 0.65rem; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 130px;
+    }
+
+    .score-block { text-align: center; }
+
+    .score-display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.8rem; letter-spacing: 0.04em;
+      line-height: 1;
+      display: flex; align-items: baseline; gap: 8px; justify-content: center;
+    }
+
+    .score-sep { color: var(--muted); font-size: 1.2rem; }
+
+    .score-home { color: var(--home-c); }
+    .score-away { color: var(--away-c); }
+
+    .score-total {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; color: var(--muted); margin-top: 4px;
+      text-align: center;
+    }
+
+    /* actual result */
+    .actual-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; margin-top: 3px; text-align: center;
+    }
+    .actual-score .hit { color: var(--high); }
+    .actual-score .miss { color: var(--weak); }
+
+    /* ── EDGE / CONFIDENCE PANEL ─────────────────────────── */
+    .edge-panel {
+      display: flex; flex-direction: column; gap: 6px; align-items: flex-end;
+    }
+
+    .confidence-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 3px;
+    }
+
+    .confidence-badge.HIGH   { background: rgba(34,197,94,0.15); color: var(--high); }
+    .confidence-badge.MEDIUM { background: rgba(234,179,8,0.15);  color: var(--medium); }
+    .confidence-badge.LOW    { background: rgba(249,115,22,0.15); color: var(--low); }
+    .confidence-badge.WEAK   { background: rgba(239,68,68,0.12);  color: var(--weak); }
+
+    .edge-indicators { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+
+    .edge-pill {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+      padding: 2px 7px; border-radius: 100px; white-space: nowrap;
+    }
+
+    .edge-pill.over   { background: rgba(59,130,246,0.15); color: var(--over); }
+    .edge-pill.under  { background: rgba(139,92,246,0.15); color: var(--under); }
+    .edge-pill.home   { background: rgba(0,212,255,0.12);  color: var(--home-c); }
+    .edge-pill.away   { background: rgba(255,107,53,0.12); color: var(--away-c); }
+    .edge-pill.push   { background: rgba(255,255,255,0.05); color: var(--muted); }
+    .edge-pill.suppressed { background: rgba(239,68,68,0.08); color: var(--weak); font-style: italic; }
+
+    .context-icons { display: flex; gap: 4px; font-size: 0.9rem; }
+
+    /* ── EXPANDED DETAIL ─────────────────────────────────── */
+    .game-detail {
+      display: none; border-top: 1px solid var(--border);
+      padding: 16px; background: var(--surface2);
+    }
+
+    .game-detail.open { display: block; animation: fadeIn 0.2s ease; }
+
+    .detail-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .detail-section h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+      border-bottom: 1px solid var(--border); padding-bottom: 4px;
+    }
+
+    .detail-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 3px 0; font-size: 0.72rem;
+    }
+
+    .detail-label { color: var(--muted); }
+    .detail-value {
+      font-family: 'JetBrains Mono', monospace; color: var(--text);
+    }
+
+    .detail-value.pos { color: var(--high); }
+    .detail-value.neg { color: var(--weak); }
+
+    .conf-bar {
+      height: 4px; background: var(--surface);
+      border-radius: 2px; margin-top: 4px; overflow: hidden;
+    }
+    .conf-bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+    .conf-bar-fill.model_agreement      { background: var(--high); }
+    .conf-bar-fill.feature_completeness { background: var(--accent); }
+    .conf-bar-fill.h2h_data_quality     { background: var(--medium); }
+    .conf-bar-fill.injury_data_freshness{ background: var(--away-c); }
+
+    /* ── LOADING / EMPTY ─────────────────────────────────── */
+    .loading-state {
+      text-align: center; padding: 4rem 2rem; color: var(--muted);
+    }
+
+    .loading-spinner {
+      width: 32px; height: 32px; border: 2px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state {
+      text-align: center; padding: 4rem 2rem; color: var(--muted);
+    }
+
+    /* ── PERFORMANCE PAGE ────────────────────────────────── */
+    .stats-summary {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px; margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 16px;
+    }
+
+    .stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.8rem; color: var(--accent);
+    }
+
+    .stat-sub { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+    .chart-container {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 20px; margin-bottom: 1rem;
+    }
+
+    .chart-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+
+    .perf-table {
+      width: 100%; border-collapse: collapse; font-size: 0.75rem;
+    }
+
+    .perf-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--border); padding: 8px 12px; text-align: left;
+    }
+
+    .perf-table td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .perf-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── METHODOLOGY PAGE ────────────────────────────────── */
+    .method-section {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 24px; margin-bottom: 1rem;
+    }
+
+    .method-section h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.3rem; letter-spacing: 0.05em;
+      margin-bottom: 12px; color: var(--accent);
+    }
+
+    .method-section h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1rem; letter-spacing: 0.05em;
+      margin: 16px 0 8px; color: var(--text);
+    }
+
+    .method-section p { color: var(--muted); line-height: 1.7; margin-bottom: 8px; }
+
+    .feature-tag {
+      display: inline-block; background: rgba(0,212,255,0.1);
+      color: var(--accent); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; padding: 2px 8px; border-radius: 3px; margin: 2px;
+    }
+
+    .model-layers {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 12px;
+    }
+
+    .model-layer {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 14px;
+    }
+
+    .layer-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
+
+    .layer-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; }
+
+    .layer-desc { font-size: 0.7rem; color: var(--muted); }
+
+    /* ── DISCLAIMER ──────────────────────────────────────── */
+    .disclaimer {
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 6px; padding: 12px 16px; margin-bottom: 1.5rem;
+      font-size: 0.72rem; color: var(--muted); line-height: 1.6;
+    }
+
+    .disclaimer strong { color: var(--weak); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      main { padding: 1rem; }
+      .game-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 8px;
+      }
+      .score-display { font-size: 1.4rem; }
+      .edge-panel { align-items: flex-start; }
+      .controls { gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NFL<span>/</span>Predictor <span style="font-size:0.8rem;opacity:0.4">2026</span></div>
+  <div class="header-meta">
+    <div><span class="status-dot"></span><span id="updateStatus">Loading predictions…</span></div>
+    <div id="modelVersion" style="color:var(--muted);opacity:0.6">—</div>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="showPage('predictions', this)">Predictions</button>
+  <button class="nav-btn" onclick="showPage('performance', this)">Performance</button>
+  <button class="nav-btn" onclick="showPage('methodology', this)">Methodology</button>
+</nav>
+
+<main>
+
+  <!-- ══════════════════ PREDICTIONS PAGE ══════════════════ -->
+  <div id="page-predictions" class="page active">
+    <div class="disclaimer">
+      <strong>⚠ Disclaimer:</strong> These predictions are generated by a statistical model for informational and entertainment purposes only. 
+      They are not financial advice. Past model performance does not guarantee future results. 
+      Edge indicators are shown only for MEDIUM+ confidence predictions.
+    </div>
+
+    <div class="controls">
+      <div class="week-selector" id="weekSelector"></div>
+      <div class="filter-group">
+        <span class="filter-label">Edge Only</span>
+        <button class="toggle-btn" id="edgeFilter" onclick="toggleFilter(this)">OFF</button>
+        <span class="filter-label" style="margin-left:8px">Show All Weeks</span>
+        <button class="toggle-btn" id="allWeeks" onclick="toggleAllWeeks(this)">OFF</button>
+      </div>
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <div>Loading predictions…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ PERFORMANCE PAGE ══════════════════ -->
+  <div id="page-performance" class="page">
+    <div class="stats-summary" id="statsSummary">
+      <div class="loading-state"><div class="loading-spinner"></div></div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">MAE by Week (Points)</div>
+      <canvas id="maeChart" height="100"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">ATS Win Rate by Confidence Tier</div>
+      <canvas id="confChart" height="80"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">Recent Game Results</div>
+      <div style="overflow-x:auto">
+        <table class="perf-table" id="perfTable">
+          <thead>
+            <tr>
+              <th>Week</th><th>Matchup</th>
+              <th>Predicted</th><th>Actual</th>
+              <th>Err Total</th><th>ATS</th><th>OU</th><th>Conf</th>
+            </tr>
+          </thead>
+          <tbody id="perfBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ METHODOLOGY PAGE ══════════════════ -->
+  <div id="page-methodology" class="page">
+
+    <div class="method-section">
+      <h2>How It Works</h2>
+      <p>This predictor uses a stacked machine learning ensemble trained on the last 3 NFL seasons (816 regular season + 39 playoff games) to forecast the final score of every upcoming game. The model outputs a predicted score for each team — from which spread, total, and moneyline predictions are derived automatically.</p>
+      <p>The pipeline runs automatically every Tuesday via GitHub Actions, fetching updated statistics and retraining the model on a rolling window that always covers exactly the 3 most recent seasons.</p>
+    </div>
+
+    <div class="method-section">
+      <h2>Feature Groups</h2>
+      <p>The model uses <strong>~150 input features</strong> per game, grouped into the following categories:</p>
+      <h3>Team Rolling Statistics</h3>
+      <p>Computed over the last 4, 8, and 16 games played by each team (strictly prior to the predicted game):</p>
+      <div>
+        <span class="feature-tag">EPA/play offense</span>
+        <span class="feature-tag">EPA/play defense</span>
+        <span class="feature-tag">Success rate</span>
+        <span class="feature-tag">Pass EPA</span>
+        <span class="feature-tag">Rush EPA</span>
+        <span class="feature-tag">CPOE</span>
+        <span class="feature-tag">Air yards/att</span>
+        <span class="feature-tag">3rd down rate</span>
+        <span class="feature-tag">Red zone TD%</span>
+        <span class="feature-tag">Turnover diff</span>
+        <span class="feature-tag">Sack rate</span>
+        <span class="feature-tag">Pressure rate</span>
+        <span class="feature-tag">FG%</span>
+        <span class="feature-tag">Shotgun rate</span>
+        <span class="feature-tag">Win rate</span>
+        <span class="feature-tag">Score differential</span>
+        <span class="feature-tag">Explosive play rate</span>
+      </div>
+      <h3>Matchup Gap Features</h3>
+      <p>For each game, the offensive EPA of Team A is compared directly against Team B's defensive EPA allowed, creating a head-to-head gap feature. This is done for passing, rushing, 3rd down, and red zone efficiency.</p>
+      <h3>Contextual Features</h3>
+      <div>
+        <span class="feature-tag">Home/Away flag</span>
+        <span class="feature-tag">Rest days</span>
+        <span class="feature-tag">Rest differential</span>
+        <span class="feature-tag">Bye week flag</span>
+        <span class="feature-tag">Short week (TNF)</span>
+        <span class="feature-tag">Temperature</span>
+        <span class="feature-tag">Wind speed</span>
+        <span class="feature-tag">Dome/Outdoor</span>
+        <span class="feature-tag">Primetime flag</span>
+        <span class="feature-tag">International game</span>
+        <span class="feature-tag">Division rivalry</span>
+        <span class="feature-tag">Week number</span>
+        <span class="feature-tag">Referee tendencies</span>
+      </div>
+      <h3>Head-to-Head History</h3>
+      <p>Historical matchup records between each pair of teams, with a tiered lookback: 3 seasons for division rivals, 6 seasons for conference opponents, 10 seasons for cross-conference matchups. H2H features are modulated by roster continuity — if both teams have largely different personnel, the historical H2H record is discounted.</p>
+      <h3>Injury & Roster</h3>
+      <div>
+        <span class="feature-tag">QB availability</span>
+        <span class="feature-tag">Offensive availability score</span>
+        <span class="feature-tag">Defensive availability score</span>
+        <span class="feature-tag">Injury report severity</span>
+        <span class="feature-tag">O-line health</span>
+      </div>
+      <h3>Cross-Season Signals</h3>
+      <div>
+        <span class="feature-tag">Roster continuity</span>
+        <span class="feature-tag">Vegas preseason wins O/U</span>
+        <span class="feature-tag">Draft quality score</span>
+        <span class="feature-tag">Elo rating</span>
+        <span class="feature-tag">Elo vs. spread divergence</span>
+        <span class="feature-tag">QB change flag</span>
+        <span class="feature-tag">Coach change flag</span>
+      </div>
+    </div>
+
+    <div class="method-section">
+      <h2>Model Architecture</h2>
+      <p>A 3-layer stacked ensemble where each layer's predictions feed into the next:</p>
+      <div class="model-layers">
+        <div class="model-layer">
+          <div class="layer-label">Layer 1A</div>
+          <div class="layer-title">Ridge Regression</div>
+          <div class="layer-desc">Linear baseline. Interpretable, handles multicollinearity. Trained with L2 regularization.</div>
+        </div>
+        <div class="model-layer">
+          <div class="layer-label">Layer 1B</div>
+          <div class="layer-title">XGBoost</div>
+          <div class="layer-desc">Gradient boosted trees. Captures non-linear interactions. MAE objective.</div>
+        </div>
+        <div class="model-layer">
+          <div class="layer-label">Layer 1C</div>
+          <div class="layer-title">LightGBM</div>
+          <div class="layer-desc">Faster gradient boosting alternative. Leaf-wise growth strategy.</div>
+        </div>
+        <div class="model-layer">
+          <div class="layer-label">Layer 2</div>
+          <div class="layer-title">Dual-Head Neural Network</div>
+          <div class="layer-desc">PyTorch NN (256→128→64) with separate heads for home and away scores. Multi-target loss optimizes score, total, and spread simultaneously.</div>
+        </div>
+        <div class="model-layer">
+          <div class="layer-label">Layer 3</div>
+          <div class="layer-title">Meta-Learner</div>
+          <div class="layer-desc">Ridge regression that learns the optimal blend of all sub-model outputs. Trained on out-of-fold predictions to prevent overfitting.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-section">
+      <h2>Confidence Score</h2>
+      <p>Every prediction includes a confidence score (0–100%) composed of four weighted components:</p>
+      <div class="detail-grid" style="margin-top:12px">
+        <div class="detail-section">
+          <h4>Model Agreement (40%)</h4>
+          <p style="font-size:0.72rem;color:var(--muted)">How closely the Ridge, XGBoost, LightGBM, and Neural Network predictions agree. High std-dev between models → lower confidence.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Feature Completeness (30%)</h4>
+          <p style="font-size:0.72rem;color:var(--muted)">What fraction of expected features are non-null. High-importance features (QB EPA, Elo) carry extra weight when missing.</p>
+        </div>
+        <div class="detail-section">
+          <h4>H2H Data Quality (15%)</h4>
+          <p style="font-size:0.72rem;color:var(--muted)">Sample size of available head-to-head historical games. Division games (6 in 3 years) score near 1.0; cross-conference games with 0 meetings score 0.2.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Injury Freshness (15%)</h4>
+          <p style="font-size:0.72rem;color:var(--muted)">How current the injury report is relative to kickoff. Predictions generated &lt;24h before kickoff score 1.0; &gt;7 days out score 0.4.</p>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:0.72rem;color:var(--muted)"><strong style="color:var(--weak)">Edge Suppression:</strong> When confidence is WEAK (&lt;50%), edge indicators are hidden to prevent misleading signals driven by data gaps.</p>
+    </div>
+
+    <div class="method-section">
+      <h2>Data Sources</h2>
+      <p>All data is sourced from free, publicly available APIs — no proprietary data is required.</p>
+      <div>
+        <span class="feature-tag">nfl_data_py</span>
+        <span class="feature-tag">nflverse</span>
+        <span class="feature-tag">nflfastR (PBP)</span>
+        <span class="feature-tag">Next Gen Stats</span>
+        <span class="feature-tag">PFR Advanced Stats</span>
+        <span class="feature-tag">FTN Charting</span>
+        <span class="feature-tag">weatherapi.com</span>
+      </div>
+      <h3>Sliding Window</h3>
+      <p>The model trains on exactly 3 × 272 = <strong>816 regular season games</strong> plus 39 playoff games. Each week after a game completes, the newest game enters the window and the oldest drops out. Season weights are optimised by Bayesian search (Optuna) rather than being fixed — ensuring recent games contribute appropriately more than older ones.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+let allPredictions = [];
+let perfData = {};
+let currentWeek = null;
+let showAllWeeks = false;
+let edgeFilterOn = false;
+
+const NFL_TEAMS = {
+  NE:'Patriots',BUF:'Bills',MIA:'Dolphins',NYJ:'Jets',
+  BAL:'Ravens',CIN:'Bengals',CLE:'Browns',PIT:'Steelers',
+  HOU:'Texans',IND:'Colts',JAX:'Jaguars',TEN:'Titans',
+  DEN:'Broncos',KC:'Chiefs',LV:'Raiders',LAC:'Chargers',
+  DAL:'Cowboys',NYG:'Giants',PHI:'Eagles',WAS:'Commanders',
+  CHI:'Bears',DET:'Lions',GB:'Packers',MIN:'Vikings',
+  ATL:'Falcons',CAR:'Panthers',NO:'Saints',TB:'Buccaneers',
+  ARI:'Cardinals',LAR:'Rams',SF:'49ers',SEA:'Seahawks',
+};
+
+// ════════════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════════════
+async function init() {
+  await Promise.all([loadPredictions(), loadPerformance()]);
+}
+
+async function loadPredictions() {
+  const paths = [
+    'assets/predictions_latest.json',
+    'https://llou77.github.io/NFL/assets/predictions_latest.json',
+  ];
+
+  let data = null;
+  for (const p of paths) {
+    try {
+      const r = await fetch(p + '?t=' + Date.now());
+      if (r.ok) { data = await r.json(); break; }
+    } catch(_) {}
+  }
+
+  if (!data) {
+    document.getElementById('gamesGrid').innerHTML =
+      '<div class="empty-state">⚠ Predictions not yet available.<br>The pipeline runs every Tuesday during the season.</div>';
+    document.getElementById('updateStatus').textContent = 'No data loaded';
+    return;
+  }
+
+  allPredictions = data.predictions || [];
+
+  const ts = data.generated_at ? new Date(data.generated_at) : null;
+  document.getElementById('updateStatus').textContent =
+    ts ? `Updated ${ts.toLocaleDateString('en-US', {month:'short',day:'numeric'})} · ${data.n_games} games` : `${data.n_games} games loaded`;
+  document.getElementById('modelVersion').textContent = data.model_version || '';
+
+  buildWeekSelector();
+  renderGames();
+}
+
+async function loadPerformance() {
+  try {
+    const r = await fetch('assets/performance.json?t=' + Date.now());
+    if (r.ok) perfData = await r.json();
+  } catch(_) {}
+  renderPerformance();
+}
+
+// ════════════════════════════════════════════════════════
+//  WEEK SELECTOR
+// ════════════════════════════════════════════════════════
+function buildWeekSelector() {
+  const weeks = [...new Set(allPredictions.map(p => p.week))].sort((a,b) => a-b);
+  const today = new Date();
+
+  // Find current/upcoming week
+  let targetWeek = weeks[0] || 1;
+  for (const p of allPredictions) {
+    if (!p.actual_home_score && new Date(p.game_date) >= today) {
+      targetWeek = p.week; break;
+    }
+  }
+  currentWeek = targetWeek;
+
+  const cont = document.getElementById('weekSelector');
+  cont.innerHTML = weeks.map(w =>
+    `<button class="week-btn ${w === currentWeek ? 'active' : ''}"
+      onclick="selectWeek(${w}, this)">Wk ${w}</button>`
+  ).join('');
+}
+
+function selectWeek(w, btn) {
+  currentWeek = w;
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  showAllWeeks = false;
+  document.getElementById('allWeeks').classList.remove('on');
+  document.getElementById('allWeeks').textContent = 'OFF';
+  renderGames();
+}
+
+function toggleAllWeeks(btn) {
+  showAllWeeks = !showAllWeeks;
+  btn.classList.toggle('on', showAllWeeks);
+  btn.textContent = showAllWeeks ? 'ON' : 'OFF';
+  renderGames();
+}
+
+function toggleFilter(btn) {
+  edgeFilterOn = !edgeFilterOn;
+  btn.classList.toggle('on', edgeFilterOn);
+  btn.textContent = edgeFilterOn ? 'ON' : 'OFF';
+  renderGames();
+}
+
+// ════════════════════════════════════════════════════════
+//  RENDER GAMES
+// ════════════════════════════════════════════════════════
+function renderGames() {
+  let games = allPredictions;
+
+  if (!showAllWeeks) {
+    games = games.filter(g => g.week === currentWeek);
+  }
+
+  if (edgeFilterOn) {
+    games = games.filter(g =>
+      (g.spread_lean && g.spread_lean !== 'PUSH' && g.spread_lean !== 'SUPPRESSED') ||
+      (g.total_lean  && g.total_lean  !== 'PUSH' && g.total_lean  !== 'SUPPRESSED')
+    );
+  }
+
+  const grid = document.getElementById('gamesGrid');
+
+  if (!games.length) {
+    grid.innerHTML = '<div class="empty-state">No games match the current filter.</div>';
+    return;
+  }
+
+  // Sort by date
+  games = [...games].sort((a,b) => new Date(a.game_date) - new Date(b.game_date));
+
+  grid.innerHTML = games.map((g, i) => gameCard(g, i)).join('');
+}
+
+function gameCard(g, idx) {
+  const homeAbbr = g.home_team;
+  const awayAbbr = g.away_team;
+  const homeName = NFL_TEAMS[homeAbbr] || homeAbbr;
+  const awayName = NFL_TEAMS[awayAbbr] || awayAbbr;
+  const dateStr  = g.game_date ? new Date(g.game_date + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric'}) : '';
+  const conf     = g.confidence_label || 'LOW';
+  const confPct  = Math.round((g.confidence_score || 0.5) * 100);
+  const isCompleted = g.actual_home_score != null;
+
+  // Edge pills
+  let edgePills = '';
+  if (g.total_lean && g.total_lean !== 'PUSH' && g.total_lean !== 'SUPPRESSED') {
+    const cls = g.total_lean === 'OVER' ? 'over' : 'under';
+    const delta = g.total_edge ? (g.total_edge > 0 ? '+' : '') + g.total_edge.toFixed(1) : '';
+    edgePills += `<span class="edge-pill ${cls}">${g.total_lean} ${delta}</span>`;
+  }
+  if (g.spread_lean && g.spread_lean !== 'PUSH' && g.spread_lean !== 'SUPPRESSED') {
+    const cls = g.spread_lean === 'HOME' ? 'home' : 'away';
+    const delta = g.spread_edge ? (g.spread_edge > 0 ? '+' : '') + g.spread_edge.toFixed(1) : '';
+    edgePills += `<span class="edge-pill ${cls}">${g.spread_lean} ${delta}</span>`;
+  }
+  if (g.spread_lean === 'SUPPRESSED' || g.total_lean === 'SUPPRESSED') {
+    edgePills += `<span class="edge-pill suppressed">⚠ edge suppressed</span>`;
+  }
+
+  // Context icons
+  let icons = '';
+  if (g.is_dome) icons += '<span title="Dome">🏟️</span>';
+  else if (g.high_wind || (g.wind && g.wind >= 15)) icons += '<span title="High wind">💨</span>';
+  else if (g.cold_game || (g.temp && g.temp < 32)) icons += '<span title="Cold">❄️</span>';
+  if (g.is_primetime) icons += '<span title="Primetime">🌙</span>';
+  if (g.is_international) icons += '<span title="International">🌍</span>';
+  if (g.is_division_game) icons += '<span title="Division">⚔️</span>';
+
+  // Actual score (if game completed)
+  let actualBlock = '';
+  if (isCompleted) {
+    const errT = Math.abs((g.predicted_home_score + g.predicted_away_score) - (g.actual_home_score + g.actual_away_score));
+    const hitClass = errT <= 7 ? 'hit' : 'miss';
+    actualBlock = `<div class="actual-score">
+      <span class="${hitClass}">
+        Actual: ${g.actual_home_score}–${g.actual_away_score}
+        (Δ${errT})
+      </span>
+    </div>`;
+  }
+
+  return `<div class="game-card${isCompleted ? ' completed' : ''}" id="gc-${idx}">
+    <div class="game-main" onclick="toggleDetail(${idx})">
+      <div class="game-meta">
+        <div class="date">${dateStr}</div>
+        <div class="time">${g.game_type !== 'REG' ? `<span class="type-badge">${g.game_type}</span>` : ''}</div>
+        <div>Wk ${g.week}</div>
+      </div>
+
+      <div class="team-block home">
+        <div class="team-logo">${homeAbbr}</div>
+        <div class="team-info">
+          <div class="team-abbr">${homeAbbr}</div>
+          <div class="team-name">${homeName}</div>
+        </div>
+      </div>
+
+      <div class="score-block">
+        <div class="score-display">
+          <span class="score-home">${g.predicted_home_score}</span>
+          <span class="score-sep">–</span>
+          <span class="score-away">${g.predicted_away_score}</span>
+        </div>
+        <div class="score-total">Total ${g.predicted_total}${g.book_total ? ` · Book ${g.book_total}` : ''}</div>
+        ${actualBlock}
+      </div>
+
+      <div class="team-block away">
+        <div class="team-logo">${awayAbbr}</div>
+        <div class="team-info">
+          <div class="team-abbr">${awayAbbr}</div>
+          <div class="team-name">${awayName}</div>
+        </div>
+      </div>
+
+      <div class="edge-panel">
+        <span class="confidence-badge ${conf}">${conf} ${confPct}%</span>
+        <div class="edge-indicators">${edgePills}</div>
+        <div class="context-icons">${icons}</div>
+      </div>
+    </div>
+
+    <div class="game-detail" id="gd-${idx}">
+      ${gameDetail(g)}
+    </div>
+  </div>`;
+}
+
+function gameDetail(g) {
+  const bd = g.confidence_breakdown || {};
+  const tf = g.top_features || {};
+
+  const confRows = [
+    ['Model Agreement',   bd.model_agreement,       'model_agreement'],
+    ['Feature Complete',  bd.feature_completeness,  'feature_completeness'],
+    ['H2H Quality',       bd.h2h_data_quality,      'h2h_data_quality'],
+    ['Injury Freshness',  bd.injury_data_freshness, 'injury_data_freshness'],
+  ];
+
+  const confHtml = confRows.map(([label, val, cls]) => {
+    const pct = val != null ? Math.round(val * 100) : 0;
+    return `<div class="detail-row">
+      <span class="detail-label">${label}</span>
+      <span class="detail-value">${pct}%</span>
+    </div>
+    <div class="conf-bar"><div class="conf-bar-fill ${cls}" style="width:${pct}%"></div></div>`;
+  }).join('');
+
+  const featRows = Object.entries(tf).filter(([,v]) => typeof v === 'number').slice(0, 8);
+  const featHtml = featRows.map(([k,v]) => {
+    const cls = v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+    return `<div class="detail-row">
+      <span class="detail-label">${k.replace(/_/g,' ').replace(/home |away /g,'')}</span>
+      <span class="detail-value ${cls}">${v.toFixed(3)}</span>
+    </div>`;
+  }).join('');
+
+  const ciHtml = g.ci_home && g.ci_away ? `
+    <div class="detail-row"><span class="detail-label">Home CI (20–80%)</span>
+      <span class="detail-value">${g.ci_home[0]}–${g.ci_home[1]}</span></div>
+    <div class="detail-row"><span class="detail-label">Away CI (20–80%)</span>
+      <span class="detail-value">${g.ci_away[0]}–${g.ci_away[1]}</span></div>
+  ` : '';
+
+  const weatherHtml = !g.is_dome && (g.temp != null || g.wind != null) ? `
+    <div class="detail-row"><span class="detail-label">Temp</span>
+      <span class="detail-value">${g.temp != null ? g.temp + '°F' : '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Wind</span>
+      <span class="detail-value">${g.wind != null ? g.wind + ' mph' : '—'}</span></div>
+  ` : '';
+
+  return `<div class="detail-grid">
+    <div class="detail-section">
+      <h4>Confidence Breakdown</h4>
+      ${confHtml}
+    </div>
+    <div class="detail-section">
+      <h4>Score Intervals</h4>
+      ${ciHtml}
+      <div class="detail-row"><span class="detail-label">Model Spread</span>
+        <span class="detail-value">${g.predicted_spread > 0 ? '+' : ''}${g.predicted_spread}</span></div>
+      ${g.book_spread != null ? `<div class="detail-row"><span class="detail-label">Book Spread</span>
+        <span class="detail-value">${g.book_spread}</span></div>` : ''}
+    </div>
+    ${featHtml ? `<div class="detail-section">
+      <h4>Key Features</h4>${featHtml}
+    </div>` : ''}
+    ${weatherHtml ? `<div class="detail-section">
+      <h4>Conditions</h4>${weatherHtml}
+    </div>` : ''}
+  </div>`;
+}
+
+function toggleDetail(idx) {
+  const el = document.getElementById(`gd-${idx}`);
+  if (el) el.classList.toggle('open');
+}
+
+// ════════════════════════════════════════════════════════
+//  PERFORMANCE PAGE
+// ════════════════════════════════════════════════════════
+function renderPerformance() {
+  const summary = perfData.summary || {};
+  const games   = perfData.games   || [];
+
+  // Summary cards
+  const cards = [
+    { label: 'MAE Total',    value: summary.mae_total   ? summary.mae_total + ' pts' : '—', sub: 'Mean absolute error on total score' },
+    { label: 'MAE Spread',   value: summary.mae_spread  ? summary.mae_spread + ' pts' : '—', sub: 'Mean absolute error on spread' },
+    { label: 'ATS Record',   value: summary.ats_record  || '—', sub: `${Math.round((summary.ats_pct || 0) * 100)}% win rate` },
+    { label: 'O/U Record',   value: summary.ou_record   || '—', sub: `${Math.round((summary.ou_pct  || 0) * 100)}% win rate` },
+    { label: 'Games Tracked', value: summary.n_games    || '0', sub: '2026 season' },
+  ];
+
+  document.getElementById('statsSummary').innerHTML = cards.map(c => `
+    <div class="stat-card">
+      <div class="stat-label">${c.label}</div>
+      <div class="stat-value">${c.value}</div>
+      <div class="stat-sub">${c.sub}</div>
+    </div>
+  `).join('');
+
+  // MAE by week chart
+  const maeByWeek = {};
+  for (const g of games) {
+    const w = g.week;
+    if (!maeByWeek[w]) maeByWeek[w] = [];
+    maeByWeek[w].push(Math.abs(g.error_total));
+  }
+  const weekLabels = Object.keys(maeByWeek).sort((a,b) => +a - +b);
+  const weekMaes   = weekLabels.map(w => {
+    const arr = maeByWeek[w];
+    return (arr.reduce((a,b) => a+b, 0) / arr.length).toFixed(2);
+  });
+
+  const ctx1 = document.getElementById('maeChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: weekLabels.map(w => `Wk ${w}`),
+      datasets: [{
+        label: 'MAE Total (pts)',
+        data: weekMaes,
+        borderColor: '#00d4ff', backgroundColor: 'rgba(0,212,255,0.08)',
+        tension: 0.4, pointRadius: 4, fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#6b7280' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { ticks: { color: '#6b7280' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      }
+    }
+  });
+
+  // ATS by confidence tier chart
+  const confData = summary.confidence_breakdown || {};
+  const tiers = ['HIGH','MEDIUM','LOW','WEAK'];
+  const tierColors = { HIGH:'#22c55e', MEDIUM:'#eab308', LOW:'#f97316', WEAK:'#ef4444' };
+
+  const ctx2 = document.getElementById('confChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: tiers,
+      datasets: [{
+        label: 'MAE Total by Tier',
+        data: tiers.map(t => confData[t] ? confData[t].mae_total : 0),
+        backgroundColor: tiers.map(t => tierColors[t] + '33'),
+        borderColor:     tiers.map(t => tierColors[t]),
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#6b7280' }, grid: { display: false } },
+        y: { ticks: { color: '#6b7280' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      }
+    }
+  });
+
+  // Recent game table
+  const recent = games.slice(-30).reverse();
+  document.getElementById('perfBody').innerHTML = recent.map(g => {
+    const atsCls = g.ats_result === 'WIN' ? 'pos' : g.ats_result === 'LOSS' ? 'neg' : '';
+    const ouCls  = g.ou_result  === 'WIN' ? 'pos' : g.ou_result  === 'LOSS' ? 'neg' : '';
+    const errCls = Math.abs(g.error_total) <= 7 ? 'pos' : 'neg';
+    return `<tr>
+      <td>Wk ${g.week}</td>
+      <td>${g.home_team} vs ${g.away_team}</td>
+      <td>${g.predicted_home}–${g.predicted_away}</td>
+      <td>${g.actual_home}–${g.actual_away}</td>
+      <td class="${errCls}">${g.error_total > 0 ? '+' : ''}${g.error_total}</td>
+      <td class="${atsCls}">${g.ats_result || '—'}</td>
+      <td class="${ouCls}">${g.ou_result  || '—'}</td>
+      <td><span class="confidence-badge ${g.confidence_label}">${g.confidence_label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+//  PAGE NAVIGATION
+// ════════════════════════════════════════════════════════
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
