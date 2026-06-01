@@ -2,38 +2,34 @@
 # Python 3.11+ required
 
 # ── Data Ingestion ──────────────────────────────────────────────
-nfl-data-py==0.3.1
-nflreadr==1.1.0          # fallback / supplemental nflverse data
+nfl-data-py==0.3.3
 requests==2.31.0
-beautifulsoup4==4.12.3   # supplemental scraping if needed
+beautifulsoup4==4.12.3
 
 # ── Data Processing ─────────────────────────────────────────────
 pandas==2.2.2
 numpy==1.26.4
-polars==0.20.31          # fast frame ops on large PBP tables
-pyarrow==16.1.0          # parquet support for caching
+polars==0.20.31
+pyarrow==16.1.0
 
 # ── Machine Learning ────────────────────────────────────────────
 scikit-learn==1.5.0
 xgboost==2.0.3
 lightgbm==4.3.0
-shap==0.45.1             # feature importance / explainability
+shap==0.45.1
 
 # ── Deep Learning ───────────────────────────────────────────────
-torch==2.3.0             # PyTorch CPU build (no CUDA needed at this scale)
+torch==2.3.0
 
 # ── Bayesian Optimisation ───────────────────────────────────────
 optuna==3.6.1
 optuna-integration==3.6.0
 
 # ── Utilities ───────────────────────────────────────────────────
-tqdm==4.66.4             # progress bars
-python-dotenv==1.0.1     # env vars for API keys (weather)
-joblib==1.4.2            # model serialisation & parallel jobs
-scipy==1.13.1            # statistical helpers
-
-# ── Weather API ─────────────────────────────────────────────────
-# weatherapi.com via plain requests — no extra library needed
+tqdm==4.66.4
+python-dotenv==1.0.1
+joblib==1.4.2
+scipy==1.13.1
 
 # ── Testing ─────────────────────────────────────────────────────
 pytest==8.2.2
