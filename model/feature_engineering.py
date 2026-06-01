@@ -216,13 +216,19 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     if len(pbp) == 0:
         return pd.DataFrame(columns=["game_id","team"])
 
-    # Ensure numeric types
-    for col in ["epa","wpa","cpoe","air_yards","yards_gained","yards_after_catch",
-                "success","sack","qb_hit","penalty_yards","first_down","touchdown",
-                "interception","fumble_lost","turnover","shotgun","no_huddle",
-                "return_yards","field_goal_result"]:
-        if col in pbp.columns and not pd.api.types.is_numeric_dtype(pbp[col]):
-            pbp[col] = pd.to_numeric(pbp[col], errors="coerce")
+    # Ensure all required columns exist with safe defaults
+    # This prevents KeyError if nflverse changes column names or a column is absent
+    numeric_cols_zero = [
+        "epa","wpa","cpoe","air_yards","yards_gained","yards_after_catch",
+        "success","sack","qb_hit","penalty_yards","first_down","touchdown",
+        "interception","fumble_lost","fumble","shotgun","no_huddle",
+        "return_yards",
+    ]
+    for col in numeric_cols_zero:
+        if col not in pbp.columns:
+            pbp[col] = 0.0
+        else:
+            pbp[col] = pd.to_numeric(pbp[col], errors="coerce").fillna(0)
 
     scrimmage_mask = pbp["play_type"].isin(["pass","run","qb_kneel","qb_spike"])
     pass_mask = pbp["play_type"] == "pass"
@@ -369,12 +375,23 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     )
 
     # ── Turnovers ────────────────────────────────────────────────────────
+    # nflverse PBP has no single 'turnover' column — derive from components
+
+    # Ensure columns exist with safe fallbacks
+    for col in ["interception", "fumble_lost", "fumble"]:
+        if col not in pbp.columns:
+            pbp[col] = 0
+        else:
+            pbp[col] = pd.to_numeric(pbp[col], errors="coerce").fillna(0)
+
+    # interception + fumble_lost = turnovers committed by offense
+    pbp["_to_committed"] = pbp["interception"] + pbp["fumble_lost"]
 
     to_off = (
         pbp[pbp["posteam"].notna()]
         .groupby(["game_id","posteam"])
         .agg(
-            turnovers_committed=("turnover",      "sum"),
+            turnovers_committed=("_to_committed", "sum"),
             interceptions      =("interception",  "sum"),
             fumbles_lost       =("fumble_lost",   "sum"),
         )
@@ -382,13 +399,17 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         .rename(columns={"posteam":"team"})
     )
 
+    # turnovers_forced = opponent's turnovers = what the defense forced
     to_def = (
         pbp[pbp["defteam"].notna()]
         .groupby(["game_id","defteam"])
-        .agg(turnovers_forced=("turnover","sum"))
+        .agg(turnovers_forced=("_to_committed", "sum"))
         .reset_index()
         .rename(columns={"defteam":"team"})
     )
+
+    # Clean up temp column
+    pbp.drop(columns=["_to_committed"], inplace=True, errors="ignore")
 
     # ── Pace ─────────────────────────────────────────────────────────────
 
