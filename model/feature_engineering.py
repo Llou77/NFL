@@ -515,25 +515,31 @@ def _add_rolling(tg: pd.DataFrame) -> pd.DataFrame:
     for _, grp in tg.groupby("team", sort=False):
         grp = grp.sort_values("game_date").copy()
 
+        # Build all new rolling columns in a dict, then concat once — avoids fragmentation
+        new_cols: dict = {}
+
         for col in stat_cols:
             s = grp[col].shift(1)
             for N, sfx in [(ROLLING_SHORT,"r4"),(ROLLING_MED,"r8"),(ROLLING_LONG,"r16")]:
-                grp[f"{col}_{sfx}"] = s.rolling(N, min_periods=max(1, N//2)).mean()
+                new_cols[f"{col}_{sfx}"] = s.rolling(N, min_periods=max(1, N//2)).mean()
 
         # Derived: turnover diff
         if "turnovers_committed" in grp.columns and "turnovers_forced" in grp.columns:
             td = (grp["turnovers_forced"] - grp["turnovers_committed"]).shift(1)
             for N, sfx in [(4,"r4"),(8,"r8"),(16,"r16")]:
-                grp[f"turnover_diff_{sfx}"] = td.rolling(N, min_periods=1).mean()
+                new_cols[f"turnover_diff_{sfx}"] = td.rolling(N, min_periods=1).mean()
 
-        # Derived: score diff
+        # Derived: score diff + win rate
         if "team_score" in grp.columns and "opp_score" in grp.columns:
             sd = (grp["team_score"] - grp["opp_score"]).shift(1)
             wr = (grp["team_score"] > grp["opp_score"]).astype(float).shift(1)
             for N, sfx in [(4,"r4"),(8,"r8"),(16,"r16")]:
-                grp[f"score_diff_{sfx}"]= sd.rolling(N, min_periods=1).mean()
-                grp[f"win_rate_{sfx}"]  = wr.rolling(N, min_periods=1).mean()
+                new_cols[f"score_diff_{sfx}"] = sd.rolling(N, min_periods=1).mean()
+                new_cols[f"win_rate_{sfx}"]   = wr.rolling(N, min_periods=1).mean()
 
+        # Single concat for all new columns — no fragmentation
+        new_df = pd.DataFrame(new_cols, index=grp.index)
+        grp = pd.concat([grp, new_df], axis=1)
         frames.append(grp)
 
     return pd.concat(frames, ignore_index=True).sort_values(
@@ -924,8 +930,10 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
 def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
     """Pivot team-game table to one row per game with home_ and away_ prefixed columns."""
 
+    # shared_cols = game-level cols that appear ONCE (not per-team)
+    # game_id is excluded here because it's already the merge key from add_prefix/rename
     shared_cols = [c for c in [
-        "game_id","season","week","game_type","game_date",
+        "season","week","game_type","game_date",
         "spread_line","total_line","temp","wind","humidity",
         "is_dome","is_primetime","is_international","is_division_game",
         "high_wind","extreme_wind","cold_game","very_cold_game",
@@ -934,7 +942,7 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
     ] if c in tg.columns]
 
     skip = set(shared_cols) | {
-        "is_home","team","opponent","game_date",
+        "game_id","is_home","team","opponent","game_date",
         "day_of_week","referee","prev_game_date",
     }
 
@@ -943,13 +951,15 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
     home = tg[tg["is_home"] == 1][["game_id"] + team_stat_cols].copy()
     away = tg[tg["is_home"] == 0][["game_id"] + team_stat_cols].copy()
 
-    home = home.add_prefix("home_").rename(columns={"home_game_id":"game_id"})
-    away = away.add_prefix("away_").rename(columns={"away_game_id":"game_id"})
+    home = home.add_prefix("home_").rename(columns={"home_game_id": "game_id"})
+    away = away.add_prefix("away_").rename(columns={"away_game_id": "game_id"})
 
     game_df = home.merge(away, on="game_id", how="inner")
 
-    # Merge shared columns from home perspective
+    # Merge shared columns — use game_id only as key, not as a column in shared
     shared = tg[tg["is_home"] == 1][["game_id"] + shared_cols].copy()
+    # Drop duplicate game_id rows (shouldn't exist, but safeguard)
+    shared = shared.drop_duplicates(subset=["game_id"])
     game_df = game_df.merge(shared, on="game_id", how="left")
 
     # Rest differential
