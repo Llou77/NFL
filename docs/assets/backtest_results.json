@@ -1,0 +1,126 @@
+{
+  "2025": {
+    "mae_home": 4.056,
+    "mae_away": 3.786,
+    "mae_total": 6.895,
+    "mae_spread": 3.856,
+    "ats_wins": 257,
+    "ats_losses": 24,
+    "ats_pushes": 4,
+    "ats_pct": 0.9146,
+    "ou_wins": 224,
+    "ou_losses": 61,
+    "ou_pushes": 0,
+    "ou_pct": 0.786,
+    "r2_total": 0.6161,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 6.934,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 7.167,
+        "n": 6
+      }
+    },
+    "by_division": {
+      "1": {
+        "mae_total": 6.838,
+        "n": 99
+      },
+      "0": {
+        "mae_total": 6.925,
+        "n": 186
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 6.858,
+        "n": 190
+      },
+      "1": {
+        "mae_total": 6.968,
+        "n": 95
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 6.414,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 7.018,
+        "n": 227
+      }
+    },
+    "train_seasons": [
+      2022,
+      2023,
+      2024
+    ],
+    "test_season": 2025
+  },
+  "2024": {
+    "mae_home": 4.463,
+    "mae_away": 4.326,
+    "mae_total": 7.737,
+    "mae_spread": 4.193,
+    "ats_wins": 270,
+    "ats_losses": 14,
+    "ats_pushes": 1,
+    "ats_pct": 0.9507,
+    "ou_wins": 207,
+    "ou_losses": 75,
+    "ou_pushes": 3,
+    "ou_pct": 0.734,
+    "r2_total": 0.4387,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 7.61,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 7.667,
+        "n": 6
+      }
+    },
+    "by_division": {
+      "0": {
+        "mae_total": 7.364,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 8.449,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 8.032,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 7.173,
+        "n": 98
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 6.825,
+        "n": 63
+      },
+      "0": {
+        "mae_total": 7.995,
+        "n": 222
+      }
+    },
+    "train_seasons": [
+      2021,
+      2022,
+      2023
+    ],
+    "test_season": 2024
+  }
+}
