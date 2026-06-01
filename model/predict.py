@@ -186,14 +186,19 @@ def _save_predictions(df: pd.DataFrame, gen_ts: datetime) -> None:
     """Save predictions as JSON in the format expected by the frontend."""
     records = []
     for _, row in df.iterrows():
+        # Extract team names — try multiple column name variants produced by the pivot,
+        # then fall back to parsing the game_id (format: YEAR_WK_AWAY_HOME)
+        game_id = str(row.get("game_id", ""))
+        home_team, away_team = _extract_teams(row, game_id)
+
         rec = {
-            "game_id":              str(row.get("game_id", "")),
+            "game_id":              game_id,
             "season":               int(row.get("season", 2026)),
             "week":                 int(row.get("week", 0)),
             "game_type":            str(row.get("game_type", "REG")),
             "game_date":            str(row.get("game_date", ""))[:10],
-            "home_team":            str(row.get("home_team_x", row.get("home_home_team", ""))),
-            "away_team":            str(row.get("away_team_x", row.get("away_away_team", ""))),
+            "home_team":            home_team,
+            "away_team":            away_team,
             "predicted_home_score": int(row.get("predicted_home_score", 0)),
             "predicted_away_score": int(row.get("predicted_away_score", 0)),
             "predicted_total":      int(row.get("predicted_total", 0)),
@@ -243,6 +248,47 @@ def _save_predictions(df: pd.DataFrame, gen_ts: datetime) -> None:
     archive_path = ARCHIVE_DIR / f"predictions_{ts_str}.json"
     with open(archive_path, "w") as f:
         json.dump(output, f, indent=2)
+
+
+def _extract_teams(row: pd.Series, game_id: str) -> tuple:
+    """
+    Extract home and away team abbreviations from the prediction row.
+    Tries multiple column name variants produced by the pivot, then
+    falls back to parsing game_id (nflverse format: YEAR_WK_AWAY_HOME).
+    """
+    # Try every column variant the pivot might produce
+    candidate_home = [
+        "home_team", "home_team_x", "home_home_team",
+        "home_team_y", "home_away_team",
+    ]
+    candidate_away = [
+        "away_team", "away_team_x", "away_away_team",
+        "away_team_y", "away_home_team",
+    ]
+
+    home = ""
+    for col in candidate_home:
+        val = row.get(col, "")
+        if val and str(val).strip() and str(val) != "nan":
+            home = str(val).strip()
+            break
+
+    away = ""
+    for col in candidate_away:
+        val = row.get(col, "")
+        if val and str(val).strip() and str(val) != "nan":
+            away = str(val).strip()
+            break
+
+    # Fallback: parse game_id — nflverse format is YEAR_WK_AWAY_HOME
+    if (not home or not away) and game_id:
+        parts = game_id.split("_")
+        if len(parts) >= 4:
+            # parts: [2026, 01, AWAY, HOME]
+            away = away or parts[2]
+            home = home or parts[3]
+
+    return home, away
 
 
 def _safe_float(val) -> Optional[float]:
