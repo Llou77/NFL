@@ -292,8 +292,9 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
          max_hours=168)
 
     # ── 16. Vegas win totals ──────────────────────────────────────────────────
+    # nfl-data-py source: mrcaseb nfl-data repo (lines/odds CSV)
     _get("win_totals",
-         f"{BASE}/misc/win_totals.csv",
+         "https://raw.githubusercontent.com/mrcaseb/nfl-data/master/data/nfl_lines_odds.csv.gz",
          fmt="csv", max_hours=168)
 
     # ── 17. Scoring lines / spreads ───────────────────────────────────────────
