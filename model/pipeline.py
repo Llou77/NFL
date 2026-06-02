@@ -190,6 +190,26 @@ def run_backtest(args):
     _write_status("success")
 
 
+def run_analyze_seasons(args):
+    log.info("PER-SEASON ANALYSIS MODE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
+
+    game_df = _build_features(force_data=False)
+
+    from season_analysis import run_season_analysis
+    results = run_season_analysis(game_df)
+
+    log.info("Season analysis complete: %d seasons analysed", results.get("n_seasons", 0))
+    trends = results.get("trends", {})
+    interp = trends.get("interpretation", {})
+    log.info("  Total scoring: %s | Home advantage: %s | Model difficulty: %s",
+             interp.get("total_scoring", "?"),
+             interp.get("home_advantage", "?"),
+             interp.get("model_difficulty", "?"))
+
+    _copy_to_docs()
+    _write_status("success")
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 #  HELPERS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -198,7 +218,8 @@ def _copy_to_docs():
     """Copy prediction outputs to docs/assets/ for GitHub Pages."""
     docs_assets = ROOT / "docs" / "assets"
     docs_assets.mkdir(parents=True, exist_ok=True)
-    for fname in ["predictions_latest.json", "performance.json", "backtest_results.json"]:
+    for fname in ["predictions_latest.json", "performance.json",
+                  "backtest_results.json", "season_analysis.json"]:
         src = PRED_DIR / fname
         if src.exists():
             import shutil
@@ -220,7 +241,7 @@ def main():
     parser = argparse.ArgumentParser(description="NFL Score Predictor Pipeline")
     parser.add_argument(
         "--mode",
-        choices=["full", "predict_only", "backtest", "optimize"],
+        choices=["full", "predict_only", "backtest", "optimize", "analyze_seasons"],
         default="full",
         help="Pipeline mode",
     )
@@ -235,10 +256,11 @@ def main():
     args.force_data = args.force_data
 
     dispatch = {
-        "full":         run_full,
-        "predict_only": run_predict_only,
-        "backtest":     run_backtest,
-        "optimize":     run_optimize,
+        "full":             run_full,
+        "predict_only":     run_predict_only,
+        "backtest":         run_backtest,
+        "optimize":         run_optimize,
+        "analyze_seasons":  run_analyze_seasons,
     }
     dispatch[args.mode](args)
 

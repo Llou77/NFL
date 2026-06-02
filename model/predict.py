@@ -103,12 +103,32 @@ def generate_predictions(
     meta_X_home = np.column_stack(list(sub_preds_home.values()))
     meta_X_away = np.column_stack(list(sub_preds_away.values()))
 
-    final_home = models["meta_home"].predict(meta_X_home)
-    final_away = models["meta_away"].predict(meta_X_away)
+    raw_home = models["meta_home"].predict(meta_X_home)
+    raw_away = models["meta_away"].predict(meta_X_away)
 
-    # Clip to realistic score range [0, 65]
-    final_home = np.clip(np.round(final_home).astype(int), 0, 65)
-    final_away = np.clip(np.round(final_away).astype(int), 0, 65)
+    # ── Variance calibration ──────────────────────────────────────────────
+    # Apply spread rescaling to reverse the regression-to-mean from Ridge
+    calib_path = ROOT / "model" / "saved" / "calibration.json"
+    if calib_path.exists():
+        with open(calib_path) as f:
+            calib = json.load(f)
+        scale = calib.get("spread_scale", 1.0)
+        if scale > 1.0:
+            mean_h = np.mean(raw_home)
+            mean_a = np.mean(raw_away)
+            mean_spread = mean_h - mean_a
+            raw_spread  = raw_home - raw_away
+            # Rescale spread around its mean, then redistribute to home/away
+            calibrated_spread = mean_spread + (raw_spread - mean_spread) * scale
+            # Adjust home/away proportionally (preserve total)
+            raw_total = raw_home + raw_away
+            raw_home  = (raw_total + calibrated_spread) / 2.0
+            raw_away  = (raw_total - calibrated_spread) / 2.0
+        logger.info("  Applied variance calibration (scale=%.3f)", scale)
+
+    # Clip to realistic range and round
+    final_home = np.clip(np.round(raw_home).astype(int), 0, 65)
+    final_away = np.clip(np.round(raw_away).astype(int), 0, 65)
 
     # ── Confidence intervals (bootstrap-style from sub-model spread) ──────
     home_preds_matrix = np.column_stack(list(sub_preds_home.values()))

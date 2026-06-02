@@ -354,6 +354,39 @@ def _train_meta_learner(X_sc, y_home, y_away, sw,
     meta_h = Ridge(alpha=1.0).fit(oof_X_h, oof_y_h)
     meta_a = Ridge(alpha=1.0).fit(oof_X_a, oof_y_a)
 
+    # ── Variance calibration ──────────────────────────────────────────────
+    # Ridge meta-learner heavily regresses predictions toward the mean,
+    # collapsing spread std to ~1-2 pts (real NFL: ~12 pts).
+    # Fix: fit a linear rescaling on OOF predictions to match target variance.
+    oof_pred_h = meta_h.predict(oof_X_h)
+    oof_pred_a = meta_a.predict(oof_X_a)
+    oof_spread_pred   = oof_pred_h - oof_pred_a
+    oof_spread_actual = oof_y_h    - oof_y_a
+
+    pred_std   = np.std(oof_spread_pred)
+    actual_std = np.std(oof_spread_actual)
+
+    # Scale factor: expand predictions to match actual variance
+    # Capped at 3× to prevent overcorrection on small training sets
+    if pred_std > 0.5:
+        spread_scale = float(np.clip(actual_std / pred_std, 1.0, 3.0))
+    else:
+        spread_scale = 1.5   # safe default if predictions are degenerate
+
+    logger.info("  Variance calibration: pred_spread_std=%.2f → target=%.2f → scale=%.3f",
+                pred_std, actual_std, spread_scale)
+
+    # Save calibration parameters
+    calib = {
+        "spread_scale":      spread_scale,
+        "home_mean_pred":    float(np.mean(oof_pred_h)),
+        "home_mean_actual":  float(np.mean(oof_y_h)),
+        "away_mean_pred":    float(np.mean(oof_pred_a)),
+        "away_mean_actual":  float(np.mean(oof_y_a)),
+    }
+    with open(MODEL_DIR / "calibration.json", "w") as f:
+        json.dump(calib, f, indent=2)
+
     with open(MODEL_DIR / "meta_learner_home.pkl", "wb") as f: pickle.dump(meta_h, f)
     with open(MODEL_DIR / "meta_learner_away.pkl", "wb") as f: pickle.dump(meta_a, f)
     return meta_h, meta_a
