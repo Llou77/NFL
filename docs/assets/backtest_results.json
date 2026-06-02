@@ -1,140 +1,71 @@
 {
   "2025": {
-    "mae_home": 4.214,
-    "mae_away": 3.821,
-    "mae_total": 6.912,
-    "mae_spread": 4.014,
-    "ats_wins": 259,
+    "mae_home": 4.151,
+    "mae_away": 3.828,
+    "mae_total": 6.877,
+    "mae_spread": 3.979,
+    "ats_wins": 258,
     "ats_losses": 22,
     "ats_pushes": 4,
-    "ats_pct": 0.9217,
-    "edge_ats_wins": 231,
-    "edge_ats_losses": 9,
+    "ats_pct": 0.9214,
+    "edge_ats_wins": 229,
+    "edge_ats_losses": 11,
     "edge_ats_pushes": 2,
-    "edge_ats_pct": 0.9625,
+    "edge_ats_pct": 0.9542,
     "edge_ats_n_games": 242,
-    "ou_wins": 219,
-    "ou_losses": 66,
+    "ou_wins": 213,
+    "ou_losses": 72,
     "ou_pushes": 0,
-    "ou_pct": 0.7684,
-    "r2_total": 0.6055,
-    "pred_spread_std": 12.85,
+    "ou_pct": 0.7474,
+    "r2_total": 0.6109,
+    "pred_spread_std": 12.7,
     "actual_spread_std": 14.13,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 6.952,
+        "mae_total": 6.901,
         "n": 272
       },
       "WC": {
-        "mae_total": 5.833,
+        "mae_total": 7.833,
         "n": 6
       }
     },
     "by_division_game": {
       "1": {
-        "mae_total": 6.465,
+        "mae_total": 6.343,
         "n": 99
       },
       "0": {
-        "mae_total": 7.151,
+        "mae_total": 7.161,
         "n": 186
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 6.895,
+        "mae_total": 6.947,
         "n": 190
       },
       "1": {
-        "mae_total": 6.947,
+        "mae_total": 6.737,
         "n": 95
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 6.707,
+        "mae_total": 6.397,
         "n": 58
       },
       "0": {
-        "mae_total": 6.965,
+        "mae_total": 7.0,
         "n": 227
       }
     },
     "train_seasons": [
-      2022,
-      2023,
-      2024
+      "2023",
+      "2024"
     ],
-    "test_season": 2025
-  },
-  "2024": {
-    "mae_home": 4.509,
-    "mae_away": 4.281,
-    "mae_total": 7.835,
-    "mae_spread": 4.158,
-    "ats_wins": 265,
-    "ats_losses": 17,
-    "ats_pushes": 1,
-    "ats_pct": 0.9397,
-    "edge_ats_wins": 247,
-    "edge_ats_losses": 7,
-    "edge_ats_pushes": 1,
-    "edge_ats_pct": 0.9724,
-    "edge_ats_n_games": 255,
-    "ou_wins": 199,
-    "ou_losses": 83,
-    "ou_pushes": 3,
-    "ou_pct": 0.7057,
-    "r2_total": 0.4276,
-    "pred_spread_std": 12.63,
-    "actual_spread_std": 14.44,
-    "n_games": 285,
-    "by_game_type": {
-      "REG": {
-        "mae_total": 7.695,
-        "n": 272
-      },
-      "WC": {
-        "mae_total": 7.167,
-        "n": 6
-      }
-    },
-    "by_division_game": {
-      "0": {
-        "mae_total": 7.465,
-        "n": 187
-      },
-      "1": {
-        "mae_total": 8.541,
-        "n": 98
-      }
-    },
-    "by_dome": {
-      "0": {
-        "mae_total": 8.23,
-        "n": 187
-      },
-      "1": {
-        "mae_total": 7.082,
-        "n": 98
-      }
-    },
-    "by_primetime": {
-      "1": {
-        "mae_total": 7.365,
-        "n": 63
-      },
-      "0": {
-        "mae_total": 7.968,
-        "n": 222
-      }
-    },
-    "train_seasons": [
-      2021,
-      2022,
-      2023
-    ],
-    "test_season": 2024
+    "test_season": "2025",
+    "window_type": "3-season"
   }
 }
