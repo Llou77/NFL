@@ -51,12 +51,50 @@ def run_backtests(
 
     feature_cols = get_feature_columns(game_df)
 
-    backtest_configs = [
-        {"train_seasons": [2022, 2023, 2024], "test_season": 2025},
-        {"train_seasons": [2021, 2022, 2023], "test_season": 2024},
-        {"train_seasons": [2020, 2021, 2022], "test_season": 2023},
-    ]
+    # Auto-detect available labeled seasons
+    available = sorted(
+        game_df[game_df["target_home_score"].notna()]["season"].unique()
+    )
+    logger.info("Available labeled seasons for backtesting: %s", available)
 
+    # Build backtest configs dynamically:
+    # - 3-season window (standard): test most recent 2 seasons
+    # - 5-season window (extended): test if data goes far enough back
+    backtest_configs = []
+
+    # Standard 3-season window
+    for test_s in sorted(available)[-3:]:
+        train_end  = test_s - 1
+        train_start = train_end - 2  # 3 seasons
+        train_s = [s for s in available if train_start <= s <= train_end]
+        if len(train_s) >= 2 and test_s in available:
+            backtest_configs.append({
+                "train_seasons": train_s,
+                "test_season":   test_s,
+                "window_type":   "3-season",
+            })
+
+    # Extended 5-season window (if enough data)
+    for test_s in sorted(available)[-2:]:
+        train_end   = test_s - 1
+        train_start = train_end - 4  # 5 seasons
+        train_s = [s for s in available if train_start <= s <= train_end]
+        if len(train_s) >= 4 and test_s in available:
+            # Only add if different from already-added 3-season configs
+            backtest_configs.append({
+                "train_seasons": train_s,
+                "test_season":   test_s,
+                "window_type":   "5-season",
+            })
+
+    if not backtest_configs:
+        # Fallback to hardcoded if not enough data detected
+        backtest_configs = [
+            {"train_seasons": [2022, 2023, 2024], "test_season": 2025, "window_type": "3-season"},
+            {"train_seasons": [2021, 2022, 2023], "test_season": 2024, "window_type": "3-season"},
+        ]
+
+    logger.info("Running %d backtest configurations", len(backtest_configs))
     all_results = {}
 
     for config in backtest_configs:
@@ -116,9 +154,16 @@ def run_backtests(
         result = compute_metrics(pred_home, pred_away, actual_home, actual_away, df_test)
         result["train_seasons"] = train_s
         result["test_season"]   = test_s
-        all_results[str(test_s)] = result
+        result["window_type"]   = config.get("window_type", "3-season")
 
-        logger.info("    MAE home=%.2f away=%.2f total=%.2f | ATS=%.1f%% | OU=%.1f%%",
+        # Use unique key: season + window type for 5-season configs
+        key = str(test_s)
+        if config.get("window_type") == "5-season":
+            key = f"{test_s}_5yr"
+        all_results[key] = result
+
+        logger.info("    [%s] MAE home=%.2f away=%.2f total=%.2f | ATS=%.1f%% | OU=%.1f%%",
+                    config.get("window_type", "3s"),
                     result["mae_home"], result["mae_away"], result["mae_total"],
                     result["ats_pct"] * 100, result["ou_pct"] * 100)
 

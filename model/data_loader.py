@@ -291,11 +291,17 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
          f"{BASE}/combine/combine.parquet",
          max_hours=168)
 
-    # ── 16. Vegas win totals ──────────────────────────────────────────────────
-    # nfl-data-py source: mrcaseb nfl-data repo (lines/odds CSV)
+    # ── 16. Vegas preseason win totals ───────────────────────────────────────
+    # Correct source: nflverse/nfldata (season-level preseason O/U lines)
     _get("win_totals",
-         "https://raw.githubusercontent.com/mrcaseb/nfl-data/master/data/nfl_lines_odds.csv.gz",
+         "https://raw.githubusercontent.com/nflverse/nfldata/master/data/win_totals.csv",
          fmt="csv", max_hours=168)
+
+    # ── 16b. Historical game lines (spread/total per game) ────────────────────
+    # This is the mrcaseb source — game-level lines, not preseason win totals
+    _get("game_lines",
+         "https://raw.githubusercontent.com/mrcaseb/nfl-data/master/data/nfl_lines_odds.csv.gz",
+         fmt="csv", max_hours=24)
 
     # ── 17. Scoring lines / spreads ───────────────────────────────────────────
     _get("scoring_lines",

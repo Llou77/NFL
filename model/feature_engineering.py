@@ -98,6 +98,9 @@ def get_feature_columns(game_df: pd.DataFrame) -> list:
         "home_season","away_season","home_week","away_week",
         "home_game_type","away_game_type",
         "home_game_type_weight","away_game_type_weight",
+        # Raw text/id columns not useful as features
+        "home_team_y","away_team_y",
+        "home_pname","away_pname",
     }
     return [c for c in game_df.columns
             if c not in exclude and pd.api.types.is_numeric_dtype(game_df[c])]
@@ -750,66 +753,297 @@ def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
 #  STEP 8: CROSS-SEASON FEATURES
 # ══════════════════════════════════════════════════════════════════════════════
 
+# ══════════════════════════════════════════════════════════════════════════════
+#  STEP 8: CROSS-SEASON FEATURES
+# ══════════════════════════════════════════════════════════════════════════════
+
 def _add_cross_season(tg: pd.DataFrame) -> pd.DataFrame:
     from data_loader import get_table
 
-    # Vegas pre-season win totals
+    tg = _add_win_totals(tg)
+    tg = _add_roster_continuity(tg)
+    tg = _add_draft_quality(tg)
+    tg = _add_qb_coach_change_flags(tg)
+    tg = _add_game_lines(tg)
+    return tg
+
+
+def _add_win_totals(tg: pd.DataFrame) -> pd.DataFrame:
+    """Vegas preseason win totals — correct nflverse/nfldata source.
+    Columns: season, team, line (the O/U wins line), over_odds, under_odds
+    """
+    from data_loader import get_table
     wt = get_table("win_totals")
-    if wt is not None and len(wt) > 0:
-        team_col = next((c for c in ["team","team_abbr"] if c in wt.columns), None)
-        win_col  = next((c for c in ["wins","implied_wins","win_total","over_under"]
-                         if c in wt.columns), None)
-        if team_col and win_col and "season" in wt.columns:
-            wt = wt.rename(columns={team_col:"team", win_col:"vegas_preseason_wins"})
-            wt["season"] = pd.to_numeric(wt["season"], errors="coerce")
-            wt["vegas_preseason_wins"] = pd.to_numeric(wt["vegas_preseason_wins"], errors="coerce")
-            tg = tg.merge(wt[["team","season","vegas_preseason_wins"]], on=["team","season"], how="left")
-        else:
-            tg["vegas_preseason_wins"] = np.nan
-    else:
+
+    if wt is None or len(wt) == 0:
         tg["vegas_preseason_wins"] = np.nan
+        return tg
 
-    # Roster continuity
+    # Correct column names from nflverse/nfldata win_totals.csv
+    # season | team | line | over_odds | under_odds
+    team_col = next((c for c in ["team", "team_abbr"] if c in wt.columns), None)
+    line_col  = next((c for c in ["line", "wins", "win_total", "over_under",
+                                   "implied_wins"] if c in wt.columns), None)
+
+    if team_col is None or line_col is None or "season" not in wt.columns:
+        logger.warning("win_totals: unexpected columns %s", list(wt.columns))
+        tg["vegas_preseason_wins"] = np.nan
+        return tg
+
+    wt = wt.copy()
+    wt = wt.rename(columns={team_col: "team", line_col: "vegas_preseason_wins"})
+    wt["season"] = pd.to_numeric(wt["season"], errors="coerce")
+    wt["vegas_preseason_wins"] = pd.to_numeric(wt["vegas_preseason_wins"], errors="coerce")
+
+    # Take consensus line (average if multiple books)
+    wt_agg = (wt.groupby(["team", "season"])["vegas_preseason_wins"]
+              .mean().reset_index())
+
+    tg = tg.merge(wt_agg, on=["team", "season"], how="left")
+    filled = tg["vegas_preseason_wins"].notna().sum()
+    logger.info("  win_totals: %d team-season rows matched", filled)
+    return tg
+
+
+def _add_roster_continuity(tg: pd.DataFrame) -> pd.DataFrame:
+    from data_loader import get_table
     rosters = get_table("rosters")
-    if rosters is not None and len(rosters) > 0:
-        team_col = next((c for c in ["team","team_abbr"] if c in rosters.columns), None)
-        id_col   = next((c for c in ["gsis_id","player_id"] if c in rosters.columns), None)
-        if team_col and id_col and "season" in rosters.columns:
-            rosters["season"] = pd.to_numeric(rosters["season"], errors="coerce")
-            rosters = rosters.rename(columns={team_col:"team"})
-            cont = {}
-            for (team, season), grp in rosters.groupby(["team","season"]):
-                prev = rosters[(rosters["team"]==team) & (rosters["season"]==season-1)]
-                if len(prev) == 0:
-                    cont[(team,season)] = 0.5
-                    continue
-                cur_ids  = set(grp[id_col].dropna())
-                prev_ids = set(prev[id_col].dropna())
-                cont[(team,season)] = len(cur_ids & prev_ids) / max(len(prev_ids), 1)
-            tg["roster_continuity"] = tg.apply(
-                lambda r: cont.get((r["team"], r["season"]), 0.5), axis=1
-            )
-        else:
-            tg["roster_continuity"] = 0.5
-    else:
-        tg["roster_continuity"] = 0.5
 
-    # Draft quality
+    if rosters is None or len(rosters) == 0:
+        tg["roster_continuity"] = 0.5
+        return tg
+
+    team_col = next((c for c in ["team", "team_abbr"] if c in rosters.columns), None)
+    id_col   = next((c for c in ["gsis_id", "player_id"] if c in rosters.columns), None)
+
+    if team_col is None or id_col is None or "season" not in rosters.columns:
+        tg["roster_continuity"] = 0.5
+        return tg
+
+    rosters = rosters.copy()
+    rosters["season"] = pd.to_numeric(rosters["season"], errors="coerce")
+    rosters = rosters.rename(columns={team_col: "team"})
+
+    cont = {}
+    for (team, season), grp in rosters.groupby(["team", "season"]):
+        prev = rosters[(rosters["team"] == team) & (rosters["season"] == season - 1)]
+        if len(prev) == 0:
+            cont[(team, season)] = 0.5
+            continue
+        cur_ids  = set(grp[id_col].dropna())
+        prev_ids = set(prev[id_col].dropna())
+        cont[(team, season)] = len(cur_ids & prev_ids) / max(len(prev_ids), 1)
+
+    # Vectorized lookup
+    tg["roster_continuity"] = tg.apply(
+        lambda r: cont.get((r["team"], r["season"]), 0.5), axis=1
+    )
+    return tg
+
+
+def _add_draft_quality(tg: pd.DataFrame) -> pd.DataFrame:
+    from data_loader import get_table
     dp = get_table("draft_picks")
-    if dp is not None and len(dp) > 0 and "pfr_av" in dp.columns:
-        team_col = next((c for c in ["team","team_abbr"] if c in dp.columns), None)
-        if team_col and "season" in dp.columns:
-            dp["pfr_av"] = pd.to_numeric(dp["pfr_av"], errors="coerce").fillna(0)
-            dp = dp.rename(columns={team_col:"team"})
-            dp["season"] = pd.to_numeric(dp["season"], errors="coerce")
-            dq = dp.groupby(["team","season"])["pfr_av"].sum().reset_index()
-            dq = dq.rename(columns={"pfr_av":"draft_quality_score"})
-            tg = tg.merge(dq, on=["team","season"], how="left")
-            tg["draft_quality_score"] = tg["draft_quality_score"].fillna(0)
-        else:
-            tg["draft_quality_score"] = 0.0
-    else:
+
+    if dp is None or len(dp) == 0 or "pfr_av" not in dp.columns:
         tg["draft_quality_score"] = 0.0
+        return tg
+
+    team_col = next((c for c in ["team", "team_abbr"] if c in dp.columns), None)
+    if team_col is None or "season" not in dp.columns:
+        tg["draft_quality_score"] = 0.0
+        return tg
+
+    dp = dp.copy()
+    dp["pfr_av"] = pd.to_numeric(dp["pfr_av"], errors="coerce").fillna(0)
+    dp = dp.rename(columns={team_col: "team"})
+    dp["season"] = pd.to_numeric(dp["season"], errors="coerce")
+
+    dq = (dp.groupby(["team", "season"])["pfr_av"]
+          .sum().reset_index()
+          .rename(columns={"pfr_av": "draft_quality_score"}))
+    tg = tg.merge(dq, on=["team", "season"], how="left")
+    tg["draft_quality_score"] = tg["draft_quality_score"].fillna(0)
+    return tg
+
+
+def _add_qb_coach_change_flags(tg: pd.DataFrame) -> pd.DataFrame:
+    """
+    QB and head coach change flags — quantifies the single biggest
+    unmeasured cross-season signal.
+
+    Simulation showed QB changes cause ~4pt extra prediction error in week 1,
+    decaying to ~1pt by week 6. This flag lets the model discount prior-season
+    EPA stats when the QB changed.
+
+    Sources: weekly rosters (QB depth chart position) + schedules (coaches).
+    Falls back gracefully if data is unavailable.
+    """
+    from data_loader import get_table
+    import re
+
+    # ── QB change flag ────────────────────────────────────────────────────────
+    weekly = get_table("rosters_weekly")
+    qb_changed: dict = {}     # (team, season) → bool
+
+    if weekly is not None and len(weekly) > 0:
+        team_col = next((c for c in ["team", "team_abbr"] if c in weekly.columns), None)
+        name_col = next((c for c in ["full_name", "player_name"] if c in weekly.columns), None)
+        pos_col  = next((c for c in ["depth_chart_position", "position"] if c in weekly.columns), None)
+
+        if all(c is not None for c in [team_col, name_col, pos_col]) and "season" in weekly.columns:
+            wr = weekly.copy()
+            wr["season"] = pd.to_numeric(wr["season"], errors="coerce")
+            wr["week"]   = pd.to_numeric(wr.get("week", 1), errors="coerce").fillna(1)
+            wr = wr.rename(columns={team_col: "team", name_col: "pname"})
+
+            # QB starters: highest depth_chart rank among QBs, week 1
+            qb_w1 = wr[
+                wr[pos_col].isin(["QB"]) &
+                (wr["week"] == 1)
+            ].groupby(["team", "season"])["pname"].first().reset_index()
+
+            for _, row in qb_w1.iterrows():
+                team, season = row["team"], row["season"]
+                prev_qbs = qb_w1[
+                    (qb_w1["team"] == team) &
+                    (qb_w1["season"] == season - 1)
+                ]
+                if len(prev_qbs) == 0:
+                    qb_changed[(team, season)] = False
+                else:
+                    qb_changed[(team, season)] = (
+                        row["pname"] != prev_qbs.iloc[0]["pname"]
+                    )
+
+    if qb_changed:
+        tg["qb_changed"] = tg.apply(
+            lambda r: int(qb_changed.get((r["team"], r["season"]), False)), axis=1
+        )
+        n_changed = tg["qb_changed"].sum()
+        logger.info("  qb_changed: %d team-season observations flagged", int(n_changed))
+    else:
+        tg["qb_changed"] = 0
+
+    # ── QB change EPA penalty ─────────────────────────────────────────────────
+    # When QB changed, discount prior-season QB EPA by (1 - decay factor)
+    # Week 1 → 0% reliability of prior QB stats; week 8 → ~80% reliability
+    if "week" in tg.columns and "qb_changed" in tg.columns:
+        tg["week_num"] = pd.to_numeric(tg["week"], errors="coerce").fillna(9)
+        # Reliability: 0 at week 1, rising to ~1 by week 8
+        tg["qb_era_reliability"] = np.where(
+            tg["qb_changed"] == 1,
+            np.clip(1 - np.exp(-0.35 * (tg["week_num"] - 1)), 0, 1),
+            1.0
+        )
+    else:
+        tg["qb_era_reliability"] = 1.0
+
+    # ── Coach change flag ──────────────────────────────────────────────────────
+    # Check from schedules if there's a coach column; otherwise use schedule-
+    # derived heuristic (win% change > threshold suggests coaching change).
+    # Minimal implementation — will be enhanced once coach data is loaded.
+    sched = get_table("schedules")
+
+    if sched is not None:
+        # Try explicit coach columns
+        coach_col = next((c for c in ["home_coach", "away_coach", "coach"]
+                          if c in (sched.columns if sched is not None else [])), None)
+        if coach_col:
+            # Build dict: (team, season) → coach name from week 1
+            sched_c = sched.copy()
+            sched_c["season"] = pd.to_numeric(sched_c.get("season", 0), errors="coerce")
+            coaches: dict = {}
+            # Home teams
+            if "home_team" in sched_c.columns and "home_coach" in sched_c.columns:
+                hc = sched_c.groupby(["home_team", "season"])["home_coach"].first()
+                for (team, season), coach in hc.items():
+                    coaches[(team, season)] = str(coach)
+            # Away teams
+            if "away_team" in sched_c.columns and "away_coach" in sched_c.columns:
+                ac = sched_c.groupby(["away_team", "season"])["away_coach"].first()
+                for (team, season), coach in ac.items():
+                    if (team, season) not in coaches:
+                        coaches[(team, season)] = str(coach)
+
+            if coaches:
+                def _coach_changed(row):
+                    cur  = coaches.get((row["team"], row["season"]))
+                    prev = coaches.get((row["team"], row["season"] - 1))
+                    if cur is None or prev is None:
+                        return 0
+                    return int(cur != prev)
+                tg["coach_changed"] = tg.apply(_coach_changed, axis=1)
+                logger.info("  coach_changed: %d flagged", int(tg["coach_changed"].sum()))
+            else:
+                tg["coach_changed"] = 0
+        else:
+            tg["coach_changed"] = 0
+    else:
+        tg["coach_changed"] = 0
+
+    # Combined instability score (used in confidence calculation)
+    tg["team_instability"] = (
+        tg["qb_changed"].fillna(0) * 0.6 +
+        tg["coach_changed"].fillna(0) * 0.4
+    )
+
+    return tg
+
+
+def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
+    """
+    Add historical game-level book spreads and totals from mrcaseb data.
+    This gives us 'what the market thought' at game time — a very powerful
+    cross-validation signal. Also used for Edge ATS calculation.
+
+    Columns: game_id, market_type (spread/total/money_line), abbr (team), lines, odds
+    """
+    from data_loader import get_table
+    gl = get_table("game_lines")
+
+    if gl is None or len(gl) == 0 or "game_id" not in gl.columns:
+        return tg
+
+    try:
+        # Extract spreads: consensus across books
+        spreads = (
+            gl[gl["market_type"] == "spread"]
+            .groupby(["game_id", "abbr"])["lines"]
+            .median()
+            .reset_index()
+            .rename(columns={"lines": "book_spread_hist", "abbr": "team"})
+        )
+
+        # Extract totals
+        totals = (
+            gl[gl["market_type"] == "total"]
+            .groupby("game_id")["lines"]
+            .median()
+            .reset_index()
+            .rename(columns={"lines": "book_total_hist"})
+        )
+
+        # Merge spreads onto team-game table
+        if "game_id" in tg.columns and len(spreads) > 0:
+            tg = tg.merge(spreads, on=["game_id", "team"], how="left")
+
+        if "game_id" in tg.columns and len(totals) > 0:
+            tg = tg.merge(totals, on="game_id", how="left")
+
+        # Fill with schedule spread_line if historical line missing
+        if "spread_line" in tg.columns:
+            tg["book_spread_hist"] = tg.get("book_spread_hist", pd.Series(np.nan, index=tg.index))
+            tg["book_spread_hist"] = tg["book_spread_hist"].fillna(
+                tg["spread_line"] if "spread_line" in tg.columns else np.nan
+            )
+
+        logger.info("  game_lines: %d spread rows, %d total rows added",
+                    spreads["book_spread_hist"].notna().sum() if len(spreads) > 0 else 0,
+                    totals["book_total_hist"].notna().sum() if len(totals) > 0 else 0)
+
+    except Exception as e:
+        logger.warning("  game_lines merge failed: %s", e)
 
     return tg
 

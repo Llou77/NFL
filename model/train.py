@@ -355,9 +355,9 @@ def _train_meta_learner(X_sc, y_home, y_away, sw,
     meta_a = Ridge(alpha=1.0).fit(oof_X_a, oof_y_a)
 
     # ── Variance calibration ──────────────────────────────────────────────
-    # Ridge meta-learner heavily regresses predictions toward the mean,
-    # collapsing spread std to ~1-2 pts (real NFL: ~12 pts).
-    # Fix: fit a linear rescaling on OOF predictions to match target variance.
+    # Ridge meta-learner collapses spread std. We rescale to match actual NFL
+    # spread distribution. Scale is either from Bayesian optimization or
+    # computed automatically from OOF residuals.
     oof_pred_h = meta_h.predict(oof_X_h)
     oof_pred_a = meta_a.predict(oof_X_a)
     oof_spread_pred   = oof_pred_h - oof_pred_a
@@ -366,15 +366,23 @@ def _train_meta_learner(X_sc, y_home, y_away, sw,
     pred_std   = np.std(oof_spread_pred)
     actual_std = np.std(oof_spread_actual)
 
-    # Scale factor: expand predictions to match actual variance
-    # Capped at 3× to prevent overcorrection on small training sets
-    if pred_std > 0.5:
-        spread_scale = float(np.clip(actual_std / pred_std, 1.0, 3.0))
+    # Check if Bayesian optimizer already found a better scale
+    from bayesian_optimizer import load_weights
+    opt_weights = load_weights()
+    if "variance_scale" in opt_weights and opt_weights["variance_scale"] > 1.0:
+        spread_scale = float(np.clip(opt_weights["variance_scale"], 1.0, 3.0))
+        logger.info("  Variance calibration: using Bayesian-optimised scale=%.3f", spread_scale)
+    elif pred_std > 0.5:
+        # Simulation showed scale ~1.5-2.0 is optimal; data-driven auto-scale
+        data_scale = actual_std / pred_std
+        # Blend: 70% data-driven, 30% simulation prior of 1.8
+        spread_scale = float(np.clip(0.7 * data_scale + 0.3 * 1.8, 1.0, 3.0))
+        logger.info("  Variance calibration: pred_std=%.2f → actual_std=%.2f → scale=%.3f",
+                    pred_std, actual_std, spread_scale)
     else:
-        spread_scale = 1.5   # safe default if predictions are degenerate
-
-    logger.info("  Variance calibration: pred_spread_std=%.2f → target=%.2f → scale=%.3f",
-                pred_std, actual_std, spread_scale)
+        spread_scale = 1.8   # safe default from simulation
+        logger.info("  Variance calibration: degenerate predictions, using default scale=%.3f",
+                    spread_scale)
 
     # Save calibration parameters
     calib = {
@@ -383,6 +391,8 @@ def _train_meta_learner(X_sc, y_home, y_away, sw,
         "home_mean_actual":  float(np.mean(oof_y_h)),
         "away_mean_pred":    float(np.mean(oof_pred_a)),
         "away_mean_actual":  float(np.mean(oof_y_a)),
+        "pred_spread_std":   float(pred_std),
+        "actual_spread_std": float(actual_std),
     }
     with open(MODEL_DIR / "calibration.json", "w") as f:
         json.dump(calib, f, indent=2)

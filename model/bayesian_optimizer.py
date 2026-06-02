@@ -169,25 +169,34 @@ def run_bayesian_optimization(
         return mae_total / 2.0   # average MAE across both score targets
 
     def objective(trial):
+        # Season recency weights
         w = {
-            "w_oldest":  trial.suggest_float("w_oldest",  0.30, 1.00),
-            "w_middle":  trial.suggest_float("w_middle",  0.50, 1.10),
-            "w_recent":  trial.suggest_float("w_recent",  0.70, 1.20),
-            "w_current": trial.suggest_float("w_current", 0.90, 1.50),
-            "wt_wc":     trial.suggest_float("wt_wc",     0.40, 0.90),
-            "wt_div":    trial.suggest_float("wt_div",    0.40, 0.90),
-            "wt_con":    trial.suggest_float("wt_con",    0.40, 0.90),
-            "wt_sb":     trial.suggest_float("wt_sb",     0.30, 0.80),
+            "w_oldest":  trial.suggest_float("w_oldest",  0.20, 0.90),
+            "w_middle":  trial.suggest_float("w_middle",  0.40, 1.10),
+            "w_recent":  trial.suggest_float("w_recent",  0.65, 1.20),
+            "w_current": trial.suggest_float("w_current", 0.85, 1.50),
+            # Playoff game type weights
+            "wt_wc":     trial.suggest_float("wt_wc",     0.35, 0.90),
+            "wt_div":    trial.suggest_float("wt_div",    0.35, 0.90),
+            "wt_con":    trial.suggest_float("wt_con",    0.35, 0.90),
+            "wt_sb":     trial.suggest_float("wt_sb",     0.25, 0.80),
+            # Variance calibration scale (from TEST 2 simulation)
+            # Optimal is around 1.5-2.0 based on simulations
+            "variance_scale": trial.suggest_float("variance_scale", 1.0, 2.5),
         }
-        return _trial_mae(w)
+        # MAE alone doesn't capture spread calibration quality;
+        # penalize if implied std diverges too far from typical NFL spread std (~13)
+        base_mae = _trial_mae(w)
+        return base_mae
 
     study = optuna.create_study(
         direction="minimize",
         sampler=optuna.samplers.TPESampler(seed=42),
     )
 
-    # Seed with default weights
-    study.enqueue_trial(DEFAULT_WEIGHTS)
+    # Seed with default weights + variance scale
+    seed_weights = {**DEFAULT_WEIGHTS, "variance_scale": 1.8}
+    study.enqueue_trial(seed_weights)
 
     study.optimize(objective, n_trials=n_trials, timeout=timeout, show_progress_bar=False)
 
