@@ -561,22 +561,33 @@ function renderBacktest(){
     return;
   }
 
-  const seasons=Object.keys(btD).sort((a,b)=>+b-+a); // newest first
+  const seasons=Object.keys(btD).sort((a,b)=>+b-+a);
 
   // Cards
   document.getElementById('btCards').innerHTML=seasons.map(s=>{
     const r=btD[s];
-    const atsGood=r.ats_pct>0.55;
     const ouGood=r.ou_pct>0.55;
     const maePts=r.mae_total.toFixed(1);
     const maeSpread=r.mae_spread.toFixed(1);
+    const spreadRatio=r.pred_spread_std&&r.actual_spread_std
+      ?(r.pred_spread_std/r.actual_spread_std*100).toFixed(0):null;
+    const hasEdge=r.edge_ats_wins!=null;
+    const edgePct=hasEdge?(r.edge_ats_pct*100).toFixed(1):null;
+    const edgeN=hasEdge?r.edge_ats_n_games:0;
+    const edgeRecord=hasEdge?`${r.edge_ats_wins}-${r.edge_ats_losses}`:'—';
+    const edgeGood=hasEdge&&r.edge_ats_pct>0.55;
     return `<div class="bt-card">
       <div class="bt-season">${s} Season Backtest</div>
       <h3>Trained on ${r.train_seasons?.join(', ')||'prior seasons'} → Tested on ${s}</h3>
       <div class="bt-row"><span class="lbl">Games tested</span><span class="val">${r.n_games}</span></div>
       <div class="bt-row"><span class="lbl">Score MAE (total)</span><span class="val ${r.mae_total<8?'good':'warn'}">±${maePts} pts</span></div>
       <div class="bt-row"><span class="lbl">Spread MAE</span><span class="val ${r.mae_spread<5?'good':'warn'}">±${maeSpread} pts</span></div>
-      <div class="bt-row"><span class="lbl">ATS hit rate</span><span class="val ${atsGood?'good':'warn'}">${(r.ats_pct*100).toFixed(1)}% (${r.ats_wins}-${r.ats_losses})</span></div>
+      ${spreadRatio?`<div class="bt-row"><span class="lbl">Spread variance coverage</span><span class="val ${spreadRatio>80?'good':'warn'}">${spreadRatio}% of actual</span></div>`:''}
+      <div class="bt-row" style="border-top:1px solid rgba(255,255,255,.06);margin-top:5px;padding-top:5px">
+        <span class="lbl" style="font-style:italic" title="Did model pick the correct side? ~90%+ expected — this is not a betting metric, it just measures spread correlation.">Directional accuracy ⓘ</span>
+        <span class="val" style="color:var(--muted)">${(r.ats_pct*100).toFixed(1)}% (${r.ats_wins}-${r.ats_losses})</span>
+      </div>
+      ${hasEdge?`<div class="bt-row"><span class="lbl" style="color:var(--accent)" title="ATS win rate ONLY on games where model disagreed with Vegas by >3 pts. This is the real betting edge signal. >55% = edge exists. Break-even = 52.4% with standard vig.">Edge ATS (>3pt gap) ⓘ</span><span class="val ${edgeGood?'good':'warn'}">${edgePct}% (${edgeRecord}) n=${edgeN}</span></div>`:''}
       <div class="bt-row"><span class="lbl">Over/Under hit rate</span><span class="val ${ouGood?'good':'warn'}">${(r.ou_pct*100).toFixed(1)}% (${r.ou_wins}-${r.ou_losses})</span></div>
       <div class="bt-row"><span class="lbl">R² (total score)</span><span class="val ${r.r2_total>0.5?'good':'warn'}">${r.r2_total.toFixed(3)}</span></div>
     </div>`;
@@ -590,13 +601,16 @@ function renderBacktest(){
     options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7280'},grid:{display:false}},y:{ticks:{color:'#6b7280'},grid:{color:'rgba(255,255,255,.04)'},title:{display:true,text:'Points',color:'#6b7280'}}}}
   });
 
-  // ATS chart
-  const atsVals=seasons.map(s=>+(btD[s].ats_pct*100).toFixed(1));
-  new Chart(document.getElementById('btAts').getContext('2d'),{
-    type:'bar',
-    data:{labels:seasons.map(s=>s+' Season'),datasets:[{label:'ATS %',data:atsVals,backgroundColor:atsVals.map(v=>v>55?'rgba(34,197,94,.4)':'rgba(234,179,8,.4)'),borderColor:atsVals.map(v=>v>55?'#22c55e':'#eab308'),borderWidth:1}]},
-    options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7280'},grid:{display:false}},y:{ticks:{color:'#6b7280'},grid:{color:'rgba(255,255,255,.04)'},min:40,title:{display:true,text:'Hit rate %',color:'#6b7280'}}}}
-  });
+  // Edge ATS chart (the real metric)
+  const edgeVals=seasons.map(s=>btD[s].edge_ats_pct!=null?+(btD[s].edge_ats_pct*100).toFixed(1):null).filter(v=>v!==null);
+  const edgeLabels=seasons.filter(s=>btD[s].edge_ats_pct!=null).map(s=>s+' Season');
+  if(edgeVals.length){
+    new Chart(document.getElementById('btAts').getContext('2d'),{
+      type:'bar',
+      data:{labels:edgeLabels,datasets:[{label:'Edge ATS %',data:edgeVals,backgroundColor:edgeVals.map(v=>v>55?'rgba(34,197,94,.4)':'rgba(234,179,8,.4)'),borderColor:edgeVals.map(v=>v>55?'#22c55e':'#eab308'),borderWidth:1}]},
+      options:{responsive:true,plugins:{legend:{display:false},title:{display:true,text:'Edge ATS — only games where model disagreed with Vegas >3 pts',color:'#6b7280',font:{size:11}}},scales:{x:{ticks:{color:'#6b7280'},grid:{display:false}},y:{ticks:{color:'#6b7280'},grid:{color:'rgba(255,255,255,.04)'},min:40,max:70,title:{display:true,text:'Hit rate %',color:'#6b7280'}}}}
+    });
+  }
 
   // Game type breakdown
   const firstSeason=seasons[0];
