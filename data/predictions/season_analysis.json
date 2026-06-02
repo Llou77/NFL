@@ -1,0 +1,144 @@
+{
+  "per_season": {
+    "2023": {
+      "n_games": 285,
+      "cv_mae_total": 7.7,
+      "cv_mae_spread": 4.769,
+      "model_type": "xgboost",
+      "top_features": {
+        "away_off_yac_per_rec": 0.00499,
+        "home_week_norm": 0.0045,
+        "away_off_epa_per_play": 0.0045,
+        "away_vegas_implied_power": 0.0041,
+        "away_pass_vs_home_def_r8": 0.00377,
+        "away_turnovers_committed_r4": 0.00374,
+        "away_off_yards_per_play": 0.00365,
+        "home_def_explosive_allowed": 0.00364,
+        "away_off_pass_epa_r4": 0.00363,
+        "away_elo_pre_game": 0.00362,
+        "away_off_rush_success": 0.00359,
+        "away_def_rz_success_allowed": 0.00358,
+        "away_n_plays_off": 0.00354,
+        "home_fumbles_lost_r8": 0.00349,
+        "home_def_pass_epa": 0.00348,
+        "away_off_rz_td_rate_r16": 0.00343,
+        "away_n_plays_def": 0.00342,
+        "away_team_score_r8": 0.00338,
+        "away_off_success_rate_r4": 0.00334,
+        "home_off_explosive_play_rate_r16": 0.00334
+      },
+      "season_stats": {
+        "total_mean": 43.8,
+        "total_std": 13.68,
+        "spread_std": 14.38,
+        "home_win_pct": 0.565
+      }
+    },
+    "2024": {
+      "n_games": 285,
+      "cv_mae_total": 7.121,
+      "cv_mae_spread": 4.822,
+      "model_type": "xgboost",
+      "top_features": {
+        "away_off_yac_per_rec": 0.00784,
+        "home_week_norm": 0.00478,
+        "away_off_rz_td_rate": 0.00465,
+        "away_off_third_down_rate": 0.0045,
+        "away_off_rush_success": 0.00425,
+        "away_off_epa_per_play": 0.0041,
+        "home_def_epa_per_play": 0.00407,
+        "away_elo_pre_game": 0.00406,
+        "away_off_yards_per_play": 0.00353,
+        "away_off_rz_success_rate": 0.00346,
+        "home_qb_dakota_r16": 0.00345,
+        "home_def_rz_td_allowed": 0.00342,
+        "away_fumbles_lost_r8": 0.00342,
+        "away_ngs_pass_aggressiveness": 0.0034,
+        "home_def_rz_success_allowed": 0.00334,
+        "away_qb_qb_epa_per_att_r8": 0.00334,
+        "away_def_epa_per_play": 0.00334,
+        "away_fumbles_lost": 0.00333,
+        "away_def_pass_epa": 0.00331,
+        "home_interceptions_r16": 0.00329
+      },
+      "season_stats": {
+        "total_mean": 46.02,
+        "total_std": 13.18,
+        "spread_std": 14.44,
+        "home_win_pct": 0.547
+      }
+    },
+    "2025": {
+      "n_games": 285,
+      "cv_mae_total": 7.118,
+      "cv_mae_spread": 4.854,
+      "model_type": "xgboost",
+      "top_features": {
+        "home_season_half": 0.00602,
+        "away_off_explosive_play_rate": 0.00533,
+        "home_ngs_rush_avg_time_to_los": 0.00519,
+        "home_def_epa_per_play": 0.00448,
+        "home_ngs_recv_catch_percentage": 0.00429,
+        "home_ngs_rush_rush_yards_over_expected_per_att": 0.00403,
+        "away_n_plays_off": 0.00397,
+        "away_off_rush_yards_per_att_r16": 0.00371,
+        "away_week_norm": 0.00369,
+        "away_def_pressure_rate_r8": 0.00367,
+        "away_off_rz_td_rate": 0.00361,
+        "home_fumbles_lost": 0.00358,
+        "away_def_pass_epa_r4": 0.00356,
+        "home_score_diff_r8": 0.00355,
+        "home_score_diff_r16": 0.00354,
+        "away_def_explosive_allowed_r8": 0.00354,
+        "away_def_pass_epa_r16": 0.00353,
+        "home_off_wpa_r16": 0.00353,
+        "home_turnovers_forced_r8": 0.00351,
+        "away_off_air_yards_per_att_r4": 0.00351
+      },
+      "season_stats": {
+        "total_mean": 45.96,
+        "total_std": 13.82,
+        "spread_std": 14.13,
+        "home_win_pct": 0.533
+      }
+    }
+  },
+  "trends": {
+    "mae_by_season": {
+      "2023": 7.7,
+      "2024": 7.121,
+      "2025": 7.118
+    },
+    "mae_trend": "improving",
+    "mae_slope_per_season": -0.291,
+    "consistently_important_features": [],
+    "total_scoring_by_season": {
+      "2023": 43.8,
+      "2024": 46.02,
+      "2025": 45.96
+    },
+    "total_scoring_slope": 1.08,
+    "spread_variance_by_season": {
+      "2023": 14.38,
+      "2024": 14.44,
+      "2025": 14.13
+    },
+    "home_win_pct_by_season": {
+      "2023": 0.565,
+      "2024": 0.547,
+      "2025": 0.533
+    },
+    "home_win_slope": -0.016,
+    "interpretation": {
+      "total_scoring": "trending up",
+      "home_advantage": "declining",
+      "model_difficulty": "improving"
+    }
+  },
+  "n_seasons": 3,
+  "seasons": [
+    "2023",
+    "2024",
+    "2025"
+  ]
+}
