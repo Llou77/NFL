@@ -166,8 +166,22 @@ def compute_metrics(
     pred_spread_std  = float(np.std(pred_spread))
     actual_spread_std = float(np.std(actual_spread))
 
-    # ── ATS (corrected logic using vectorized pandas) ──────────────────────
-    ats_wins = ats_losses = ats_pushes = 0
+    # ── ATS (two separate metrics) ─────────────────────────────────────────
+    #
+    # METRIC 1 — Directional Accuracy (what we currently compute)
+    #   "Did the model correctly predict which side covered?"
+    #   This will be ~90%+ because model spread correlates with actual spread.
+    #   It has NO betting value — you're just agreeing with the line direction.
+    #
+    # METRIC 2 — Disagreement ATS (the real betting metric)
+    #   Only count games where model meaningfully DISAGREES with Vegas line.
+    #   i.e. abs(model_spread - book_spread) > edge_threshold (e.g. 3 pts)
+    #   THESE games measure actual edge. ~50% = no edge. >55% = real edge.
+    #
+    EDGE_THRESHOLD = 3.0   # minimum pts model must disagree with line to count
+
+    dir_wins = dir_losses = dir_pushes = 0
+    edge_wins = edge_losses = edge_pushes = 0
 
     if df is not None and "spread_line" in df.columns:
         df_aligned = df.reset_index(drop=True)
@@ -175,7 +189,7 @@ def compute_metrics(
         valid = book_spread.notna()
 
         if valid.any():
-            bs  = book_spread[valid].values   # book spread (home perspective)
+            bs  = book_spread[valid].values
             ph  = pred_home[valid]
             pa  = pred_away[valid]
             ah  = actual_home[valid]
@@ -183,32 +197,42 @@ def compute_metrics(
 
             actual_margin = ah - aa
             model_margin  = ph - pa
+            threshold     = -bs   # home covers if actual_margin > threshold
 
-            # threshold: home covers if actual_margin > -book_spread
-            threshold = -bs
+            model_pick_home = model_margin > threshold
+            model_pick_away = model_margin < threshold
+            home_covered    = actual_margin > threshold
+            away_covered    = actual_margin < threshold
+            push            = actual_margin == threshold
 
-            # Model pick: which side does the model favor?
-            model_pick_home = model_margin > threshold     # True = model takes home
-            model_pick_away = model_margin < threshold     # True = model takes away
+            ats_win_arr  = (model_pick_home & home_covered) | (model_pick_away & away_covered)
+            ats_loss_arr = (model_pick_home & away_covered) | (model_pick_away & home_covered)
 
-            # Actual outcome
-            home_covered  = actual_margin > threshold
-            away_covered  = actual_margin < threshold
-            push          = actual_margin == threshold
+            dir_wins   = int((ats_win_arr  & ~push).sum())
+            dir_losses = int((ats_loss_arr & ~push).sum())
+            dir_pushes = int(push.sum())
 
-            # ATS result
-            ats_win_arr  = ((model_pick_home & home_covered) |
-                            (model_pick_away & away_covered))
-            ats_loss_arr = ((model_pick_home & away_covered) |
-                            (model_pick_away & home_covered))
-            ats_push_arr = push
+            # Disagreement filter: model must differ from book by > threshold
+            model_edge = np.abs(model_margin - (-bs))   # model vs book spread gap
+            disagrees  = model_edge > EDGE_THRESHOLD
 
-            ats_wins   = int(ats_win_arr.sum())
-            ats_losses = int(ats_loss_arr.sum())
-            ats_pushes = int(ats_push_arr.sum())
+            edge_win_arr  = ats_win_arr  & disagrees
+            edge_loss_arr = ats_loss_arr & disagrees
+            edge_push_arr = push         & disagrees
 
-    ats_total = ats_wins + ats_losses + ats_pushes
-    ats_pct   = ats_wins / max(ats_wins + ats_losses, 1)
+            edge_wins   = int((edge_win_arr  & ~push).sum())
+            edge_losses = int((edge_loss_arr & ~push).sum())
+            edge_pushes = int(edge_push_arr.sum())
+
+    dir_pct  = dir_wins  / max(dir_wins  + dir_losses,  1)
+    edge_pct = edge_wins / max(edge_wins + edge_losses, 1)
+    n_edge_games = edge_wins + edge_losses + edge_pushes
+
+    # Keep ats_wins/ats_pct as directional (for compatibility) but add edge metrics
+    ats_wins   = dir_wins
+    ats_losses = dir_losses
+    ats_pushes = dir_pushes
+    ats_pct    = dir_pct
 
     # ── Over/Under ─────────────────────────────────────────────────────────
     ou_wins = ou_losses = ou_pushes = 0
@@ -242,10 +266,17 @@ def compute_metrics(
         "mae_away":          round(mae_away,   3),
         "mae_total":         round(mae_total,  3),
         "mae_spread":        round(mae_spread, 3),
+        # Directional ATS: did model pick correct side? (~90% due to spread correlation)
         "ats_wins":          ats_wins,
         "ats_losses":        ats_losses,
         "ats_pushes":        ats_pushes,
         "ats_pct":           round(ats_pct,    4),
+        # Edge ATS: only games where model disagreed with Vegas by >3 pts (REAL betting metric)
+        "edge_ats_wins":     edge_wins,
+        "edge_ats_losses":   edge_losses,
+        "edge_ats_pushes":   edge_pushes,
+        "edge_ats_pct":      round(edge_pct,   4),
+        "edge_ats_n_games":  n_edge_games,
         "ou_wins":           ou_wins,
         "ou_losses":         ou_losses,
         "ou_pushes":         ou_pushes,
