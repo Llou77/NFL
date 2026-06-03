@@ -692,12 +692,17 @@ def _add_injury_features(tg: pd.DataFrame) -> pd.DataFrame:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
-    tg = tg.sort_values(["season","week","game_date","game_id"]).copy()
-    tg["elo_pre_game"]        = np.nan
+    # Sort by season, week, then game_id (stable sort within same day)
+    # game_id is YEAR_WK_AWAY_HOME — alphabetical sort gives stable same-day ordering
+    # This prevents Elo leakage where game B on same day uses game A's updated Elo
+    tg = tg.sort_values(["season", "week", "game_id", "team"]).reset_index(drop=True)
+    tg["elo_pre_game"]          = np.nan
     tg["elo_expected_win_prob"] = np.nan
     elo: dict = {}
 
+    # Track which games have been processed (to avoid double-updating Elo on same game)
     processed: set = set()
+    prev_week  = None
     prev_season = None
 
     for idx, row in tg.iterrows():

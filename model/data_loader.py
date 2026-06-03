@@ -26,11 +26,16 @@ RAW_DIR = ROOT / "data" / "raw"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── seasons ────────────────────────────────────────────────────────────────────
-WINDOW_SEASONS   = [2023, 2024, 2025]
+WINDOW_SEASONS   = [2022, 2023, 2024, 2025]      # 4-season window (was 3)
 CURRENT_SEASON   = 2026
 ALL_SEASONS      = WINDOW_SEASONS + [CURRENT_SEASON]
-EXTENDED_SEASONS = list(range(2014, 2027))   # for H2H 10-year lookback
-BACKTEST_SEASONS = list(range(2020, 2027))
+
+# COVID 2020 season had no fans → home field advantage collapsed to ~0.1 pts
+# Including it distorts HFA features. Explicitly flagged so downstream code can handle.
+COVID_SEASONS    = [2020]
+
+EXTENDED_SEASONS = list(range(2014, 2027))       # for H2H 10-year lookback
+BACKTEST_SEASONS = [s for s in range(2020, 2027) if s not in COVID_SEASONS]
 
 # ── nflverse base URL ──────────────────────────────────────────────────────────
 BASE = "https://github.com/nflverse/nflverse-data/releases/download"

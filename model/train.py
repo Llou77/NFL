@@ -226,13 +226,15 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
     class NFLNet(nn.Module):
         def __init__(self, n_in):
             super().__init__()
+            # 128→64→32: simulation showed smaller nets generalise better
+            # on NFL dataset (~816 games). 256→128→64 was overparameterised.
             self.trunk = nn.Sequential(
-                nn.Linear(n_in, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(0.3),
-                nn.Linear(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.2),
-                nn.Linear(128, 64),  nn.ReLU(),
+                nn.Linear(n_in, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.25),
+                nn.Linear(128, 64),   nn.BatchNorm1d(64),  nn.ReLU(), nn.Dropout(0.15),
+                nn.Linear(64, 32),    nn.ReLU(),
             )
-            self.head_home = nn.Linear(64, 1)
-            self.head_away = nn.Linear(64, 1)
+            self.head_home = nn.Linear(32, 1)
+            self.head_away = nn.Linear(32, 1)
 
         def forward(self, x):
             z = self.trunk(x)
@@ -287,8 +289,8 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
 def _train_mlp_fallback(X, y_home, y_away, sw):
     from sklearn.neural_network import MLPRegressor
     logger.info("  Training sklearn MLP (fallback) …")
-    mlp_h = MLPRegressor(hidden_layer_sizes=(256, 128, 64), max_iter=300, random_state=42)
-    mlp_a = MLPRegressor(hidden_layer_sizes=(256, 128, 64), max_iter=300, random_state=43)
+    mlp_h = MLPRegressor(hidden_layer_sizes=(128, 64, 32), max_iter=400, random_state=42)
+    mlp_a = MLPRegressor(hidden_layer_sizes=(128, 64, 32), max_iter=400, random_state=43)
     mlp_h.fit(X, y_home)
     mlp_a.fit(X, y_away)
     with open(MODEL_DIR / "mlp_home.pkl", "wb") as f: pickle.dump(mlp_h, f)
@@ -504,12 +506,12 @@ def load_models() -> dict:
                     def __init__(self, n_in):
                         super().__init__()
                         self.trunk = nn.Sequential(
-                            nn.Linear(n_in, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(0.3),
-                            nn.Linear(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.2),
-                            nn.Linear(128, 64), nn.ReLU(),
+                            nn.Linear(n_in, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(0.25),
+                            nn.Linear(128, 64),   nn.BatchNorm1d(64),  nn.ReLU(), nn.Dropout(0.15),
+                            nn.Linear(64, 32),    nn.ReLU(),
                         )
-                        self.head_home = nn.Linear(64, 1)
-                        self.head_away = nn.Linear(64, 1)
+                        self.head_home = nn.Linear(32, 1)
+                        self.head_away = nn.Linear(32, 1)
                     def forward(self, x):
                         z = self.trunk(x)
                         return self.head_home(z).squeeze(-1), self.head_away(z).squeeze(-1)

@@ -87,6 +87,12 @@ def compute_sample_weights(
     sw = df["season"].map(season_weights).fillna(weights["w_oldest"]).values
     gw = df["game_type"].map(game_type_weights).fillna(1.0).values
 
+    # COVID 2020: no fans → home field advantage collapsed to ~0.1 pts
+    # Downweight heavily so the model doesn't learn aberrant HFA patterns
+    COVID_PENALTY = 0.15   # use only 15% of normal weight for 2020 games
+    covid_mask = (df["season"] == 2020).values
+    sw = np.where(covid_mask, sw * COVID_PENALTY, sw)
+
     sample_weights = sw * gw
     return sample_weights.astype(np.float32)
 
