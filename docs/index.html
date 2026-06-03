@@ -678,7 +678,7 @@ let curWeek=null,showAll=false,edgeOnly=false;
 let charts={};
 
 /* ══ INIT ════════════════════════════════════════════════════ */
-async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest Results()])}
+async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest()])}
 
 async function fj(urls){
   for(const u of urls){try{const r=await fetch(u+'?t='+Date.now());if(r.ok)return await r.json()}catch(_){}}
@@ -694,7 +694,7 @@ async function loadPredictions(){
   buildWeekSel();buildTicker();renderGames();
 }
 async function loadPerformance(){const d=await fj(['assets/performance.json']);if(d)perfD=d;renderPerf()}
-async function loadBacktest Results(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest Results()}
+async function loadBacktest(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest Results()}
 
 /* ══ TICKER ══════════════════════════════════════════════════ */
 function buildTicker(){
