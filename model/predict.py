@@ -177,10 +177,18 @@ def generate_predictions(
 def _add_edge_signals(df: pd.DataFrame) -> pd.DataFrame:
     """Compute model vs. book deltas for spread and total."""
     if "spread_line" in df.columns:
-        # spread_line is typically expressed as home team spread (neg = home favored)
+        # spread_line convention: negative = home favored (e.g. -3 means home -3)
+        #   positive = home underdog (e.g. +3.5 means home +3.5)
+        #
+        # Cover threshold: home COVERS if actual_margin > -book_spread
+        #   (e.g. book=-3 → threshold=+3 → home must win by 3+)
+        #
+        # Edge: model_spread vs. cover threshold
+        #   positive edge → model more optimistic about home than threshold → HOME value
+        #   negative edge → model less optimistic → AWAY value
         df["model_spread"] = df["predicted_spread"]
         df["book_spread"]  = df["spread_line"]
-        df["spread_edge"]  = df["model_spread"] - df["book_spread"]
+        df["spread_edge"]  = df["model_spread"] - (-df["book_spread"])   # model margin vs cover threshold
         df["spread_lean"]  = df["spread_edge"].apply(
             lambda x: "HOME" if x > 1.5 else ("AWAY" if x < -1.5 else "PUSH")
         )

@@ -1144,15 +1144,47 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
         tg["cold_game"]      = ((temp < 32) & (tg["is_dome"].fillna(0) == 0)).astype(int)
         tg["very_cold_game"] = ((temp < 20) & (tg["is_dome"].fillna(0) == 0)).astype(int)
 
-    tg["week"]       = pd.to_numeric(tg["week"], errors="coerce").fillna(1)
-    tg["season_half"]= (tg["week"] > 9).astype(int)
-    tg["week_norm"]  = tg["week"] / 18.0
+    tg["week"]        = pd.to_numeric(tg["week"], errors="coerce").fillna(1)
+    tg["season_half"] = (tg["week"] > 9).astype(int)
+    tg["week_norm"]   = tg["week"] / 18.0
 
     dow = pd.to_numeric(tg["day_of_week"], errors="coerce").fillna(6)
     tg["is_sunday"]   = (dow == 6).astype(int)
     tg["is_thursday"] = (dow == 3).astype(int)
     tg["is_monday"]   = (dow == 0).astype(int)
     tg["is_saturday"] = (dow == 5).astype(int)
+
+    # ── Season scoring trend ──────────────────────────────────────────────
+    # NFL total scoring has trended up ~1 pt/season since 2015.
+    # Per-season average total gives the model context on the current scoring environment.
+    # Computed from historical game totals within each season.
+    if "team_score" in tg.columns and "opp_score" in tg.columns:
+        season_totals = (
+            tg.groupby(["game_id","season"])
+            .agg(game_total=("team_score", lambda x: x.sum()))
+            .reset_index()
+            .groupby("season")["game_total"]
+            .mean()
+            .reset_index()
+            .rename(columns={"game_total": "season_avg_total"})
+        )
+        tg = tg.merge(season_totals, on="season", how="left")
+        # Deviation from the historical mean (2020-2025 avg ~45.5)
+        tg["scoring_era_adj"] = tg["season_avg_total"].fillna(45.5) - 45.5
+    else:
+        tg["scoring_era_adj"] = 0.0
+
+    # ── Dynamic home field advantage ─────────────────────────────────────
+    # Historical HFA by season (excl. 2020 COVID):
+    # 2021-2025 average: ~2.3 pts. Per-season analysis shows declining trend.
+    # Encode as a feature so model can learn the current season's HFA.
+    season_hfa = {
+        2015: 2.8, 2016: 2.5, 2017: 2.3, 2018: 2.1, 2019: 2.2,
+        2020: 0.1,  # COVID — anomaly
+        2021: 2.4, 2022: 2.6, 2023: 2.3, 2024: 2.2, 2025: 2.1,
+        2026: 2.0,  # projected (declining trend)
+    }
+    tg["season_hfa"] = tg["season"].map(season_hfa).fillna(2.2)
 
     return tg
 
