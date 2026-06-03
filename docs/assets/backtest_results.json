@@ -1,67 +1,137 @@
 {
+  "2024": {
+    "mae_home": 4.47,
+    "mae_away": 3.691,
+    "mae_total": 7.025,
+    "mae_spread": 4.196,
+    "ats_wins": 266,
+    "ats_losses": 15,
+    "ats_pushes": 1,
+    "ats_pct": 0.9466,
+    "edge_ats_wins": 199,
+    "edge_ats_losses": 2,
+    "edge_ats_pushes": 1,
+    "edge_ats_pct": 0.99,
+    "edge_ats_n_games": 202,
+    "ou_wins": 218,
+    "ou_losses": 64,
+    "ou_pushes": 3,
+    "ou_pct": 0.773,
+    "r2_total": 0.5383,
+    "pred_spread_std": 12.02,
+    "actual_spread_std": 14.44,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 6.982,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 5.333,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 6.834,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 7.388,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 7.209,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 6.673,
+        "n": 98
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 6.032,
+        "n": 63
+      },
+      "0": {
+        "mae_total": 7.306,
+        "n": 222
+      }
+    },
+    "train_seasons": [
+      "2022",
+      "2023"
+    ],
+    "test_season": "2024",
+    "window_type": "3-season"
+  },
   "2025": {
-    "mae_home": 3.986,
-    "mae_away": 3.842,
-    "mae_total": 6.635,
-    "mae_spread": 3.863,
-    "ats_wins": 254,
-    "ats_losses": 25,
+    "mae_home": 4.067,
+    "mae_away": 3.635,
+    "mae_total": 6.663,
+    "mae_spread": 3.744,
+    "ats_wins": 258,
+    "ats_losses": 23,
     "ats_pushes": 4,
-    "ats_pct": 0.9104,
-    "edge_ats_wins": 188,
-    "edge_ats_losses": 4,
+    "ats_pct": 0.9181,
+    "edge_ats_wins": 189,
+    "edge_ats_losses": 5,
     "edge_ats_pushes": 3,
-    "edge_ats_pct": 0.9792,
-    "edge_ats_n_games": 195,
-    "ou_wins": 222,
-    "ou_losses": 63,
+    "edge_ats_pct": 0.9742,
+    "edge_ats_n_games": 197,
+    "ou_wins": 226,
+    "ou_losses": 59,
     "ou_pushes": 0,
-    "ou_pct": 0.7789,
-    "r2_total": 0.637,
-    "pred_spread_std": 12.44,
+    "ou_pct": 0.793,
+    "r2_total": 0.6381,
+    "pred_spread_std": 13.01,
     "actual_spread_std": 14.13,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 6.64,
+        "mae_total": 6.651,
         "n": 272
       },
       "WC": {
-        "mae_total": 6.333,
+        "mae_total": 6.667,
         "n": 6
       }
     },
     "by_division_game": {
       "1": {
-        "mae_total": 6.485,
+        "mae_total": 6.737,
         "n": 99
       },
       "0": {
-        "mae_total": 6.715,
+        "mae_total": 6.624,
         "n": 186
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 6.489,
+        "mae_total": 6.621,
         "n": 190
       },
       "1": {
-        "mae_total": 6.926,
+        "mae_total": 6.747,
         "n": 95
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 6.345,
+        "mae_total": 6.741,
         "n": 58
       },
       "0": {
-        "mae_total": 6.709,
+        "mae_total": 6.643,
         "n": 227
       }
     },
     "train_seasons": [
+      "2022",
       "2023",
       "2024"
     ],
