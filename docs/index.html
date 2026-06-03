@@ -443,7 +443,7 @@
   <div class="logo">NFL Predictor <em>2026 Season</em></div>
   <nav>
     <button class="nb active" onclick="showPage('predictions',this)">Predictions</button>
-    <button class="nb" onclick="showPage('backtest',this)">Backtest</button>
+    <button class="nb" onclick="showPage('backtest',this)">Backtest Results</button>
     <button class="nb" onclick="showPage('performance',this)">Performance</button>
     <button class="nb" onclick="showPage('methodology',this)">Methodology</button>
   </nav>
@@ -464,7 +464,7 @@
     <div style="position:relative;z-index:1">
       <div style="font-family:'Catamaran',sans-serif;font-weight:800;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.6rem">NFL Score Predictor</div>
       <h1>2026 Predictions</h1>
-      <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em">Updated every Tuesday · All 272 regular season games</div>
+      <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em">Updated every Tuesday — predictions for all 272 regular season games</div>
     </div>
     <p>Machine learning ensemble trained on 3 seasons of play-by-play data. Every game scored, spreads and totals derived automatically.</p>
   </div>
@@ -477,13 +477,13 @@
   <div class="divider"></div>
 
   <div class="content">
-    <div class="disc"><strong>Disclaimer —</strong> Statistical model for informational and entertainment purposes only. Not financial advice. Edge signals shown only for MEDIUM+ confidence predictions.</div>
+    <div class="disc"><strong>Important —</strong> This is a statistical model for informational and entertainment purposes only. It is not financial or betting advice. Edge signals are shown only for predictions with MEDIUM or higher confidence.</div>
     <div class="controls">
       <div class="wsel" id="wsel"></div>
       <div class="fgroup">
-        <span class="flbl">Edge only</span>
+        <span class="flbl">Edge signals only</span>
         <button class="tbtn" id="edgeBtn" onclick="toggleEdge(this)">OFF</button>
-        <span class="flbl">All weeks</span>
+        <span class="flbl">Show all weeks</span>
         <button class="tbtn" id="allBtn" onclick="toggleAll(this)">OFF</button>
       </div>
     </div>
@@ -496,21 +496,21 @@
 <!-- ══════ BACKTEST ══════════════════════════════════════════ -->
 <div id="page-backtest" class="page">
   <div class="page-hero hero-light" data-wm="Test">
-    <div><h1>Backtest<br>Results</h1></div>
+    <div><h1>Backtest Results<br>Results</h1></div>
     <p>Accuracy measured on seasons the model was never trained on — the same process used for 2026 predictions.</p>
   </div>
   <div class="divider"></div>
   <div class="content">
     <div class="bt-exp">
-      <strong>Directional accuracy (~90%)</strong> measures whether the model picked the correct side of the spread. This is inflated by spread correlation and has no direct betting value.<br>
-      <strong>Edge ATS</strong> only counts games where the model <em>disagreed</em> with Vegas by &gt;3 points. This is the real signal. 52.4% = break-even with standard −110 vig.
+      <strong>Spread direction accuracy</strong> measures whether the model's predicted margin lands on the same side of the Vegas spread as the actual result. This is inflated because our predicted spreads correlate with the real outcome — it does not mean the model wins 90% of bets.<br>
+      <strong>Betting edge signal</strong> only counts games where our model <em>disagreed</em> with the Vegas line by more than 3 points. This is the metric that matters for betting. At 52.4% you break even with standard odds. Above 55% consistently is meaningful.
     </div>
     <div class="data-grid" id="btCards"><div class="lstate"><div class="spin"></div></div></div>
     <div class="chart-duo">
-      <div class="chart-wrap"><div class="chart-label">Score MAE by season (pts)</div><canvas id="btMae" height="160"></canvas></div>
-      <div class="chart-wrap"><div class="chart-label">Edge ATS hit rate (%)</div><canvas id="btAts" height="160"></canvas></div>
+      <div class="chart-wrap"><div class="chart-label">Average score error by season</div><canvas id="btMae" height="160"></canvas></div>
+      <div class="chart-wrap"><div class="chart-label">Betting edge hit rate — games where model disagreed with Vegas (%)</div><canvas id="btAts" height="160"></canvas></div>
     </div>
-    <div class="chart-wrap"><div class="chart-label">MAE by game type</div><canvas id="btType" height="90"></canvas></div>
+    <div class="chart-wrap"><div class="chart-label">Average prediction error by game type</div><canvas id="btType" height="90"></canvas></div>
   </div>
 </div>
 
@@ -524,9 +524,9 @@
   <div class="divider"></div>
   <div class="content">
     <div class="kpi-strip" id="perfKpis"><div class="lstate" style="color:var(--g2)"><div class="spin" style="border-top-color:#fff"></div></div></div>
-    <div class="chart-wrap" style="margin-bottom:.75rem"><div class="chart-label">MAE by week</div><canvas id="maeWk" height="90"></canvas></div>
+    <div class="chart-wrap" style="margin-bottom:.75rem"><div class="chart-label">Average prediction error by week of the season</div><canvas id="maeWk" height="90"></canvas></div>
     <div class="chart-wrap"><div class="chart-label">Recent results</div>
-      <div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Wk</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Error</th><th>ATS</th><th>O/U</th><th>Conf</th></tr></thead><tbody id="perfBody"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Week</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Total score error</th><th>Beat the spread?</th><th>Over/Under correct?</th><th>Confidence</th></tr></thead><tbody id="perfBody"></tbody></table></div>
     </div>
   </div>
 </div>
@@ -544,7 +544,7 @@
       <div class="msec">
         <div class="msec-head">
           <h2>Overview</h2>
-          <p>Pipeline, training window, and automation.</p>
+          <p>How the model is run, what data it trains on, and how it updates automatically.</p>
         </div>
         <div class="msec-body">
           <p>Every Tuesday during the NFL season, a GitHub Actions pipeline fetches updated statistics from nflverse, retrains a stacked ensemble on a rolling 3-season window (816 regular season + 39 playoff games), and publishes predictions for every upcoming game.</p>
@@ -555,41 +555,41 @@
       <div class="msec">
         <div class="msec-head">
           <h2>Model Architecture</h2>
-          <p>3-layer stacked ensemble.</p>
+          <p>Three stacked prediction layers: base models → neural network → final blender.</p>
         </div>
         <div class="msec-body">
           <div class="mlayers">
-            <div class="ml"><div class="ll">Layer 1A</div><div class="lt">Ridge Regression</div><div class="ld">Linear baseline, L2 regularisation.</div></div>
-            <div class="ml"><div class="ll">Layer 1B</div><div class="lt">XGBoost</div><div class="ld">500 trees, MAE objective, non-linear interactions.</div></div>
-            <div class="ml"><div class="ll">Layer 1C</div><div class="lt">LightGBM</div><div class="ld">Leaf-wise gradient boosting.</div></div>
-            <div class="ml"><div class="ll">Layer 2</div><div class="lt">Dual-Head NN</div><div class="ld">PyTorch 256→128→64. Home and away heads. Multi-target loss.</div></div>
-            <div class="ml"><div class="ll">Layer 3</div><div class="lt">Meta-Learner</div><div class="ld">Ridge blending all sub-models via out-of-fold predictions.</div></div>
+            <div class="ml"><div class="ll">Layer 1A</div><div class="lt">Ridge Regression</div><div class="ld">Simple linear model with a complexity penalty to prevent overfitting. Fast and interpretable.</div></div>
+            <div class="ml"><div class="ll">Layer 1B</div><div class="lt">XGBoost</div><div class="ld">500 decision trees optimised for minimum absolute error. Captures complex, non-linear patterns.</div></div>
+            <div class="ml"><div class="ll">Layer 1C</div><div class="lt">LightGBM</div><div class="ld">A fast gradient boosting variant that grows trees leaf-by-leaf for higher accuracy.</div></div>
+            <div class="ml"><div class="ll">Layer 2</div><div class="lt">Neural Network</div><div class="ld">Deep neural network with separate output branches for home and away scores. Simultaneously optimises score accuracy, margin, and combined total.</div></div>
+            <div class="ml"><div class="ll">Layer 3</div><div class="lt">Meta-Learner</div><div class="ld">A final blending layer that learns the optimal mix of all sub-model outputs, trained on held-out data to prevent overfitting.</div></div>
           </div>
         </div>
       </div>
 
       <div class="msec">
-        <div class="msec-head"><h2>Features (~150)</h2><p>Input signals per game.</p></div>
+        <div class="msec-head"><h2>Features (~150)</h2><p>The statistics and signals the model uses to make each prediction.</p></div>
         <div class="msec-body">
-          <h3>Rolling stats — last 4 / 8 / 16 games</h3>
-          <div><span class="ftag">EPA/play offense</span><span class="ftag">EPA/play defense</span><span class="ftag">Success rate</span><span class="ftag">Pass EPA</span><span class="ftag">Rush EPA</span><span class="ftag">CPOE</span><span class="ftag">Air yards/att</span><span class="ftag">3rd down %</span><span class="ftag">Red zone TD%</span><span class="ftag">Turnover diff</span><span class="ftag">Sack rate</span><span class="ftag">FG%</span><span class="ftag">Score diff</span><span class="ftag">Win rate</span></div>
-          <h3>Matchup gaps</h3>
+          <h3>Rolling statistics — computed over the last 4, 8, and 16 games</h3>
+          <div><span class="ftag" title="Expected Points Added per offensive play — measures how much each play improves scoring chances">Offensive efficiency (EPA/play)</span><span class="ftag" title="Expected Points Added allowed per defensive play">Defensive efficiency (EPA/play)</span><span class="ftag">Play success rate</span><span class="ftag" title="Expected Points Added per pass play">Passing efficiency</span><span class="ftag" title="Expected Points Added per run play">Rushing efficiency</span><span class="ftag" title="Completion Percentage Over Expected — how much better/worse the QB completes passes than the average QB would in the same situations">QB accuracy over expected</span><span class="ftag">Air yards per attempt</span><span class="ftag">3rd down conversion rate</span><span class="ftag">Red zone touchdown rate</span><span class="ftag">Turnover differential</span><span class="ftag">Sack rate allowed</span><span class="ftag">Field goal %</span><span class="ftag">Recent score differential</span><span class="ftag">Recent win rate</span></div>
+          <h3>Head-to-head matchup advantages</h3>
           <p>Offensive EPA of Team A minus defensive EPA allowed by Team B — for passing, rushing, 3rd down, and red zone. Directly quantifies strength mismatch in each phase.</p>
           <h3>Contextual</h3>
-          <div><span class="ftag">Home/Away</span><span class="ftag">Rest days</span><span class="ftag">Rest diff</span><span class="ftag">Bye week</span><span class="ftag">Short week</span><span class="ftag">Temperature</span><span class="ftag">Wind speed</span><span class="ftag">Dome</span><span class="ftag">Primetime</span><span class="ftag">International</span><span class="ftag">Division rivalry</span><span class="ftag">Referee tendencies</span></div>
-          <h3>Cross-season</h3>
-          <div><span class="ftag">Elo rating</span><span class="ftag">Elo vs. Vegas divergence</span><span class="ftag">Vegas preseason O/U</span><span class="ftag">Roster continuity</span><span class="ftag">Draft quality</span></div>
+          <div><span class="ftag">Home/Away</span><span class="ftag">Rest days</span><span class="ftag">Rest day differential</span><span class="ftag">Coming off a bye week</span><span class="ftag">Short week (Thursday game)</span><span class="ftag">Temperature</span><span class="ftag">Wind speed</span><span class="ftag">Dome</span><span class="ftag">Primetime</span><span class="ftag">International</span><span class="ftag">Division rivalry game</span><span class="ftag">Referee tendencies</span></div>
+          <h3>Off-season and preseason signals</h3>
+          <div><span class="ftag">Power rating (Elo)</span><span class="ftag" title="How much our internal power rating disagrees with the Vegas line">Power rating vs. Vegas disagreement</span><span class="ftag" title="The Vegas over/under win total set before the season begins — a powerful pre-season team quality signal">Vegas preseason win total</span><span class="ftag" title="Fraction of key players retained from the previous season">Roster continuity year-over-year</span><span class="ftag" title="Cumulative career value of a team's draft picks">Recent draft class quality</span></div>
         </div>
       </div>
 
       <div class="msec">
-        <div class="msec-head"><h2>Confidence Score</h2><p>Data quality signal, not win probability.</p></div>
+        <div class="msec-head"><h2>Confidence Score</h2><p>Measures how much the model trusts its own prediction — not the probability of winning.</p></div>
         <div class="msec-body">
           <p>Every prediction carries a 0–100% score measuring model agreement and data completeness. Edge signals are suppressed for low-confidence games.</p>
           <div class="mlayers">
-            <div class="ml"><div class="ll">50%</div><div class="lt">Model Agreement</div><div class="ld">Std-dev of sub-model predictions. High disagreement → lower score.</div></div>
-            <div class="ml"><div class="ll">35%</div><div class="lt">Feature Completeness</div><div class="ld">Fraction of expected features available. QB and injury data weighted more.</div></div>
-            <div class="ml"><div class="ll">15%</div><div class="lt">H2H Data Quality</div><div class="ld">Historical matchup sample size. Division rivals score near 1.0.</div></div>
+            <div class="ml"><div class="ll">40% weight</div><div class="lt">Sub-model agreement</div><div class="ld">How closely all four sub-models agree on the prediction. Large disagreements lower the score.</div></div>
+            <div class="ml"><div class="ll">35% weight</div><div class="lt">Data completeness</div><div class="ld">How much of the expected input data was available. Quarterback and injury data are weighted more heavily.</div></div>
+            <div class="ml"><div class="ll">25% weight</div><div class="lt">Head-to-head sample size</div><div class="ld">How many historical meetings are available between these two teams. Division rivals meet often so score near 100%.</div></div>
           </div>
         </div>
       </div>
@@ -597,8 +597,8 @@
       <div class="msec">
         <div class="msec-head"><h2>Data Sources</h2><p>All free and public.</p></div>
         <div class="msec-body">
-          <div><span class="ftag">nflverse/nfl_data_py</span><span class="ftag">nflfastR PBP</span><span class="ftag">Next Gen Stats</span><span class="ftag">PFR Advanced</span><span class="ftag">FTN Charting</span><span class="ftag">weatherapi.com</span></div>
-          <h3>Sliding window</h3>
+          <div><span class="ftag">nflverse/nfl_data_py</span><span class="ftag" title="Play-by-play data from every game">Play-by-play data (nflfastR)</span><span class="ftag">Next Gen Stats (NFL tracking data)</span><span class="ftag" title="Pro Football Reference advanced statistics">Advanced stats (Pro Football Reference)</span><span class="ftag" title="FTN Data manual charting — pass routes, coverage types, blocking assignments">Manual charting data (FTN)</span><span class="ftag">weatherapi.com</span></div>
+          <h3>Training window and data freshness</h3>
           <p>816 regular season + 39 playoff games (3 full seasons). Each completed game enters the window and the oldest exits. Playoff games weighted at 0.6–0.75×. Season weights optimised annually by Bayesian search.</p>
         </div>
       </div>
@@ -627,8 +627,49 @@ const ALT={JAC:'JAX',SD:'LAC',STL:'LAR',OAK:'LV'};
 function ti(a){return T[a]||T[ALT[a]]||{nick:a,logo:''}}
 function logo(a){const t=ti(a);return t.logo?`<img src="${t.logo}" alt="${a}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=fb>${a}</div>'">`:`<div class="fb">${a}</div>`}
 
-const FEAT={home_off_epa_per_play_r8:'Home offense EPA (8g)',away_off_epa_per_play_r8:'Away offense EPA (8g)',home_def_epa_per_play_r8:'Home defense EPA (8g)',away_def_epa_per_play_r8:'Away defense EPA (8g)',elo_gap:'Elo gap (home−away)',cpoe_gap_r8:'QB accuracy gap',rest_diff:'Rest advantage',h2h_avg_margin:'H2H margin',h2h_win_rate:'H2H home win rate'};
-function fl(k){return FEAT[k]||k.replace(/_/g,' ').replace(/r(\d+)$/,'($1g)')}
+const FEAT={
+  home_off_epa_per_play_r8:'Home offense efficiency (last 8 games)',
+  away_off_epa_per_play_r8:'Away offense efficiency (last 8 games)',
+  home_def_epa_per_play_r8:'Home defense efficiency allowed (last 8 games)',
+  away_def_epa_per_play_r8:'Away defense efficiency allowed (last 8 games)',
+  home_off_pass_epa_r8:'Home passing efficiency (last 8 games)',
+  away_off_pass_epa_r8:'Away passing efficiency (last 8 games)',
+  home_off_rush_epa_r8:'Home rushing efficiency (last 8 games)',
+  away_off_rush_epa_r8:'Away rushing efficiency (last 8 games)',
+  elo_gap:'Power rating gap (home minus away)',
+  cpoe_gap_r8:'Quarterback accuracy gap (last 8 games)',
+  rest_diff:'Rest days advantage (home minus away)',
+  score_diff_r8:'Average score margin (last 8 games)',
+  win_rate_r8:'Win rate (last 8 games)',
+  h2h_avg_margin:'Historical head-to-head margin',
+  h2h_win_rate:'Home win rate in past head-to-head meetings',
+  home_qb_changed:'Home team changed starting quarterback',
+  away_qb_changed:'Away team changed starting quarterback',
+  home_vegas_preseason_wins:'Home team Vegas preseason win total',
+  away_vegas_preseason_wins:'Away team Vegas preseason win total',
+  home_roster_continuity:'Home team roster continuity vs. last season',
+  away_roster_continuity:'Away team roster continuity vs. last season',
+  is_division_game:'Division rivalry game',
+  rest_diff:'Rest days advantage',
+  home_rest_days:'Home team rest days',
+  away_rest_days:'Away team rest days',
+};
+// Fallback: convert raw feature names to readable labels
+function fl(k){
+  if(FEAT[k]) return FEAT[k];
+  return k
+    .replace(/^home_/,'Home ')
+    .replace(/^away_/,'Away ')
+    .replace(/_r4$/,' (last 4 games)')
+    .replace(/_r8$/,' (last 8 games)')
+    .replace(/_r16$/,' (last 16 games)')
+    .replace(/_/g,' ')
+    .replace(/(epa|cpoe|mae|ats|ou|h2h)/gi, s=>({
+      epa:'efficiency',cpoe:'QB accuracy over expected',
+      mae:'avg error',ats:'beat-spread',ou:'over/under',h2h:'head-to-head'
+    }[s.toLowerCase()]||s));
+}
+
 
 /* ══ STATE ═══════════════════════════════════════════════════ */
 let allP=[],perfD={},btD={};
@@ -636,7 +677,7 @@ let curWeek=null,showAll=false,edgeOnly=false;
 let charts={};
 
 /* ══ INIT ════════════════════════════════════════════════════ */
-async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest()])}
+async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest Results()])}
 
 async function fj(urls){
   for(const u of urls){try{const r=await fetch(u+'?t='+Date.now());if(r.ok)return await r.json()}catch(_){}}
@@ -652,7 +693,7 @@ async function loadPredictions(){
   buildWeekSel();buildTicker();renderGames();
 }
 async function loadPerformance(){const d=await fj(['assets/performance.json']);if(d)perfD=d;renderPerf()}
-async function loadBacktest(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest()}
+async function loadBacktest Results(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest Results()}
 
 /* ══ TICKER ══════════════════════════════════════════════════ */
 function buildTicker(){
@@ -670,7 +711,7 @@ function buildWeekSel(){
   const today=new Date();
   curWeek=weeks[0]||1;
   for(const p of allP){if(!p.actual_home_score&&new Date(p.game_date+'T12:00:00')>=today){curWeek=p.week;break}}
-  document.getElementById('wsel').innerHTML=weeks.map(w=>`<button class="wb${w===curWeek?' active':''}" onclick="selWeek(${w},this)">Wk ${w}</button>`).join('');
+  document.getElementById('wsel').innerHTML=weeks.map(w=>`<button class="wb${w===curWeek?' active':''}" onclick="selWeek(${w},this)">Week ${w}</button>`).join('');
 }
 function selWeek(w,b){curWeek=w;showAll=false;document.querySelectorAll('.wb').forEach(x=>x.classList.remove('active'));b.classList.add('active');const ab=document.getElementById('allBtn');ab.classList.remove('on');ab.textContent='OFF';renderGames()}
 function toggleAll(b){showAll=!showAll;b.classList.toggle('on',showAll);b.textContent=showAll?'ON':'OFF';renderGames()}
@@ -701,25 +742,25 @@ function cHtml(g,idx){
   const done=g.actual_home_score!=null;
   const dateStr=g.game_date?new Date(g.game_date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):'';
   let pills='';
-  if(g.total_lean&&!['PUSH','SUPPRESSED',''].includes(g.total_lean)){const c=g.total_lean==='OVER'?'ov':'un';const d=g.total_edge!=null?(g.total_edge>0?'+':'')+g.total_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.total_lean} ${d}</span>`}
-  if(g.spread_lean&&!['PUSH','SUPPRESSED',''].includes(g.spread_lean)){const c=g.spread_lean==='HOME'?'hm':'aw';const d=g.spread_edge!=null?(g.spread_edge>0?'+':'')+g.spread_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.spread_lean} ${d}</span>`}
-  if(g.spread_lean==='SUPPRESSED'||g.total_lean==='SUPPRESSED')pills+=`<span class="pill sp">low conf</span>`;
+  if(g.total_lean&&!['PUSH','SUPPRESSED',''].includes(g.total_lean)){const c=g.total_lean==='OVER'?'ov':'un';const d=g.total_edge!=null?(g.total_edge>0?'+':'')+g.total_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.total_lean==='OVER'?'Total OVER':'Total UNDER'} ${d}</span>`}
+  if(g.spread_lean&&!['PUSH','SUPPRESSED',''].includes(g.spread_lean)){const c=g.spread_lean==='HOME'?'hm':'aw';const d=g.spread_edge!=null?(g.spread_edge>0?'+':'')+g.spread_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.spread_lean==='HOME'?'Home value':'Away value'} ${d}</span>`}
+  if(g.spread_lean==='SUPPRESSED'||g.total_lean==='SUPPRESSED')pills+=`<span class="pill sp">⚠ insufficient data</span>`;
   const ctx=[];
-  if(g.is_dome)ctx.push('<span title="Dome">🏟</span>');
+  if(g.is_dome)ctx.push('<span title="Played in a dome (indoor stadium)">🏟</span>');
   else if(g.wind>=15)ctx.push(`<span title="${g.wind}mph">💨</span>`);
   else if(g.temp!=null&&g.temp<=32)ctx.push(`<span title="${g.temp}°F">❄</span>`);
-  if(g.is_primetime)ctx.push('<span title="Primetime">🌙</span>');
-  if(g.is_international)ctx.push('<span title="International">🌍</span>');
-  if(g.is_division_game)ctx.push('<span title="Division">⚔</span>');
+  if(g.is_primetime)ctx.push('<span title="Primetime game (MNF / SNF / TNF)">🌙</span>');
+  if(g.is_international)ctx.push('<span title="International game">🌍</span>');
+  if(g.is_division_game)ctx.push('<span title="Division rivalry game game">⚔</span>');
   let actual='';
   if(done){const e=Math.abs((g.predicted_home_score+g.predicted_away_score)-(g.actual_home_score+g.actual_away_score));actual=`<div class="actual ${e<=7?'hit':'miss'}">Actual: ${g.actual_home_score}–${g.actual_away_score} (±${e})</div>`}
   return `<div class="gc${done?' done':''}" id="gc${idx}">
 <div class="gm" onclick="toggleDetail(${idx})">
-  <div class="gdate"><div class="gd-day">${dateStr}</div><div class="gd-wk">Week ${g.week}</div>${g.game_type!=='REG'?`<span class="gtype">${g.game_type}</span>`:''}</div>
+  <div class="gdate"><div class="gd-day">${dateStr}</div><div class="gd-wk">Week ${g.week}</div>${['WC','DIV','CON','SB'].includes(g.game_type)?`<span class="gtype">${{WC:'Wild Card',DIV:'Divisional',CON:'Conference Championship',SB:'Super Bowl'}[g.game_type]||g.game_type}</span>`:''}</div>
   <div class="tb home"><div class="tlogo">${logo(h)}</div><div><div class="tabbr">${h}</div><div class="tnick">${ti(h).nick}</div></div></div>
   <div class="sc">
     <div class="snum"><span class="sh">${g.predicted_home_score}</span><span class="ssep">—</span><span class="sa">${g.predicted_away_score}</span></div>
-    <div class="ssub">Total ${g.predicted_total}${g.book_total!=null?` · Book ${g.book_total}`:''}</div>
+    <div class="ssub">Predicted combined score: ${g.predicted_total}${g.book_total!=null?` &nbsp;·&nbsp; Vegas over/under line: ${g.book_total}`:''}</div>
     ${(()=>{const tot=g.predicted_home_score+g.predicted_away_score;const hp=tot>0?Math.round(g.predicted_home_score/tot*100):50;return`<div class="score-bar"><div class="sh-bar" style="width:${hp}%"></div><div class="sa-bar"></div></div>`})()}
     ${actual}
   </div>
@@ -732,11 +773,11 @@ function cHtml(g,idx){
 
 function dHtml(g,h,a){
   const bd=g.confidence_breakdown||{};
-  const cr=[['Model Agreement',bd.model_agreement,'#2d6a3f'],['Feature Complete',bd.feature_completeness,'#1e4d7a'],['H2H Quality',bd.h2h_data_quality,'#7a5e18'],['Injury Freshness',bd.injury_data_freshness,'#8b3030']];
+  const cr=[['Sub-model agreement',bd.model_agreement,'#2d6a3f'],['Data completeness',bd.feature_completeness,'#1e4d7a'],['Head-to-head sample size',bd.h2h_data_quality,'#7a5e18'],['Injury report freshness',bd.injury_data_freshness,'#8b3030']];
   const cHtml=cr.map(([l,v,c])=>{const p=v!=null?Math.round(v*100):0;return`<div class="drow"><span class="dlbl">${l}</span><span class="dval">${p}%</span></div><div class="cbar"><div class="cbf" style="width:${p}%;background:${c}"></div></div>`}).join('');
   const sd=[g.ci_home?`<div class="drow"><span class="dlbl">${h} range</span><span class="dval">${g.ci_home[0]}–${g.ci_home[1]} pts</span></div>`:'',g.ci_away?`<div class="drow"><span class="dlbl">${a} range</span><span class="dval">${g.ci_away[0]}–${g.ci_away[1]} pts</span></div>`:'',`<div class="drow"><span class="dlbl">Model spread</span><span class="dval">${g.predicted_spread>0?'+':''}${g.predicted_spread}</span></div>`,g.book_spread!=null?`<div class="drow"><span class="dlbl">Vegas spread</span><span class="dval">${g.book_spread}</span></div>`:'',g.total_edge!=null?`<div class="drow"><span class="dlbl">Total edge</span><span class="dval ${g.total_edge<-1?'pos':g.total_edge>1?'neg':''}">${g.total_edge>0?'+':''}${g.total_edge}</span></div>`:''  ].join('');
   const fh=Object.entries(g.top_features||{}).filter(([k,v])=>typeof v==='number'&&!['spread_edge','total_edge','is_dome','high_wind','cold_game'].includes(k)).slice(0,6).map(([k,v])=>`<div class="drow"><span class="dlbl">${fl(k)}</span><span class="dval ${v>0.01?'pos':v<-0.01?'neg':''}">${Math.abs(v)>10?v.toFixed(0):v.toFixed(3)}</span></div>`).join('');
-  return `<div class="dgrid"><div class="dsec"><h5>Confidence</h5>${cHtml}</div><div class="dsec"><h5>Score detail</h5>${sd}</div><div class="dsec"><h5>Key signals</h5>${fh}</div></div>`;
+  return `<div class="dgrid"><div class="dsec"><h5>Confidence</h5>${cHtml}</div><div class="dsec"><h5>Score breakdown</h5>${sd}</div><div class="dsec"><h5>Key model signals</h5>${fh}</div></div>`;
 }
 
 function toggleDetail(idx){
@@ -754,7 +795,7 @@ const CO={responsive:true,plugins:{legend:{display:false}},scales:{
 function mkC(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id).getContext('2d'),cfg)}
 
 /* ══ BACKTEST ════════════════════════════════════════════════ */
-function renderBacktest(){
+function renderBacktest Results(){
   if(!Object.keys(btD).length){document.getElementById('btCards').innerHTML='<div class="empty">No backtest data yet.</div>';return}
   const seas=Object.keys(btD).sort((a,b)=>+b-+a);
   document.getElementById('btCards').innerHTML=seas.map(s=>{
@@ -762,40 +803,40 @@ function renderBacktest(){
     const sr=r.pred_spread_std&&r.actual_spread_std?(r.pred_spread_std/r.actual_spread_std*100).toFixed(0):null;
     const he=r.edge_ats_wins!=null;
     return `<div class="d-card">
-      <div class="d-season">${s}</div><div class="d-sub">Train ${r.train_seasons?.join('+')||'?'} → Test ${s}</div>
-      <div class="d-row"><span class="lbl">Games</span><span class="val">${r.n_games}</span></div>
-      <div class="d-row"><span class="lbl">Score MAE</span><span class="val ${r.mae_total<8?'good':'warn'}">±${r.mae_total.toFixed(1)} pts</span></div>
-      <div class="d-row"><span class="lbl">Spread MAE</span><span class="val ${r.mae_spread<5?'good':'warn'}">±${r.mae_spread.toFixed(1)} pts</span></div>
-      ${sr?`<div class="d-row"><span class="lbl">Spread variance</span><span class="val ${sr>80?'good':'warn'}">${sr}% of actual</span></div>`:''}
-      <div class="d-row" style="border-top:1px solid var(--w3);margin-top:4px;padding-top:8px"><span class="lbl" style="font-style:italic">Directional acc.</span><span class="val dim">${(r.ats_pct*100).toFixed(1)}%</span></div>
-      ${he?`<div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Edge ATS (&gt;3pt)</span><span class="val ${r.edge_ats_pct>0.55?'good':'warn'}">${(r.edge_ats_pct*100).toFixed(1)}% — n=${r.edge_ats_n_games}</span></div>`:''}
-      <div class="d-row"><span class="lbl">O/U hit rate</span><span class="val ${r.ou_pct>0.55?'good':'warn'}">${(r.ou_pct*100).toFixed(1)}% (${r.ou_wins}–${r.ou_losses})</span></div>
-      <div class="d-row"><span class="lbl">R²</span><span class="val ${r.r2_total>0.5?'good':'warn'}">${r.r2_total.toFixed(3)}</span></div>
+      <div class="d-season">${s}</div><div class="d-sub">Trained on seasons ${r.train_seasons?.join(', ')||'?'} — tested on ${s}</div>
+      <div class="d-row"><span class="lbl">Total games tested</span><span class="val">${r.n_games}</span></div>
+      <div class="d-row"><span class="lbl">Average score error</span><span class="val ${r.mae_total<8?'good':'warn'}">±${r.mae_total.toFixed(1)} pts</span></div>
+      <div class="d-row"><span class="lbl">Average margin error</span><span class="val ${r.mae_spread<5?'good':'warn'}">±${r.mae_spread.toFixed(1)} pts</span></div>
+      ${sr?`<div class="d-row"><span class="lbl" title="How spread out our predicted margins are vs. actual game margins. 90%+ means the model is not collapsing all games to the same score">Predicted margin spread</span><span class="val ${sr>80?'good':'warn'}">${sr}% of actual</span></div>`:''}
+      <div class="d-row" style="border-top:1px solid var(--w3);margin-top:4px;padding-top:8px"><span class="lbl" style="color:var(--g2);font-style:italic" title="Did the model land on the correct side of the spread? Inflated by spread correlation — not a direct betting metric.">Spread direction (not a bet signal)</span><span class="val dim">${(r.ats_pct*100).toFixed(1)}%</span></div>
+      ${he?`<div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Betting edge signal (3pt+ gap)</span><span class="val ${r.edge_ats_pct>0.55?'good':'warn'}">${(r.edge_ats_pct*100).toFixed(1)}% — n=${r.edge_ats_n_games}</span></div>`:''}
+      <div class="d-row"><span class="lbl">Over/Under prediction rate</span><span class="val ${r.ou_pct>0.55?'good':'warn'}">${(r.ou_pct*100).toFixed(1)}% (${r.ou_wins}–${r.ou_losses})</span></div>
+      <div class="d-row"><span class="lbl" title="How much of the actual score variation is explained by the model. 1.0 = perfect, 0.0 = no better than guessing the average">Predictive fit (R²)</span><span class="val ${r.r2_total>0.5?'good':'warn'}">${r.r2_total.toFixed(3)}</span></div>
     </div>`;
   }).join('');
 
   const mv=seas.map(s=>btD[s].mae_total);
-  mkC('btMae',{type:'bar',data:{labels:seas,datasets:[{data:mv,backgroundColor:mv.map(v=>v<8?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:mv.map(v=>v<8?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,title:{display:true,text:'Points',color:'#9a9a96'}}}}});
+  mkC('btMae',{type:'bar',data:{labels:seas,datasets:[{data:mv,backgroundColor:mv.map(v=>v<8?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:mv.map(v=>v<8?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,title:{display:true,text:'Error (points)',color:'#9a9a96'}}}}});
 
   const es=seas.filter(s=>btD[s].edge_ats_pct!=null);
   const ev=es.map(s=>+(btD[s].edge_ats_pct*100).toFixed(1));
-  if(es.length)mkC('btAts',{type:'bar',data:{labels:es,datasets:[{data:ev,backgroundColor:ev.map(v=>v>55?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:ev.map(v=>v>55?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:40,max:70,title:{display:true,text:'%',color:'#9a9a96'}}}}});
+  if(es.length)mkC('btAts',{type:'bar',data:{labels:es,datasets:[{data:ev,backgroundColor:ev.map(v=>v>55?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:ev.map(v=>v>55?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:40,max:70,title:{display:true,text:'Hit rate (%)',color:'#9a9a96'}}}}});
 
   const byT=btD[seas[0]]?.by_game_type||{};
   const tks=Object.keys(byT);
   const tL={REG:'Regular Season',WC:'Wild Card',DIV:'Divisional',CON:'Conf. Champ.',SB:'Super Bowl'};
-  if(tks.length)mkC('btType',{type:'bar',data:{labels:tks.map(k=>tL[k]||k),datasets:[{data:tks.map(k=>byT[k].mae_total),backgroundColor:'rgba(30,77,122,.18)',borderColor:'#1e4d7a',borderWidth:1}]},options:{indexAxis:'y',...CO,scales:{x:{...CO.scales.x,title:{display:true,text:'MAE (pts)',color:'#9a9a96'}},y:{...CO.scales.y,grid:{display:false}}}}});
+  if(tks.length)mkC('btType',{type:'bar',data:{labels:tks.map(k=>tL[k]||k),datasets:[{data:tks.map(k=>byT[k].mae_total),backgroundColor:'rgba(30,77,122,.18)',borderColor:'#1e4d7a',borderWidth:1}]},options:{indexAxis:'y',...CO,scales:{x:{...CO.scales.x,title:{display:true,text:'Score error (pts)',color:'#9a9a96'}},y:{...CO.scales.y,grid:{display:false}}}}});
 }
 
 /* ══ PERFORMANCE ═════════════════════════════════════════════ */
 function renderPerf(){
   const s=perfD.summary||{},g=perfD.games||[];
   document.getElementById('perfKpis').innerHTML=[
-    {l:'Score MAE',v:s.mae_total?s.mae_total+' pts':'—',sub:'Mean absolute error on total'},
-    {l:'Spread MAE',v:s.mae_spread?s.mae_spread+' pts':'—',sub:'Mean absolute error'},
-    {l:'ATS Record',v:s.ats_record||'—',sub:`${Math.round((s.ats_pct||0)*100)}%`},
-    {l:'O/U Record',v:s.ou_record||'—',sub:`${Math.round((s.ou_pct||0)*100)}%`},
-    {l:'Games',v:s.n_games||'0',sub:'tracked this season'},
+    {l:'Average score error (pts)',v:s.mae_total?'±'+s.mae_total+' pts':'—',sub:'Average points off per game (total score)'},
+    {l:'Average margin-of-victory error (pts)',v:s.mae_spread?'±'+s.mae_spread+' pts':'—',sub:'Mean absolute error'},
+    {l:'Spread pick record',v:s.ats_record||'—',sub:`${Math.round((s.ats_pct||0)*100)}% hit rate`},
+    {l:'Over/Under record',v:s.ou_record||'—',sub:`${Math.round((s.ou_pct||0)*100)}% hit rate`},
+    {l:'Games tracked',v:s.n_games||'0',sub:'completed games this season'},
   ].map(c=>`<div class="kpi"><div class="kpi-lbl">${c.l}</div><div class="kpi-val">${c.v}</div><div class="kpi-sub">${c.sub}</div></div>`).join('');
 
   const mw={};for(const x of g){mw[x.week]=mw[x.week]||[];mw[x.week].push(Math.abs(x.error_total))}
@@ -806,7 +847,7 @@ function renderPerf(){
     const ac=x.ats_result==='WIN'?'pos':x.ats_result==='LOSS'?'neg':'';
     const oc=x.ou_result==='WIN'?'pos':x.ou_result==='LOSS'?'neg':'';
     const ec=Math.abs(x.error_total)<=7?'pos':'neg';
-    return `<tr><td>Wk ${x.week}</td><td>${x.away_team||'?'} @ ${x.home_team||'?'}</td><td>${x.predicted_home}–${x.predicted_away}</td><td>${x.actual_home}–${x.actual_away}</td><td class="${ec}">${x.error_total>0?'+':''}${x.error_total}</td><td class="${ac}">${x.ats_result||'—'}</td><td class="${oc}">${x.ou_result||'—'}</td><td><span class="cbadge ${x.confidence_label}" style="font-size:.54rem;padding:1px 5px">${x.confidence_label}</span></td></tr>`;
+    return `<tr><td>Week ${x.week}</td><td>${x.away_team||'?'} @ ${x.home_team||'?'}</td><td>${x.predicted_home}–${x.predicted_away}</td><td>${x.actual_home}–${x.actual_away}</td><td class="${ec}">${x.error_total>0?'+':''}${x.error_total}</td><td class="${ac}">${{WIN:'✓ Beat',LOSS:'✗ Missed',PUSH:'Push'}[x.ats_result]||x.ats_result||'—'}</td><td class="${oc}">${{WIN:'✓ Correct',LOSS:'✗ Wrong',PUSH:'Push'}[x.ou_result]||x.ou_result||'—'}</td><td><span class="cbadge ${x.confidence_label}" style="font-size:.65rem;padding:2px 6px">${{HIGH:"High",MEDIUM:"Medium",LOW:"Low",WEAK:"Insufficient data"}[x.confidence_label]||x.confidence_label}</span></td></tr>`;
   }).join('');
 }
 
