@@ -694,7 +694,7 @@ async function loadPredictions(){
   buildWeekSel();buildTicker();renderGames();
 }
 async function loadPerformance(){const d=await fj(['assets/performance.json']);if(d)perfD=d;renderPerf()}
-async function loadBacktest(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest Results()}
+async function loadBacktest(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest()}
 
 /* ══ TICKER ══════════════════════════════════════════════════ */
 function buildTicker(){
@@ -796,7 +796,7 @@ const CO={responsive:true,plugins:{legend:{display:false}},scales:{
 function mkC(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id).getContext('2d'),cfg)}
 
 /* ══ BACKTEST ════════════════════════════════════════════════ */
-function renderBacktest Results(){
+function renderBacktest(){
   if(!Object.keys(btD).length){document.getElementById('btCards').innerHTML='<div class="empty">No backtest data yet.</div>';return}
   const seas=Object.keys(btD).sort((a,b)=>+b-+a);
   document.getElementById('btCards').innerHTML=seas.map(s=>{
