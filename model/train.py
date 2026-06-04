@@ -251,6 +251,16 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
     optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 
+    # Loss weights — loaded from Bayesian optimizer (default = research-informed values)
+    from bayesian_optimizer import load_weights as _lw
+    _w = _lw()
+    LW_HOME   = float(_w.get("nn_w_home",   0.40))
+    LW_AWAY   = float(_w.get("nn_w_away",   0.40))
+    LW_TOTAL  = float(_w.get("nn_w_total",  0.35))
+    LW_SPREAD = float(_w.get("nn_w_spread", 0.25))
+    logger.info("  NN loss weights: home=%.2f away=%.2f total=%.2f spread=%.2f",
+                LW_HOME, LW_AWAY, LW_TOTAL, LW_SPREAD)
+
     best_loss, best_state = float("inf"), None
 
     for epoch in range(150):
@@ -260,10 +270,10 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
             optimizer.zero_grad()
             ph, pa = model(xb)
             loss = (
-                0.40 * (torch.abs(ph - yh) * w).mean() +
-                0.40 * (torch.abs(pa - ya) * w).mean() +
-                0.35 * (torch.abs((ph + pa) - (yh + ya)) * w).mean() +
-                0.25 * (torch.abs((ph - pa) - (yh - ya)) * w).mean()
+                LW_HOME   * (torch.abs(ph - yh) * w).mean() +
+                LW_AWAY   * (torch.abs(pa - ya) * w).mean() +
+                LW_TOTAL  * (torch.abs((ph + pa) - (yh + ya)) * w).mean() +
+                LW_SPREAD * (torch.abs((ph - pa) - (yh - ya)) * w).mean()
             )
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)

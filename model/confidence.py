@@ -63,8 +63,23 @@ def compute_confidence(
     if generation_timestamp is None:
         generation_timestamp = datetime.now(timezone.utc)
 
-    # Component 1: Model Agreement (most reliable)
-    model_agreement = _compute_model_agreement(sub_model_predictions)
+    # Load weights dynamically from Bayesian optimizer
+    from bayesian_optimizer import load_weights as _lw
+    _w = _lw()
+    w_model  = float(_w.get("conf_w_model",   W_MODEL_AGREEMENT))
+    w_feat   = float(_w.get("conf_w_feat",    W_FEATURE_COMPLETENESS))
+    w_h2h    = float(_w.get("conf_w_h2h",     W_H2H_QUALITY))
+    div      = float(_w.get("conf_model_div", 10.0))
+    t_high   = float(_w.get("conf_high_thr",  LABEL_THRESHOLDS["HIGH"]))
+    t_med    = float(_w.get("conf_med_thr",   LABEL_THRESHOLDS["MEDIUM"]))
+
+    # Normalise component weights
+    total_w = w_model + w_feat + w_h2h
+    if total_w > 0:
+        w_model /= total_w; w_feat /= total_w; w_h2h /= total_w
+
+    # Component 1: Model Agreement (uses dynamic divisor)
+    model_agreement = _compute_model_agreement(sub_model_predictions, divisor=div)
 
     # Component 2: Feature Completeness
     feature_completeness = _compute_feature_completeness(game_row)
@@ -72,19 +87,23 @@ def compute_confidence(
     # Component 3: H2H Data Quality
     h2h_quality = float(np.clip(game_row.get("h2h_data_confidence", 0.5), 0.0, 1.0))
 
-    # Base score (no freshness penalty)
+    # Weighted score with dynamic weights
     score = (
-        W_MODEL_AGREEMENT      * model_agreement      +
-        W_FEATURE_COMPLETENESS * feature_completeness +
-        W_H2H_QUALITY          * h2h_quality
+        w_model * model_agreement      +
+        w_feat  * feature_completeness +
+        w_h2h   * h2h_quality
     )
 
-    # Injury freshness BONUS only (not penalty)
+    # Injury freshness BONUS only
     freshness = _compute_injury_freshness(generation_timestamp, kickoff_timestamp)
-    bonus = FRESHNESS_BONUS_MAX * max(0.0, freshness - 0.60)   # only above 0.60 gives bonus
+    bonus = FRESHNESS_BONUS_MAX * max(0.0, freshness - 0.60)
     score = float(np.clip(score + bonus, 0.0, 1.0))
 
-    label = _score_to_label(score)
+    # Dynamic thresholds
+    if   score >= t_high:                   label = "HIGH"
+    elif score >= t_med:                    label = "MEDIUM"
+    elif score >= LABEL_THRESHOLDS["LOW"]:  label = "LOW"
+    else:                                   label = "WEAK"
 
     return {
         "confidence_score": round(score, 4),
@@ -137,7 +156,7 @@ def compute_confidence_batch(
 
 # ── Private helpers ───────────────────────────────────────────────────────────
 
-def _compute_model_agreement(sub_preds: Optional[dict]) -> float:
+def _compute_model_agreement(sub_preds: Optional[dict], divisor: float = 10.0) -> float:
     if not sub_preds or len(sub_preds) < 2:
         return 0.72
 
@@ -147,8 +166,8 @@ def _compute_model_agreement(sub_preds: Optional[dict]) -> float:
         return 0.72
 
     avg_std = (np.std(home_preds) + np.std(away_preds)) / 2.0
-    # Divisor 10: if models disagree by 10 pts on average → score ≈ 0
-    return float(np.clip(1.0 - avg_std / 10.0, 0.0, 1.0))
+    # divisor: if models disagree by divisor pts on average → score ≈ 0
+    return float(np.clip(1.0 - avg_std / divisor, 0.0, 1.0))
 
 
 def _compute_feature_completeness(row: pd.Series) -> float:

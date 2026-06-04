@@ -692,17 +692,21 @@ def _add_injury_features(tg: pd.DataFrame) -> pd.DataFrame:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
+    # Load Elo parameters dynamically from Bayesian optimizer
+    from bayesian_optimizer import load_weights as _lw
+    _w = _lw()
+    ELO_K_DYN    = float(_w.get("elo_k",           ELO_K))
+    ELO_REG      = float(_w.get("elo_regression",   0.67))
+    ELO_MOV      = float(_w.get("elo_mov_mult",     2.2))
+
     # Sort by season, week, then game_id (stable sort within same day)
-    # game_id is YEAR_WK_AWAY_HOME — alphabetical sort gives stable same-day ordering
-    # This prevents Elo leakage where game B on same day uses game A's updated Elo
     tg = tg.sort_values(["season", "week", "game_id", "team"]).reset_index(drop=True)
     tg["elo_pre_game"]          = np.nan
     tg["elo_expected_win_prob"] = np.nan
     elo: dict = {}
 
-    # Track which games have been processed (to avoid double-updating Elo on same game)
     processed: set = set()
-    prev_week  = None
+    prev_week   = None
     prev_season = None
 
     for idx, row in tg.iterrows():
@@ -710,7 +714,7 @@ def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
         # Seasonal regression toward mean at season boundary
         if prev_season is not None and season != prev_season:
             for t in list(elo):
-                elo[t] = ELO_START + 0.67 * (elo[t] - ELO_START)
+                elo[t] = ELO_START + ELO_REG * (elo[t] - ELO_START)
         prev_season = season
 
         team = row["team"]
@@ -732,11 +736,11 @@ def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
             a_score = row.get("opp_score")
             if pd.notna(h_score) and pd.notna(a_score):
                 margin   = abs(h_score - a_score)
-                mov_mult = np.log(margin + 1) * 2.2 / (
+                mov_mult = np.log(margin + 1) * ELO_MOV / (
                     abs(team_elo - opp_elo) * 0.001 + 1.0
                 )
                 h_actual = 1.0 if h_score > a_score else (0.5 if h_score == a_score else 0.0)
-                delta = ELO_K * mov_mult * (h_actual - exp_win)
+                delta = ELO_K_DYN * mov_mult * (h_actual - exp_win)
                 elo[team] = team_elo + delta
                 elo[opp]  = opp_elo  - delta
 
@@ -1265,6 +1269,21 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
             game_df[target] = pd.to_numeric(game_df[score_col], errors="coerce")
         else:
             game_df[target] = np.nan
+
+    # ── Research-backed feature weighting ─────────────────────────────────
+    # nfelo WEPA study: offensive EPA is 1.6× more predictive than defensive EPA
+    # Harvard/covers: ~54% of turnovers are luck → downweight
+    from bayesian_optimizer import load_weights as _lw
+    _w = _lw()
+    OFF_EPA_W  = float(_w.get("off_epa_weight",  1.6))
+    TO_W       = float(_w.get("turnover_weight", 0.6))
+
+    # Apply weights to matchup gap features after they're computed
+    for col in game_df.columns:
+        if "off_epa" in col and ("home_off" in col or "away_off" in col):
+            game_df[col] = game_df[col] * OFF_EPA_W
+        elif "turnover" in col.lower() and any(s in col for s in ["_r4","_r8","_r16","_diff"]):
+            game_df[col] = game_df[col] * TO_W
 
     if "target_home_score" in game_df.columns and "target_away_score" in game_df.columns:
         game_df["target_total"]  = game_df["target_home_score"] + game_df["target_away_score"]
