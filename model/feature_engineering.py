@@ -204,6 +204,65 @@ def _build_game_base(seasons: list) -> pd.DataFrame:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  WEPA HELPER: Play-type weights for Weighted EPA
+# ══════════════════════════════════════════════════════════════════════════════
+
+def _compute_wepa_weights(pbp: pd.DataFrame) -> pd.DataFrame:
+    """
+    Compute Weighted EPA (WEPA) for each play.
+
+    Based on nfelo research (2022): weighting plays by their predictive value
+    for future team performance improves predictive power by ~14% over raw EPA.
+
+    Weight logic:
+      - Garbage time (wp < 0.05 or wp > 0.95, AND < 15 min remaining): 0.20
+        → opponent eases up, not reflective of true team quality
+      - QB spike / kneel / two-point attempt: 0.10
+        → nearly zero football signal
+      - Penalty plays: 0.40
+        → partially random, reduces true performance signal
+      - Explosive plays (air_yards >= 20 OR yards_gained >= 15): 0.65
+        → high variance, luck component (Pythagorean luck)
+      - Normal pass (not above): 1.20
+        → most predictive play type per nfelo study
+      - Normal run: 0.80
+        → less predictive than passing
+    """
+    pbp = pbp.copy()
+
+    # Classify each play
+    is_garbage = (
+        ((pbp["wp"] < 0.05) | (pbp["wp"] > 0.95)) &
+        (pbp["game_seconds_remaining"] < 900)   # last 15 mins
+    )
+    is_spike_kneel = pbp["play_type"].isin(["qb_spike", "qb_kneel"])
+    is_two_point   = pbp.get("two_point_attempt", pd.Series(0, index=pbp.index)).astype(bool)
+    is_penalty_only = (pbp["penalty"] == 1) & ~pbp["play_type"].isin(["pass","run"])
+    is_explosive   = (
+        (pbp["air_yards"] >= 20) | (pbp["yards_gained"] >= 15)
+    ) & ~is_garbage
+
+    # Build weight vector (vectorized)
+    weight = pd.Series(1.0, index=pbp.index)   # default
+
+    # Apply in priority order (most restrictive first)
+    is_pass = pbp["play_type"] == "pass"
+    is_run  = pbp["play_type"] == "run"
+
+    weight = np.where(is_spike_kneel | is_two_point, 0.10, weight)
+    weight = np.where(is_garbage,                    0.20, weight)
+    weight = np.where(is_penalty_only,               0.40, weight)
+    weight = np.where(is_explosive & ~is_garbage,    0.65, weight)
+    weight = np.where(is_pass & ~is_explosive & ~is_garbage & ~is_penalty_only, 1.20, weight)
+    weight = np.where(is_run  & ~is_explosive & ~is_garbage & ~is_penalty_only, 0.80, weight)
+
+    pbp["_wepa_weight"] = weight
+    pbp["_wepa"]        = pbp["epa"] * pbp["_wepa_weight"]
+
+    return pbp
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  STEP 2: PBP AGGREGATION (vectorized, no lambdas)
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -220,12 +279,17 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         return pd.DataFrame(columns=["game_id","team"])
 
     # Ensure all required columns exist with safe defaults
-    # This prevents KeyError if nflverse changes column names or a column is absent
     numeric_cols_zero = [
         "epa","wpa","cpoe","air_yards","yards_gained","yards_after_catch",
         "success","sack","qb_hit","penalty_yards","first_down","touchdown",
         "interception","fumble_lost","fumble","shotgun","no_huddle",
         "return_yards",
+        # WEPA columns
+        "wp","game_seconds_remaining","penalty",
+        # Coverage complexity columns
+        "defenders_in_box","number_of_pass_rushers",
+        # Turnover luck columns
+        "pass_attempt","rush_attempt",
     ]
     for col in numeric_cols_zero:
         if col not in pbp.columns:
@@ -233,9 +297,21 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         else:
             pbp[col] = pd.to_numeric(pbp[col], errors="coerce").fillna(0)
 
+    # Also ensure yardline_100 for red zone detection
+    if "yardline_100" not in pbp.columns:
+        pbp["yardline_100"] = 50.0
+    else:
+        pbp["yardline_100"] = pd.to_numeric(pbp["yardline_100"], errors="coerce").fillna(50)
+
     scrimmage_mask = pbp["play_type"].isin(["pass","run","qb_kneel","qb_spike"])
     pass_mask = pbp["play_type"] == "pass"
     run_mask  = pbp["play_type"] == "run"
+
+    # ══ WEIGHTED EPA (WEPA) ══════════════════════════════════════════════════
+    # nfelo research: weight plays by their predictive value for future performance
+    # Garbage time, explosive plays, penalties, spikes downweighted
+    # Normal pass plays most predictive (1.2×), runs less so (0.8×)
+    pbp = _compute_wepa_weights(pbp)
 
     # ── Offensive aggregates — split pass/run first, then merge ──────────
 
@@ -246,6 +322,9 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         .agg(
             off_epa_per_play       =("epa",         "mean"),
             off_epa_total          =("epa",         "sum"),
+            # WEPA: weighted EPA (nfelo research — more predictive than raw EPA)
+            off_wepa_per_play      =("_wepa",       "mean"),
+            off_wepa_total         =("_wepa",       "sum"),
             off_success_rate       =("success",     "mean"),
             off_yards_per_play     =("yards_gained","mean"),
             off_total_yards        =("yards_gained","sum"),
@@ -438,12 +517,88 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     )
     fg["fg_pct"] = fg["fg_made"] / fg["fg_attempts"].clip(lower=1)
 
+    # ── Coverage Complexity (NFL Operations 2024 research) ───────────────
+    # Two-high safety usage went from 44% (2019) to 63% (2024)
+    # defenders_in_box and number_of_pass_rushers proxy coverage complexity
+
+    cov_def = pd.DataFrame(columns=["game_id","team"])
+    if "defenders_in_box" in pbp.columns and pbp["defenders_in_box"].notna().any():
+        cov_def = (
+            pbp[pbp["defteam"].notna() & pass_mask & (pbp["defenders_in_box"] > 0)]
+            .groupby(["game_id","defteam"])
+            .agg(
+                def_avg_defenders_box    =("defenders_in_box",        "mean"),
+                def_avg_pass_rushers     =("number_of_pass_rushers",  "mean"),
+            )
+            .reset_index()
+            .rename(columns={"defteam":"team"})
+        )
+        # Coverage complexity score: combined signal (higher = more complex defense)
+        if len(cov_def) > 0:
+            cov_def["def_coverage_complexity"] = (
+                cov_def["def_avg_defenders_box"].fillna(6.5) / 6.5 * 0.5 +
+                cov_def["def_avg_pass_rushers"].fillna(4.0) / 4.0 * 0.5
+            )
+        logger.debug("  Coverage complexity: %d game-team rows", len(cov_def))
+
+    # ── Turnover Luck Correction (Harvard 2014, covers.com research) ─────
+    # 54% of turnovers are luck. We compute rolling vs season baseline divergence.
+    # A team winning the turnover battle far above their season average is "lucky"
+    # and will likely regress.
+
+    to_luck = pd.DataFrame(columns=["game_id","team"])
+    if "_to_committed" in pbp.columns:
+        # Season-level expected turnover rate (per play)
+        season_to_rates = {}
+        if "season" in pbp.columns:
+            for season, grp in pbp.groupby("season"):
+                pass_plays = (grp["play_type"] == "pass").sum()
+                total_ints = grp["interception"].sum()
+                total_fumb = grp["fumble_lost"].sum()
+                # Expected rates per pass/run attempt
+                int_rate  = total_ints / max(pass_plays, 1)
+                fumb_rate = total_fumb / max(len(grp), 1)
+                season_to_rates[season] = {"int_rate": int_rate, "fumb_rate": fumb_rate}
+
+        # Per-game turnover luck: actual - expected
+        to_by_game = (
+            pbp[pbp["posteam"].notna()]
+            .groupby(["game_id","posteam","season"])
+            .agg(
+                actual_int    =("interception", "sum"),
+                actual_fumb   =("fumble_lost",  "sum"),
+                pass_attempts =("pass_attempt", "sum"),
+                rush_attempts =("rush_attempt", "sum"),
+            )
+            .reset_index()
+            .rename(columns={"posteam":"team"})
+        )
+
+        if len(to_by_game) > 0 and season_to_rates:
+            def _expected_to(row):
+                rates = season_to_rates.get(row["season"], {"int_rate": 0.025, "fumb_rate": 0.01})
+                exp_int  = row["pass_attempts"] * rates["int_rate"]
+                exp_fumb = row["rush_attempts"] * rates["fumb_rate"]
+                return exp_int + exp_fumb
+
+            to_by_game["expected_to"] = to_by_game.apply(_expected_to, axis=1)
+            to_by_game["actual_to"]   = to_by_game["actual_int"] + to_by_game["actual_fumb"]
+            # Luck = actual - expected (positive = lucky, will regress)
+            to_by_game["turnover_luck"] = to_by_game["actual_to"] - to_by_game["expected_to"]
+            # Skill-adjusted turnovers: actual - 0.54 × luck component
+            to_by_game["to_skill_adj"] = (
+                to_by_game["actual_to"] -
+                0.54 * to_by_game["turnover_luck"].clip(lower=0)
+            )
+            to_luck = to_by_game[["game_id","team","turnover_luck","to_skill_adj"]]
+            logger.debug("  Turnover luck: %d game-team rows", len(to_luck))
+
     # ── Merge all ────────────────────────────────────────────────────────
 
     result = off_base.copy()
     for df in [off_pass, off_rush, off_expl, td3_off, rz_off,
                def_base, def_pass, def_rush, def_expl, td3_def, rz_def,
-               to_off, to_def, pace, fg]:
+               to_off, to_def, pace, fg, cov_def, to_luck]:
         if len(df) > 0:
             result = result.merge(df, on=["game_id","team"], how="left")
 
@@ -502,6 +657,7 @@ def _build_team_games(games: pd.DataFrame, pbp_agg: pd.DataFrame) -> pd.DataFram
 
 def _add_rolling(tg: pd.DataFrame) -> pd.DataFrame:
     stat_cols = [c for c in [
+        # Standard EPA features
         "off_epa_per_play","off_success_rate","off_yards_per_play",
         "off_pass_epa","off_cpoe","off_air_yards_per_att","off_rush_epa",
         "off_rush_yards_per_att","off_third_down_rate","off_rz_success_rate",
@@ -510,7 +666,14 @@ def _add_rolling(tg: pd.DataFrame) -> pd.DataFrame:
         "def_pass_epa","def_rush_epa","def_explosive_allowed",
         "def_third_down_allowed","def_rz_success_allowed","def_rz_td_allowed",
         "def_sack_rate","def_pressure_rate",
+        # WEPA: Weighted EPA (nfelo research — more predictive than raw EPA)
+        "off_wepa_per_play","off_wepa_total",
+        # Coverage complexity (NFL Operations 2024 research)
+        "def_avg_defenders_box","def_avg_pass_rushers","def_coverage_complexity",
+        # Turnover luck correction (Harvard 2014, covers.com)
         "turnovers_committed","turnovers_forced","interceptions","fumbles_lost",
+        "turnover_luck","to_skill_adj",
+        # Standard other features
         "fg_pct","shotgun_rate","no_huddle_rate","team_score","opp_score",
     ] if c in tg.columns]
 
@@ -1165,8 +1328,6 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
 
     # ── Season scoring trend ──────────────────────────────────────────────
     # NFL total scoring has trended up ~1 pt/season since 2015.
-    # Per-season average total gives the model context on the current scoring environment.
-    # Computed from historical game totals within each season.
     if "team_score" in tg.columns and "opp_score" in tg.columns:
         season_totals = (
             tg.groupby(["game_id","season"])
@@ -1178,22 +1339,69 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
             .rename(columns={"game_total": "season_avg_total"})
         )
         tg = tg.merge(season_totals, on="season", how="left")
-        # Deviation from the historical mean (2020-2025 avg ~45.5)
         tg["scoring_era_adj"] = tg["season_avg_total"].fillna(45.5) - 45.5
     else:
         tg["scoring_era_adj"] = 0.0
 
-    # ── Dynamic home field advantage ─────────────────────────────────────
-    # Historical HFA by season (excl. 2020 COVID):
-    # 2021-2025 average: ~2.3 pts. Per-season analysis shows declining trend.
-    # Encode as a feature so model can learn the current season's HFA.
-    season_hfa = {
-        2015: 2.8, 2016: 2.5, 2017: 2.3, 2018: 2.1, 2019: 2.2,
-        2020: 0.1,  # COVID — anomaly
-        2021: 2.4, 2022: 2.6, 2023: 2.3, 2024: 2.2, 2025: 2.1,
-        2026: 2.0,  # projected (declining trend)
-    }
-    tg["season_hfa"] = tg["season"].map(season_hfa).fillna(2.2)
+    # ── Rolling Home Field Advantage (FiveThirtyEight methodology) ────────
+    # FiveThirtyEight (2021): switched from fixed HFA to rolling 10-season average.
+    # Research: HFA declined from ~2.8pts (pre-2015) to ~1.5pts (2024).
+    # Implementation: compute actual HFA per season from completed games,
+    # then use exponentially weighted rolling average as a feature.
+
+    hfa_by_season = {}
+    if "team_score" in tg.columns and "is_home" in tg.columns:
+        completed = tg[tg["team_score"].notna()].copy()
+        if len(completed) > 0:
+            home_games = completed[completed["is_home"] == 1]
+            away_games = completed[completed["is_home"] == 0]
+
+            # HFA = average home score minus average away score, by season
+            h_avg = home_games.groupby("season")["team_score"].mean()
+            a_avg = away_games.groupby("season")["team_score"].mean()
+
+            seasons_with_both = h_avg.index.intersection(a_avg.index)
+            for s in sorted(seasons_with_both):
+                # Exclude 2020 COVID outlier from HFA calculation
+                if s != 2020:
+                    hfa_by_season[s] = float(h_avg[s] - a_avg[s])
+
+    # Exponentially weighted rolling average across seasons
+    # Weight decay: more recent seasons weighted more
+    def _rolling_hfa(season: int, hfa_dict: dict, decay: float = 0.7) -> float:
+        """EW average of past HFA values, decaying by `decay` per year."""
+        past = [(s, v) for s, v in hfa_dict.items() if s < season and s != 2020]
+        if not past:
+            return 2.0   # league average default
+        past.sort(key=lambda x: x[0])
+        total_w, total_v = 0.0, 0.0
+        for i, (_, v) in enumerate(past):
+            w = decay ** (len(past) - 1 - i)
+            total_w += w
+            total_v += w * v
+        return total_v / max(total_w, 1e-9)
+
+    tg["rolling_hfa"] = tg["season"].apply(
+        lambda s: _rolling_hfa(s, hfa_by_season)
+    )
+
+    # Per-team HFA — some teams (KC, SEA) consistently higher than league average
+    if "team" in tg.columns and "is_home" in tg.columns and "team_score" in tg.columns:
+        completed = tg[tg["team_score"].notna() & (tg["season"] != 2020)].copy()
+        if len(completed) > 20:
+            team_home = completed[completed["is_home"] == 1].groupby("team")["team_score"].mean()
+            team_away = completed[completed["is_home"] == 0].groupby("team")["team_score"].mean()
+            team_hfa  = (team_home - team_away).dropna()
+            tg["team_specific_hfa"] = tg["team"].map(team_hfa).fillna(tg["rolling_hfa"])
+        else:
+            tg["team_specific_hfa"] = tg["rolling_hfa"]
+    else:
+        tg["team_specific_hfa"] = 2.0
+
+    # Dynamic season HFA (replaces the hardcoded season_hfa dict)
+    tg["season_hfa"] = tg["season"].apply(
+        lambda s: _rolling_hfa(s, hfa_by_season)
+    )
 
     return tg
 
@@ -1257,10 +1465,26 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
     _add_gap(game_df, "away_off_pass_epa_r8",      "home_def_pass_epa_r8",      "away_pass_vs_home_def_r8")
     _add_gap(game_df, "away_off_rush_epa_r8",      "home_def_rush_epa_r8",      "away_rush_vs_home_def_r8")
 
-    # Turnover gap
+    # Turnover gaps (raw + luck-adjusted)
     for sfx in ["r4","r8","r16"]:
         h, a = f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}"
         _add_gap(game_df, h, a, f"turnover_diff_gap_{sfx}")
+
+    # WEPA matchup gaps (research-backed: more predictive than raw EPA)
+    _add_gap(game_df, "home_off_wepa_per_play_r8", "away_def_epa_per_play_r8",
+             "home_wepa_vs_away_def_r8")
+    _add_gap(game_df, "away_off_wepa_per_play_r8", "home_def_epa_per_play_r8",
+             "away_wepa_vs_home_def_r8")
+
+    # Coverage complexity advantage
+    _add_gap(game_df, "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
+             "coverage_complexity_gap")
+
+    # Turnover skill-adjusted gaps (Harvard: 54% luck → use skill-adjusted version)
+    _add_gap(game_df, "home_to_skill_adj_r8", "away_to_skill_adj_r8",
+             "turnover_skill_adj_gap_r8")
+    _add_gap(game_df, "home_turnover_luck_r8", "away_turnover_luck_r8",
+             "turnover_luck_gap_r8")
 
     # Target columns — use merged score columns directly
     for side, target in [("home","target_home_score"),("away","target_away_score")]:
