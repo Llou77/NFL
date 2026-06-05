@@ -51,6 +51,15 @@ jobs:
           git add docs/assets/performance.json || true
           git add data/predictions/predictions_latest.json || true
           git add data/predictions/performance.json || true
+          git add model/saved/calibration.json || true
+          git add model/saved/feature_list.json || true
+          git add model/saved/version.txt || true
+          git add model/saved/training_log.json || true
+          git add model/saved/nn_config.json || true
+          git add model/saved/*.pkl || true
+          git add model/saved/*.json || true
+          git add model/saved/*.pt || true
+          git add model/saved/lgbm_home.txt model/saved/lgbm_away.txt || true
           git diff --staged --quiet || git commit -m "Weekly update — $(date -u '+%Y-%m-%d')"
           git push
 
