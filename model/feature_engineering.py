@@ -1494,21 +1494,6 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
         else:
             game_df[target] = np.nan
 
-    # ── Research-backed feature weighting ─────────────────────────────────
-    # nfelo WEPA study: offensive EPA is 1.6× more predictive than defensive EPA
-    # Harvard/covers: ~54% of turnovers are luck → downweight
-    from bayesian_optimizer import load_weights as _lw
-    _w = _lw()
-    OFF_EPA_W  = float(_w.get("off_epa_weight",  1.6))
-    TO_W       = float(_w.get("turnover_weight", 0.6))
-
-    # Apply weights to matchup gap features after they're computed
-    for col in game_df.columns:
-        if "off_epa" in col and ("home_off" in col or "away_off" in col):
-            game_df[col] = game_df[col] * OFF_EPA_W
-        elif "turnover" in col.lower() and any(s in col for s in ["_r4","_r8","_r16","_diff"]):
-            game_df[col] = game_df[col] * TO_W
-
     if "target_home_score" in game_df.columns and "target_away_score" in game_df.columns:
         game_df["target_total"]  = game_df["target_home_score"] + game_df["target_away_score"]
         game_df["target_spread"] = game_df["target_home_score"] - game_df["target_away_score"]

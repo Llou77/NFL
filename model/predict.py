@@ -106,6 +106,24 @@ def generate_predictions(
     raw_home = models["meta_home"].predict(meta_X_home)
     raw_away = models["meta_away"].predict(meta_X_away)
 
+    # ── Sanity check ─────────────────────────────────────────────────────
+    avg_total = float(np.mean(raw_home + raw_away))
+    avg_home  = float(np.mean(raw_home))
+    if avg_total > 65 or avg_home < 10 or avg_home > 40:
+        logger.error(
+            "PREDICTION SANITY FAIL: avg_home=%.1f avg_total=%.1f — "
+            "expected home ~24pts, total ~45pts. "
+            "Model may be stale or trained on wrong targets. "
+            "Re-run --mode full to retrain.",
+            avg_home, avg_total
+        )
+        # Clamp to plausible range rather than publish garbage
+        scale_h = 24.0 / max(avg_home, 1.0)
+        scale_a = 21.8 / max(float(np.mean(raw_away)), 1.0)
+        raw_home = raw_home * scale_h
+        raw_away = raw_away * scale_a
+        logger.warning("Applied emergency rescaling: home×%.3f away×%.3f", scale_h, scale_a)
+
     # ── Variance calibration ──────────────────────────────────────────────
     # Apply spread rescaling to reverse the regression-to-mean from Ridge
     calib_path = ROOT / "model" / "saved" / "calibration.json"
