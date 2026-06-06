@@ -91,6 +91,16 @@ def build_all_features(seasons: Optional[list] = None) -> pd.DataFrame:
     tg.to_parquet(PROCESSED_DIR / "team_games.parquet", index=False)
 
     game_df = _pivot_to_game(tg)
+
+    # Player ratings and positional matchup gaps (added at game level after pivot)
+    try:
+        from player_ratings import build_player_ratings
+        game_df = build_player_ratings(game_df, seasons)
+        n_rating_cols = sum(1 for c in game_df.columns if "rating" in c or "_gap" in c)
+        logger.info("  Player ratings: %d rating/gap columns added", n_rating_cols)
+    except Exception as e:
+        logger.warning("  Player ratings skipped (non-fatal): %s", e)
+
     game_df.to_parquet(PROCESSED_DIR / "game_features.parquet", index=False)
     logger.info("  Final game matrix: %d rows × %d cols", len(game_df), len(game_df.columns))
 
@@ -354,14 +364,16 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         .rename(columns={"posteam":"team"})
     )
 
-    # Passing only
+    # Passing only — precompute explosive flag to avoid lambda in agg
+    pbp_pass = pbp[pbp["posteam"].notna() & pass_mask].copy()
+    pbp_pass["_expl_pass"] = (pbp_pass["yards_gained"] >= 20).astype(float)
     off_pass = (
-        pbp[pbp["posteam"].notna() & pass_mask]
+        pbp_pass
         .groupby(["game_id","posteam"])
         .agg(
             off_pass_epa      =("epa",         "mean"),
             off_pass_success  =("success",     "mean"),
-            off_explosive_pass=("yards_gained",lambda x: (x >= 20).mean()),
+            off_explosive_pass=("_expl_pass",  "mean"),
         )
         .reset_index()
         .rename(columns={"posteam":"team"})
@@ -380,14 +392,17 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
         .rename(columns={"posteam":"team"})
     )
 
-    # Explosive any
+    # Explosive any — vectorized (lambda in agg unreliable in pandas 2.x)
+    pbp_sc = pbp[pbp["posteam"].notna() & scrimmage_mask].copy()
+    pbp_sc["_is_expl"] = (pbp_sc["yards_gained"] >= 20).astype(float)
     off_expl = (
-        pbp[pbp["posteam"].notna() & scrimmage_mask]
+        pbp_sc
         .groupby(["game_id","posteam"])
-        .agg(off_explosive_play_rate=("yards_gained", lambda x: (x >= 20).mean()))
+        .agg(off_explosive_play_rate=("_is_expl", "mean"))
         .reset_index()
         .rename(columns={"posteam":"team"})
     )
+    pbp_sc = pbp_sc.drop(columns=["_is_expl"])
 
     # 3rd down offense
     td3_off = (
@@ -411,6 +426,9 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     )
 
     # ── Defensive aggregates ─────────────────────────────────────────────
+    # Precompute explosive flag for defense (lambda in agg unreliable pandas 2.x)
+    pbp_def_expl = pbp[pbp["defteam"].notna() & pass_mask].copy()
+    pbp_def_expl["_is_expl_def"] = (pbp_def_expl["yards_gained"] >= 20).astype(float)
 
     def_base = (
         pbp[pbp["defteam"].notna() & scrimmage_mask]
@@ -446,7 +464,7 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     def_expl = (
         pbp[pbp["defteam"].notna() & scrimmage_mask]
         .groupby(["game_id","defteam"])
-        .agg(def_explosive_allowed=("yards_gained", lambda x: (x >= 20).mean()))
+        .agg(def_explosive_allowed=("_is_expl_def", "mean"))
         .reset_index()
         .rename(columns={"defteam":"team"})
     )
@@ -518,12 +536,14 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     )
 
     # ── Special teams ────────────────────────────────────────────────────
+    # Precompute fg_made flag (lambda in agg unreliable pandas 2.x)
+    pbp["_fg_made_flag"] = (pbp.get("field_goal_result", "") == "made").astype(float)
 
     fg = (
         pbp[pbp["play_type"] == "field_goal"]
         .groupby(["game_id","posteam"])
         .agg(
-            fg_made    =("field_goal_result", lambda x: (x == "made").sum()),
+            fg_made    =("_fg_made_flag",    "sum"),
             fg_attempts=("field_goal_result", "count"),
         )
         .reset_index()
@@ -856,12 +876,27 @@ def _add_injury_features(tg: pd.DataFrame) -> pd.DataFrame:
             tg[k] = v
         return tg
 
-    agg = inj.groupby(grp_cols).agg(
-        qb_available         =("status_score", lambda x: x[inj.loc[x.index,"is_qb"]==1].max() if (inj.loc[x.index,"is_qb"]==1).any() else 1.0),
-        off_availability_score=("weighted",    lambda x: x[inj.loc[x.index,"is_off"]==1].mean() if (inj.loc[x.index,"is_off"]==1).any() else 1.0),
-        def_availability_score=("weighted",    lambda x: x[inj.loc[x.index,"is_def"]==1].mean() if (inj.loc[x.index,"is_def"]==1).any() else 1.0),
-        injury_report_severity=("is_out",      "sum"),
-    ).reset_index()
+    # Vectorized: separate aggregation per position group, then merge
+    # Avoids lambda-in-agg closure bugs with pandas 2.x
+    qb_agg = (
+        inj[inj["is_qb"] == 1].groupby(grp_cols)["status_score"]
+        .max().reset_index().rename(columns={"status_score": "qb_available"})
+    )
+    off_agg = (
+        inj[inj["is_off"] == 1].groupby(grp_cols)["weighted"]
+        .mean().reset_index().rename(columns={"weighted": "off_availability_score"})
+    )
+    def_agg = (
+        inj[inj["is_def"] == 1].groupby(grp_cols)["weighted"]
+        .mean().reset_index().rename(columns={"weighted": "def_availability_score"})
+    )
+    severity_agg = (
+        inj.groupby(grp_cols)["is_out"]
+        .sum().reset_index().rename(columns={"is_out": "injury_report_severity"})
+    )
+    agg = severity_agg.copy()
+    for sub in [qb_agg, off_agg, def_agg]:
+        agg = agg.merge(sub, on=grp_cols, how="left")
     agg = agg.fillna({"qb_available":1.0,"off_availability_score":1.0,
                       "def_availability_score":1.0,"injury_report_severity":0.0})
 
@@ -892,7 +927,6 @@ def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
     elo: dict = {}
 
     processed: set = set()
-    prev_week   = None
     prev_season = None
 
     for idx, row in tg.iterrows():
@@ -1188,11 +1222,18 @@ def _add_qb_coach_change_flags(tg: pd.DataFrame) -> pd.DataFrame:
 
 def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
     """
-    Add historical game-level book spreads and totals from mrcaseb data.
-    This gives us 'what the market thought' at game time — a very powerful
-    cross-validation signal. Also used for Edge ATS calculation.
+    Add historical game-level book spreads, totals and opening lines.
 
-    Columns: game_id, market_type (spread/total/money_line), abbr (team), lines, odds
+    Opening spread = oddsmaker's pure estimate before public money moves it.
+    This is more informative than closing spread as a model input because:
+      - Not contaminated by public betting patterns
+      - Represents the market's best pre-information estimate
+      - Model divergence from opening spread = genuine edge signal
+
+    Model divergence from opening spread (model_vs_market_gap) is one of the
+    strongest available betting edge indicators.
+
+    Columns: game_id, market_type, abbr (team), lines, odds, opening_lines, opening_odds
     """
     from data_loader import get_table
     gl = get_table("game_lines")
@@ -1201,8 +1242,13 @@ def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
         return tg
 
     try:
-        # Extract spreads: consensus across books
-        spreads = (
+        gl["lines"]          = pd.to_numeric(gl["lines"],          errors="coerce")
+        gl["opening_lines"]  = pd.to_numeric(gl["opening_lines"],  errors="coerce")
+        gl["odds"]           = pd.to_numeric(gl["odds"],           errors="coerce")
+        gl["opening_odds"]   = pd.to_numeric(gl["opening_odds"],   errors="coerce")
+
+        # ── CLOSING spread (consensus across books) ───────────────────────
+        spreads_close = (
             gl[gl["market_type"] == "spread"]
             .groupby(["game_id", "abbr"])["lines"]
             .median()
@@ -1210,8 +1256,17 @@ def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
             .rename(columns={"lines": "book_spread_hist", "abbr": "team"})
         )
 
-        # Extract totals
-        totals = (
+        # ── OPENING spread (pre-public-money estimate) ────────────────────
+        spreads_open = (
+            gl[(gl["market_type"] == "spread") & gl["opening_lines"].notna()]
+            .groupby(["game_id", "abbr"])["opening_lines"]
+            .median()
+            .reset_index()
+            .rename(columns={"opening_lines": "opening_spread", "abbr": "team"})
+        )
+
+        # ── CLOSING total ─────────────────────────────────────────────────
+        totals_close = (
             gl[gl["market_type"] == "total"]
             .groupby("game_id")["lines"]
             .median()
@@ -1219,23 +1274,80 @@ def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
             .rename(columns={"lines": "book_total_hist"})
         )
 
-        # Merge spreads onto team-game table
-        if "game_id" in tg.columns and len(spreads) > 0:
-            tg = tg.merge(spreads, on=["game_id", "team"], how="left")
+        # ── OPENING total ─────────────────────────────────────────────────
+        totals_open = (
+            gl[(gl["market_type"] == "total") & gl["opening_lines"].notna()]
+            .groupby("game_id")["opening_lines"]
+            .median()
+            .reset_index()
+            .rename(columns={"opening_lines": "opening_total"})
+        )
 
-        if "game_id" in tg.columns and len(totals) > 0:
-            tg = tg.merge(totals, on="game_id", how="left")
-
-        # Fill with schedule spread_line if historical line missing
-        if "spread_line" in tg.columns:
-            tg["book_spread_hist"] = tg.get("book_spread_hist", pd.Series(np.nan, index=tg.index))
-            tg["book_spread_hist"] = tg["book_spread_hist"].fillna(
-                tg["spread_line"] if "spread_line" in tg.columns else np.nan
+        # ── Money line → implied win probability ──────────────────────────
+        # Formula: negative line → prob = |line| / (|line| + 100)
+        #          positive line → prob = 100 / (line + 100)
+        # Use closing money line; opening as fallback
+        def _ml_to_prob(ml_series: pd.Series) -> pd.Series:
+            ml = pd.to_numeric(ml_series, errors="coerce")
+            prob = np.where(
+                ml < 0,
+                np.abs(ml) / (np.abs(ml) + 100),
+                np.where(ml > 0, 100 / (ml + 100), np.nan)
             )
+            # Remove vig: normalize so home+away probs sum to ~1
+            return pd.Series(prob, index=ml_series.index)
 
-        logger.info("  game_lines: %d spread rows, %d total rows added",
-                    spreads["book_spread_hist"].notna().sum() if len(spreads) > 0 else 0,
-                    totals["book_total_hist"].notna().sum() if len(totals) > 0 else 0)
+        ml_data = gl[gl["market_type"] == "money_line"].copy()
+        if len(ml_data) > 0 and "abbr" in ml_data.columns:
+            ml_data["implied_prob"] = _ml_to_prob(ml_data["odds"])
+            ml_agg = (
+                ml_data[ml_data["implied_prob"].notna()]
+                .groupby(["game_id", "abbr"])["implied_prob"]
+                .median()
+                .reset_index()
+                .rename(columns={"implied_prob": "market_win_prob", "abbr": "team"})
+            )
+        else:
+            ml_agg = pd.DataFrame(columns=["game_id", "team", "market_win_prob"])
+
+        # ── Merge all into tg ──────────────────────────────────────────────
+        if len(spreads_close) > 0:
+            tg = tg.merge(spreads_close, on=["game_id", "team"], how="left")
+        if len(spreads_open) > 0:
+            tg = tg.merge(spreads_open,  on=["game_id", "team"], how="left")
+        if len(totals_close) > 0:
+            tg = tg.merge(totals_close,  on="game_id", how="left")
+        if len(totals_open) > 0:
+            tg = tg.merge(totals_open,   on="game_id", how="left")
+        if len(ml_agg) > 0:
+            tg = tg.merge(ml_agg,        on=["game_id", "team"], how="left")
+
+        # ── Fill closing with opening if missing ──────────────────────────
+        if "opening_spread" in tg.columns and "book_spread_hist" in tg.columns:
+            tg["book_spread_hist"] = tg["book_spread_hist"].fillna(tg["opening_spread"])
+        if "spread_line" in tg.columns:
+            tg["book_spread_hist"] = tg.get("book_spread_hist",
+                pd.Series(np.nan, index=tg.index)).fillna(tg["spread_line"])
+            # Use spread_line as opening fallback too
+            if "opening_spread" not in tg.columns:
+                tg["opening_spread"] = tg["spread_line"]
+            else:
+                tg["opening_spread"] = tg["opening_spread"].fillna(tg["spread_line"])
+
+        # ── Vig-free implied probability ──────────────────────────────────
+        # Remove overround so probabilities sum to 1 per game
+        if "market_win_prob" in tg.columns:
+            # For each game, normalize home + away implied probs
+            game_prob_sum = (
+                tg.groupby("game_id")["market_win_prob"]
+                .transform("sum")
+            )
+            tg["market_win_prob_vigfree"] = tg["market_win_prob"] / game_prob_sum.clip(lower=0.5)
+
+        n_open  = tg["opening_spread"].notna().sum() if "opening_spread" in tg.columns else 0
+        n_close = tg["book_spread_hist"].notna().sum() if "book_spread_hist" in tg.columns else 0
+        logger.info("  game_lines: opening_spread=%d rows, closing_spread=%d rows",
+                    n_open, n_close)
 
     except Exception as e:
         logger.warning("  game_lines merge failed: %s", e)
@@ -1354,7 +1466,7 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
     if "team_score" in tg.columns and "opp_score" in tg.columns:
         season_totals = (
             tg.groupby(["game_id","season"])
-            .agg(game_total=("team_score", lambda x: x.sum()))
+            .agg(game_total=("team_score", "sum"))
             .reset_index()
             .groupby("season")["game_total"]
             .mean()
@@ -1445,6 +1557,14 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
         "high_wind","extreme_wind","cold_game","very_cold_game",
         "is_sunday","is_thursday","is_monday","is_saturday",
         "ref_home_win_rate","ref_total_tendency","game_type_weight",
+        # Opening market data — shared per game (same for both teams)
+        "opening_total","book_total_hist",
+        "opening_spread",         # pre-public-money spread estimate
+        # Season context
+        "season_avg_total","scoring_era_adj",
+        "rolling_hfa","season_hfa",
+        # Data availability flags
+        "wepa_available","coverage_available","ngs_available",
     ] if c in tg.columns]
 
     skip = set(shared_cols) | {
@@ -1579,7 +1699,28 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
         "home_turnover_luck_r8", "away_turnover_luck_r8",
         "turnover_luck_gap_r8")
 
-    # ── Availability flags → game-level (home team's flag applies) ─────────
+    # ── Market divergence features ────────────────────────────────────────
+    # These measure how much the model DISAGREES with the opening market.
+    # Large divergences are the core of any betting edge signal.
+    # Note: these are computed AFTER targets to avoid leakage — opening spread
+    # is a PRE-game public signal, not derived from outcomes.
+    if "opening_spread" in game_df.columns:
+        # Model predicted margin vs opening market spread
+        # Positive = model more optimistic about home than opening spread
+        if "home_elo_pre_game" in game_df.columns and "away_elo_pre_game" in game_df.columns:
+            elo_implied = (game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]) / 25.0
+            game_df["elo_vs_opening_spread"] = elo_implied - (-game_df["opening_spread"].fillna(0))
+
+    if "opening_total" in game_df.columns:
+        # Season scoring context vs opening total
+        if "scoring_era_adj" in game_df.columns:
+            game_df["era_adj_vs_opening_total"] = game_df["scoring_era_adj"]
+
+    # Market-implied win probability gap (home vs away)
+    _add_gap(game_df, "home_market_win_prob_vigfree", "away_market_win_prob_vigfree",
+             "market_win_prob_gap")
+
+    # Availability flags → game-level (home team's flag applies)
     for flag in ["wepa_available", "coverage_available", "ngs_available"]:
         home_flag = f"home_{flag}"
         if home_flag in game_df.columns:

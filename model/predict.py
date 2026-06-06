@@ -133,24 +133,34 @@ def generate_predictions(
         logger.warning("Applied emergency rescaling: home×%.3f away×%.3f", scale_h, scale_a)
 
     # ── Variance calibration ──────────────────────────────────────────────
-    # Apply spread rescaling to reverse the regression-to-mean from Ridge
     calib_path = ROOT / "model" / "saved" / "calibration.json"
     if calib_path.exists():
         with open(calib_path) as f:
             calib = json.load(f)
-        scale = calib.get("spread_scale", 1.0)
-        if scale > 1.0:
-            mean_h = np.mean(raw_home)
-            mean_a = np.mean(raw_away)
-            mean_spread = mean_h - mean_a
-            raw_spread  = raw_home - raw_away
-            # Rescale spread around its mean, then redistribute to home/away
-            calibrated_spread = mean_spread + (raw_spread - mean_spread) * scale
-            # Adjust home/away proportionally (preserve total)
-            raw_total = raw_home + raw_away
-            raw_home  = (raw_total + calibrated_spread) / 2.0
-            raw_away  = (raw_total - calibrated_spread) / 2.0
-        logger.info("  Applied variance calibration (scale=%.3f)", scale)
+
+        spread_scale = calib.get("spread_scale", 1.0)
+        total_scale  = calib.get("total_scale",  1.0)
+
+        if spread_scale > 1.0 or total_scale > 1.0:
+            mean_h       = np.mean(raw_home)
+            mean_a       = np.mean(raw_away)
+            mean_total   = mean_h + mean_a
+            mean_spread  = mean_h - mean_a
+            raw_spread   = raw_home - raw_away
+            raw_total    = raw_home + raw_away
+
+            # 1. Calibrate spread (expand around mean)
+            cal_spread = mean_spread + (raw_spread - mean_spread) * spread_scale
+
+            # 2. Calibrate total independently (expand around mean)
+            cal_total  = mean_total  + (raw_total  - mean_total)  * total_scale
+
+            # 3. Reconstruct home/away from calibrated spread + total
+            raw_home = (cal_total + cal_spread) / 2.0
+            raw_away = (cal_total - cal_spread) / 2.0
+
+        logger.info("  Applied variance calibration (spread_scale=%.3f total_scale=%.3f)",
+                    spread_scale, total_scale)
 
     # Clip to realistic range and round
     final_home = np.clip(np.round(raw_home).astype(int), 0, 65)
@@ -216,6 +226,11 @@ def _add_edge_signals(df: pd.DataFrame) -> pd.DataFrame:
             lambda x: "HOME" if x > SPREAD_THR else ("AWAY" if x < -SPREAD_THR else "PUSH")
         )
 
+        # Opening spread divergence — model vs. pre-public-money line
+        # This is the cleaner betting signal: model disagrees with oddsmaker's pure estimate
+        if "opening_spread" in df.columns:
+            df["opening_spread_edge"] = df["model_spread"] - (-df["opening_spread"].fillna(df["book_spread"]))
+
     if "total_line" in df.columns:
         df["model_total"] = df["predicted_total"]
         df["book_total"]  = df["total_line"]
@@ -224,11 +239,12 @@ def _add_edge_signals(df: pd.DataFrame) -> pd.DataFrame:
             lambda x: "OVER" if x > TOTAL_THR else ("UNDER" if x < -TOTAL_THR else "PUSH")
         )
 
-    # Suppress edges for WEAK confidence
+    # Suppress edges for LOW and WEAK confidence
+    # (LOW = insufficient data to trust spread signal; WEAK = almost no data)
     if "confidence_label" in df.columns:
         for col in ["spread_lean", "total_lean"]:
             if col in df.columns:
-                df.loc[df["confidence_label"] == "WEAK", col] = "SUPPRESSED"
+                df.loc[df["confidence_label"].isin(["WEAK", "LOW"]), col] = "SUPPRESSED"
 
     return df
 
@@ -264,8 +280,12 @@ def _save_predictions(df: pd.DataFrame, gen_ts: datetime) -> None:
                 "h2h_data_quality":      float(row.get("conf_h2h_data_quality", 0.5)),
                 "injury_data_freshness": float(row.get("conf_injury_data_freshness", 0.5)),
             },
-            "book_spread":   _safe_float(row.get("book_spread")),
-            "book_total":    _safe_float(row.get("book_total")),
+            "book_spread":          _safe_float(row.get("book_spread")),
+            "book_total":           _safe_float(row.get("book_total")),
+            "opening_spread":       _safe_float(row.get("opening_spread")),
+            "opening_total":        _safe_float(row.get("opening_total")),
+            "opening_spread_edge":  _safe_float(row.get("opening_spread_edge")),
+            "market_win_prob":      _safe_float(row.get("market_win_prob_vigfree")),
             "spread_edge":   _safe_float(row.get("spread_edge")),
             "total_edge":    _safe_float(row.get("total_edge")),
             "spread_lean":   str(row.get("spread_lean", "PUSH")),
