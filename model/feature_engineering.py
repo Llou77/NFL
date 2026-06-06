@@ -26,8 +26,22 @@ PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 ROLLING_SHORT = 4
 ROLLING_MED   = 8
 ROLLING_LONG  = 16
-ELO_K         = 20.0
-ELO_START     = 1500.0
+# ══════════════════════════════════════════════════════════════════════════════
+#  DATA AVAILABILITY CONSTANTS
+#  Used to flag features that are only available from certain seasons onwards.
+#  Tree models (XGB, LGB) handle NaN natively — these flags let them learn
+#  "data missing" as a meaningful signal rather than imputing a fake value.
+# ══════════════════════════════════════════════════════════════════════════════
+
+# defenders_in_box / number_of_pass_rushers: NGS tracking, reliable from 2019+
+COVERAGE_COMPLEXITY_MIN_SEASON = 2019
+
+# WEPA requires wp (win probability) and game_seconds_remaining in PBP
+# Both are available from 2014+ in nflfastR — no restriction needed
+WEPA_MIN_SEASON = 2014
+
+# NGS passing/rushing/receiving stats: available from 2016+
+NGS_MIN_SEASON = 2016
 
 # NFL divisions for rivalry detection
 _DIVISIONS = [
@@ -648,6 +662,15 @@ def _build_team_games(games: pd.DataFrame, pbp_agg: pd.DataFrame) -> pd.DataFram
         tg = tg.merge(pbp_agg, on=["game_id","team"], how="left")
 
     tg = tg.sort_values(["season","week","game_date","game_id","team"]).reset_index(drop=True)
+
+    # ── Data availability flags ─────────────────────────────────────────────
+    # These binary flags tell tree models whether a feature family is available
+    # for a given season. Tree models learn "if flag=0, ignore this feature group"
+    # without us having to impute fake values.
+    tg["wepa_available"]     = (tg["season"] >= WEPA_MIN_SEASON).astype(np.float32)
+    tg["coverage_available"] = (tg["season"] >= COVERAGE_COMPLEXITY_MIN_SEASON).astype(np.float32)
+    tg["ngs_available"]      = (tg["season"] >= NGS_MIN_SEASON).astype(np.float32)
+
     return tg
 
 
@@ -1457,34 +1480,110 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
     if "home_off_cpoe_r8" in game_df.columns and "away_off_cpoe_r8" in game_df.columns:
         game_df["cpoe_gap_r8"] = game_df["home_off_cpoe_r8"] - game_df["away_off_cpoe_r8"]
 
-    # Matchup gap features
-    _add_gap(game_df, "home_off_epa_per_play_r8",  "away_def_epa_per_play_r8",  "home_off_vs_away_def_epa_r8")
-    _add_gap(game_df, "home_off_pass_epa_r8",      "away_def_pass_epa_r8",      "home_pass_vs_away_def_r8")
-    _add_gap(game_df, "home_off_rush_epa_r8",      "away_def_rush_epa_r8",      "home_rush_vs_away_def_r8")
-    _add_gap(game_df, "away_off_epa_per_play_r8",  "home_def_epa_per_play_r8",  "away_off_vs_home_def_epa_r8")
-    _add_gap(game_df, "away_off_pass_epa_r8",      "home_def_pass_epa_r8",      "away_pass_vs_home_def_r8")
-    _add_gap(game_df, "away_off_rush_epa_r8",      "home_def_rush_epa_r8",      "away_rush_vs_home_def_r8")
+    # ── Load research-backed weights from Bayesian optimizer ──────────────
+    from bayesian_optimizer import load_weights as _lw
+    _opt = _lw()
+    OFF_EPA_W  = float(np.clip(_opt.get("off_epa_weight",  1.6), 1.0, 2.5))
+    TO_W       = float(np.clip(_opt.get("turnover_weight", 0.6), 0.2, 1.0))
 
-    # Turnover gaps (raw + luck-adjusted)
-    for sfx in ["r4","r8","r16"]:
-        h, a = f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}"
-        _add_gap(game_df, h, a, f"turnover_diff_gap_{sfx}")
+    # ── EPA matchup gaps (ASYMMETRIC: offense trusted more than defense) ───
+    # nfelo WEPA research: offensive EPA is ~1.6× more predictive of future
+    # performance than defensive EPA.
+    # Implementation: gap = off_col * sqrt(w) - def_col * (1/sqrt(w))
+    # Using sqrt keeps the units interpretable and avoids extreme scaling.
+    # When w=1.0 this is exactly the standard symmetric gap.
+    off_scale = float(np.sqrt(OFF_EPA_W))   # ~1.265 at w=1.6
+    def_scale = 1.0 / off_scale             # ~0.791 at w=1.6
 
-    # WEPA matchup gaps (research-backed: more predictive than raw EPA)
-    _add_gap(game_df, "home_off_wepa_per_play_r8", "away_def_epa_per_play_r8",
-             "home_wepa_vs_away_def_r8")
-    _add_gap(game_df, "away_off_wepa_per_play_r8", "home_def_epa_per_play_r8",
-             "away_wepa_vs_home_def_r8")
+    def _add_asymmetric_epa_gap(df, off_col, def_col, name):
+        if off_col in df.columns and def_col in df.columns:
+            df[name] = df[off_col].fillna(0) * off_scale - df[def_col].fillna(0) * def_scale
 
-    # Coverage complexity advantage
-    _add_gap(game_df, "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
-             "coverage_complexity_gap")
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_epa_per_play_r8", "away_def_epa_per_play_r8",
+        "home_off_vs_away_def_epa_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_pass_epa_r8",     "away_def_pass_epa_r8",
+        "home_pass_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_rush_epa_r8",     "away_def_rush_epa_r8",
+        "home_rush_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_epa_per_play_r8", "home_def_epa_per_play_r8",
+        "away_off_vs_home_def_epa_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_pass_epa_r8",     "home_def_pass_epa_r8",
+        "away_pass_vs_home_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_rush_epa_r8",     "home_def_rush_epa_r8",
+        "away_rush_vs_home_def_r8")
 
-    # Turnover skill-adjusted gaps (Harvard: 54% luck → use skill-adjusted version)
-    _add_gap(game_df, "home_to_skill_adj_r8", "away_to_skill_adj_r8",
-             "turnover_skill_adj_gap_r8")
-    _add_gap(game_df, "home_turnover_luck_r8", "away_turnover_luck_r8",
-             "turnover_luck_gap_r8")
+    # WEPA matchup gaps (uses WEPA offense vs raw def — already captures the weighting)
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_wepa_per_play_r8", "away_def_epa_per_play_r8",
+        "home_wepa_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_wepa_per_play_r8", "home_def_epa_per_play_r8",
+        "away_wepa_vs_home_def_r8")
+
+    # ── Turnover gaps: blended (skill-adjusted vs raw) ─────────────────────
+    # Harvard research: 54% of turnovers are luck.
+    # Blend = TO_W × skill-adjusted + (1−TO_W) × raw
+    # At TO_W=0.6: 60% weight on luck-corrected signal, 40% on raw observed
+    # When to_skill_adj is unavailable (NaN), falls back to raw.
+
+    def _add_turnover_blend_gap(df, skill_h, skill_a, raw_h, raw_a, name):
+        """Blended turnover gap: favours luck-adjusted signal by TO_W."""
+        sh = skill_h in df.columns
+        sa = skill_a in df.columns
+        rh = raw_h   in df.columns
+        ra = raw_a   in df.columns
+
+        if sh and sa:
+            skill_gap = df[skill_h].fillna(df.get(raw_h, 0)) \
+                      - df[skill_a].fillna(df.get(raw_a, 0))
+        else:
+            skill_gap = None
+
+        if rh and ra:
+            raw_gap = df[raw_h].fillna(0) - df[raw_a].fillna(0)
+        else:
+            raw_gap = None
+
+        if skill_gap is not None and raw_gap is not None:
+            df[name] = TO_W * skill_gap + (1 - TO_W) * raw_gap
+        elif skill_gap is not None:
+            df[name] = skill_gap
+        elif raw_gap is not None:
+            df[name] = raw_gap
+
+    for sfx in ["r4", "r8", "r16"]:
+        _add_turnover_blend_gap(
+            game_df,
+            f"home_to_skill_adj_{sfx}", f"away_to_skill_adj_{sfx}",
+            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
+            f"turnover_gap_blended_{sfx}",
+        )
+        # Keep raw gap too — gives model both signals
+        _add_gap(game_df,
+            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
+            f"turnover_diff_gap_{sfx}")
+
+    # ── Coverage complexity gap ────────────────────────────────────────────
+    _add_gap(game_df,
+        "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
+        "coverage_complexity_gap")
+
+    # ── Turnover luck gap (keep as separate signal) ────────────────────────
+    _add_gap(game_df,
+        "home_turnover_luck_r8", "away_turnover_luck_r8",
+        "turnover_luck_gap_r8")
+
+    # ── Availability flags → game-level (home team's flag applies) ─────────
+    for flag in ["wepa_available", "coverage_available", "ngs_available"]:
+        home_flag = f"home_{flag}"
+        if home_flag in game_df.columns:
+            game_df[flag] = game_df[home_flag]
 
     # Target columns — use merged score columns directly
     for side, target in [("home","target_home_score"),("away","target_away_score")]:

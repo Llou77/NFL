@@ -57,17 +57,37 @@ def train_all(
     y_away = df_known["target_away_score"].values.astype(np.float32)
     sw     = compute_sample_weights(df_known, weights, current_season)
 
-    # Preprocessing
+    # ── Preprocessing ─────────────────────────────────────────────────────
+    # IMPORTANT: tree models (XGBoost, LightGBM) handle NaN natively via
+    # learned default directions at each split. Imputing fake medians for
+    # WEPA/coverage features that are structurally absent (pre-2019 seasons)
+    # would give the model incorrect signal.
+    #
+    # Ridge and NN cannot handle NaN → use median imputation for those only.
+    # We save TWO preprocessors: one with imputation (Ridge/NN) and raw (trees).
+
     imputer = SimpleImputer(strategy="median")
-    X_imp   = imputer.fit_transform(X_raw)
+    X_imp   = imputer.fit_transform(X_raw)   # for Ridge + NN
+
+    # For trees: replace imputed NaN with actual NaN (undo imputation for NaN cells)
+    nan_mask = np.isnan(X_raw)
+    X_tree   = X_imp.copy()
+    X_tree[nan_mask] = np.nan               # re-introduce NaN where it was
 
     scaler  = StandardScaler()
-    X_sc    = scaler.fit_transform(X_imp)
+    X_sc    = scaler.fit_transform(X_imp)   # Ridge + NN: imputed + scaled
+
+    # Trees use raw-scale data (no StandardScaler — tree splits are scale-invariant)
+    # X_tree is already in original scale with NaN preserved
 
     with open(MODEL_DIR / "imputer.pkl", "wb") as f:
         pickle.dump(imputer, f)
     with open(MODEL_DIR / "scaler.pkl", "wb") as f:
         pickle.dump(scaler, f)
+    with open(MODEL_DIR / "nan_mask_cols.json", "w") as f:
+        # Track which feature indices had NaN — for predict-time validation
+        nan_col_pct = nan_mask.mean(axis=0).tolist()
+        json.dump({"feature_nan_pct": nan_col_pct, "n_features": len(feature_cols)}, f)
     with open(MODEL_DIR / "feature_list.json", "w") as f:
         json.dump(feature_cols, f)
 
@@ -80,29 +100,29 @@ def train_all(
                     cv_metrics.get("cv_mae_away", 0),
                     cv_metrics.get("cv_mae_total", 0))
 
-    # Layer 1
+    # Layer 1 — Ridge gets imputed+scaled, trees get NaN-preserved raw data
     ridge_h, ridge_a = _train_ridge(X_sc, y_home, y_away, sw)
-    xgb_h,   xgb_a   = _train_xgboost(X_sc, y_home, y_away, sw)
-    lgbm_h,  lgbm_a  = _train_lightgbm(X_sc, y_home, y_away, sw)
+    xgb_h,   xgb_a   = _train_xgboost(X_tree, y_home, y_away, sw)
+    lgbm_h,  lgbm_a  = _train_lightgbm(X_tree, y_home, y_away, sw)
 
-    # Layer 2
+    # Layer 2 — NN gets imputed+scaled (cannot handle NaN)
     nn_obj = _train_neural_network(X_sc, y_home, y_away, sw)
 
     # Layer 3: meta-learner via OOF
     meta_h, meta_a = _train_meta_learner(
-        X_sc, y_home, y_away, sw,
+        X_sc, X_tree, y_home, y_away, sw,
         ridge_h, ridge_a, xgb_h, xgb_a, lgbm_h, lgbm_a, nn_obj
     )
 
     # Final training metrics
     nn_ph, nn_pa = _nn_predict(nn_obj, X_sc)
     meta_X_h = np.column_stack([
-        ridge_h.predict(X_sc), xgb_h.predict(X_sc),
-        lgbm_h.predict(X_sc), nn_ph,
+        ridge_h.predict(X_sc),    xgb_h.predict(X_tree),
+        lgbm_h.predict(X_tree),   nn_ph,
     ])
     meta_X_a = np.column_stack([
-        ridge_a.predict(X_sc), xgb_a.predict(X_sc),
-        lgbm_a.predict(X_sc), nn_pa,
+        ridge_a.predict(X_sc),    xgb_a.predict(X_tree),
+        lgbm_a.predict(X_tree),   nn_pa,
     ])
     final_h = meta_h.predict(meta_X_h)
     final_a = meta_a.predict(meta_X_a)
@@ -328,7 +348,7 @@ def _nn_predict(nn_obj, X):
 #  LAYER 3: META-LEARNER (out-of-fold, no leakage)
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _train_meta_learner(X_sc, y_home, y_away, sw,
+def _train_meta_learner(X_sc, X_tree, y_home, y_away, sw,
                         ridge_h, ridge_a, xgb_h, xgb_a, lgbm_h, lgbm_a, nn_obj):
     from sklearn.linear_model import Ridge
     from sklearn.model_selection import TimeSeriesSplit
@@ -339,23 +359,24 @@ def _train_meta_learner(X_sc, y_home, y_away, sw,
     oof_meta_h, oof_meta_a, oof_idx = [], [], []
 
     for tr_idx, val_idx in tscv.split(X_sc):
-        X_tr,  X_val  = X_sc[tr_idx], X_sc[val_idx]
-        yh_tr, ya_tr  = y_home[tr_idx], y_away[tr_idx]
-        sw_tr          = sw[tr_idx]
+        X_sc_tr,   X_sc_val   = X_sc[tr_idx],   X_sc[val_idx]
+        X_tree_tr, X_tree_val = X_tree[tr_idx],  X_tree[val_idx]
+        yh_tr, ya_tr = y_home[tr_idx], y_away[tr_idx]
+        sw_tr        = sw[tr_idx]
 
         # Retrain ridge on fold (fast)
-        r_h = Ridge(alpha=10.0).fit(X_tr, yh_tr, sample_weight=sw_tr)
-        r_a = Ridge(alpha=10.0).fit(X_tr, ya_tr, sample_weight=sw_tr)
+        r_h = Ridge(alpha=10.0).fit(X_sc_tr, yh_tr, sample_weight=sw_tr)
+        r_a = Ridge(alpha=10.0).fit(X_sc_tr, ya_tr, sample_weight=sw_tr)
 
-        # Use full-trained tree models on val (approximate — avoids 3× retraining cost)
-        xgb_h_p  = xgb_h.predict(X_val)
-        xgb_a_p  = xgb_a.predict(X_val)
-        lgbm_h_p = lgbm_h.predict(X_val)
-        lgbm_a_p = lgbm_a.predict(X_val)
-        nn_h_p, nn_a_p = _nn_predict(nn_obj, X_val)
+        # Tree models use full-trained versions on val (approximate — avoids 3× retraining)
+        xgb_h_p  = xgb_h.predict(X_tree_val)
+        xgb_a_p  = xgb_a.predict(X_tree_val)
+        lgbm_h_p = lgbm_h.predict(X_tree_val)
+        lgbm_a_p = lgbm_a.predict(X_tree_val)
+        nn_h_p, nn_a_p = _nn_predict(nn_obj, X_sc_val)
 
-        oof_meta_h.append(np.column_stack([r_h.predict(X_val), xgb_h_p, lgbm_h_p, nn_h_p]))
-        oof_meta_a.append(np.column_stack([r_a.predict(X_val), xgb_a_p, lgbm_a_p, nn_a_p]))
+        oof_meta_h.append(np.column_stack([r_h.predict(X_sc_val), xgb_h_p, lgbm_h_p, nn_h_p]))
+        oof_meta_a.append(np.column_stack([r_a.predict(X_sc_val), xgb_a_p, lgbm_a_p, nn_a_p]))
         oof_idx.append(val_idx)
 
     oof_X_h = np.vstack(oof_meta_h)

@@ -63,33 +63,41 @@ def generate_predictions(
     imputer      = models["imputer"]
     scaler       = models["scaler"]
 
-    # Preprocess
+    # Preprocess — two versions:
+    # X_sc:   imputed + scaled (for Ridge and NN)
+    # X_tree: imputed only for Ridge/NN columns, NaN preserved for tree features
     X_raw = upcoming[feature_cols].values
-    X_imp = imputer.transform(X_raw)
-    X_sc  = scaler.transform(X_imp)
+    nan_mask = np.isnan(X_raw)
+
+    X_imp  = imputer.transform(X_raw)
+    X_sc   = scaler.transform(X_imp)
+
+    # Re-introduce NaN for tree models (they handle it natively via learned splits)
+    X_tree = X_imp.copy()
+    X_tree[nan_mask] = np.nan
 
     # ── Sub-model predictions ─────────────────────────────────────────────
     sub_preds_home = {}
     sub_preds_away = {}
 
-    # Ridge
+    # Ridge — imputed + scaled
     sub_preds_home["ridge"] = models["ridge_home"].predict(X_sc)
     sub_preds_away["ridge"] = models["ridge_away"].predict(X_sc)
 
-    # XGBoost
+    # XGBoost — NaN-preserved (native NaN handling)
     if "xgb_home" in models:
-        sub_preds_home["xgb"] = models["xgb_home"].predict(X_sc)
-        sub_preds_away["xgb"] = models["xgb_away"].predict(X_sc)
+        sub_preds_home["xgb"] = models["xgb_home"].predict(X_tree)
+        sub_preds_away["xgb"] = models["xgb_away"].predict(X_tree)
 
-    # LightGBM
+    # LightGBM — NaN-preserved
     if "lgbm_home" in models:
         try:
-            sub_preds_home["lgbm"] = models["lgbm_home"].predict(X_sc)
-            sub_preds_away["lgbm"] = models["lgbm_away"].predict(X_sc)
+            sub_preds_home["lgbm"] = models["lgbm_home"].predict(X_tree)
+            sub_preds_away["lgbm"] = models["lgbm_away"].predict(X_tree)
         except Exception:
             pass
 
-    # Neural Network
+    # Neural Network — imputed + scaled (cannot handle NaN)
     if "nn" in models:
         from train import _nn_predict
         nn_h, nn_a = _nn_predict(models["nn"], X_sc)
