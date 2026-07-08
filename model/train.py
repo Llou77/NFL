@@ -6,7 +6,7 @@ Trains the full stacked ensemble:
   Layer 2 : Dual-head PyTorch Neural Network (or sklearn MLP fallback)
   Layer 3 : Ridge meta-learner
 
-Outputs saved to model/saved/.
+All artifacts are saved to model/saved/.
 """
 
 import json
@@ -24,6 +24,26 @@ ROOT      = Path(__file__).resolve().parent.parent
 MODEL_DIR = ROOT / "model" / "saved"
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
+# Single seed for every stochastic component — retraining on identical data
+# must produce identical models (stability requirement).
+SEED = 42
+
+# Shared Layer-1 tree parameters — used for BOTH the final fit and the
+# per-fold OOF refits in the meta-learner, so the meta-learner learns to
+# blend the same model family it will see at predict time.
+XGB_PARAMS = dict(
+    n_estimators=500, max_depth=5, learning_rate=0.03,
+    subsample=0.8, colsample_bytree=0.8,
+    min_child_weight=5, reg_alpha=0.1, reg_lambda=1.0,
+    objective="reg:absoluteerror", random_state=SEED, n_jobs=-1,
+)
+LGBM_PARAMS = dict(
+    n_estimators=500, num_leaves=63, learning_rate=0.03,
+    subsample=0.8, colsample_bytree=0.8,
+    min_child_samples=10, reg_alpha=0.05, reg_lambda=0.5,
+    objective="mae", metric="mae", random_state=SEED, n_jobs=-1, verbose=-1,
+)
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  MASTER TRAIN
@@ -33,12 +53,16 @@ def train_all(
     game_df: pd.DataFrame,
     feature_cols: list,
     weights: Optional[dict] = None,
-    current_season: int = 2026,
+    current_season: Optional[int] = None,
     run_cv: bool = True,
 ) -> dict:
+    if current_season is None:
+        from data_loader import CURRENT_SEASON as current_season
     from bayesian_optimizer import compute_sample_weights
     from sklearn.impute import SimpleImputer
     from sklearn.preprocessing import StandardScaler
+
+    np.random.seed(SEED)   # determinism for anything numpy-random downstream
 
     df_known = game_df[
         game_df["target_home_score"].notna() &
@@ -140,8 +164,8 @@ def train_all(
     with open(MODEL_DIR / "training_log.json", "w") as f:
         json.dump(metrics, f, indent=2)
     with open(MODEL_DIR / "version.txt", "w") as f:
-        from datetime import datetime
-        f.write(f"v1.0-{datetime.utcnow().strftime('%Y%m%d')}")
+        from datetime import datetime, timezone
+        f.write(f"v1.1-{datetime.now(timezone.utc).strftime('%Y%m%d')}")
 
     logger.info("  Train MAE home=%.3f away=%.3f total=%.3f spread=%.3f",
                 metrics["train_mae_home"], metrics["train_mae_away"],
@@ -165,12 +189,7 @@ def _train_ridge(X, y_home, y_away, sw):
 
 def _train_xgboost(X, y_home, y_away, sw):
     logger.info("  Training XGBoost …")
-    params = dict(
-        n_estimators=500, max_depth=5, learning_rate=0.03,
-        subsample=0.8, colsample_bytree=0.8,
-        min_child_weight=5, reg_alpha=0.1, reg_lambda=1.0,
-        objective="reg:absoluteerror", random_state=42, n_jobs=-1,
-    )
+    params = XGB_PARAMS
     try:
         import xgboost as xgb
         xh = xgb.XGBRegressor(**params)
@@ -194,12 +213,7 @@ def _train_xgboost(X, y_home, y_away, sw):
 
 def _train_lightgbm(X, y_home, y_away, sw):
     logger.info("  Training LightGBM …")
-    params = dict(
-        n_estimators=500, num_leaves=63, learning_rate=0.03,
-        subsample=0.8, colsample_bytree=0.8,
-        min_child_samples=10, reg_alpha=0.05, reg_lambda=0.5,
-        objective="mae", metric="mae", random_state=42, n_jobs=-1, verbose=-1,
-    )
+    params = LGBM_PARAMS
     try:
         import lightgbm as lgb
         lh = lgb.LGBMRegressor(**params)
@@ -233,13 +247,18 @@ def _train_neural_network(X, y_home, y_away, sw):
         return _train_mlp_fallback(X, y_home, y_away, sw)
 
 
-def _train_pytorch_nn(X, y_home, y_away, sw):
+def _fit_pytorch_core(X, y_home, y_away, sw, epochs: int = 150, seed: int = SEED):
+    """
+    Fit the dual-head NFLNet and return ("pytorch", model, n_features, device).
+    No artifacts are saved here — used both for the final model and for
+    per-fold OOF refits in the meta-learner.
+    """
     import torch
     import torch.nn as nn
     import torch.optim as optim
     from torch.utils.data import DataLoader, TensorDataset
 
-    logger.info("  Training PyTorch NN …")
+    torch.manual_seed(seed)          # deterministic init + DataLoader shuffle
     device     = torch.device("cpu")
     n_features = X.shape[1]
 
@@ -267,7 +286,9 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
     ya_t = torch.FloatTensor(y_away).to(device)
     sw_t = torch.FloatTensor(sw / sw.mean()).to(device)
 
-    loader    = DataLoader(TensorDataset(X_t, yh_t, ya_t, sw_t), batch_size=64, shuffle=True)
+    gen       = torch.Generator().manual_seed(seed)
+    loader    = DataLoader(TensorDataset(X_t, yh_t, ya_t, sw_t),
+                           batch_size=64, shuffle=True, generator=gen)
     optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
 
@@ -278,12 +299,10 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
     LW_AWAY   = float(_w.get("nn_w_away",   0.40))
     LW_TOTAL  = float(_w.get("nn_w_total",  0.35))
     LW_SPREAD = float(_w.get("nn_w_spread", 0.25))
-    logger.info("  NN loss weights: home=%.2f away=%.2f total=%.2f spread=%.2f",
-                LW_HOME, LW_AWAY, LW_TOTAL, LW_SPREAD)
 
     best_loss, best_state = float("inf"), None
 
-    for epoch in range(150):
+    for epoch in range(epochs):
         model.train()
         epoch_loss = 0.0
         for xb, yh, ya, w in loader:
@@ -309,11 +328,18 @@ def _train_pytorch_nn(X, y_home, y_away, sw):
     if best_state:
         model.load_state_dict(best_state)
 
+    return ("pytorch", model, n_features, device)
+
+
+def _train_pytorch_nn(X, y_home, y_away, sw):
+    logger.info("  Training PyTorch NN …")
+    nn_obj = _fit_pytorch_core(X, y_home, y_away, sw, epochs=150)
+    import torch
+    _, model, n_features, _ = nn_obj
     torch.save(model.state_dict(), MODEL_DIR / "model_weights.pt")
     with open(MODEL_DIR / "nn_config.json", "w") as f:
         json.dump({"n_features": n_features, "type": "pytorch"}, f)
-
-    return ("pytorch", model, n_features, device)
+    return nn_obj
 
 
 def _train_mlp_fallback(X, y_home, y_away, sw):
@@ -353,30 +379,60 @@ def _train_meta_learner(X_sc, X_tree, y_home, y_away, sw,
     from sklearn.linear_model import Ridge
     from sklearn.model_selection import TimeSeriesSplit
 
-    logger.info("  Training meta-learner (OOF) …")
+    logger.info("  Training meta-learner (true OOF) …")
     tscv = TimeSeriesSplit(n_splits=5)
 
+    # HONESTY FIX: every Layer-1 model is refit on the fold's TRAIN portion
+    # only. The previous version reused the full-trained trees and NN for the
+    # validation predictions — those had already seen the validation rows, so
+    # the meta-learner was fit on partially in-sample inputs and learned to
+    # over-trust the leaky columns.
     oof_meta_h, oof_meta_a, oof_idx = [], [], []
 
-    for tr_idx, val_idx in tscv.split(X_sc):
+    for fold_i, (tr_idx, val_idx) in enumerate(tscv.split(X_sc), start=1):
         X_sc_tr,   X_sc_val   = X_sc[tr_idx],   X_sc[val_idx]
         X_tree_tr, X_tree_val = X_tree[tr_idx],  X_tree[val_idx]
         yh_tr, ya_tr = y_home[tr_idx], y_away[tr_idx]
         sw_tr        = sw[tr_idx]
 
-        # Retrain ridge on fold (fast)
+        # Ridge — refit per fold (fast)
         r_h = Ridge(alpha=10.0).fit(X_sc_tr, yh_tr, sample_weight=sw_tr)
         r_a = Ridge(alpha=10.0).fit(X_sc_tr, ya_tr, sample_weight=sw_tr)
 
-        # Tree models use full-trained versions on val (approximate — avoids 3× retraining)
-        xgb_h_p  = xgb_h.predict(X_tree_val)
-        xgb_a_p  = xgb_a.predict(X_tree_val)
-        lgbm_h_p = lgbm_h.predict(X_tree_val)
-        lgbm_a_p = lgbm_a.predict(X_tree_val)
-        nn_h_p, nn_a_p = _nn_predict(nn_obj, X_sc_val)
+        # Trees — refit per fold with the shared production parameters
+        try:
+            import xgboost as _xgb
+            f_xgb_h = _xgb.XGBRegressor(**XGB_PARAMS).fit(X_tree_tr, yh_tr, sample_weight=sw_tr)
+            f_xgb_a = _xgb.XGBRegressor(**XGB_PARAMS).fit(X_tree_tr, ya_tr, sample_weight=sw_tr)
+        except ImportError:
+            f_xgb_h, f_xgb_a = xgb_h, xgb_a   # degraded: full-trained fallback
+        try:
+            import lightgbm as _lgb
+            f_lgb_h = _lgb.LGBMRegressor(**LGBM_PARAMS).fit(X_tree_tr, yh_tr, sample_weight=sw_tr)
+            f_lgb_a = _lgb.LGBMRegressor(**LGBM_PARAMS).fit(X_tree_tr, ya_tr, sample_weight=sw_tr)
+        except ImportError:
+            f_lgb_h, f_lgb_a = lgbm_h, lgbm_a
 
-        oof_meta_h.append(np.column_stack([r_h.predict(X_sc_val), xgb_h_p, lgbm_h_p, nn_h_p]))
-        oof_meta_a.append(np.column_stack([r_a.predict(X_sc_val), xgb_a_p, lgbm_a_p, nn_a_p]))
+        # NN — refit per fold with reduced epochs (cost/benefit compromise);
+        # falls back to the full-trained net only if torch is unavailable.
+        try:
+            fold_nn = _fit_pytorch_core(X_sc_tr, yh_tr, ya_tr, sw_tr,
+                                        epochs=60, seed=SEED + fold_i)
+        except Exception as e:
+            logger.warning("    Fold %d NN refit failed (%s) — using full-trained NN "
+                           "(approximate OOF for the NN column)", fold_i, e)
+            fold_nn = nn_obj
+
+        nn_h_p, nn_a_p = _nn_predict(fold_nn, X_sc_val)
+
+        oof_meta_h.append(np.column_stack([
+            r_h.predict(X_sc_val), f_xgb_h.predict(X_tree_val),
+            f_lgb_h.predict(X_tree_val), nn_h_p,
+        ]))
+        oof_meta_a.append(np.column_stack([
+            r_a.predict(X_sc_val), f_xgb_a.predict(X_tree_val),
+            f_lgb_a.predict(X_tree_val), nn_a_p,
+        ]))
         oof_idx.append(val_idx)
 
     oof_X_h = np.vstack(oof_meta_h)

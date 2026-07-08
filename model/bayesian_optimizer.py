@@ -3,38 +3,27 @@ bayesian_optimizer.py
 =====================
 Bayesian hyperparameter optimisation via Optuna.
 
-Optimises ALL tunable parameters in one unified search:
+WHAT IS ACTUALLY SEARCHED (and why only this):
+  The optimisation objective is a fast GBR proxy trained on a FIXED,
+  pre-built feature matrix. The only parameters that can influence that
+  objective are the SAMPLE WEIGHTS:
 
-Season weights:
-  w_oldest, w_middle, w_recent, w_current  (relative to REG=1.0)
-  wt_wc, wt_div, wt_con, wt_sb            (playoff game type weights)
+    w_oldest, w_middle, w_recent, w_current   (season recency weights)
+    wt_wc, wt_div, wt_con, wt_sb              (playoff game-type weights)
 
-Model parameters:
-  variance_scale    — spread variance calibration (1.0–3.0)
-  elo_k             — Elo update rate (10–30)
-  elo_regression    — seasonal mean regression (0.55–0.80)
-  elo_mov_mult      — margin-of-victory multiplier (1.5–3.0)
-  off_epa_weight    — offensive EPA weight vs defensive (1.0–2.0)
-                      research: nfelo found 1.6× optimal (Weighted EPA)
-  turnover_weight   — turnover feature weight (0.3–1.0)
-                      research: ~54% of turnovers are luck → downweight
+  The previous version also "searched" 18 further parameters (elo_k,
+  variance_scale, confidence weights, NN loss weights, lean thresholds, …).
+  None of them touched the proxy objective — the features were already built
+  and the proxy uses neither the confidence module nor the NN — so Optuna was
+  sampling pure noise in 18 of 26 dimensions, and a sum-constraint on the
+  confidence weights silently discarded most trials with a 999 penalty.
+  That noise diluted the TPE sampler and made the found "optimum" unstable.
 
-Confidence weights:
-  conf_w_model      — model agreement weight (0.40–0.65)
-  conf_w_feat       — feature completeness weight (0.20–0.40)
-  conf_w_h2h        — H2H quality weight (0.10–0.20)
-  conf_model_div    — model agreement divisor (6–14)
-  conf_high_thr     — HIGH confidence threshold (0.68–0.80)
-  conf_med_thr      — MEDIUM confidence threshold (0.50–0.68)
-
-NN loss weights:
-  nn_w_home, nn_w_away  — individual score loss weights (0.25–0.55)
-  nn_w_total            — combined total loss weight (0.20–0.50)
-  nn_w_spread           — spread loss weight (0.15–0.40)
-
-Lean thresholds:
-  spread_lean_thr   — minimum pts edge to signal a spread lean (0.5–3.0)
-  total_lean_thr    — minimum pts edge to signal a total lean (0.5–3.0)
+EVERYTHING ELSE stays a research-backed constant in DEFAULT_WEIGHTS
+(consumed at runtime by feature_engineering / train / confidence / predict
+via load_weights). Tuning those honestly would require rebuilding features
+and retraining the full ensemble inside the objective — deliberately out of
+scope for a weekly CI job.
 """
 
 import json
@@ -45,7 +34,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)  # module logger
 
 ROOT       = Path(__file__).resolve().parent.parent
 WEIGHTS_PATH = ROOT / "model" / "saved" / "optimal_weights.json"
@@ -109,10 +98,12 @@ def save_weights(weights: dict) -> None:
 def compute_sample_weights(
     df: pd.DataFrame,
     weights: Optional[dict] = None,
-    current_season: int = 2026,
+    current_season: Optional[int] = None,
 ) -> np.ndarray:
     if weights is None:
         weights = load_weights()
+    if current_season is None:
+        from data_loader import CURRENT_SEASON as current_season
 
     season_weights = {
         current_season - 3: weights["w_oldest"],
@@ -177,8 +168,12 @@ def run_bayesian_optimization(
     y_val_home = df_val["target_home_score"].values
     y_val_away = df_val["target_away_score"].values
 
+    # Recency weights must be interpreted relative to the VALIDATION season,
+    # not the wall-clock current season (they may differ during backfills).
+    ref_season = int(df_val["season"].max())
+
     def _trial_mae(w: dict) -> float:
-        sw = compute_sample_weights(df_train, w)
+        sw = compute_sample_weights(df_train, w, current_season=ref_season)
         sw = sw / sw.mean()
         mae_total = 0.0
         for y_tr, y_val in [
@@ -193,6 +188,13 @@ def run_bayesian_optimization(
             mae_total += np.mean(np.abs(m.predict(X_val_sc) - y_val))
         return mae_total / 2.0
 
+    # ONLY the parameters that actually influence the proxy objective are
+    # searched — see the module docstring for why the other 18 were removed.
+    SEARCHED_PARAMS = (
+        "w_oldest", "w_middle", "w_recent", "w_current",
+        "wt_wc", "wt_div", "wt_con", "wt_sb",
+    )
+
     def objective(trial):
         w = {
             # ── Season recency ────────────────────────────────────────
@@ -205,51 +207,25 @@ def run_bayesian_optimization(
             "wt_div": trial.suggest_float("wt_div", 0.35, 0.90),
             "wt_con": trial.suggest_float("wt_con", 0.35, 0.90),
             "wt_sb":  trial.suggest_float("wt_sb",  0.20, 0.80),
-            # ── Model calibration ─────────────────────────────────────
-            "variance_scale": trial.suggest_float("variance_scale", 1.0, 2.8),
-            "elo_k":          trial.suggest_float("elo_k",          12.0, 28.0),
-            "elo_regression": trial.suggest_float("elo_regression", 0.55, 0.82),
-            "elo_mov_mult":   trial.suggest_float("elo_mov_mult",   1.5, 3.2),
-            # ── Research-backed ranges ────────────────────────────────
-            # nfelo: off EPA weight 1.6 optimal
-            "off_epa_weight":  trial.suggest_float("off_epa_weight",  1.0, 2.2),
-            # Harvard: ~54% turnover luck → downweight 0.3–0.8
-            "turnover_weight": trial.suggest_float("turnover_weight", 0.25, 0.85),
-            # ── Confidence ────────────────────────────────────────────
-            "conf_w_model":  trial.suggest_float("conf_w_model",  0.38, 0.65),
-            "conf_w_feat":   trial.suggest_float("conf_w_feat",   0.20, 0.42),
-            "conf_w_h2h":    trial.suggest_float("conf_w_h2h",    0.08, 0.22),
-            "conf_model_div":trial.suggest_float("conf_model_div",6.0, 14.0),
-            "conf_high_thr": trial.suggest_float("conf_high_thr", 0.66, 0.82),
-            "conf_med_thr":  trial.suggest_float("conf_med_thr",  0.48, 0.68),
-            # ── NN loss weights ───────────────────────────────────────
-            "nn_w_home":   trial.suggest_float("nn_w_home",   0.25, 0.55),
-            "nn_w_away":   trial.suggest_float("nn_w_away",   0.25, 0.55),
-            "nn_w_total":  trial.suggest_float("nn_w_total",  0.18, 0.50),
-            "nn_w_spread": trial.suggest_float("nn_w_spread", 0.12, 0.40),
-            # ── Lean thresholds ───────────────────────────────────────
-            "spread_lean_thr": trial.suggest_float("spread_lean_thr", 0.5, 3.5),
-            "total_lean_thr":  trial.suggest_float("total_lean_thr",  0.5, 3.5),
         }
-        # Constraint: confidence weights must sum roughly to 1
-        conf_sum = w["conf_w_model"] + w["conf_w_feat"] + w["conf_w_h2h"]
-        if abs(conf_sum - 1.0) > 0.05:
-            return 999.0
-        return _trial_mae(w)
+        # Non-searched params come from research-backed defaults so the
+        # proxy sees the exact configuration production will use.
+        return _trial_mae({**DEFAULT_WEIGHTS, **w})
 
     study = optuna.create_study(
         direction="minimize",
         sampler=optuna.samplers.TPESampler(seed=42, n_startup_trials=15),
     )
-    # Seed with research-backed defaults
-    study.enqueue_trial(DEFAULT_WEIGHTS)
+    # Seed with research-backed defaults (searched subset only)
+    study.enqueue_trial({k: DEFAULT_WEIGHTS[k] for k in SEARCHED_PARAMS})
 
     study.optimize(objective, n_trials=n_trials, timeout=timeout, show_progress_bar=False)
 
-    best = study.best_params
+    best     = {**DEFAULT_WEIGHTS, **study.best_params}
     best_mae = study.best_value
     logger.info("Optimisation complete. Best proxy MAE: %.4f", best_mae)
-    logger.info("Best weights: %s", best)
+    logger.info("Best sample weights: %s",
+                {k: round(v, 3) for k, v in study.best_params.items()})
 
     save_weights(best)
     return best
