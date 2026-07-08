@@ -12,7 +12,7 @@ import argparse
 import json
 import logging
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,7 +35,10 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-CURRENT_SEASON = 2026
+# Single source of truth for the season — computed from the clock in
+# data_loader (no more hand-edited season constants scattered across files).
+from data_loader import CURRENT_SEASON
+
 DATA_DIR  = ROOT / "data"
 MODEL_DIR = ROOT / "model" / "saved"
 PRED_DIR  = DATA_DIR / "predictions"
@@ -66,13 +69,9 @@ def _build_features(force_data: bool = False):
 #  MODE: FULL
 # ══════════════════════════════════════════════════════════════════════════════
 
-def run_full(args):
-    log.info("=" * 60)
-    log.info("FULL PIPELINE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
-    log.info("=" * 60)
-
-    game_df = _build_features(force_data=getattr(args, "force_data", False))
-
+def _train_models(game_df):
+    """Train the full ensemble and persist artifacts. Shared by full mode and
+    the predict_only fallback."""
     log.info("Loading season weights …")
     from bayesian_optimizer import load_weights
     weights = load_weights()
@@ -84,6 +83,28 @@ def run_full(args):
     feature_cols = get_feature_columns(game_df)
     metrics = train_all(game_df, feature_cols, weights, CURRENT_SEASON)
     log.info("  Training metrics: %s", metrics)
+    return metrics
+
+
+def _reconcile_performance(game_df):
+    """Match the previously published predictions against games completed
+    since, and refresh performance.json — BEFORE the file is overwritten."""
+    try:
+        from evaluate import update_performance_from_latest
+        update_performance_from_latest(game_df)
+    except Exception as e:
+        log.warning("Performance reconciliation failed (non-fatal): %s", e)
+
+
+def run_full(args):
+    log.info("=" * 60)
+    log.info("FULL PIPELINE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+    log.info("=" * 60)
+
+    game_df = _build_features(force_data=getattr(args, "force_data", False))
+
+    _reconcile_performance(game_df)
+    _train_models(game_df)
 
     log.info("Generating predictions …")
     from train import load_models
@@ -102,13 +123,25 @@ def run_full(args):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def run_predict_only(args):
-    log.info("PREDICT-ONLY MODE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
+    log.info("PREDICT-ONLY MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
 
     game_df = _build_features(force_data=False)
 
+    _reconcile_performance(game_df)
+
     from train import load_models
     from predict import generate_predictions
-    models   = load_models()
+    try:
+        models = load_models()
+    except FileNotFoundError as e:
+        # CRASH FIX: model artifacts are gitignored, so a clean CI checkout
+        # has none — this previously killed the Thursday workflow every week.
+        # Fall back to training (the workflow-level cache makes this rare).
+        log.warning("Saved model artifacts unavailable (%s) — "
+                    "falling back to full training.", e)
+        _train_models(game_df)
+        models = load_models()
+
     preds_df = generate_predictions(game_df, models, CURRENT_SEASON, save=True)
     log.info("  Generated %d predictions", len(preds_df))
 
@@ -121,7 +154,7 @@ def run_predict_only(args):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def run_optimize(args):
-    log.info("BAYESIAN OPTIMISATION MODE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
+    log.info("BAYESIAN OPTIMISATION MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
 
     game_df = _build_features(force_data=True)
 
@@ -165,7 +198,7 @@ def run_optimize(args):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def run_backtest(args):
-    log.info("BACKTEST MODE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
+    log.info("BACKTEST MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
 
     game_df = _build_features(force_data=False)
 
@@ -191,7 +224,7 @@ def run_backtest(args):
 
 
 def run_analyze_seasons(args):
-    log.info("PER-SEASON ANALYSIS MODE  —  %s", datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"))
+    log.info("PER-SEASON ANALYSIS MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
 
     game_df = _build_features(force_data=False)
 
@@ -230,40 +263,7 @@ def _copy_to_docs():
 def _write_status(status: str):
     with open(DATA_DIR / "pipeline_status.json", "w") as f:
         json.dump({"status": status,
-                   "timestamp": datetime.utcnow().isoformat() + "Z"}, f)
+                   "timestamp": datetime.now(timezone.utc).isoformat()}, f)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  ENTRY POINT
-# ══════════════════════════════════════════════════════════════════════════════
-
-def main():
-    parser = argparse.ArgumentParser(description="NFL Score Predictor Pipeline")
-    parser.add_argument(
-        "--mode",
-        choices=["full", "predict_only", "backtest", "optimize", "analyze_seasons"],
-        default="full",
-        help="Pipeline mode",
-    )
-    parser.add_argument(
-        "--force-data",
-        action="store_true",
-        default=False,
-        help="Force re-download all data even if cached",
-    )
-    args = parser.parse_args()
-    # Make force_data accessible as attribute
-    args.force_data = args.force_data
-
-    dispatch = {
-        "full":             run_full,
-        "predict_only":     run_predict_only,
-        "backtest":         run_backtest,
-        "optimize":         run_optimize,
-        "analyze_seasons":  run_analyze_seasons,
-    }
-    dispatch[args.mode](args)
-
-
-if __name__ == "__main__":
-    main()
+#

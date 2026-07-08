@@ -5,7 +5,7 @@ Downloads and caches every available nflverse / nfldata table.
 Calls nflverse GitHub release URLs directly — no nfl-data-py dependency,
 which means no pandas version conflicts.
 
-All data is stored as parquet files in data/raw/ for fast reloads.
+All raw data is stored as parquet files in data/raw/ for fast reloads.
 """
 
 import json
@@ -26,16 +26,30 @@ RAW_DIR = ROOT / "data" / "raw"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── seasons ────────────────────────────────────────────────────────────────────
-WINDOW_SEASONS   = [2022, 2023, 2024, 2025]      # 4-season window (was 3)
-CURRENT_SEASON   = 2026
+
+def get_current_season(today: Optional[datetime] = None) -> int:
+    """
+    Current NFL season year, derived from the clock instead of a hardcoded
+    constant (which previously had to be hand-edited in several files every
+    year — a guaranteed annual failure mode).
+    League-year convention: March–December → calendar year; Jan–Feb (playoffs,
+    Super Bowl) still belong to the PREVIOUS season.
+    """
+    from datetime import timezone
+    t = today or datetime.now(timezone.utc)
+    return t.year if t.month >= 3 else t.year - 1
+
+
+CURRENT_SEASON   = get_current_season()
+WINDOW_SEASONS   = list(range(CURRENT_SEASON - 4, CURRENT_SEASON))   # 4-season window
 ALL_SEASONS      = WINDOW_SEASONS + [CURRENT_SEASON]
 
 # COVID 2020 season had no fans → home field advantage collapsed to ~0.1 pts
 # Including it distorts HFA features. Explicitly flagged so downstream code can handle.
 COVID_SEASONS    = [2020]
 
-EXTENDED_SEASONS = list(range(2014, 2027))       # for H2H 10-year lookback
-BACKTEST_SEASONS = [s for s in range(2020, 2027) if s not in COVID_SEASONS]
+EXTENDED_SEASONS = list(range(2014, CURRENT_SEASON + 1))   # for H2H 10-year lookback
+BACKTEST_SEASONS = [s for s in range(2020, CURRENT_SEASON + 1) if s not in COVID_SEASONS]
 
 # ── nflverse base URL ──────────────────────────────────────────────────────────
 BASE = "https://github.com/nflverse/nflverse-data/releases/download"
@@ -388,8 +402,9 @@ def list_available_tables() -> list[str]:
 
 
 def _save_manifest(tables: dict) -> None:
+    from datetime import timezone
     manifest = {
-        "generated_at": datetime.utcnow().isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "tables": {k: len(v) for k, v in tables.items() if v is not None},
     }
     with open(RAW_DIR / "manifest.json", "w") as f:
