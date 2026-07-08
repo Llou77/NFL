@@ -266,4 +266,37 @@ def _write_status(status: str):
                    "timestamp": datetime.now(timezone.utc).isoformat()}, f)
 
 
-#
+# ══════════════════════════════════════════════════════════════════════════════
+#  ENTRY POINT
+# ══════════════════════════════════════════════════════════════════════════════
+
+def main():
+    parser = argparse.ArgumentParser(description="NFL Score Predictor Pipeline")
+    parser.add_argument(
+        "--mode",
+        choices=["full", "predict_only", "backtest", "optimize", "analyze_seasons"],
+        default="full",
+        help="Pipeline mode",
+    )
+    parser.add_argument(
+        "--force-data",
+        action="store_true",
+        default=False,
+        help="Force re-download all data even if cached",
+    )
+    args = parser.parse_args()
+    # Make force_data accessible as attribute
+    args.force_data = args.force_data
+
+    dispatch = {
+        "full":             run_full,
+        "predict_only":     run_predict_only,
+        "backtest":         run_backtest,
+        "optimize":         run_optimize,
+        "analyze_seasons":  run_analyze_seasons,
+    }
+    dispatch[args.mode](args)
+
+
+if __name__ == "__main__":
+    main()
