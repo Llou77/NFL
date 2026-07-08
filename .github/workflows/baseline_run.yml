@@ -42,12 +42,16 @@ jobs:
             model-saved-
 
       - name: Step 1 — Bayesian optimisation (fresh data)
-        run: python -u model/pipeline.py --mode optimize --force-data 2>&1 | tee -a run_console.log
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode optimize --force-data 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
       - name: Step 2 — Full train + predict
-        run: python -u model/pipeline.py --mode full 2>&1 | tee -a run_console.log
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode full 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
@@ -65,7 +69,9 @@ jobs:
           git push
 
       - name: Step 3 — Honest backtest
-        run: python -u model/pipeline.py --mode backtest 2>&1 | tee -a run_console.log
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode backtest 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 

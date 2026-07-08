@@ -505,7 +505,7 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
 
     # ── Defensive aggregates ─────────────────────────────────────────────
     # Precompute explosive flag for defense (lambda in agg unreliable pandas 2.x)
-    pbp_def_expl = pbp[pbp["defteam"].notna() & pass_mask].copy()
+    pbp_def_expl = pbp[pbp["defteam"].notna() & scrimmage_mask].copy()
     pbp_def_expl["_is_expl_def"] = (pbp_def_expl["yards_gained"] >= 20).astype(float)
 
     def_base = (
@@ -540,7 +540,7 @@ def _aggregate_pbp(seasons: list) -> pd.DataFrame:
     )
 
     def_expl = (
-        pbp[pbp["defteam"].notna() & scrimmage_mask]
+        pbp_def_expl
         .groupby(["game_id","defteam"])
         .agg(def_explosive_allowed=("_is_expl_def", "mean"))
         .reset_index()
