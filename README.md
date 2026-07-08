@@ -18,16 +18,19 @@ The site updates automatically every Tuesday during the season with fresh predic
 
 ## How accurate is it?
 
-The model was tested on the **2025 NFL season** — a full season of games it had never seen before:
+**Honest status (July 2026): previously published accuracy figures were invalid and have been withdrawn.**
 
-| Metric | Result | What it means |
+An internal audit found multiple data-leakage channels in the feature pipeline — same-game box-score statistics, post-game Elo ratings, and same-week tracking stats were reaching the model during training and backtesting. Those leaks fully explain the implausibly strong historical numbers that used to be shown here (e.g. ±4.0-point margin error, ~75% over/under). Real NFL models do not achieve that; the leaks are now closed (feature allowlist, two-phase Elo, lagged NGS, honest out-of-fold stacking, and a backtest that runs the exact production prediction path).
+
+Realistic expectations after the fixes, to be verified by the next full backtest run:
+
+| Metric | Honest expectation | Context |
 |---|---|---|
-| Average score error | **±6.9 points** | The predicted combined score was within ~7 points of the real score, on average |
-| Average margin error | **±4.0 points** | The predicted winning margin was within ~4 points of reality, on average |
-| Predictive fit (R²) | **0.61** | The model explains 61% of actual score variation — well above random |
-| Over/Under prediction rate | **74.7%** | When the model says the total will go over or under the Vegas line, it's been right ~75% of the time |
+| Average margin error (MAE) | ~10–11 points | The theoretical best for NFL is ~9.5–10; Vegas closing lines sit around 10.2–10.5 |
+| Edge ATS hit rate | 50–54% | 52.4% is break-even at -110 odds; anything sustained above that is real edge |
+| ROI / CLV | tracked from now | Flat-stake ROI and closing-line-value are now first-class backtest metrics |
 
-For reference: a coin flip would give you 50%. Professional sports analysts typically achieve 55–60% on over/under picks.
+The backtest suite (`--mode backtest`) republishes updated numbers to the site automatically. Until a full post-fix backtest has run, treat any accuracy figure on the site as stale.
 
 > **On betting:** The site shows "edge signals" — games where the model's prediction meaningfully disagrees with the Vegas line. These are not betting recommendations. They're the games where the model is most confident it sees something the market may have missed. Whether there's genuine betting edge will only be known after a full season of live predictions.
 
@@ -79,7 +82,7 @@ Different models are good at different things. Linear regression handles stable,
 
 ## Training setup
 
-The model trains on a rolling window of the **last 3 NFL seasons** (~855 games total). Each week during the season, it retrains from scratch on all available data including the most recent completed games.
+The model trains on a rolling window of the **last 4 NFL seasons plus the current one**. Each week during the season, it retrains from scratch on all available data including the most recent completed games. The season window is derived from the clock automatically — no hand-edited year constants.
 
 Season weights are not fixed — they're tuned every pre-season using Bayesian optimisation (a systematic search algorithm). The most recent season gets the highest weight, and the oldest gets the least. This reflects the reality that NFL teams change significantly year to year.
 
@@ -125,11 +128,11 @@ Every prediction has a confidence rating: **High / Medium / Low / Weak**
 
 This is not a win probability. It measures how much the model trusts its own prediction given data quality and internal agreement.
 
-| Component | Weight | What it measures |
+| Component | Weight (default) | What it measures |
 |---|---|---|
-| Sub-model agreement | 40% | How closely all four sub-models agree on the score |
-| Data completeness | 35% | How much of the expected input data was available |
-| Head-to-head sample size | 25% | How many times these two teams have played historically |
+| Sub-model agreement | 55% | How closely all four sub-models agree on the score |
+| Data completeness | 30% | How much of the expected input data was available |
+| Head-to-head sample size | 15% | How many times these two teams have played historically |
 
 Early in the season (weeks 1–4), confidence tends to be lower because there's less recent game data available. Edge signals are suppressed for predictions with low or insufficient-data confidence.
 
@@ -137,16 +140,4 @@ Early in the season (weeks 1–4), confidence tends to be lower because there's 
 
 ## Known limitations
 
-- **No in-game or injury adjustments:** Predictions are made before kickoff and don't update if a star player is ruled out on game day. Injury report freshness is factored into the confidence score, but not the prediction itself.
-- **Rare situations:** The model has never seen a team with a historically bad/good start, so early-season outliers may be poorly predicted until more data accumulates.
-- **Vegas lines are hard to beat:** The Vegas spread is set by professional oddsmakers with access to enormous amounts of information. Consistently outperforming it is extremely difficult. The model's edge signal hit rate will be tracked live during the 2026 season.
-
----
-
-## Tech stack
-
-Python · scikit-learn · XGBoost · LightGBM · PyTorch · Optuna · GitHub Actions · GitHub Pages
-
----
-
-*Built by [@llou77](https://github.com/llou77) · Updated automatically every Tuesday during the NFL season*
+- **No in-game or injury adjustments:** Predictions are made before kickoff and don't update if a star player is ruled out on game day. Injury report freshness is factored into the confidence score, but not th
