@@ -41,13 +41,13 @@ The backtest suite (`--mode backtest`) republishes updated numbers to the site a
 About 150 different signals per game, grouped into four categories:
 
 **Recent team performance** (computed over the last 4, 8, and 16 games)
-How efficiently a team is moving the ball, stopping the run, creating turnovers, converting third downs, scoring in the red zone, and winning.
+How efficiently a team is moving the ball, stopping the run, creating turnovers, converting third downs, scoring in the red zone, and winning. All rolling stats are lagged — a game's own box score can never describe itself.
 
 **Matchup advantages**
 The model directly compares offensive strengths against defensive weaknesses. If Team A has an elite passing attack and Team B gives up a lot of yards through the air, that mismatch is explicitly measured.
 
 **Game context**
-Home/away, days of rest (coming off a bye vs. a short week), weather conditions (temperature, wind speed, dome vs. outdoor), primetime games, division rivalries, and referee tendencies.
+Home/away, days of rest (coming off a bye vs. a short week), weather conditions (temperature, wind speed, dome vs. outdoor), primetime games, division rivalries, and referee tendencies (computed from each referee's PRIOR games only).
 
 **Off-season and preseason signals**
 Power ratings that update continuously throughout the season. Vegas preseason win totals (a strong signal of team quality before any games are played). Whether the team changed its starting quarterback or head coach. Roster continuity vs. the previous year.
@@ -72,7 +72,7 @@ Layer 3:             Meta-Learner (optimal blend)
 
 **Layer 2** — A neural network processes the same features and outputs two numbers: a predicted home score and a predicted away score. It's trained to simultaneously minimise errors on the score, the winning margin, and the combined total.
 
-**Layer 3** — A final blending model learns the optimal way to combine all the predictions from layers 1 and 2. It's trained on held-out data (games not used to train the other models) to prevent it from just memorising the training set.
+**Layer 3** — A final blending model learns the optimal way to combine all the predictions from layers 1 and 2. It's trained on true out-of-fold predictions (every layer-1 model is refit per fold, so the blender never sees a model predicting its own training data).
 
 ### Why multiple models instead of just one?
 
@@ -140,4 +140,16 @@ Early in the season (weeks 1–4), confidence tends to be lower because there's 
 
 ## Known limitations
 
-- **No in-game or injury adjustments:** Predictions are made before kickoff and don't update if a star player is ruled out on game day. Injury report freshness is factored into the confidence score, but not th
+- **No in-game or injury adjustments:** Predictions are made before kickoff and don't update if a star player is ruled out on game day. Injury report freshness is factored into the confidence score, but not the prediction itself.
+- **Rare situations:** The model has never seen a team with a historically bad/good start, so early-season outliers may be poorly predicted until more data accumulates.
+- **Vegas lines are hard to beat:** The Vegas spread is set by professional oddsmakers with access to enormous amounts of information. Consistently outperforming it is extremely difficult. The model's edge signal hit rate, ROI and closing-line value will be tracked live during the 2026 season.
+
+---
+
+## Tech stack
+
+Python · scikit-learn · XGBoost · LightGBM · PyTorch · Optuna · GitHub Actions · GitHub Pages
+
+---
+
+*Built by [@llou77](https://github.com/llou77) · Updated automatically every Tuesday during the NFL season*

@@ -2,10 +2,10 @@ name: Pre-Season Training
 
 on:
   schedule:
-    # CRON FIX: the old expression '0 12 1-7 8 2' fired on Aug 1–7 EVERY day
+    # CRON FIX: the old expression '0 12 1-7 8 2' fired on Aug 1-7 EVERY day
     # PLUS every August Tuesday (day-of-month and day-of-week are OR-ed in
     # cron) — ~11 runs instead of 1. Now: every August Tuesday, and the guard
-    # step below exits early unless it is the FIRST Tuesday (day ≤ 7).
+    # step below exits early unless it is the FIRST Tuesday (day <= 7).
     - cron: '0 12 * 8 2'
   workflow_dispatch:
     inputs:
@@ -76,4 +76,18 @@ jobs:
 
       - name: Step 3 — Backtesting
         if: steps.guard.outputs.run == 'true' && github.event.inputs.run_backtest != 'false'
-        run: python model/pipeline.py --mod
+        run: python model/pipeline.py --mode backtest
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+        continue-on-error: true   # don't fail the whole job if backtest fails
+
+      - name: Commit artifacts
+        if: steps.guard.outputs.run == 'true'
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add docs/assets/
+          git add model/saved/optimal_weights.json model/saved/version.txt || true
+          git add data/predictions/predictions_latest.json data/predictions/performance.json data/predictions/backtest_results.json || true
+          git diff --staged --quiet || git commit -m "Pre-season training — $(date -u '+%Y-%m-%d')"
+          git push
