@@ -1750,4 +1750,197 @@ def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
         "day_of_week","referee","prev_game_date",
     }
 
-    team
+    team_stat_cols = [c for c in tg.columns if c not in skip]
+
+    home = tg[tg["is_home"] == 1][["game_id"] + team_stat_cols].copy()
+    away = tg[tg["is_home"] == 0][["game_id"] + team_stat_cols].copy()
+
+    home = home.add_prefix("home_").rename(columns={"home_game_id": "game_id"})
+    away = away.add_prefix("away_").rename(columns={"away_game_id": "game_id"})
+
+    game_df = home.merge(away, on="game_id", how="inner")
+
+    # Merge shared columns — use game_id only as key, not as a column in shared
+    shared = tg[tg["is_home"] == 1][["game_id"] + shared_cols].copy()
+    # Drop duplicate game_id rows (shouldn't exist, but safeguard)
+    shared = shared.drop_duplicates(subset=["game_id"])
+    game_df = game_df.merge(shared, on="game_id", how="left")
+
+    # Rest differential
+    if "home_rest_days" in game_df.columns and "away_rest_days" in game_df.columns:
+        game_df["rest_diff"] = game_df["home_rest_days"] - game_df["away_rest_days"]
+
+    # Elo gap
+    if "home_elo_pre_game" in game_df.columns and "away_elo_pre_game" in game_df.columns:
+        game_df["elo_gap"] = game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]
+
+    # CPOE gap
+    if "home_off_cpoe_r8" in game_df.columns and "away_off_cpoe_r8" in game_df.columns:
+        game_df["cpoe_gap_r8"] = game_df["home_off_cpoe_r8"] - game_df["away_off_cpoe_r8"]
+
+    # ── Load research-backed weights from Bayesian optimizer ──────────────
+    from bayesian_optimizer import load_weights as _lw
+    _opt = _lw()
+    OFF_EPA_W  = float(np.clip(_opt.get("off_epa_weight",  1.6), 1.0, 2.5))
+    TO_W       = float(np.clip(_opt.get("turnover_weight", 0.6), 0.2, 1.0))
+
+    # ── EPA matchup gaps (ASYMMETRIC: offense trusted more than defense) ───
+    # nfelo WEPA research: offensive EPA is ~1.6× more predictive of future
+    # performance than defensive EPA.
+    # Implementation: gap = off_col * sqrt(w) - def_col * (1/sqrt(w))
+    # Using sqrt keeps the units interpretable and avoids extreme scaling.
+    # When w=1.0 this is exactly the standard symmetric gap.
+    off_scale = float(np.sqrt(OFF_EPA_W))   # ~1.265 at w=1.6
+    def_scale = 1.0 / off_scale             # ~0.791 at w=1.6
+
+    def _add_asymmetric_epa_gap(df, off_col, def_col, name):
+        if off_col in df.columns and def_col in df.columns:
+            df[name] = df[off_col].fillna(0) * off_scale - df[def_col].fillna(0) * def_scale
+
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_epa_per_play_r8", "away_def_epa_per_play_r8",
+        "home_off_vs_away_def_epa_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_pass_epa_r8",     "away_def_pass_epa_r8",
+        "home_pass_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_rush_epa_r8",     "away_def_rush_epa_r8",
+        "home_rush_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_epa_per_play_r8", "home_def_epa_per_play_r8",
+        "away_off_vs_home_def_epa_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_pass_epa_r8",     "home_def_pass_epa_r8",
+        "away_pass_vs_home_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_rush_epa_r8",     "home_def_rush_epa_r8",
+        "away_rush_vs_home_def_r8")
+
+    # WEPA matchup gaps (uses WEPA offense vs raw def — already captures the weighting)
+    _add_asymmetric_epa_gap(game_df,
+        "home_off_wepa_per_play_r8", "away_def_epa_per_play_r8",
+        "home_wepa_vs_away_def_r8")
+    _add_asymmetric_epa_gap(game_df,
+        "away_off_wepa_per_play_r8", "home_def_epa_per_play_r8",
+        "away_wepa_vs_home_def_r8")
+
+    # ── Turnover gaps: blended (skill-adjusted vs raw) ─────────────────────
+    # Harvard research: 54% of turnovers are luck.
+    # Blend = TO_W × skill-adjusted + (1−TO_W) × raw
+    # At TO_W=0.6: 60% weight on luck-corrected signal, 40% on raw observed
+    # When to_skill_adj is unavailable (NaN), falls back to raw.
+
+    def _add_turnover_blend_gap(df, skill_h, skill_a, raw_h, raw_a, name):
+        """Blended turnover gap: favours luck-adjusted signal by TO_W."""
+        sh = skill_h in df.columns
+        sa = skill_a in df.columns
+        rh = raw_h   in df.columns
+        ra = raw_a   in df.columns
+
+        if sh and sa:
+            skill_gap = df[skill_h].fillna(df.get(raw_h, 0)) \
+                      - df[skill_a].fillna(df.get(raw_a, 0))
+        else:
+            skill_gap = None
+
+        if rh and ra:
+            raw_gap = df[raw_h].fillna(0) - df[raw_a].fillna(0)
+        else:
+            raw_gap = None
+
+        if skill_gap is not None and raw_gap is not None:
+            df[name] = TO_W * skill_gap + (1 - TO_W) * raw_gap
+        elif skill_gap is not None:
+            df[name] = skill_gap
+        elif raw_gap is not None:
+            df[name] = raw_gap
+
+    for sfx in ["r4", "r8", "r16"]:
+        _add_turnover_blend_gap(
+            game_df,
+            f"home_to_skill_adj_{sfx}", f"away_to_skill_adj_{sfx}",
+            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
+            f"turnover_gap_blended_{sfx}",
+        )
+        # Keep raw gap too — gives model both signals
+        _add_gap(game_df,
+            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
+            f"turnover_diff_gap_{sfx}")
+
+    # ── Coverage complexity gap ────────────────────────────────────────────
+    _add_gap(game_df,
+        "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
+        "coverage_complexity_gap")
+
+    # ── Turnover luck gap (keep as separate signal) ────────────────────────
+    _add_gap(game_df,
+        "home_turnover_luck_r8", "away_turnover_luck_r8",
+        "turnover_luck_gap_r8")
+
+    # ── Market divergence features ────────────────────────────────────────
+    # These measure how much the model DISAGREES with the opening market.
+    # Large divergences are the core of any betting edge signal.
+    # Note: these are computed AFTER targets to avoid leakage — opening spread
+    # is a PRE-game public signal, not derived from outcomes.
+    if "opening_spread" in game_df.columns:
+        # Model predicted margin vs opening market spread
+        # Positive = model more optimistic about home than opening spread
+        if "home_elo_pre_game" in game_df.columns and "away_elo_pre_game" in game_df.columns:
+            elo_implied = (game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]) / 25.0
+            game_df["elo_vs_opening_spread"] = elo_implied - (-game_df["opening_spread"].fillna(0))
+
+    if "opening_total" in game_df.columns:
+        # Season scoring context vs opening total
+        if "scoring_era_adj" in game_df.columns:
+            game_df["era_adj_vs_opening_total"] = game_df["scoring_era_adj"]
+
+    # Market-implied win probability gap (home vs away)
+    _add_gap(game_df, "home_market_win_prob_vigfree", "away_market_win_prob_vigfree",
+             "market_win_prob_gap")
+
+    # Availability flags → game-level (home team's flag applies)
+    for flag in ["wepa_available", "coverage_available", "ngs_available"]:
+        home_flag = f"home_{flag}"
+        if home_flag in game_df.columns:
+            game_df[flag] = game_df[home_flag]
+
+    # Target columns — use merged score columns directly
+    for side, target in [("home","target_home_score"),("away","target_away_score")]:
+        score_col = f"{side}_team_score"
+        if score_col in game_df.columns:
+            game_df[target] = pd.to_numeric(game_df[score_col], errors="coerce")
+        else:
+            game_df[target] = np.nan
+
+    if "target_home_score" in game_df.columns and "target_away_score" in game_df.columns:
+        game_df["target_total"]  = game_df["target_home_score"] + game_df["target_away_score"]
+        game_df["target_spread"] = game_df["target_home_score"] - game_df["target_away_score"]
+
+    return game_df.sort_values(["season","week","game_date"]).reset_index(drop=True)
+
+
+def _add_gap(df: pd.DataFrame, col_a: str, col_b: str, name: str):
+    if col_a in df.columns and col_b in df.columns:
+        df[name] = df[col_a] - df[col_b]
+
+
+def save_feature_dictionary(game_df: pd.DataFrame) -> None:
+    import csv
+    feat_cols = get_feature_columns(game_df)
+    with open(PROCESSED_DIR / "feature_dictionary.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["feature_name","dtype","null_pct","mean","std"])
+        for col in feat_cols:
+            s = game_df[col]
+            w.writerow([col, str(s.dtype),
+                        f"{s.isna().mean():.3f}",
+                        f"{s.mean():.4f}" if pd.api.types.is_numeric_dtype(s) else "",
+                        f"{s.std():.4f}"  if pd.api.types.is_numeric_dtype(s) else ""])
+    logger.info("Feature dictionary saved.")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    gf = build_all_features()
+    feat_cols = get_feature_columns(gf)
+    print(f"Games: {len(gf)} | Features: {len(feat_cols)}")
