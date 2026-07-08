@@ -42,12 +42,12 @@ jobs:
             model-saved-
 
       - name: Step 1 — Bayesian optimisation (fresh data)
-        run: python model/pipeline.py --mode optimize --force-data
+        run: python -u model/pipeline.py --mode optimize --force-data 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
       - name: Step 2 — Full train + predict
-        run: python model/pipeline.py --mode full
+        run: python -u model/pipeline.py --mode full 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
@@ -65,7 +65,7 @@ jobs:
           git push
 
       - name: Step 3 — Honest backtest
-        run: python model/pipeline.py --mode backtest
+        run: python -u model/pipeline.py --mode backtest 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
@@ -78,6 +78,27 @@ jobs:
           git add data/predictions/backtest_results.json || true
           git diff --staged --quiet || git commit -m "Honest baseline backtest — $(date -u '+%Y-%m-%d %H:%M')"
           git push
+
+      # Commit the console log so the outcome is publicly inspectable
+      # (anonymous users cannot read Actions logs).
+      - name: Publish run log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          {
+            echo "=== baseline run $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            python -V
+            pip list 2>/dev/null | grep -iE "torch|xgboost|lightgbm|optuna|pandas|scikit" || true
+            echo "--- console (tail) ---"
+            tail -c 40000 run_console.log 2>/dev/null || echo "(no console log)"
+            echo "--- data/pipeline.log (tail) ---"
+            tail -c 20000 data/pipeline.log 2>/dev/null || echo "(no pipeline.log)"
+          } > data/last_run_log.txt
+          git pull --rebase origin main || true
+          git add data/last_run_log.txt
+          git commit -m "Baseline run log — $(date -u '+%Y-%m-%d %H:%M')" || true
+          git push || true
 
       - name: Upload pipeline log on failure
         if: failure()
