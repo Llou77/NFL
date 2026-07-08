@@ -1559,6 +1559,12 @@ def _add_ngs_features(tg: pd.DataFrame, seasons: list) -> pd.DataFrame:
             continue
 
         grp_cols = ["team", "season", "week"]
+        # NGS files contain week=0 SEASON-SUMMARY rows. If those survive, the
+        # shift(1) rolling below would pull a full-season aggregate into the
+        # early weeks of the SAME season — a leak. Keep true weekly rows only.
+        tbl["week"] = pd.to_numeric(tbl["week"], errors="coerce")
+        tbl = tbl[tbl["week"] > 0].copy()
+        tbl["week"] = tbl["week"].astype(int)
         for c in available:
             tbl[c] = pd.to_numeric(tbl[c], errors="coerce")
         tbl_agg = tbl.groupby(grp_cols)[available].mean().reset_index()
