@@ -47,7 +47,6 @@ def run_backtests(
 ) -> dict:
     from feature_engineering import get_feature_columns
     from train import train_all, load_models
-    from train import _nn_predict
 
     feature_cols = get_feature_columns(game_df)
 
@@ -120,33 +119,19 @@ def run_backtests(
         train_all(df_train, feature_cols, weights, current_season=test_s, run_cv=False)
         models = load_models()
 
-        # Align features — fill missing cols with 0
-        feature_cols_exist = [c for c in feature_cols if c in df_test.columns]
-        X_test = df_test.reindex(columns=feature_cols, fill_value=np.nan).values
-        X_imp  = models["imputer"].transform(X_test)
-        X_sc   = models["scaler"].transform(X_imp)
+        # TRAIN/SERVE SKEW FIX: use the exact same ensemble path as live
+        # prediction (predict.ensemble_predict). The old code fed SCALED
+        # features to the tree models here while the live pipeline fed raw
+        # NaN-preserved features — the backtest measured a different model
+        # than the one deployed.
+        from predict import ensemble_predict
+        model_feature_cols = models.get("feature_cols", feature_cols)
+        X_test = df_test.reindex(columns=model_feature_cols,
+                                 fill_value=np.nan)[model_feature_cols].values
+        _, _, raw_home, raw_away = ensemble_predict(models, X_test, apply_calibration=True)
 
-        # Sub-model predictions
-        ph = {"ridge": models["ridge_home"].predict(X_sc)}
-        pa = {"ridge": models["ridge_away"].predict(X_sc)}
-        if "xgb_home" in models:
-            ph["xgb"] = models["xgb_home"].predict(X_sc)
-            pa["xgb"] = models["xgb_away"].predict(X_sc)
-        if "lgbm_home" in models:
-            try:
-                ph["lgbm"] = models["lgbm_home"].predict(X_sc)
-                pa["lgbm"] = models["lgbm_away"].predict(X_sc)
-            except Exception:
-                pass
-        if "nn" in models:
-            nh, na = _nn_predict(models["nn"], X_sc)
-            ph["nn"], pa["nn"] = nh, na
-
-        meta_X_h = np.column_stack(list(ph.values()))
-        meta_X_a = np.column_stack(list(pa.values()))
-
-        pred_home = np.round(models["meta_home"].predict(meta_X_h)).astype(float)
-        pred_away = np.round(models["meta_away"].predict(meta_X_a)).astype(float)
+        pred_home = np.round(raw_home).astype(float)
+        pred_away = np.round(raw_away).astype(float)
 
         actual_home = df_test["target_home_score"].values.astype(float)
         actual_away = df_test["target_away_score"].values.astype(float)
@@ -226,10 +211,9 @@ def compute_metrics(
     #   i.e. model and Vegas disagree on which team covers.
     #   Baseline: ~50% on random. >52.4% = break-even with -110 odds.
     #
-    EDGE_THRESHOLD = 1.5   # minimum pts model must predict home margin (away of 0)
-
     dir_wins = dir_losses = dir_pushes = 0
     edge_wins = edge_losses = edge_pushes = 0
+    clv_vals = np.array([])   # closing-line-value proxy per picked game
 
     if df is not None and "spread_line" in df.columns:
         df_aligned = df.reset_index(drop=True)
@@ -278,9 +262,38 @@ def compute_metrics(
             edge_losses = int((edge_loss_arr & ~push).sum())
             edge_pushes = int(edge_push_arr.sum())
 
+            # ── CLV proxy (closing line value) ──────────────────────────
+            # If the model "bet" at the OPENING line, did the market move
+            # toward the model by close? Positive CLV = the model got a
+            # better number than the closing consensus — the strongest
+            # known predictor of long-term betting profitability.
+            # Proxy caveat: uses consensus open/close medians, not real
+            # obtainable prices.
+            if "opening_spread" in df_aligned.columns:
+                opening = pd.to_numeric(
+                    df_aligned["opening_spread"], errors="coerce"
+                )[valid].values
+                thr_open  = -opening            # home must-cover at open
+                thr_close = threshold           # home must-cover at close
+                has_open  = ~np.isnan(thr_open) & (np.abs(thr_close - thr_open) > 1e-9)
+                clv_raw = np.where(
+                    model_pick_home, thr_close - thr_open,
+                    np.where(model_pick_away, thr_open - thr_close, np.nan),
+                )
+                clv_vals = clv_raw[has_open & ~np.isnan(clv_raw)]
+
     dir_pct  = dir_wins  / max(dir_wins  + dir_losses,  1)
     edge_pct = edge_wins / max(edge_wins + edge_losses, 1)
     n_edge   = edge_wins + edge_losses + edge_pushes
+
+    # ── ROI at flat -110 stakes on edge games (the honest money metric) ────
+    # 1 unit staked per edge game; win pays 100/110, loss costs the unit.
+    n_bets      = edge_wins + edge_losses
+    edge_profit = edge_wins * (100.0 / 110.0) - edge_losses * 1.0
+    edge_roi    = edge_profit / n_bets if n_bets > 0 else 0.0
+
+    avg_clv          = float(np.mean(clv_vals)) if len(clv_vals) else None
+    clv_positive_pct = float(np.mean(clv_vals > 0)) if len(clv_vals) else None
 
     ats_wins   = dir_wins
     ats_losses = dir_losses
@@ -324,12 +337,20 @@ def compute_metrics(
         "ats_losses":        ats_losses,
         "ats_pushes":        ats_pushes,
         "ats_pct":           round(ats_pct,    4),
-        # Edge ATS: only games where model disagreed with Vegas by >3 pts (REAL betting metric)
+        # Edge ATS: only games where model and Vegas favor DIFFERENT teams
+        # (the real betting metric — >52.4% beats -110 vig)
         "edge_ats_wins":     edge_wins,
         "edge_ats_losses":   edge_losses,
         "edge_ats_pushes":   edge_pushes,
         "edge_ats_pct":      round(edge_pct,   4),
         "edge_ats_n_games":  n_edge,
+        # ROI at flat 1-unit, -110 stakes across all edge games
+        "edge_profit_units": round(edge_profit, 2),
+        "edge_roi_flat_110": round(edge_roi,    4),
+        # Closing-line-value proxy (model "bets" the opening line)
+        "avg_clv_pts":       round(avg_clv, 3)          if avg_clv          is not None else None,
+        "clv_positive_pct":  round(clv_positive_pct, 4) if clv_positive_pct is not None else None,
+        "n_clv_games":       int(len(clv_vals)),
         "ou_wins":           ou_wins,
         "ou_losses":         ou_losses,
         "ou_pushes":         ou_pushes,
@@ -366,6 +387,51 @@ def _breakdown_by(ph, pa, ah, aa, df, col):
 # ══════════════════════════════════════════════════════════════════════════════
 #  LIVE SEASON PERFORMANCE
 # ══════════════════════════════════════════════════════════════════════════════
+
+def update_performance_from_latest(game_df: pd.DataFrame) -> Optional[dict]:
+    """
+    Reconcile the PREVIOUSLY published predictions with games that have since
+    completed, and update performance.json.
+
+    Call this BEFORE regenerating predictions_latest.json — the committed
+    file is the only persisted record of what the model predicted (the CI
+    checkout starts clean every run, so the archive/ folder is always empty).
+    Without this call performance.json is never updated at all.
+    """
+    latest_path = ROOT / "data" / "predictions" / "predictions_latest.json"
+    if not latest_path.exists():
+        logger.info("No previous predictions_latest.json — skipping performance update.")
+        return None
+
+    try:
+        with open(latest_path) as f:
+            payload = json.load(f)
+        records = payload.get("predictions", [])
+        if not records:
+            return None
+        preds_df = pd.DataFrame(records)
+
+        completed = game_df[game_df["target_home_score"].notna()][
+            ["game_id", "target_home_score", "target_away_score"]
+        ].rename(columns={
+            "target_home_score": "home_score",
+            "target_away_score": "away_score",
+        })
+        if len(completed) == 0:
+            return None
+
+        overlap = set(preds_df["game_id"]) & set(completed["game_id"])
+        if not overlap:
+            logger.info("Performance update: no newly completed predicted games.")
+            return None
+
+        logger.info("Performance update: reconciling %d completed games.", len(overlap))
+        return update_season_performance(preds_df, completed)
+    except Exception as e:
+        # Never let bookkeeping kill the prediction pipeline
+        logger.warning("Performance update failed (non-fatal): %s", e)
+        return None
+
 
 def update_season_performance(
     predictions_df: pd.DataFrame,
@@ -502,4 +568,4 @@ def _compute_summary(games: list) -> dict:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    print("evaluate.py — run via pipeline.py --mode backtest")
+    print("evaluate.py — run via: pipeline.py --mode backtest")

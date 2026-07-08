@@ -23,11 +23,143 @@ PRED_DIR.mkdir(parents=True, exist_ok=True)
 ARCHIVE_DIR  = PRED_DIR / "archive"
 ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
 
+# Meta-learner input order — MUST match _train_meta_learner's column stacking.
+_META_MODEL_ORDER = ("ridge", "xgb", "lgbm", "nn")
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  SHARED ENSEMBLE PATH  (used by BOTH live prediction and backtesting)
+#
+#  This is the single source of truth for how features flow through the
+#  ensemble. Before this existed, evaluate.py fed SCALED features to the tree
+#  models while the live path fed raw NaN-preserved features — the backtest
+#  was evaluating a different pipeline than the one deployed (train/serve skew).
+# ══════════════════════════════════════════════════════════════════════════════
+
+def ensemble_predict(
+    models: dict,
+    X_raw: np.ndarray,
+    apply_calibration: bool = True,
+) -> tuple:
+    """
+    Run the full ensemble on a raw feature matrix.
+
+    Preprocessing mirrors train.py exactly:
+      - Ridge + NN   → median-imputed + standard-scaled
+      - XGB + LGBM   → imputed then NaN re-introduced (native NaN handling)
+
+    Returns (sub_preds_home, sub_preds_away, raw_home, raw_away) where the
+    sub_preds dicts preserve _META_MODEL_ORDER for meta-learner stacking.
+    """
+    X_raw    = np.asarray(X_raw, dtype=np.float64)
+    nan_mask = np.isnan(X_raw)
+
+    X_imp  = models["imputer"].transform(X_raw)
+    X_sc   = models["scaler"].transform(X_imp)
+    X_tree = X_imp.copy()
+    X_tree[nan_mask] = np.nan
+
+    sub_home, sub_away = {}, {}
+
+    sub_home["ridge"] = models["ridge_home"].predict(X_sc)
+    sub_away["ridge"] = models["ridge_away"].predict(X_sc)
+
+    if "xgb_home" in models:
+        sub_home["xgb"] = models["xgb_home"].predict(X_tree)
+        sub_away["xgb"] = models["xgb_away"].predict(X_tree)
+
+    if "lgbm_home" in models:
+        try:
+            sub_home["lgbm"] = models["lgbm_home"].predict(X_tree)
+            sub_away["lgbm"] = models["lgbm_away"].predict(X_tree)
+        except Exception:
+            pass
+
+    if "nn" in models:
+        from train import _nn_predict
+        nn_h, nn_a = _nn_predict(models["nn"], X_sc)
+        sub_home["nn"], sub_away["nn"] = nn_h, nn_a
+    elif "nn_home_mlp" in models:
+        sub_home["nn"] = models["nn_home_mlp"].predict(X_sc)
+        sub_away["nn"] = models["nn_away_mlp"].predict(X_sc)
+
+    # Meta-learner expects the exact training-time column order and count.
+    present = [m for m in _META_MODEL_ORDER if m in sub_home]
+    n_meta  = getattr(models["meta_home"], "n_features_in_", len(present))
+    if len(present) != n_meta:
+        raise RuntimeError(
+            f"Meta-learner was trained on {n_meta} sub-models but only "
+            f"{present} are loadable — refusing to predict with a mismatched "
+            f"ensemble. Re-run pipeline --mode full."
+        )
+
+    meta_X_h = np.column_stack([sub_home[m] for m in present])
+    meta_X_a = np.column_stack([sub_away[m] for m in present])
+    raw_home = models["meta_home"].predict(meta_X_h)
+    raw_away = models["meta_away"].predict(meta_X_a)
+
+    raw_home, raw_away = _sanity_clamp(raw_home, raw_away)
+    if apply_calibration:
+        raw_home, raw_away = apply_variance_calibration(raw_home, raw_away)
+
+    return sub_home, sub_away, raw_home, raw_away
+
+
+def _sanity_clamp(raw_home: np.ndarray, raw_away: np.ndarray) -> tuple:
+    """Emergency rescale if the ensemble output is wildly implausible."""
+    avg_total = float(np.mean(raw_home + raw_away))
+    avg_home  = float(np.mean(raw_home))
+    if avg_total > 65 or avg_home < 10 or avg_home > 40:
+        logger.error(
+            "PREDICTION SANITY FAIL: avg_home=%.1f avg_total=%.1f — "
+            "expected home ~24pts, total ~45pts. "
+            "Model may be stale or trained on wrong targets. "
+            "Re-run --mode full to retrain.",
+            avg_home, avg_total
+        )
+        scale_h  = 24.0 / max(avg_home, 1.0)
+        scale_a  = 21.8 / max(float(np.mean(raw_away)), 1.0)
+        raw_home = raw_home * scale_h
+        raw_away = raw_away * scale_a
+        logger.warning("Applied emergency rescaling: home×%.3f away×%.3f", scale_h, scale_a)
+    return raw_home, raw_away
+
+
+def apply_variance_calibration(raw_home: np.ndarray, raw_away: np.ndarray) -> tuple:
+    """Expand spread/total variance around the mean using saved calibration."""
+    calib_path = ROOT / "model" / "saved" / "calibration.json"
+    if not calib_path.exists():
+        return raw_home, raw_away
+
+    with open(calib_path) as f:
+        calib = json.load(f)
+
+    spread_scale = calib.get("spread_scale", 1.0)
+    total_scale  = calib.get("total_scale",  1.0)
+
+    if spread_scale > 1.0 or total_scale > 1.0:
+        mean_h      = np.mean(raw_home)
+        mean_a      = np.mean(raw_away)
+        mean_total  = mean_h + mean_a
+        mean_spread = mean_h - mean_a
+        raw_spread  = raw_home - raw_away
+        raw_total   = raw_home + raw_away
+
+        cal_spread = mean_spread + (raw_spread - mean_spread) * spread_scale
+        cal_total  = mean_total  + (raw_total  - mean_total)  * total_scale
+
+        raw_home = (cal_total + cal_spread) / 2.0
+        raw_away = (cal_total - cal_spread) / 2.0
+
+    logger.info("  Applied variance calibration (spread_scale=%.3f total_scale=%.3f)",
+                spread_scale, total_scale)
+    return raw_home, raw_away
+
 
 def generate_predictions(
     game_df: pd.DataFrame,
     models: dict,
-    current_season: int = 2026,
+    current_season: Optional[int] = None,
     save: bool = True,
 ) -> pd.DataFrame:
     """
@@ -47,6 +179,9 @@ def generate_predictions(
     """
     from confidence import compute_confidence_batch
 
+    if current_season is None:
+        from data_loader import CURRENT_SEASON as current_season
+
     # Select unplayed games for current season
     upcoming = game_df[
         (game_df["season"] == current_season) &
@@ -60,107 +195,20 @@ def generate_predictions(
     logger.info(f"Generating predictions for {len(upcoming)} upcoming games …")
 
     feature_cols = models["feature_cols"]
-    imputer      = models["imputer"]
-    scaler       = models["scaler"]
-
-    # Preprocess — two versions:
-    # X_sc:   imputed + scaled (for Ridge and NN)
-    # X_tree: imputed only for Ridge/NN columns, NaN preserved for tree features
-    X_raw = upcoming[feature_cols].values
-    nan_mask = np.isnan(X_raw)
-
-    X_imp  = imputer.transform(X_raw)
-    X_sc   = scaler.transform(X_imp)
-
-    # Re-introduce NaN for tree models (they handle it natively via learned splits)
-    X_tree = X_imp.copy()
-    X_tree[nan_mask] = np.nan
-
-    # ── Sub-model predictions ─────────────────────────────────────────────
-    sub_preds_home = {}
-    sub_preds_away = {}
-
-    # Ridge — imputed + scaled
-    sub_preds_home["ridge"] = models["ridge_home"].predict(X_sc)
-    sub_preds_away["ridge"] = models["ridge_away"].predict(X_sc)
-
-    # XGBoost — NaN-preserved (native NaN handling)
-    if "xgb_home" in models:
-        sub_preds_home["xgb"] = models["xgb_home"].predict(X_tree)
-        sub_preds_away["xgb"] = models["xgb_away"].predict(X_tree)
-
-    # LightGBM — NaN-preserved
-    if "lgbm_home" in models:
-        try:
-            sub_preds_home["lgbm"] = models["lgbm_home"].predict(X_tree)
-            sub_preds_away["lgbm"] = models["lgbm_away"].predict(X_tree)
-        except Exception:
-            pass
-
-    # Neural Network — imputed + scaled (cannot handle NaN)
-    if "nn" in models:
-        from train import _nn_predict
-        nn_h, nn_a = _nn_predict(models["nn"], X_sc)
-        sub_preds_home["nn"] = nn_h
-        sub_preds_away["nn"] = nn_a
-    elif "nn_home_mlp" in models:
-        sub_preds_home["nn"] = models["nn_home_mlp"].predict(X_sc)
-        sub_preds_away["nn"] = models["nn_away_mlp"].predict(X_sc)
-
-    # ── Meta-learner final predictions ────────────────────────────────────
-    meta_X_home = np.column_stack(list(sub_preds_home.values()))
-    meta_X_away = np.column_stack(list(sub_preds_away.values()))
-
-    raw_home = models["meta_home"].predict(meta_X_home)
-    raw_away = models["meta_away"].predict(meta_X_away)
-
-    # ── Sanity check ─────────────────────────────────────────────────────
-    avg_total = float(np.mean(raw_home + raw_away))
-    avg_home  = float(np.mean(raw_home))
-    if avg_total > 65 or avg_home < 10 or avg_home > 40:
-        logger.error(
-            "PREDICTION SANITY FAIL: avg_home=%.1f avg_total=%.1f — "
-            "expected home ~24pts, total ~45pts. "
-            "Model may be stale or trained on wrong targets. "
-            "Re-run --mode full to retrain.",
-            avg_home, avg_total
+    missing = [c for c in feature_cols if c not in upcoming.columns]
+    if missing:
+        logger.warning(
+            "%d/%d model features are missing from the current feature matrix "
+            "(imputed as NaN — likely a feature-set change since the artifacts "
+            "were trained; retrain with --mode full). Examples: %s",
+            len(missing), len(feature_cols), missing[:5],
         )
-        # Clamp to plausible range rather than publish garbage
-        scale_h = 24.0 / max(avg_home, 1.0)
-        scale_a = 21.8 / max(float(np.mean(raw_away)), 1.0)
-        raw_home = raw_home * scale_h
-        raw_away = raw_away * scale_a
-        logger.warning("Applied emergency rescaling: home×%.3f away×%.3f", scale_h, scale_a)
+    X_raw = upcoming.reindex(columns=feature_cols, fill_value=np.nan)[feature_cols].values
 
-    # ── Variance calibration ──────────────────────────────────────────────
-    calib_path = ROOT / "model" / "saved" / "calibration.json"
-    if calib_path.exists():
-        with open(calib_path) as f:
-            calib = json.load(f)
-
-        spread_scale = calib.get("spread_scale", 1.0)
-        total_scale  = calib.get("total_scale",  1.0)
-
-        if spread_scale > 1.0 or total_scale > 1.0:
-            mean_h       = np.mean(raw_home)
-            mean_a       = np.mean(raw_away)
-            mean_total   = mean_h + mean_a
-            mean_spread  = mean_h - mean_a
-            raw_spread   = raw_home - raw_away
-            raw_total    = raw_home + raw_away
-
-            # 1. Calibrate spread (expand around mean)
-            cal_spread = mean_spread + (raw_spread - mean_spread) * spread_scale
-
-            # 2. Calibrate total independently (expand around mean)
-            cal_total  = mean_total  + (raw_total  - mean_total)  * total_scale
-
-            # 3. Reconstruct home/away from calibrated spread + total
-            raw_home = (cal_total + cal_spread) / 2.0
-            raw_away = (cal_total - cal_spread) / 2.0
-
-        logger.info("  Applied variance calibration (spread_scale=%.3f total_scale=%.3f)",
-                    spread_scale, total_scale)
+    # Single shared ensemble path (same code the backtest evaluates)
+    sub_preds_home, sub_preds_away, raw_home, raw_away = ensemble_predict(
+        models, X_raw, apply_calibration=True
+    )
 
     # Clip to realistic range and round
     final_home = np.clip(np.round(raw_home).astype(int), 0, 65)
@@ -301,9 +349,10 @@ def _save_predictions(df: pd.DataFrame, gen_ts: datetime) -> None:
         }
         records.append(rec)
 
+    seasons_in_batch = [r["season"] for r in records]
     output = {
         "generated_at":   gen_ts.isoformat(),
-        "season":         2026,
+        "season":         max(seasons_in_batch) if seasons_in_batch else None,
         "n_games":        len(records),
         "predictions":    records,
     }
@@ -392,4 +441,4 @@ def _get_top_features(row: pd.Series, n: int = 6) -> dict:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
-    print("predict.py — run via pipeline.py")
+    print("predict.py — run via pipeline.py --mode full | predict_only")
