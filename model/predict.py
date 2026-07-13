@@ -269,17 +269,24 @@ def _add_edge_signals(df: pd.DataFrame) -> pd.DataFrame:
     TOTAL_THR  = float(_lw_vals.get("total_lean_thr",  1.5))
 
     if "spread_line" in df.columns:
+        # SIGN FIX (2026-07): spread_line is HOME-oriented, POSITIVE = home
+        # favored (nflverse schedules convention), i.e. it is already the
+        # book's expected home margin. Edge = model margin − book margin.
+        # The old `- (-book_spread)` ADDED the line instead of subtracting
+        # it, which inverted/garbled every HOME/AWAY value label on the site.
         df["model_spread"] = df["predicted_spread"]
         df["book_spread"]  = df["spread_line"]
-        df["spread_edge"]  = df["model_spread"] - (-df["book_spread"])
+        df["spread_edge"]  = df["model_spread"] - df["book_spread"]
         df["spread_lean"]  = df["spread_edge"].apply(
             lambda x: "HOME" if x > SPREAD_THR else ("AWAY" if x < -SPREAD_THR else "PUSH")
         )
 
-        # Opening spread divergence — model vs. pre-public-money line
-        # This is the cleaner betting signal: model disagrees with oddsmaker's pure estimate
+        # Opening spread divergence — model vs. pre-public-money line.
+        # CAVEAT: opening_spread is built from a different source (mrcaseb
+        # team-level lines) whose orientation is not yet verified/unified —
+        # treat this column as informational only.
         if "opening_spread" in df.columns:
-            df["opening_spread_edge"] = df["model_spread"] - (-df["opening_spread"].fillna(df["book_spread"]))
+            df["opening_spread_edge"] = df["model_spread"] - df["opening_spread"].fillna(df["book_spread"])
 
     if "total_line" in df.columns:
         df["model_total"] = df["predicted_total"]
