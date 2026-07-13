@@ -1,0 +1,76 @@
+=== freeze 2026-07-13T14:33Z — status: success ===
+--- console (tail) ---
+14:32:58  INFO    Current season: 2026 — freezing closed seasons: [2022, 2023, 2024, 2025]
+14:32:58  INFO      frozen player_stats_weekly_2022                  18831 rows    0.71 MB
+14:32:59  INFO      frozen player_stats_weekly_2023                  18643 rows    0.71 MB
+14:32:59  INFO      frozen player_stats_weekly_2024                  18981 rows    0.71 MB
+14:32:59  INFO      frozen player_stats_weekly_2025                  19421 rows    0.72 MB
+14:33:00  INFO      frozen player_stats_season_2022                   2007 rows    0.26 MB
+14:33:00  INFO      frozen player_stats_season_2023                   1943 rows    0.25 MB
+14:33:00  INFO      frozen player_stats_season_2024                   1997 rows    0.26 MB
+14:33:01  INFO      frozen player_stats_season_2025                   2020 rows    0.26 MB
+14:33:01  INFO      frozen rosters_2022                               3134 rows    0.38 MB
+14:33:02  INFO      frozen rosters_2023                               3090 rows    0.38 MB
+14:33:02  INFO      frozen rosters_2024                               3216 rows    0.39 MB
+14:33:02  INFO      frozen rosters_2025                               3137 rows    0.40 MB
+14:33:03  INFO      frozen rosters_weekly_2022                       46163 rows    0.55 MB
+14:33:03  INFO      frozen rosters_weekly_2023                       45655 rows    0.54 MB
+14:33:04  INFO      frozen rosters_weekly_2024                       46579 rows    0.57 MB
+14:33:04  INFO      frozen rosters_weekly_2025                       46849 rows    0.58 MB
+14:33:05  INFO      frozen snap_counts_2022                          26381 rows    0.21 MB
+14:33:05  INFO      frozen snap_counts_2023                          26540 rows    0.21 MB
+14:33:05  INFO      frozen snap_counts_2024                          26615 rows    0.22 MB
+14:33:06  INFO      frozen snap_counts_2025                          26612 rows    0.22 MB
+14:33:06  INFO      frozen injuries_2022                              5682 rows    0.12 MB
+14:33:06  INFO      frozen injuries_2023                              5599 rows    0.11 MB
+14:33:07  INFO      frozen injuries_2024                              6215 rows    0.12 MB
+14:33:07  INFO      frozen injuries_2025                              6068 rows    0.09 MB
+14:33:07  INFO      frozen depth_charts_2022                         37780 rows    0.44 MB
+14:33:08  INFO      frozen depth_charts_2023                         37327 rows    0.44 MB
+14:33:08  INFO      frozen depth_charts_2024                         37312 rows    0.44 MB
+14:33:09  INFO      frozen depth_charts_2025                        554215 rows    0.70 MB
+14:33:09  INFO      frozen ftn_charting_2022                         41643 rows    0.40 MB
+14:33:10  INFO      frozen ftn_charting_2023                         48225 rows    0.45 MB
+14:33:10  INFO      frozen ftn_charting_2024                         48031 rows    0.45 MB
+14:33:11  INFO      frozen ftn_charting_2025                         47316 rows    0.44 MB
+14:33:11  INFO      frozen pfr_pass_2022                               685 rows    0.03 MB
+14:33:11  INFO      frozen pfr_pass_2023                               700 rows    0.03 MB
+14:33:12  INFO      frozen pfr_pass_2024                               697 rows    0.03 MB
+14:33:12  INFO      frozen pfr_pass_2025                               684 rows    0.03 MB
+14:33:12  INFO      frozen pfr_rush_2022                              2389 rows    0.04 MB
+14:33:13  INFO      frozen pfr_rush_2023                              2380 rows    0.04 MB
+14:33:13  INFO      frozen pfr_rush_2024                              2359 rows    0.04 MB
+14:33:13  INFO      frozen pfr_rush_2025                              2355 rows    0.04 MB
+14:33:14  INFO      frozen pfr_rec_2022                               4547 rows    0.05 MB
+14:33:14  INFO      frozen pfr_rec_2023                               4594 rows    0.05 MB
+14:33:14  INFO      frozen pfr_rec_2024                               4453 rows    0.05 MB
+14:33:15  INFO      frozen pfr_rec_2025                               4533 rows    0.05 MB
+14:33:15  INFO      frozen pfr_def_2022                               7878 rows    0.14 MB
+14:33:15  INFO      frozen pfr_def_2023                               7902 rows    0.14 MB
+14:33:16  INFO      frozen pfr_def_2024                               7992 rows    0.14 MB
+14:33:16  INFO      frozen pfr_def_2025                               7926 rows    0.14 MB
+14:33:16  INFO      frozen ngs_passing                                5933 rows    0.68 MB
+14:33:17  INFO      frozen ngs_rushing                                6059 rows    0.36 MB
+14:33:17  INFO      frozen ngs_receiving                             14731 rows    1.05 MB
+14:33:17  INFO      frozen draft_picks                               12927 rows    0.54 MB
+14:33:18  INFO      frozen draft_values                                262 rows    0.01 MB
+14:33:18  INFO      frozen combine                                    8968 rows    0.30 MB
+14:33:18  INFO      frozen win_totals                                  576 rows    0.01 MB
+14:33:19  INFO      frozen game_lines                               479089 rows    0.96 MB
+14:33:19  INFO      frozen scoring_lines                              4092 rows    0.03 MB
+14:33:19  INFO      frozen officials                                 50904 rows    0.15 MB
+14:33:20  INFO      frozen team_desc                                    36 rows    0.02 MB
+14:33:20  INFO      frozen id_map                                    12467 rows    1.12 MB
+14:33:20  INFO      frozen players                                   25033 rows    2.39 MB
+14:33:22  INFO      frozen contracts                                 51687 rows    4.91 MB
+14:33:23  INFO      frozen schedules                                  7548 rows    0.39 MB
+14:33:23  INFO      downloading raw PBP 2022 (transient, not committed) …
+14:33:25  INFO      frozen pbp_agg_2022                                568 rows    0.15 MB
+14:33:25  INFO      downloading raw PBP 2023 (transient, not committed) …
+14:33:27  INFO      frozen pbp_agg_2023                                570 rows    0.15 MB
+14:33:27  INFO      downloading raw PBP 2024 (transient, not committed) …
+14:33:28  INFO      frozen pbp_agg_2024                                570 rows    0.15 MB
+14:33:28  INFO      downloading raw PBP 2025 (transient, not committed) …
+14:33:30  INFO      frozen pbp_agg_2025                                570 rows    0.15 MB
+14:33:30  INFO    Frozen layer total: 27.2 MB (67 files)
+14:33:30  INFO    Freeze complete.
