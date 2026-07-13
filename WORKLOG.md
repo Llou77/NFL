@@ -38,6 +38,24 @@ tanítóhalmazzá válna); (2) a súly-drift extrapolációja kimaradt (paramét
   fold-izolációt ez nem sérti érdemben.
 - Ablakhossz-kérdés (3 vs 4): az aggregátumok empirikusan eldöntik.
 
+### Eredmény (26/26 fold zöld, 2 kör után)
+
+- Menet közben javítva: (1) nflverse korszakok közti dtype-drift
+  (jersey_number str↔float → pyarrow-hiba a 2016–2019-es foldokon) —
+  `_harmonize_dtypes` + safe-write; (2) a merge a régi `_summary` blokkot
+  fold-sorként olvasta vissza → kizárva.
+- **Összesítő (13-13 fold):** ablak=3: spread MAE 10,41 | ATS 54,2% (covid
+  nélkül 53,6%) | edge ATS 59,1% (covid nélkül 57,4%) | edge ROI +12,9%.
+  Ablak=4: MAE 10,41 | ATS 55,4% (53,6%) | edge ATS 59,0% (57,0%) | ROI +12,6%.
+- **Ablakhossz-verdikt:** 3 vs 4 szezon gyakorlatilag EGYENÉRTÉKŰ (MAE azonos,
+  ATS ±0,5%p) — nincs ok változtatni a jelenlegi 4+folyó ablakon.
+- **Korszak-hatás:** a 2013–2015-ös foldok gyengébbek (MAE 10,9–11,8) — kevesebb
+  forrás (nincs NGS/PFR/FTN); 2016-tól a MAE jellemzően 9,2–10,6.
+- **Óvatossági jegyzet:** az edge ATS ~57% (covid-szűrt) átlaga fold-onként
+  34–76% közt szór — a jel pozitívnak tűnik, de a vonalforrás-egységesítés
+  (mrcaseb vs schedules) előtt éles pénzre extrapolálni nem szabad; a
+  végső bizonyíték az élő, időbélyegzett 2026-os szezon lesz.
+
 ## 2026-07-13 — "Runtime round": crash-fix, frozen adatréteg, workflow-darabolás, doksi
 
 **Feladat:** (1) a pipeline nem futott le és/vagy 20+ percig tartott — gyökérok-javítás
