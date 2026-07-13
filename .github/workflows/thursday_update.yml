@@ -84,7 +84,10 @@ jobs:
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
           git add docs/assets/
-          git add data/predictions/predictions_latest.json data/predictions/performance.json || true
+          # ONE pathspec per add: `git add A B || true` fails ENTIRELY when
+          # B does not exist, silently un-staging A too.
+          git add data/predictions/predictions_latest.json || true
+          git add data/predictions/performance.json || true
           git diff --staged --quiet || git commit -m "TNF refresh — $(date -u '+%Y-%m-%d')"
           for i in 1 2 3; do git push && break || git pull --rebase origin main; done
 
