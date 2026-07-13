@@ -65,6 +65,53 @@ STATIC_TABLES = [
 ]
 
 
+def _harmonize_dtypes(frames: list[pd.DataFrame], tbl: str) -> list[pd.DataFrame]:
+    """Reconcile schema drift across nflverse eras before concat.
+
+    The same column can be a string in one season's file and a float in
+    another's (e.g. jersey_number pre/post 2016) — concat then yields a
+    mixed object column that pyarrow refuses to write. Rule:
+      * dtype mix involving object/string  → cast to nullable string
+      * purely numeric mix (int vs float)  → widen to float64
+    """
+    from collections import defaultdict
+    dtypes: dict[str, set] = defaultdict(set)
+    for f in frames:
+        for c in f.columns:
+            dtypes[c].add(str(f[c].dtype))
+
+    to_string  = sorted(c for c, ds in dtypes.items()
+                        if len(ds) > 1 and ("object" in ds or "string" in ds))
+    to_float   = sorted(c for c, ds in dtypes.items()
+                        if len(ds) > 1 and c not in to_string)
+    if to_string or to_float:
+        log.info("  %s: harmonizing dtypes (→string: %s, →float64: %s)",
+                 tbl, to_string[:6], to_float[:6])
+    for f in frames:
+        for c in to_string:
+            if c in f.columns:
+                f[c] = f[c].astype("string")
+        for c in to_float:
+            if c in f.columns:
+                f[c] = pd.to_numeric(f[c], errors="coerce").astype("float64")
+    return frames
+
+
+def _write_parquet_safe(df: pd.DataFrame, path: Path, tbl: str) -> None:
+    """to_parquet with a last-resort fallback: if pyarrow still refuses a
+    mixed object column (heterogeneous types WITHIN one file), stringify
+    every object column and retry once."""
+    try:
+        df.to_parquet(path, index=False)
+    except Exception as e:  # noqa: BLE001
+        obj_cols = [c for c in df.columns if str(df[c].dtype) == "object"]
+        log.warning("  %s: parquet write failed (%s) — stringifying %d "
+                    "object columns and retrying", tbl, e, len(obj_cols))
+        for c in obj_cols:
+            df[c] = df[c].astype("string")
+        df.to_parquet(path, index=False)
+
+
 def prepare_tables(seasons: list[int]) -> None:
     """Materialise data/raw/ for this fold purely from data/frozen/.
 
@@ -89,8 +136,9 @@ def prepare_tables(seasons: list[int]) -> None:
             if p.exists():
                 frames.append(pd.read_parquet(p))
         if frames:
-            pd.concat(frames, ignore_index=True).to_parquet(
-                RAW / f"{tbl}.parquet", index=False)
+            frames = _harmonize_dtypes(frames, tbl)
+            combined = pd.concat(frames, ignore_index=True)
+            _write_parquet_safe(combined, RAW / f"{tbl}.parquet", tbl)
         else:
             log.warning("no frozen data for %s in seasons %s "
                         "(source may not exist for this era)", tbl, seasons)
