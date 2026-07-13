@@ -215,11 +215,14 @@ def compute_metrics(
     #
     # METRIC 2 — True Edge ATS (the ONLY meaningful betting metric)
     #   Only count games where the model and Vegas FAVOR DIFFERENT TEAMS.
-    #   book_spread < 0  → Vegas favors home
+    #   SIGN CONVENTION (fixed 2026-07): nflverse schedules spread_line is
+    #   HOME-oriented and POSITIVE when the home team is favored.
+    #   book_spread > 0  → Vegas favors home
     #   model_spread > 0 → model favors home
-    #   Edge game = sign(model_spread) ≠ sign(-book_spread)
-    #   i.e. model and Vegas disagree on which team covers.
     #   Baseline: ~50% on random. >52.4% = break-even with -110 odds.
+    #   (The old code assumed the opposite sign; that inflated ATS to
+    #   76-83% while spread MAE and O/U stayed honest — the exact
+    #   fingerprint of a sign bug, since totals have no home/away side.)
     #
     dir_wins = dir_losses = dir_pushes = 0
     edge_wins = edge_losses = edge_pushes = 0
@@ -231,7 +234,7 @@ def compute_metrics(
         valid = book_spread.notna()
 
         if valid.any():
-            bs  = book_spread[valid].values   # negative = home favored
+            bs  = book_spread[valid].values   # POSITIVE = home favored (nflverse)
             ph  = pred_home[valid]
             pa  = pred_away[valid]
             ah  = actual_home[valid]
@@ -239,8 +242,8 @@ def compute_metrics(
 
             actual_margin = ah - aa
             model_margin  = ph - pa
-            # Cover threshold: home covers if actual_margin > -book_spread
-            threshold = -bs
+            # Cover threshold: home covers iff actual_margin > spread_line
+            threshold = bs
 
             model_pick_home  = model_margin > threshold
             model_pick_away  = model_margin < threshold
@@ -256,9 +259,9 @@ def compute_metrics(
             dir_pushes = int(push.sum())
 
             # TRUE EDGE: model and Vegas must favor DIFFERENT teams
-            # Vegas favors home if book_spread < 0 (home -X)
+            # Vegas favors home if spread_line > 0 (nflverse convention)
             # Model favors home if model_margin > 0 (positive home margin)
-            vegas_fav_home = bs < 0
+            vegas_fav_home = bs > 0
             model_fav_home = model_margin > 0
 
             # Only count games where they disagree on which team wins
@@ -283,7 +286,12 @@ def compute_metrics(
                 opening = pd.to_numeric(
                     df_aligned["opening_spread"], errors="coerce"
                 )[valid].values
-                thr_open  = -opening            # home must-cover at open
+                # CAVEAT: opening_spread comes from a different source
+                # (mrcaseb team-level lines) whose orientation is not yet
+                # verified/unified with schedules — CLV is a rough proxy
+                # until the line sources are consolidated. Assumed here to
+                # share the home-positive convention for consistency.
+                thr_open  = opening             # home must-cover at open
                 thr_close = threshold           # home must-cover at close
                 has_open  = ~np.isnan(thr_open) & (np.abs(thr_close - thr_open) > 1e-9)
                 clv_raw = np.where(
@@ -469,10 +477,11 @@ def update_season_performance(
         book_spread = row.get("book_spread")
         book_total  = row.get("book_total")
 
-        # ATS result (corrected)
+        # ATS result — SIGN FIX (2026-07): book_spread is home-oriented,
+        # positive = home favored; home covers iff margin > spread_line.
         ats_result = None
         if book_spread is not None and not (isinstance(book_spread, float) and np.isnan(book_spread)):
-            threshold    = -float(book_spread)
+            threshold    = float(book_spread)
             actual_margin = act_h - act_a
             model_margin  = pred_h - pred_a
             if actual_margin == threshold:

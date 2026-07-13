@@ -66,6 +66,23 @@ jobs:
           path: run_console.log
           retention-days: 14
 
+      # Anonymous users cannot read Actions logs — commit the failure tail
+      # so matrix-job failures are diagnosable from the repo itself.
+      - name: Publish failure log
+        if: failure()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== backtest ${{ matrix.season }} $(date -u '+%Y-%m-%dT%H:%MZ') — status: FAILURE ==="
+            echo "--- console (tail) ---"
+            tail -c 30000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/backtest_${{ matrix.season }}_fail.txt
+          git add data/logs/backtest_${{ matrix.season }}_fail.txt
+          git commit -m "Backtest ${{ matrix.season }} failure log" || true
+          for i in 1 2 3 4; do git push && break || git pull --rebase origin main; done
+
   merge_backtests:
     needs: backtest
     if: ${{ always() }}

@@ -97,11 +97,13 @@ def build_h2h_features(
     hist["game_date"] = pd.to_datetime(hist["gameday"], errors="coerce")
     hist = hist[hist["game_date"].notna()].copy()
 
-    # Normalize spread_line (positive = home favored in some datasets; adjust)
+    # SIGN FIX (2026-07): nflverse schedules convention — spread_line is
+    # HOME-oriented and POSITIVE when the home team is favored. Home covers
+    # iff actual_margin > spread_line. The old code negated the line.
     if "spread_line" in hist.columns:
         hist["actual_spread"] = hist["home_score"] - hist["away_score"]
         hist["home_covered"] = (
-            hist["actual_spread"] > -hist["spread_line"].fillna(0)
+            hist["actual_spread"] > hist["spread_line"].fillna(0)
         ).astype(float)
     else:
         hist["actual_spread"] = hist["home_score"] - hist["away_score"]
