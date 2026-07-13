@@ -1,0 +1,2055 @@
+{
+  "2013_w3": {
+    "mae_home": 7.955,
+    "mae_away": 7.697,
+    "mae_total": 11.21,
+    "mae_spread": 11.052,
+    "ats_wins": 115,
+    "ats_losses": 128,
+    "ats_pushes": 7,
+    "ats_pct": 0.4733,
+    "edge_ats_wins": 27,
+    "edge_ats_losses": 36,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.4286,
+    "edge_ats_n_games": 63,
+    "edge_profit_units": -11.45,
+    "edge_roi_flat_110": -0.1818,
+    "avg_clv_pts": 1.12,
+    "clv_positive_pct": 0.5455,
+    "n_clv_games": 220,
+    "ou_wins": 138,
+    "ou_losses": 125,
+    "ou_pushes": 4,
+    "ou_pct": 0.5247,
+    "r2_total": 0.0271,
+    "pred_spread_std": 7.92,
+    "actual_spread_std": 14.19,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.246,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 11.231,
+        "n": 169
+      },
+      "1": {
+        "mae_total": 11.173,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.87,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 11.964,
+        "n": 83
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.776,
+        "n": 49
+      },
+      "0": {
+        "mae_total": 11.307,
+        "n": 218
+      }
+    },
+    "test_season": 2013,
+    "window": 3,
+    "train_seasons": [
+      2010,
+      2011,
+      2012
+    ],
+    "n_train": 801,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.152,
+      "w_middle": 1.0642,
+      "w_recent": 1.1811,
+      "w_current": 1.3755,
+      "wt_wc": 0.5175,
+      "wt_div": 0.4037,
+      "wt_con": 0.7263,
+      "wt_sb": 0.4641,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2014_w3": {
+    "mae_home": 8.363,
+    "mae_away": 7.723,
+    "mae_total": 10.88,
+    "mae_spread": 11.801,
+    "ats_wins": 127,
+    "ats_losses": 118,
+    "ats_pushes": 6,
+    "ats_pct": 0.5184,
+    "edge_ats_wins": 22,
+    "edge_ats_losses": 17,
+    "edge_ats_pushes": 1,
+    "edge_ats_pct": 0.5641,
+    "edge_ats_n_games": 40,
+    "edge_profit_units": 3.0,
+    "edge_roi_flat_110": 0.0769,
+    "avg_clv_pts": 3.215,
+    "clv_positive_pct": 0.625,
+    "n_clv_games": 224,
+    "ou_wins": 140,
+    "ou_losses": 124,
+    "ou_pushes": 3,
+    "ou_pct": 0.5303,
+    "r2_total": 0.0653,
+    "pred_spread_std": 8.8,
+    "actual_spread_std": 15.56,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.07,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.406,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 11.711,
+        "n": 97
+      }
+    },
+    "by_dome": {
+      "1": {
+        "mae_total": 10.847,
+        "n": 85
+      },
+      "0": {
+        "mae_total": 10.896,
+        "n": 182
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.865,
+        "n": 52
+      },
+      "0": {
+        "mae_total": 10.884,
+        "n": 215
+      }
+    },
+    "test_season": 2014,
+    "window": 3,
+    "train_seasons": [
+      2011,
+      2012,
+      2013
+    ],
+    "n_train": 801,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.5374,
+      "w_middle": 0.5294,
+      "w_recent": 1.1833,
+      "w_current": 1.3538,
+      "wt_wc": 0.8667,
+      "wt_div": 0.8422,
+      "wt_con": 0.6788,
+      "wt_sb": 0.7531,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2015_w3": {
+    "mae_home": 7.914,
+    "mae_away": 7.562,
+    "mae_total": 10.884,
+    "mae_spread": 10.831,
+    "ats_wins": 128,
+    "ats_losses": 120,
+    "ats_pushes": 10,
+    "ats_pct": 0.5161,
+    "edge_ats_wins": 29,
+    "edge_ats_losses": 17,
+    "edge_ats_pushes": 4,
+    "edge_ats_pct": 0.6304,
+    "edge_ats_n_games": 50,
+    "edge_profit_units": 9.36,
+    "edge_roi_flat_110": 0.2036,
+    "avg_clv_pts": 3.324,
+    "clv_positive_pct": 0.6094,
+    "n_clv_games": 233,
+    "ou_wins": 125,
+    "ou_losses": 137,
+    "ou_pushes": 5,
+    "ou_pct": 0.4771,
+    "r2_total": -0.0397,
+    "pred_spread_std": 8.22,
+    "actual_spread_std": 14.18,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.926,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.859,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 10.928,
+        "n": 97
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.011,
+        "n": 185
+      },
+      "1": {
+        "mae_total": 12.854,
+        "n": 82
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.692,
+        "n": 52
+      },
+      "0": {
+        "mae_total": 10.93,
+        "n": 215
+      }
+    },
+    "test_season": 2015,
+    "window": 3,
+    "train_seasons": [
+      2012,
+      2013,
+      2014
+    ],
+    "n_train": 801,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.8261,
+      "w_middle": 0.5745,
+      "w_recent": 0.8757,
+      "w_current": 1.3411,
+      "wt_wc": 0.4758,
+      "wt_div": 0.3923,
+      "wt_con": 0.5094,
+      "wt_sb": 0.2967,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2019_w3": {
+    "mae_home": 7.367,
+    "mae_away": 7.232,
+    "mae_total": 11.101,
+    "mae_spread": 9.895,
+    "ats_wins": 149,
+    "ats_losses": 102,
+    "ats_pushes": 10,
+    "ats_pct": 0.5936,
+    "edge_ats_wins": 33,
+    "edge_ats_losses": 13,
+    "edge_ats_pushes": 2,
+    "edge_ats_pct": 0.7174,
+    "edge_ats_n_games": 48,
+    "edge_profit_units": 17.0,
+    "edge_roi_flat_110": 0.3696,
+    "avg_clv_pts": 1.888,
+    "clv_positive_pct": 0.6175,
+    "n_clv_games": 251,
+    "ou_wins": 133,
+    "ou_losses": 133,
+    "ou_pushes": 1,
+    "ou_pct": 0.5,
+    "r2_total": 0.0203,
+    "pred_spread_std": 8.85,
+    "actual_spread_std": 14.72,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.152,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "1": {
+        "mae_total": 10.521,
+        "n": 96
+      },
+      "0": {
+        "mae_total": 11.427,
+        "n": 171
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 11.0,
+        "n": 183
+      },
+      "1": {
+        "mae_total": 11.321,
+        "n": 84
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 11.06,
+        "n": 50
+      },
+      "0": {
+        "mae_total": 11.111,
+        "n": 217
+      }
+    },
+    "test_season": 2019,
+    "window": 3,
+    "train_seasons": [
+      2016,
+      2017,
+      2018
+    ],
+    "n_train": 801,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.5182,
+      "w_middle": 0.6993,
+      "w_recent": 0.664,
+      "w_current": 0.9201,
+      "wt_wc": 0.3673,
+      "wt_div": 0.7,
+      "wt_con": 0.5229,
+      "wt_sb": 0.5051,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2020_w3": {
+    "mae_home": 7.286,
+    "mae_away": 8.227,
+    "mae_total": 11.164,
+    "mae_spread": 10.732,
+    "ats_wins": 135,
+    "ats_losses": 129,
+    "ats_pushes": 0,
+    "ats_pct": 0.5114,
+    "edge_ats_wins": 23,
+    "edge_ats_losses": 12,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.6571,
+    "edge_ats_n_games": 35,
+    "edge_profit_units": 8.91,
+    "edge_roi_flat_110": 0.2545,
+    "avg_clv_pts": 5.284,
+    "clv_positive_pct": 0.7114,
+    "n_clv_games": 246,
+    "ou_wins": 130,
+    "ou_losses": 134,
+    "ou_pushes": 5,
+    "ou_pct": 0.4924,
+    "r2_total": -0.0355,
+    "pred_spread_std": 10.76,
+    "actual_spread_std": 14.09,
+    "n_games": 269,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.09,
+        "n": 256
+      },
+      "WC": {
+        "mae_total": 15.5,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.812,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 11.768,
+        "n": 99
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.309,
+        "n": 175
+      },
+      "1": {
+        "mae_total": 12.755,
+        "n": 94
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 11.32,
+        "n": 50
+      },
+      "0": {
+        "mae_total": 11.128,
+        "n": 219
+      }
+    },
+    "test_season": 2020,
+    "window": 3,
+    "train_seasons": [
+      2017,
+      2018,
+      2019
+    ],
+    "n_train": 801,
+    "n_test": 269,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.5182,
+      "w_middle": 0.6993,
+      "w_recent": 0.664,
+      "w_current": 0.9201,
+      "wt_wc": 0.3673,
+      "wt_div": 0.7,
+      "wt_con": 0.5229,
+      "wt_sb": 0.5051,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2021_w3": {
+    "mae_home": 8.074,
+    "mae_away": 7.954,
+    "mae_total": 11.249,
+    "mae_spread": 11.172,
+    "ats_wins": 153,
+    "ats_losses": 119,
+    "ats_pushes": 4,
+    "ats_pct": 0.5625,
+    "edge_ats_wins": 52,
+    "edge_ats_losses": 23,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.6933,
+    "edge_ats_n_games": 75,
+    "edge_profit_units": 24.27,
+    "edge_roi_flat_110": 0.3236,
+    "avg_clv_pts": -2.62,
+    "clv_positive_pct": 0.4069,
+    "n_clv_games": 231,
+    "ou_wins": 144,
+    "ou_losses": 138,
+    "ou_pushes": 3,
+    "ou_pct": 0.5106,
+    "r2_total": -0.0199,
+    "pred_spread_std": 9.47,
+    "actual_spread_std": 15.28,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.228,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 9.0,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 11.091,
+        "n": 186
+      },
+      "1": {
+        "mae_total": 11.545,
+        "n": 99
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 11.312,
+        "n": 189
+      },
+      "1": {
+        "mae_total": 11.125,
+        "n": 96
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 13.362,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 10.709,
+        "n": 227
+      }
+    },
+    "test_season": 2021,
+    "window": 3,
+    "train_seasons": [
+      2018,
+      2019,
+      2020
+    ],
+    "n_train": 803,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.1708,
+      "w_middle": 0.5372,
+      "w_recent": 0.6749,
+      "w_current": 1.0615,
+      "wt_wc": 0.5638,
+      "wt_div": 0.4992,
+      "wt_con": 0.8058,
+      "wt_sb": 0.4141,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2022_w3": {
+    "mae_home": 7.947,
+    "mae_away": 7.5,
+    "mae_total": 11.813,
+    "mae_spread": 9.222,
+    "ats_wins": 164,
+    "ats_losses": 103,
+    "ats_pushes": 10,
+    "ats_pct": 0.6142,
+    "edge_ats_wins": 49,
+    "edge_ats_losses": 29,
+    "edge_ats_pushes": 3,
+    "edge_ats_pct": 0.6282,
+    "edge_ats_n_games": 81,
+    "edge_profit_units": 15.55,
+    "edge_roi_flat_110": 0.1993,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 121,
+    "ou_losses": 160,
+    "ou_pushes": 3,
+    "ou_pct": 0.4306,
+    "r2_total": -0.1271,
+    "pred_spread_std": 8.28,
+    "actual_spread_std": 12.4,
+    "n_games": 284,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.841,
+        "n": 271
+      },
+      "WC": {
+        "mae_total": 9.833,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 11.772,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 11.89,
+        "n": 100
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 11.389,
+        "n": 185
+      },
+      "1": {
+        "mae_total": 12.606,
+        "n": 99
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 12.741,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 11.575,
+        "n": 226
+      }
+    },
+    "test_season": 2022,
+    "window": 3,
+    "train_seasons": [
+      2019,
+      2020,
+      2021
+    ],
+    "n_train": 821,
+    "n_test": 284,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.2797,
+      "w_middle": 0.8644,
+      "w_recent": 1.0953,
+      "w_current": 1.4132,
+      "wt_wc": 0.8371,
+      "wt_div": 0.4661,
+      "wt_con": 0.4519,
+      "wt_sb": 0.3657,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2023_w3": {
+    "mae_home": 7.133,
+    "mae_away": 7.537,
+    "mae_total": 10.396,
+    "mae_spread": 10.13,
+    "ats_wins": 154,
+    "ats_losses": 109,
+    "ats_pushes": 14,
+    "ats_pct": 0.5856,
+    "edge_ats_wins": 31,
+    "edge_ats_losses": 22,
+    "edge_ats_pushes": 3,
+    "edge_ats_pct": 0.5849,
+    "edge_ats_n_games": 56,
+    "edge_profit_units": 6.18,
+    "edge_roi_flat_110": 0.1166,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 156,
+    "ou_losses": 125,
+    "ou_pushes": 4,
+    "ou_pct": 0.5552,
+    "r2_total": 0.0248,
+    "pred_spread_std": 8.64,
+    "actual_spread_std": 14.38,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.393,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 11.5,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.413,
+        "n": 189
+      },
+      "1": {
+        "mae_total": 10.365,
+        "n": 96
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.505,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 10.198,
+        "n": 101
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 8.417,
+        "n": 60
+      },
+      "0": {
+        "mae_total": 10.924,
+        "n": 225
+      }
+    },
+    "test_season": 2023,
+    "window": 3,
+    "train_seasons": [
+      2020,
+      2021,
+      2022
+    ],
+    "n_train": 838,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.6609,
+      "w_middle": 0.9474,
+      "w_recent": 0.758,
+      "w_current": 1.1517,
+      "wt_wc": 0.6741,
+      "wt_div": 0.351,
+      "wt_con": 0.8294,
+      "wt_sb": 0.207,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2024_w3": {
+    "mae_home": 7.34,
+    "mae_away": 6.93,
+    "mae_total": 9.898,
+    "mae_spread": 9.961,
+    "ats_wins": 146,
+    "ats_losses": 123,
+    "ats_pushes": 4,
+    "ats_pct": 0.5428,
+    "edge_ats_wins": 30,
+    "edge_ats_losses": 31,
+    "edge_ats_pushes": 2,
+    "edge_ats_pct": 0.4918,
+    "edge_ats_n_games": 63,
+    "edge_profit_units": -3.73,
+    "edge_roi_flat_110": -0.0611,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 156,
+    "ou_losses": 126,
+    "ou_pushes": 3,
+    "ou_pct": 0.5532,
+    "r2_total": 0.0386,
+    "pred_spread_std": 8.27,
+    "actual_spread_std": 14.44,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 9.82,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 7.167,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 9.321,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 11.0,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.086,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 9.541,
+        "n": 98
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.667,
+        "n": 63
+      },
+      "0": {
+        "mae_total": 9.68,
+        "n": 222
+      }
+    },
+    "test_season": 2024,
+    "window": 3,
+    "train_seasons": [
+      2021,
+      2022,
+      2023
+    ],
+    "n_train": 854,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.1044,
+      "w_middle": 0.9708,
+      "w_recent": 1.0388,
+      "w_current": 1.3239,
+      "wt_wc": 0.7742,
+      "wt_div": 0.3907,
+      "wt_con": 0.5472,
+      "wt_sb": 0.2695,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2025_w3": {
+    "mae_home": 7.796,
+    "mae_away": 7.979,
+    "mae_total": 11.193,
+    "mae_spread": 10.618,
+    "ats_wins": 152,
+    "ats_losses": 130,
+    "ats_pushes": 1,
+    "ats_pct": 0.539,
+    "edge_ats_wins": 33,
+    "edge_ats_losses": 30,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.5238,
+    "edge_ats_n_games": 63,
+    "edge_profit_units": 0.0,
+    "edge_roi_flat_110": 0.0,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 139,
+    "ou_losses": 146,
+    "ou_pushes": 0,
+    "ou_pct": 0.4877,
+    "r2_total": -0.0169,
+    "pred_spread_std": 10.39,
+    "actual_spread_std": 14.13,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.158,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 11.833,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "1": {
+        "mae_total": 11.505,
+        "n": 99
+      },
+      "0": {
+        "mae_total": 11.027,
+        "n": 186
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.479,
+        "n": 190
+      },
+      "1": {
+        "mae_total": 12.621,
+        "n": 95
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 12.672,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 10.815,
+        "n": 227
+      }
+    },
+    "test_season": 2025,
+    "window": 3,
+    "train_seasons": [
+      2022,
+      2023,
+      2024
+    ],
+    "n_train": 854,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.3247,
+      "w_middle": 0.7799,
+      "w_recent": 0.7275,
+      "w_current": 1.3714,
+      "wt_wc": 0.391,
+      "wt_div": 0.8928,
+      "wt_con": 0.7747,
+      "wt_sb": 0.3192,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2013_w4": {
+    "mae_home": 8.037,
+    "mae_away": 7.783,
+    "mae_total": 11.086,
+    "mae_spread": 11.199,
+    "ats_wins": 120,
+    "ats_losses": 128,
+    "ats_pushes": 7,
+    "ats_pct": 0.4839,
+    "edge_ats_wins": 20,
+    "edge_ats_losses": 29,
+    "edge_ats_pushes": 1,
+    "edge_ats_pct": 0.4082,
+    "edge_ats_n_games": 50,
+    "edge_profit_units": -10.82,
+    "edge_roi_flat_110": -0.2208,
+    "avg_clv_pts": 4.107,
+    "clv_positive_pct": 0.6489,
+    "n_clv_games": 225,
+    "ou_wins": 143,
+    "ou_losses": 120,
+    "ou_pushes": 4,
+    "ou_pct": 0.5437,
+    "r2_total": 0.0415,
+    "pred_spread_std": 8.66,
+    "actual_spread_std": 14.19,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.105,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.982,
+        "n": 169
+      },
+      "1": {
+        "mae_total": 11.265,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.75,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 11.831,
+        "n": 83
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.449,
+        "n": 49
+      },
+      "0": {
+        "mae_total": 11.229,
+        "n": 218
+      }
+    },
+    "test_season": 2013,
+    "window": 4,
+    "train_seasons": [
+      2009,
+      2010,
+      2011,
+      2012
+    ],
+    "n_train": 1068,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.5182,
+      "w_middle": 0.6993,
+      "w_recent": 0.664,
+      "w_current": 0.9201,
+      "wt_wc": 0.3673,
+      "wt_div": 0.7,
+      "wt_con": 0.5229,
+      "wt_sb": 0.5051,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2014_w4": {
+    "mae_home": 8.311,
+    "mae_away": 7.367,
+    "mae_total": 10.697,
+    "mae_spread": 11.685,
+    "ats_wins": 133,
+    "ats_losses": 117,
+    "ats_pushes": 6,
+    "ats_pct": 0.532,
+    "edge_ats_wins": 20,
+    "edge_ats_losses": 11,
+    "edge_ats_pushes": 1,
+    "edge_ats_pct": 0.6452,
+    "edge_ats_n_games": 32,
+    "edge_profit_units": 7.18,
+    "edge_roi_flat_110": 0.2317,
+    "avg_clv_pts": 4.628,
+    "clv_positive_pct": 0.687,
+    "n_clv_games": 230,
+    "ou_wins": 135,
+    "ou_losses": 129,
+    "ou_pushes": 3,
+    "ou_pct": 0.5114,
+    "r2_total": 0.0853,
+    "pred_spread_std": 8.76,
+    "actual_spread_std": 15.56,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.891,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.253,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 11.474,
+        "n": 97
+      }
+    },
+    "by_dome": {
+      "1": {
+        "mae_total": 10.718,
+        "n": 85
+      },
+      "0": {
+        "mae_total": 10.687,
+        "n": 182
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 11.423,
+        "n": 52
+      },
+      "0": {
+        "mae_total": 10.521,
+        "n": 215
+      }
+    },
+    "test_season": 2014,
+    "window": 4,
+    "train_seasons": [
+      2010,
+      2011,
+      2012,
+      2013
+    ],
+    "n_train": 1068,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.5809,
+      "w_middle": 0.8957,
+      "w_recent": 0.6613,
+      "w_current": 1.4804,
+      "wt_wc": 0.8078,
+      "wt_div": 0.4668,
+      "wt_con": 0.45,
+      "wt_sb": 0.31,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2015_w4": {
+    "mae_home": 8.0,
+    "mae_away": 7.513,
+    "mae_total": 10.861,
+    "mae_spread": 10.966,
+    "ats_wins": 126,
+    "ats_losses": 113,
+    "ats_pushes": 10,
+    "ats_pct": 0.5272,
+    "edge_ats_wins": 26,
+    "edge_ats_losses": 20,
+    "edge_ats_pushes": 4,
+    "edge_ats_pct": 0.5652,
+    "edge_ats_n_games": 50,
+    "edge_profit_units": 3.64,
+    "edge_roi_flat_110": 0.0791,
+    "avg_clv_pts": 4.166,
+    "clv_positive_pct": 0.6311,
+    "n_clv_games": 225,
+    "ou_wins": 131,
+    "ou_losses": 131,
+    "ou_pushes": 5,
+    "ou_pct": 0.5,
+    "r2_total": -0.0392,
+    "pred_spread_std": 8.59,
+    "actual_spread_std": 14.18,
+    "n_games": 267,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.867,
+        "n": 256
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.959,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 10.691,
+        "n": 97
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.108,
+        "n": 185
+      },
+      "1": {
+        "mae_total": 12.561,
+        "n": 82
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.423,
+        "n": 52
+      },
+      "0": {
+        "mae_total": 10.967,
+        "n": 215
+      }
+    },
+    "test_season": 2015,
+    "window": 4,
+    "train_seasons": [
+      2011,
+      2012,
+      2013,
+      2014
+    ],
+    "n_train": 1068,
+    "n_test": 267,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.8996,
+      "w_middle": 0.8559,
+      "w_recent": 0.8347,
+      "w_current": 0.9576,
+      "wt_wc": 0.576,
+      "wt_div": 0.5285,
+      "wt_con": 0.6391,
+      "wt_sb": 0.5852,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2020_w4": {
+    "mae_home": 7.257,
+    "mae_away": 8.004,
+    "mae_total": 10.933,
+    "mae_spread": 10.42,
+    "ats_wins": 127,
+    "ats_losses": 133,
+    "ats_pushes": 0,
+    "ats_pct": 0.4885,
+    "edge_ats_wins": 24,
+    "edge_ats_losses": 18,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.5714,
+    "edge_ats_n_games": 42,
+    "edge_profit_units": 3.82,
+    "edge_roi_flat_110": 0.0909,
+    "avg_clv_pts": 4.153,
+    "clv_positive_pct": 0.6872,
+    "n_clv_games": 243,
+    "ou_wins": 124,
+    "ou_losses": 140,
+    "ou_pushes": 5,
+    "ou_pct": 0.4697,
+    "r2_total": 0.0072,
+    "pred_spread_std": 9.85,
+    "actual_spread_std": 14.09,
+    "n_games": 269,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.809,
+        "n": 256
+      },
+      "WC": {
+        "mae_total": 15.833,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.588,
+        "n": 170
+      },
+      "1": {
+        "mae_total": 11.525,
+        "n": 99
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.303,
+        "n": 175
+      },
+      "1": {
+        "mae_total": 12.106,
+        "n": 94
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 10.9,
+        "n": 50
+      },
+      "0": {
+        "mae_total": 10.941,
+        "n": 219
+      }
+    },
+    "test_season": 2020,
+    "window": 4,
+    "train_seasons": [
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "n_train": 1068,
+    "n_test": 269,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.2797,
+      "w_middle": 0.8188,
+      "w_recent": 0.9234,
+      "w_current": 1.1499,
+      "wt_wc": 0.6264,
+      "wt_div": 0.631,
+      "wt_con": 0.3758,
+      "wt_sb": 0.7976,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2021_w4": {
+    "mae_home": 8.039,
+    "mae_away": 7.863,
+    "mae_total": 11.088,
+    "mae_spread": 11.053,
+    "ats_wins": 168,
+    "ats_losses": 102,
+    "ats_pushes": 4,
+    "ats_pct": 0.6222,
+    "edge_ats_wins": 45,
+    "edge_ats_losses": 19,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.7031,
+    "edge_ats_n_games": 64,
+    "edge_profit_units": 21.91,
+    "edge_roi_flat_110": 0.3423,
+    "avg_clv_pts": 1.13,
+    "clv_positive_pct": 0.5302,
+    "n_clv_games": 232,
+    "ou_wins": 150,
+    "ou_losses": 132,
+    "ou_pushes": 3,
+    "ou_pct": 0.5319,
+    "r2_total": 0.0003,
+    "pred_spread_std": 11.05,
+    "actual_spread_std": 15.28,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.04,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 9.167,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.844,
+        "n": 186
+      },
+      "1": {
+        "mae_total": 11.545,
+        "n": 99
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 11.106,
+        "n": 189
+      },
+      "1": {
+        "mae_total": 11.052,
+        "n": 96
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 13.431,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 10.489,
+        "n": 227
+      }
+    },
+    "test_season": 2021,
+    "window": 4,
+    "train_seasons": [
+      2017,
+      2018,
+      2019,
+      2020
+    ],
+    "n_train": 1070,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.1976,
+      "w_middle": 0.7466,
+      "w_recent": 0.6689,
+      "w_current": 1.4411,
+      "wt_wc": 0.4923,
+      "wt_div": 0.7144,
+      "wt_con": 0.5214,
+      "wt_sb": 0.512,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2022_w4": {
+    "mae_home": 7.754,
+    "mae_away": 7.317,
+    "mae_total": 12.007,
+    "mae_spread": 8.894,
+    "ats_wins": 168,
+    "ats_losses": 101,
+    "ats_pushes": 10,
+    "ats_pct": 0.6245,
+    "edge_ats_wins": 52,
+    "edge_ats_losses": 28,
+    "edge_ats_pushes": 3,
+    "edge_ats_pct": 0.65,
+    "edge_ats_n_games": 83,
+    "edge_profit_units": 19.27,
+    "edge_roi_flat_110": 0.2409,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 125,
+    "ou_losses": 156,
+    "ou_pushes": 3,
+    "ou_pct": 0.4448,
+    "r2_total": -0.1273,
+    "pred_spread_std": 7.77,
+    "actual_spread_std": 12.4,
+    "n_games": 284,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 12.063,
+        "n": 271
+      },
+      "WC": {
+        "mae_total": 9.167,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 11.853,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 12.29,
+        "n": 100
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 11.681,
+        "n": 185
+      },
+      "1": {
+        "mae_total": 12.616,
+        "n": 99
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 13.103,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 11.726,
+        "n": 226
+      }
+    },
+    "test_season": 2022,
+    "window": 4,
+    "train_seasons": [
+      2018,
+      2019,
+      2020,
+      2021
+    ],
+    "n_train": 1088,
+    "n_test": 284,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.6887,
+      "w_middle": 0.4128,
+      "w_recent": 0.7866,
+      "w_current": 1.4827,
+      "wt_wc": 0.8915,
+      "wt_div": 0.6125,
+      "wt_con": 0.8847,
+      "wt_sb": 0.2072,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2023_w4": {
+    "mae_home": 7.27,
+    "mae_away": 7.516,
+    "mae_total": 10.512,
+    "mae_spread": 10.154,
+    "ats_wins": 162,
+    "ats_losses": 101,
+    "ats_pushes": 14,
+    "ats_pct": 0.616,
+    "edge_ats_wins": 40,
+    "edge_ats_losses": 25,
+    "edge_ats_pushes": 3,
+    "edge_ats_pct": 0.6154,
+    "edge_ats_n_games": 68,
+    "edge_profit_units": 11.36,
+    "edge_roi_flat_110": 0.1748,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 149,
+    "ou_losses": 132,
+    "ou_pushes": 4,
+    "ou_pct": 0.5302,
+    "r2_total": 0.0417,
+    "pred_spread_std": 9.51,
+    "actual_spread_std": 14.38,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.548,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 10.333,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 10.608,
+        "n": 189
+      },
+      "1": {
+        "mae_total": 10.323,
+        "n": 96
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.908,
+        "n": 184
+      },
+      "1": {
+        "mae_total": 9.792,
+        "n": 101
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 9.083,
+        "n": 60
+      },
+      "0": {
+        "mae_total": 10.893,
+        "n": 225
+      }
+    },
+    "test_season": 2023,
+    "window": 4,
+    "train_seasons": [
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "n_train": 1105,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.7218,
+      "w_middle": 0.4154,
+      "w_recent": 0.8216,
+      "w_current": 0.8565,
+      "wt_wc": 0.5873,
+      "wt_div": 0.5584,
+      "wt_con": 0.8815,
+      "wt_sb": 0.7162,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2024_w4": {
+    "mae_home": 7.639,
+    "mae_away": 7.179,
+    "mae_total": 10.235,
+    "mae_spread": 10.361,
+    "ats_wins": 146,
+    "ats_losses": 130,
+    "ats_pushes": 4,
+    "ats_pct": 0.529,
+    "edge_ats_wins": 35,
+    "edge_ats_losses": 30,
+    "edge_ats_pushes": 2,
+    "edge_ats_pct": 0.5385,
+    "edge_ats_n_games": 67,
+    "edge_profit_units": 1.82,
+    "edge_roi_flat_110": 0.028,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 146,
+    "ou_losses": 136,
+    "ou_pushes": 3,
+    "ou_pct": 0.5177,
+    "r2_total": -0.0337,
+    "pred_spread_std": 10.74,
+    "actual_spread_std": 14.44,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 10.217,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 5.333,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "0": {
+        "mae_total": 9.406,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 11.816,
+        "n": 98
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.508,
+        "n": 187
+      },
+      "1": {
+        "mae_total": 9.714,
+        "n": 98
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 11.048,
+        "n": 63
+      },
+      "0": {
+        "mae_total": 10.005,
+        "n": 222
+      }
+    },
+    "test_season": 2024,
+    "window": 4,
+    "train_seasons": [
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "n_train": 1123,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": true,
+    "tuned_weights": {
+      "w_oldest": 0.4649,
+      "w_middle": 0.9496,
+      "w_recent": 0.7598,
+      "w_current": 1.1843,
+      "wt_wc": 0.6758,
+      "wt_div": 0.3755,
+      "wt_con": 0.6841,
+      "wt_sb": 0.3023,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "2025_w4": {
+    "mae_home": 7.712,
+    "mae_away": 7.667,
+    "mae_total": 11.035,
+    "mae_spread": 10.361,
+    "ats_wins": 156,
+    "ats_losses": 125,
+    "ats_pushes": 1,
+    "ats_pct": 0.5552,
+    "edge_ats_wins": 38,
+    "edge_ats_losses": 25,
+    "edge_ats_pushes": 0,
+    "edge_ats_pct": 0.6032,
+    "edge_ats_n_games": 63,
+    "edge_profit_units": 9.55,
+    "edge_roi_flat_110": 0.1515,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 140,
+    "ou_losses": 145,
+    "ou_pushes": 0,
+    "ou_pct": 0.4912,
+    "r2_total": 0.0251,
+    "pred_spread_std": 10.57,
+    "actual_spread_std": 14.13,
+    "n_games": 285,
+    "by_game_type": {
+      "REG": {
+        "mae_total": 11.011,
+        "n": 272
+      },
+      "WC": {
+        "mae_total": 12.667,
+        "n": 6
+      }
+    },
+    "by_division_game": {
+      "1": {
+        "mae_total": 11.354,
+        "n": 99
+      },
+      "0": {
+        "mae_total": 10.866,
+        "n": 186
+      }
+    },
+    "by_dome": {
+      "0": {
+        "mae_total": 10.432,
+        "n": 190
+      },
+      "1": {
+        "mae_total": 12.242,
+        "n": 95
+      }
+    },
+    "by_primetime": {
+      "1": {
+        "mae_total": 12.431,
+        "n": 58
+      },
+      "0": {
+        "mae_total": 10.678,
+        "n": 227
+      }
+    },
+    "test_season": 2025,
+    "window": 4,
+    "train_seasons": [
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "n_train": 1139,
+    "n_test": 285,
+    "n_features": 370,
+    "trials": 30,
+    "covid_affected": false,
+    "tuned_weights": {
+      "w_oldest": 0.1788,
+      "w_middle": 0.7452,
+      "w_recent": 0.9837,
+      "w_current": 0.8581,
+      "wt_wc": 0.6373,
+      "wt_div": 0.8277,
+      "wt_con": 0.37,
+      "wt_sb": 0.3923,
+      "variance_scale": 1.8,
+      "elo_k": 20.0,
+      "elo_regression": 0.67,
+      "elo_mov_mult": 2.2,
+      "off_epa_weight": 1.6,
+      "turnover_weight": 0.6,
+      "conf_w_model": 0.55,
+      "conf_w_feat": 0.3,
+      "conf_w_h2h": 0.15,
+      "conf_model_div": 10.0,
+      "conf_high_thr": 0.74,
+      "conf_med_thr": 0.58,
+      "nn_w_home": 0.4,
+      "nn_w_away": 0.4,
+      "nn_w_total": 0.35,
+      "nn_w_spread": 0.25,
+      "spread_lean_thr": 1.5,
+      "total_lean_thr": 1.5
+    }
+  },
+  "_summary": {
+    "window_3": {
+      "n_folds": 10,
+      "mean_mae_spread": 10.5414,
+      "mean_ats_pct": 0.5457,
+      "mean_edge_ats_pct": 0.592,
+      "mean_edge_roi": 0.1301,
+      "mean_ats_pct_excl_covid": 0.5305,
+      "mean_edge_ats_pct_excl_covid": 0.5594
+    },
+    "window_4": {
+      "n_folds": 9,
+      "mean_mae_spread": 10.5659,
+      "mean_ats_pct": 0.5532,
+      "mean_edge_ats_pct": 0.5889,
+      "mean_edge_roi": 0.1243,
+      "mean_ats_pct_excl_covid": 0.5246,
+      "mean_edge_ats_pct_excl_covid": 0.5554
+    }
+  }
+}
