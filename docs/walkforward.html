@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Walk-Forward Simulation — NFL Score Predictor</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+         background:#0d1117; color:#c9d1d9; max-width: 1000px;
+         margin: 0 auto; padding: 24px; }
+  a { color:#58a6ff; }
+  h1 { font-size: 1.5em; } h2 { font-size: 1.15em; margin-top: 1.6em; }
+  img { max-width: 100%; border-radius: 8px; background:#fff; }
+  table { border-collapse: collapse; width: 100%; font-size: .9em; }
+  th, td { padding: 6px 10px; border-bottom: 1px solid #21262d; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color:#8b949e; }
+  .covid { color:#f85149; }
+  .note { color:#8b949e; font-size:.85em; }
+  .good { color:#3fb950; }
+</style>
+</head>
+<body>
+<h1>Walk-Forward Simulation</h1>
+<p><a href="index.html">← predictions</a> · <a href="insights.html">insights</a></p>
+
+<p>Every fold trains ONLY on the seasons before its test season (sliding
+window), tunes its sample weights on pre-test data only (nested), then
+predicts the held-out season. No fold ever sees its own future.
+Rows marked <span class="covid">covid</span> include the 2020 no-fans
+season in train or test. The chart logs the tuned-weight drift —
+deliberately without trend extrapolation.</p>
+
+<h2>Fold results</h2>
+<table id="tbl"><thead><tr>
+  <th>test season</th><th>window</th><th>MAE spread</th><th>MAE total</th>
+  <th>ATS %</th><th>O/U %</th><th>edge ATS %</th><th>edge ROI</th><th></th>
+</tr></thead><tbody></tbody></table>
+<p class="note">Break-even ATS at standard -110 pricing is 52.4%. Vegas
+closing lines achieve ≈10.2 spread MAE.</p>
+
+<h2>Weight drift &amp; per-season metrics</h2>
+<img src="assets/walkforward_weights.png"
+     alt="walk-forward weight drift and metrics"
+     onerror="this.replaceWith('(chart not generated yet — run the Walk-Forward Simulation workflow)')">
+
+<script>
+fetch("assets/walkforward_results.json")
+  .then(r => r.json())
+  .then(d => {
+    const tb = document.querySelector("#tbl tbody");
+    const rows = Object.entries(d)
+      .filter(([k, v]) => k !== "_summary" && !v.skipped)
+      .map(([, v]) => v)
+      .sort((a, b) => (a.window - b.window) || (a.test_season - b.test_season));
+    const pct = x => (x == null ? "–" : (100 * x).toFixed(1));
+    const num = (x, d=2) => (x == null ? "–" : (+x).toFixed(d));
+    for (const r of rows) {
+      const tr = document.createElement("tr");
+      const ats = 100 * (r.ats_pct ?? 0);
+      tr.innerHTML =
+        `<td>${r.test_season}</td><td>w${r.window}</td>` +
+        `<td>${num(r.mae_spread)}</td><td>${num(r.mae_total)}</td>` +
+        `<td class="${ats > 52.4 ? "good" : ""}">${pct(r.ats_pct)}</td>` +
+        `<td>${pct(r.ou_pct)}</td><td>${pct(r.edge_ats_pct)}</td>` +
+        `<td>${num(r.edge_roi_flat_110, 3)}</td>` +
+        `<td class="covid">${r.covid_affected ? "covid" : ""}</td>`;
+      tb.appendChild(tr);
+    }
+    if (d._summary) {
+      const p = document.createElement("p");
+      p.className = "note";
+      p.textContent = "Aggregates: " + JSON.stringify(d._summary);
+      document.querySelector("#tbl").after(p);
+    }
+  })
+  .catch(() => {
+    document.querySelector("#tbl tbody").innerHTML =
+      "<tr><td colspan=9>walkforward_results.json not published yet</td></tr>";
+  });
+</script>
+</body>
+</html>
