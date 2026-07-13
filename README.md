@@ -73,7 +73,8 @@ All automation lives in `.github/workflows/`. Every heavy stage is a **separate 
 | `optimize_run.yml` | push touching `.opt-trigger`, or manual | Stage 1 alone: Bayesian weight optimisation (~8–10 min). |
 | `train_run.yml` | push touching `.train-trigger`, or manual | Stage 2 alone: train + predict (~8–12 min). |
 | `backtest_run.yml` | push touching `.backtest-trigger`, or manual | Stage 3 alone: backtest matrix (one season per parallel job) + merge. |
-| `freeze_data.yml` | push touching `.freeze-trigger`, manual, or Apr 1 yearly | Rebuilds `data/frozen/` — downloads all closed-season data once and commits it. |
+| `freeze_data.yml` | push touching `.freeze-trigger`, manual, or Apr 1 yearly | Rebuilds `data/frozen/` — downloads all closed-season data once and commits it (back to `FREEZE_FROM`, default 2009). |
+| `walkforward.yml` | push touching `.walkforward-trigger`, or manual | Deep walk-forward simulation: one parallel job per (test season 2013–2025 × window 3/4), nested tuning per fold, merged results + weight-drift chart published to [docs/walkforward.html](https://llou77.github.io/NFL/walkforward.html). |
 | `pre_season_train.yml` | first Tuesday of August | Dispatches `full_pipeline.yml` for the new season. |
 | `season_analysis.yml` | manual | Per-season difficulty/trend analysis for the site. |
 
@@ -112,10 +113,12 @@ model/
   confidence.py          confidence rating (model agreement / data completeness / H2H sample)
   season_analysis.py     per-season difficulty analysis
   player_ratings.py      DISABLED pending temporal-shift rework (leak risk)
+  walkforward.py         one walk-forward fold: nested tuning → train → score a held-out season
 scripts/
   freeze_data.py         builds data/frozen/ (run in CI, yearly)
   season_guard.py        offseason guard — "run"/"skip" for scheduled workflows
   merge_backtests.py     merges per-season backtest fragments into backtest_results.json
+  merge_walkforward.py   aggregates walk-forward folds; weight-drift chart
 data/
   frozen/                committed, sealed historical data (see above)
   raw/, processed/       gitignored scratch caches

@@ -33,6 +33,7 @@ Usage:  python scripts/freeze_data.py [--force]
 import argparse
 import json
 import logging
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -51,7 +52,11 @@ from data_loader import (  # noqa: E402
 FROZEN = ROOT / "data" / "frozen"
 FROZEN.mkdir(parents=True, exist_ok=True)
 
-CLOSED_SEASONS = [s for s in ALL_SEASONS if s < CURRENT_SEASON]
+# How far back to freeze. 2009 supports walk-forward folds from test season
+# 2013 with a 4-season training window. Override: FREEZE_FROM=2005 python ...
+FREEZE_FROM = int(os.environ.get("FREEZE_FROM", "2009"))
+
+CLOSED_SEASONS = [s for s in range(FREEZE_FROM, CURRENT_SEASON)]
 
 # Hard safety limits for a git repo
 MAX_FILE_MB  = 90     # GitHub rejects files >100 MB — stay well below
@@ -59,24 +64,27 @@ WARN_TOTAL_MB = 300
 
 # ── what to freeze ─────────────────────────────────────────────────────────────
 
-# (key template, [url templates in fallback order], format)
+# (key template, [url templates in fallback order], format, first_season)
+# first_season = the first year the source exists at nflverse; earlier
+# seasons are skipped WITHOUT counting as failures (era-dependent sources:
+# snap counts 2012+, injuries 2009+, PFR advstats 2018+, FTN 2022+, …).
 PER_SEASON = [
     ("player_stats_weekly_{}",
      [f"{BASE}/stats_player/stats_player_week_{{0}}.parquet",
-      f"{BASE}/player_stats/player_stats_{{0}}.parquet"], "parquet"),
+      f"{BASE}/player_stats/player_stats_{{0}}.parquet"], "parquet", 1999),
     ("player_stats_season_{}",
      [f"{BASE}/stats_player/stats_player_reg_{{0}}.parquet",
-      f"{BASE}/player_stats/player_stats_season_{{0}}.parquet"], "parquet"),
-    ("rosters_{}",        [f"{BASE}/rosters/roster_{{0}}.parquet"], "parquet"),
-    ("rosters_weekly_{}", [f"{BASE}/weekly_rosters/roster_weekly_{{0}}.parquet"], "parquet"),
-    ("snap_counts_{}",    [f"{BASE}/snap_counts/snap_counts_{{0}}.parquet"], "parquet"),
-    ("injuries_{}",       [f"{BASE}/injuries/injuries_{{0}}.parquet"], "parquet"),
-    ("depth_charts_{}",   [f"{BASE}/depth_charts/depth_charts_{{0}}.parquet"], "parquet"),
-    ("ftn_charting_{}",   [f"{BASE}/ftn_charting/ftn_charting_{{0}}.parquet"], "parquet"),
-    ("pfr_pass_{}",       [f"{BASE}/pfr_advstats/advstats_week_pass_{{0}}.parquet"], "parquet"),
-    ("pfr_rush_{}",       [f"{BASE}/pfr_advstats/advstats_week_rush_{{0}}.parquet"], "parquet"),
-    ("pfr_rec_{}",        [f"{BASE}/pfr_advstats/advstats_week_rec_{{0}}.parquet"], "parquet"),
-    ("pfr_def_{}",        [f"{BASE}/pfr_advstats/advstats_week_def_{{0}}.parquet"], "parquet"),
+      f"{BASE}/player_stats/player_stats_season_{{0}}.parquet"], "parquet", 1999),
+    ("rosters_{}",        [f"{BASE}/rosters/roster_{{0}}.parquet"], "parquet", 1999),
+    ("rosters_weekly_{}", [f"{BASE}/weekly_rosters/roster_weekly_{{0}}.parquet"], "parquet", 2002),
+    ("snap_counts_{}",    [f"{BASE}/snap_counts/snap_counts_{{0}}.parquet"], "parquet", 2012),
+    ("injuries_{}",       [f"{BASE}/injuries/injuries_{{0}}.parquet"], "parquet", 2009),
+    ("depth_charts_{}",   [f"{BASE}/depth_charts/depth_charts_{{0}}.parquet"], "parquet", 2001),
+    ("ftn_charting_{}",   [f"{BASE}/ftn_charting/ftn_charting_{{0}}.parquet"], "parquet", 2022),
+    ("pfr_pass_{}",       [f"{BASE}/pfr_advstats/advstats_week_pass_{{0}}.parquet"], "parquet", 2018),
+    ("pfr_rush_{}",       [f"{BASE}/pfr_advstats/advstats_week_rush_{{0}}.parquet"], "parquet", 2018),
+    ("pfr_rec_{}",        [f"{BASE}/pfr_advstats/advstats_week_rec_{{0}}.parquet"], "parquet", 2018),
+    ("pfr_def_{}",        [f"{BASE}/pfr_advstats/advstats_week_def_{{0}}.parquet"], "parquet", 2018),
 ]
 
 # (key, url, format) — full-history files, frozen as offline fallbacks
@@ -124,8 +132,10 @@ def main() -> None:
     failures = []
 
     # ── 1. per-season tables ────────────────────────────────────────────────
-    for key_tpl, url_tpls, fmt in PER_SEASON:
+    for key_tpl, url_tpls, fmt, first_season in PER_SEASON:
         for s in CLOSED_SEASONS:
+            if s < first_season:
+                continue   # source does not exist for this era — not a failure
             key = key_tpl.format(s)
             if not args.force and (FROZEN / f"{key}.parquet").exists():
                 log.info("  keep   %-38s (already frozen)", key)

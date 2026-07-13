@@ -73,7 +73,8 @@ Minden automatizálás a `.github/workflows/`-ban él. Minden nehéz lépés **k
 | `optimize_run.yml` | `.opt-trigger` push, vagy kézi | Csak az 1. lépcső: Bayes-súlyoptimalizálás (~8–10 perc). |
 | `train_run.yml` | `.train-trigger` push, vagy kézi | Csak a 2. lépcső: tanítás + predikció (~8–12 perc). |
 | `backtest_run.yml` | `.backtest-trigger` push, vagy kézi | Csak a 3. lépcső: backtest-mátrix (szezononként egy párhuzamos job) + összefésülés. |
-| `freeze_data.yml` | `.freeze-trigger` push, kézi, vagy évente ápr. 1. | Újraépíti a `data/frozen/`-t — az összes lezárt szezon adatát egyszer letölti és commitolja. |
+| `freeze_data.yml` | `.freeze-trigger` push, kézi, vagy évente ápr. 1. | Újraépíti a `data/frozen/`-t — az összes lezárt szezon adatát egyszer letölti és commitolja (a `FREEZE_FROM` évig vissza, alapból 2009). |
+| `walkforward.yml` | `.walkforward-trigger` push, vagy kézi | Mély walk-forward szimuláció: (tesztszezon 2013–2025 × ablak 3/4) párokra egy-egy párhuzamos job, foldonkénti nested hangolással; összesített eredmény + súly-drift ábra a [docs/walkforward.html](https://llou77.github.io/NFL/walkforward.html) oldalon. |
 | `pre_season_train.yml` | augusztus első keddje | Elindítja a `full_pipeline.yml`-t az új szezonra. |
 | `season_analysis.yml` | kézi | Szezononkénti nehézség/trend elemzés az oldalhoz. |
 
@@ -112,10 +113,12 @@ model/
   confidence.py          megbízhatósági besorolás (modell-egyetértés / adatteljesség / H2H minta)
   season_analysis.py     szezononkénti nehézség-elemzés
   player_ratings.py      KIKAPCSOLVA az időbeli eltolás átdolgozásáig (szivárgásveszély)
+  walkforward.py         egy walk-forward fold: nested hangolás → tanítás → kihagyott szezon pontozása
 scripts/
   freeze_data.py         a data/frozen/ felépítése (CI-ban fut, évente)
   season_guard.py        offszezon-őr — "run"/"skip" az ütemezett workflow-knak
   merge_backtests.py     a szezononkénti backtest-töredékek összefésülése
+  merge_walkforward.py   walk-forward foldok összesítése; súly-drift ábra
 data/
   frozen/                commitolt, lepecsételt történelmi adat (lásd fent)
   raw/, processed/       gitignore-olt munkacache-ek

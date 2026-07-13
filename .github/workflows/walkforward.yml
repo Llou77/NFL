@@ -1,0 +1,134 @@
+# Deep walk-forward simulation: one PARALLEL job per (test season × window),
+# nested tuning inside each fold (test season never touched before scoring),
+# then a merge job that aggregates, summarises and plots the weight drift.
+#
+# Runs entirely from the committed data/frozen/ layer — run the
+# freeze_data workflow first if frozen PBP aggregates are missing for the
+# early seasons.
+#
+# Trigger:  date > .walkforward-trigger && git add . && git commit && git push
+name: Walk-Forward Simulation
+
+on:
+  push:
+    branches: [main]
+    paths: ['.walkforward-trigger']
+  workflow_dispatch:
+    inputs:
+      trials:
+        description: 'Optuna trials per fold (nested tuning)'
+        required: false
+        default: '30'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-pipeline
+  cancel-in-progress: false
+
+jobs:
+  fold:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        season: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+        window: [3, 4]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/walkforward model/saved data/logs
+
+      - name: Fold ${{ matrix.season }} / window ${{ matrix.window }}
+        run: |
+          set -o pipefail
+          python -u model/walkforward.py \
+            --test-season ${{ matrix.season }} \
+            --window ${{ matrix.window }} \
+            --trials ${{ github.event.inputs.trials || '30' }} 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Upload fragment
+        uses: actions/upload-artifact@v4
+        with:
+          name: wf-w${{ matrix.window }}-${{ matrix.season }}
+          path: data/predictions/walkforward/wf_w${{ matrix.window }}_${{ matrix.season }}.json
+
+      # Anonymous users cannot read Actions logs — commit failure tails.
+      - name: Publish failure log
+        if: failure()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== walkforward ${{ matrix.season }}/w${{ matrix.window }} $(date -u '+%Y-%m-%dT%H:%MZ') — status: FAILURE ==="
+            echo "--- console (tail) ---"
+            tail -c 30000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/wf_${{ matrix.window }}_${{ matrix.season }}_fail.txt
+          git add data/logs/wf_${{ matrix.window }}_${{ matrix.season }}_fail.txt
+          git commit -m "Walkforward ${{ matrix.season }}/w${{ matrix.window }} failure log" || true
+          for i in 1 2 3 4 5; do git push && break || git pull --rebase origin main; done
+
+  merge:
+    needs: fold
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install plot dependency
+        run: pip install matplotlib
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wf-w*
+          merge-multiple: true
+          path: data/predictions/walkforward/
+
+      - name: Merge + summarise + plot
+        run: python3 scripts/merge_walkforward.py 2>&1 | tee -a merge_console.log
+
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== walkforward merge $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            echo "fold jobs: ${{ needs.fold.result }}"
+            echo "--- merge log ---"
+            cat merge_console.log 2>/dev/null || echo "(no merge log)"
+          } > data/logs/walkforward_last.txt
+          git add data/logs/walkforward_last.txt
+          git add data/predictions/walkforward_results.json || true
+          git add docs/assets/walkforward_results.json || true
+          git add docs/assets/walkforward_weights.png || true
+          git diff --staged --quiet || git commit -m "Walk-forward results — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done

@@ -5,6 +5,39 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
 
 ---
 
+## 2026-07-13 (2. kör) — Mély walk-forward szimuláció
+
+**Feladat (tulajdonosi javaslat, keményítve):** csúszó ablakos walk-forward a
+történelem elejétől máig — foldonként CSAK a tesztszezon előtti adatokon
+hangolva/tanítva, a kihagyott szezont pontozva; a hangolt súlyok driftjének
+logolása és ábrázolása. Két korrekció a javaslathoz képest: (1) az összesített
+walk-forward eredményen TILOS re-optimalizálni (meta-overfitting — a backtest
+tanítóhalmazzá válna); (2) a súly-drift extrapolációja kimaradt (paraméterenként
+~12 zajos pont — varianciát ad, nem jelet; rezsimváltás-figyelésre való).
+
+### Elvégezve
+
+1. `scripts/freeze_data.py`: `FREEZE_FROM` (default 2009) + forrásonkénti
+   `first_season` (NGS 2016+, PFR 2018+, FTN 2022+, snap 2012+, injuries 2009+
+   stb.) — a korszak előtti hiány nem hiba, kihagyás.
+2. `model/walkforward.py`: egy fold = frozen-only adat-összeállítás →
+   feature-építés → nested Optuna (train=[S-W..S-2], val=S-1, teszt érintetlen)
+   → teljes ensemble tanítás → éles predikciós úton pontozás → fragment JSON
+   (metrikák + hangolt súlyok + covid-flag).
+3. `scripts/merge_walkforward.py`: fragmentek összefésülése, ablakonkénti
+   aggregátumok (covid-szűrt változatban is), matplotlib ábra (súly-drift +
+   MAE + ATS foldonként) → docs/assets.
+4. `.github/workflows/walkforward.yml`: (2013–2025 × ablak {3,4}) = 26 párhuzamos
+   fold-job + merge; trigger: `.walkforward-trigger` push vagy kézi (trials input).
+5. `docs/walkforward.html`: eredménytábla + ábra az oldalon.
+
+### Megjegyzések
+
+- A fold-jobok a repo-beli `optimal_weights.json`-t csak az NN loss-súlyaihoz
+  és a variance_scale-hez olvassák (nem hangolt, statikus defaultok) — a
+  fold-izolációt ez nem sérti érdemben.
+- Ablakhossz-kérdés (3 vs 4): az aggregátumok empirikusan eldöntik.
+
 ## 2026-07-13 — "Runtime round": crash-fix, frozen adatréteg, workflow-darabolás, doksi
 
 **Feladat:** (1) a pipeline nem futott le és/vagy 20+ percig tartott — gyökérok-javítás
