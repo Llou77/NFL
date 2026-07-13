@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T17:49:54.766289+00:00",
+  "generated_at": "2026-07-13T18:27:26.364451+00:00",
   "season": 2026,
   "n_games": 272,
   "predictions": [
@@ -35,9 +35,9 @@
       "book_total": 44.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 11.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 11.5,
+      "spread_edge": 4.5,
       "total_edge": 7.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -59,13 +59,13 @@
         "away_off_cpoe_r8": 2.2444,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 11.5,
+        "spread_edge": 4.5,
         "total_edge": 7.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_SF_LA",
@@ -99,9 +99,9 @@
       "book_total": 48.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 12.0,
+      "opening_spread_edge": 6.0,
       "market_win_prob": null,
-      "spread_edge": 12.0,
+      "spread_edge": 6.0,
       "total_edge": -1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -123,13 +123,13 @@
         "away_off_cpoe_r8": 2.5383,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 12.0,
+        "spread_edge": 6.0,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_CHI_CAR",
@@ -163,11 +163,11 @@
       "book_total": 44.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": -4.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -4.5,
+      "spread_edge": 0.5,
       "total_edge": 1.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -187,13 +187,13 @@
         "away_off_cpoe_r8": -1.5436,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.5,
+        "spread_edge": 0.5,
         "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_TB_CIN",
@@ -227,9 +227,9 @@
       "book_total": 50.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 13.5,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": 13.5,
+      "spread_edge": 6.5,
       "total_edge": -4.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
@@ -251,13 +251,13 @@
         "away_off_cpoe_r8": -1.3088,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 13.5,
+        "spread_edge": 6.5,
         "total_edge": -4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_NO_DET",
@@ -291,11 +291,11 @@
       "book_total": 48.5,
       "opening_spread": 7.0,
       "opening_total": null,
-      "opening_spread_edge": 15.0,
+      "opening_spread_edge": 1.0,
       "market_win_prob": null,
-      "spread_edge": 15.0,
+      "spread_edge": 1.0,
       "total_edge": -0.5,
-      "spread_lean": "HOME",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -315,13 +315,13 @@
         "away_off_cpoe_r8": 2.1517,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 15.0,
+        "spread_edge": 1.0,
         "total_edge": -0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_BUF_HOU",
@@ -355,9 +355,9 @@
       "book_total": 45.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -6.5,
+      "opening_spread_edge": -3.5,
       "market_win_prob": null,
-      "spread_edge": -6.5,
+      "spread_edge": -3.5,
       "total_edge": 1.5,
       "spread_lean": "AWAY",
       "total_lean": "PUSH",
@@ -379,13 +379,13 @@
         "away_off_cpoe_r8": 2.3461,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -6.5,
+        "spread_edge": -3.5,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_BAL_IND",
@@ -419,9 +419,9 @@
       "book_total": 49.5,
       "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -14.5,
+      "opening_spread_edge": -7.5,
       "market_win_prob": null,
-      "spread_edge": -14.5,
+      "spread_edge": -7.5,
       "total_edge": -4.5,
       "spread_lean": "AWAY",
       "total_lean": "UNDER",
@@ -443,13 +443,13 @@
         "away_off_cpoe_r8": 0.3491,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -14.5,
+        "spread_edge": -7.5,
         "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_CLE_JAX",
@@ -483,9 +483,9 @@
       "book_total": 40.5,
       "opening_spread": 7.5,
       "opening_total": null,
-      "opening_spread_edge": 28.5,
+      "opening_spread_edge": 13.5,
       "market_win_prob": null,
-      "spread_edge": 28.5,
+      "spread_edge": 13.5,
       "total_edge": 10.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -507,13 +507,13 @@
         "away_off_cpoe_r8": -2.1523,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 28.5,
+        "spread_edge": 13.5,
         "total_edge": 10.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_ARI_LAC",
@@ -547,9 +547,9 @@
       "book_total": 45.5,
       "opening_spread": 11.5,
       "opening_total": null,
-      "opening_spread_edge": 27.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 27.5,
+      "spread_edge": 4.5,
       "total_edge": 2.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -571,13 +571,13 @@
         "away_off_cpoe_r8": 1.1986,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 27.5,
+        "spread_edge": 4.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_MIA_LV",
@@ -611,11 +611,11 @@
       "book_total": 41.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 0.0,
+      "opening_spread_edge": -6.0,
       "market_win_prob": null,
-      "spread_edge": 0.0,
+      "spread_edge": -6.0,
       "total_edge": 1.5,
-      "spread_lean": "PUSH",
+      "spread_lean": "AWAY",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -635,13 +635,13 @@
         "away_off_cpoe_r8": 1.1299,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.0,
+        "spread_edge": -6.0,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_GB_MIN",
@@ -675,11 +675,11 @@
       "book_total": 44.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -4.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -4.5,
+      "spread_edge": -1.5,
       "total_edge": -1.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -699,13 +699,13 @@
         "away_off_cpoe_r8": 2.3868,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.5,
+        "spread_edge": -1.5,
         "total_edge": -1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_DAL_NYG",
@@ -739,9 +739,9 @@
       "book_total": 48.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": -8.5,
+      "opening_spread_edge": -3.5,
       "market_win_prob": null,
-      "spread_edge": -8.5,
+      "spread_edge": -3.5,
       "total_edge": -4.5,
       "spread_lean": "AWAY",
       "total_lean": "UNDER",
@@ -763,13 +763,13 @@
         "away_off_cpoe_r8": 0.3181,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -8.5,
+        "spread_edge": -3.5,
         "total_edge": -4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_WAS_PHI",
@@ -803,9 +803,9 @@
       "book_total": 46.5,
       "opening_spread": 5.5,
       "opening_total": null,
-      "opening_spread_edge": 15.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 15.5,
+      "spread_edge": 4.5,
       "total_edge": 1.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -827,13 +827,13 @@
         "away_off_cpoe_r8": 0.4447,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 15.5,
+        "spread_edge": 4.5,
         "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_ATL_PIT",
@@ -867,11 +867,11 @@
       "book_total": 42.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 1.0,
+      "opening_spread_edge": -5.0,
       "market_win_prob": null,
-      "spread_edge": 1.0,
+      "spread_edge": -5.0,
       "total_edge": -2.5,
-      "spread_lean": "PUSH",
+      "spread_lean": "AWAY",
       "total_lean": "UNDER",
       "is_dome": 0,
       "is_primetime": 0,
@@ -891,13 +891,13 @@
         "away_off_cpoe_r8": -0.9748,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 1.0,
+        "spread_edge": -5.0,
         "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_NYJ_TEN",
@@ -931,9 +931,9 @@
       "book_total": 39.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 12.0,
+      "opening_spread_edge": 6.0,
       "market_win_prob": null,
-      "spread_edge": 12.0,
+      "spread_edge": 6.0,
       "total_edge": -0.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -955,13 +955,13 @@
         "away_off_cpoe_r8": -4.1749,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 12.0,
+        "spread_edge": 6.0,
         "total_edge": -0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_01_DEN_KC",
@@ -995,9 +995,9 @@
       "book_total": 42.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": -4.5,
+      "opening_spread_edge": -9.5,
       "market_win_prob": null,
-      "spread_edge": -4.5,
+      "spread_edge": -9.5,
       "total_edge": -1.5,
       "spread_lean": "AWAY",
       "total_lean": "PUSH",
@@ -1019,13 +1019,13 @@
         "away_off_cpoe_r8": -0.4771,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.5,
+        "spread_edge": -9.5,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_DET_BUF",
@@ -1059,9 +1059,9 @@
       "book_total": 52.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 12.0,
+      "opening_spread_edge": 6.0,
       "market_win_prob": null,
-      "spread_edge": 12.0,
+      "spread_edge": 6.0,
       "total_edge": -3.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
@@ -1083,13 +1083,13 @@
         "away_off_cpoe_r8": -0.3534,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 12.0,
+        "spread_edge": 6.0,
         "total_edge": -3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_SEA_ARI",
@@ -1123,9 +1123,9 @@
       "book_total": 44.5,
       "opening_spread": -10.0,
       "opening_total": null,
-      "opening_spread_edge": -22.0,
+      "opening_spread_edge": -2.0,
       "market_win_prob": null,
-      "spread_edge": -22.0,
+      "spread_edge": -2.0,
       "total_edge": 1.5,
       "spread_lean": "AWAY",
       "total_lean": "PUSH",
@@ -1147,13 +1147,13 @@
         "away_off_cpoe_r8": 1.1146,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -22.0,
+        "spread_edge": -2.0,
         "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_CAR_ATL",
@@ -1215,7 +1215,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_NO_BAL",
@@ -1249,9 +1249,9 @@
       "book_total": 46.5,
       "opening_spread": 7.5,
       "opening_total": null,
-      "opening_spread_edge": 24.5,
+      "opening_spread_edge": 9.5,
       "market_win_prob": null,
-      "spread_edge": 24.5,
+      "spread_edge": 9.5,
       "total_edge": 2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -1273,13 +1273,13 @@
         "away_off_cpoe_r8": 1.8842,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 24.5,
+        "spread_edge": 9.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_MIN_CHI",
@@ -1313,11 +1313,11 @@
       "book_total": 45.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 8.5,
+      "opening_spread_edge": 1.5,
       "market_win_prob": null,
-      "spread_edge": 8.5,
+      "spread_edge": 1.5,
       "total_edge": -6.5,
-      "spread_lean": "HOME",
+      "spread_lean": "PUSH",
       "total_lean": "UNDER",
       "is_dome": 0,
       "is_primetime": 0,
@@ -1337,13 +1337,13 @@
         "away_off_cpoe_r8": -0.6065,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 8.5,
+        "spread_edge": 1.5,
         "total_edge": -6.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_WAS_DAL",
@@ -1377,9 +1377,9 @@
       "book_total": 51.5,
       "opening_spread": 4.5,
       "opening_total": null,
-      "opening_spread_edge": 13.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 13.5,
+      "spread_edge": 4.5,
       "total_edge": -2.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
@@ -1401,13 +1401,13 @@
         "away_off_cpoe_r8": -0.3368,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 13.5,
+        "spread_edge": 4.5,
         "total_edge": -2.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_JAX_DEN",
@@ -1469,7 +1469,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_CIN_HOU",
@@ -1503,9 +1503,9 @@
       "book_total": 46.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 5.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": 5.5,
+      "spread_edge": 0.5,
       "total_edge": -3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -1527,13 +1527,13 @@
         "away_off_cpoe_r8": 2.3698,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 5.5,
+        "spread_edge": 0.5,
         "total_edge": -3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_IND_KC",
@@ -1567,9 +1567,9 @@
       "book_total": 47.5,
       "opening_spread": 6.0,
       "opening_total": null,
-      "opening_spread_edge": 16.0,
+      "opening_spread_edge": 4.0,
       "market_win_prob": null,
-      "spread_edge": 16.0,
+      "spread_edge": 4.0,
       "total_edge": -1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -1591,13 +1591,13 @@
         "away_off_cpoe_r8": -1.9971,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 16.0,
+        "spread_edge": 4.0,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_LV_LAC",
@@ -1631,9 +1631,9 @@
       "book_total": 42.5,
       "opening_spread": 8.5,
       "opening_total": null,
-      "opening_spread_edge": 21.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 21.5,
+      "spread_edge": 4.5,
       "total_edge": 2.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -1655,13 +1655,13 @@
         "away_off_cpoe_r8": 0.0054,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 21.5,
+        "spread_edge": 4.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_PIT_NE",
@@ -1695,9 +1695,9 @@
       "book_total": 43.5,
       "opening_spread": 4.5,
       "opening_total": null,
-      "opening_spread_edge": 17.5,
+      "opening_spread_edge": 8.5,
       "market_win_prob": null,
-      "spread_edge": 17.5,
+      "spread_edge": 8.5,
       "total_edge": 3.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -1719,13 +1719,13 @@
         "away_off_cpoe_r8": -2.1304,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 17.5,
+        "spread_edge": 8.5,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_GB_NYJ",
@@ -1759,9 +1759,9 @@
       "book_total": 42.5,
       "opening_spread": -6.0,
       "opening_total": null,
-      "opening_spread_edge": -23.0,
+      "opening_spread_edge": -11.0,
       "market_win_prob": null,
-      "spread_edge": -23.0,
+      "spread_edge": -11.0,
       "total_edge": 4.5,
       "spread_lean": "AWAY",
       "total_lean": "OVER",
@@ -1783,13 +1783,13 @@
         "away_off_cpoe_r8": 2.4921,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -23.0,
+        "spread_edge": -11.0,
         "total_edge": 4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_MIA_SF",
@@ -1823,11 +1823,11 @@
       "book_total": 46.5,
       "opening_spread": 10.5,
       "opening_total": null,
-      "opening_spread_edge": 22.5,
+      "opening_spread_edge": 1.5,
       "market_win_prob": null,
-      "spread_edge": 22.5,
+      "spread_edge": 1.5,
       "total_edge": 3.5,
-      "spread_lean": "HOME",
+      "spread_lean": "PUSH",
       "total_lean": "OVER",
       "is_dome": 1,
       "is_primetime": 0,
@@ -1847,13 +1847,13 @@
         "away_off_cpoe_r8": 0.9572,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 22.5,
+        "spread_edge": 1.5,
         "total_edge": 3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_CLE_TB",
@@ -1887,9 +1887,9 @@
       "book_total": 42.5,
       "opening_spread": 6.5,
       "opening_total": null,
-      "opening_spread_edge": 18.5,
+      "opening_spread_edge": 5.5,
       "market_win_prob": null,
-      "spread_edge": 18.5,
+      "spread_edge": 5.5,
       "total_edge": 3.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -1911,13 +1911,13 @@
         "away_off_cpoe_r8": -1.0829,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 18.5,
+        "spread_edge": 5.5,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_PHI_TEN",
@@ -1951,9 +1951,9 @@
       "book_total": 42.5,
       "opening_spread": -4.5,
       "opening_total": null,
-      "opening_spread_edge": -13.5,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": -13.5,
+      "spread_edge": -4.5,
       "total_edge": 0.5,
       "spread_lean": "AWAY",
       "total_lean": "PUSH",
@@ -1975,13 +1975,13 @@
         "away_off_cpoe_r8": -0.4525,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -13.5,
+        "spread_edge": -4.5,
         "total_edge": 0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_02_NYG_LA",
@@ -2015,9 +2015,9 @@
       "book_total": 47.5,
       "opening_spread": 9.5,
       "opening_total": null,
-      "opening_spread_edge": 31.5,
+      "opening_spread_edge": 12.5,
       "market_win_prob": null,
-      "spread_edge": 31.5,
+      "spread_edge": 12.5,
       "total_edge": 2.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -2039,13 +2039,13 @@
         "away_off_cpoe_r8": -0.392,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 31.5,
+        "spread_edge": 12.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_ATL_GB",
@@ -2079,11 +2079,11 @@
       "book_total": 46.5,
       "opening_spread": 7.5,
       "opening_total": null,
-      "opening_spread_edge": 13.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": 13.5,
+      "spread_edge": -1.5,
       "total_edge": -0.5,
-      "spread_lean": "HOME",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 1,
@@ -2103,13 +2103,13 @@
         "away_off_cpoe_r8": -1.2943,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 13.5,
+        "spread_edge": -1.5,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_LAC_BUF",
@@ -2143,9 +2143,9 @@
       "book_total": 48.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 16.5,
+      "opening_spread_edge": 11.5,
       "market_win_prob": null,
-      "spread_edge": 16.5,
+      "spread_edge": 11.5,
       "total_edge": -4.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
@@ -2167,13 +2167,13 @@
         "away_off_cpoe_r8": -0.1654,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 16.5,
+        "spread_edge": 11.5,
         "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_CAR_CLE",
@@ -2207,11 +2207,11 @@
       "book_total": 40.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": 5.5,
       "market_win_prob": null,
-      "spread_edge": 0.5,
+      "spread_edge": 5.5,
       "total_edge": 0.5,
-      "spread_lean": "PUSH",
+      "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -2231,13 +2231,13 @@
         "away_off_cpoe_r8": 1.637,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
+        "spread_edge": 5.5,
         "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_BAL_DAL",
@@ -2271,11 +2271,11 @@
       "book_total": 51.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": -4.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -4.5,
+      "spread_edge": 0.5,
       "total_edge": -1.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -2295,13 +2295,13 @@
         "away_off_cpoe_r8": 1.0098,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.5,
+        "spread_edge": 0.5,
         "total_edge": -1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_LA_DEN",
@@ -2335,11 +2335,11 @@
       "book_total": 45.5,
       "opening_spread": -3.0,
       "opening_total": null,
-      "opening_spread_edge": -4.0,
+      "opening_spread_edge": 2.0,
       "market_win_prob": null,
-      "spread_edge": -4.0,
+      "spread_edge": 2.0,
       "total_edge": 3.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "HOME",
       "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 1,
@@ -2359,13 +2359,13 @@
         "away_off_cpoe_r8": -1.4808,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.0,
+        "spread_edge": 2.0,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_NYJ_DET",
@@ -2399,9 +2399,9 @@
       "book_total": 45.5,
       "opening_spread": 9.5,
       "opening_total": null,
-      "opening_spread_edge": 30.5,
+      "opening_spread_edge": 11.5,
       "market_win_prob": null,
-      "spread_edge": 30.5,
+      "spread_edge": 11.5,
       "total_edge": 1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -2423,13 +2423,13 @@
         "away_off_cpoe_r8": -4.9145,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 30.5,
+        "spread_edge": 11.5,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_HOU_IND",
@@ -2463,11 +2463,11 @@
       "book_total": 45.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": -5.5,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": -5.5,
+      "spread_edge": -0.5,
       "total_edge": -4.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "UNDER",
       "is_dome": 1,
       "is_primetime": 0,
@@ -2487,13 +2487,13 @@
         "away_off_cpoe_r8": -2.8548,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -5.5,
+        "spread_edge": -0.5,
         "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_NE_JAX",
@@ -2555,7 +2555,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_KC_MIA",
@@ -2589,11 +2589,11 @@
       "book_total": 44.5,
       "opening_spread": -7.0,
       "opening_total": null,
-      "opening_spread_edge": -10.0,
+      "opening_spread_edge": 4.0,
       "market_win_prob": null,
-      "spread_edge": -10.0,
+      "spread_edge": 4.0,
       "total_edge": -1.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -2613,13 +2613,13 @@
         "away_off_cpoe_r8": -3.202,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -10.0,
+        "spread_edge": 4.0,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_LV_NO",
@@ -2653,9 +2653,9 @@
       "book_total": 42.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 12.0,
+      "opening_spread_edge": 6.0,
       "market_win_prob": null,
-      "spread_edge": 12.0,
+      "spread_edge": 6.0,
       "total_edge": 0.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -2677,13 +2677,13 @@
         "away_off_cpoe_r8": -0.0448,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 12.0,
+        "spread_edge": 6.0,
         "total_edge": 0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_TEN_NYG",
@@ -2717,9 +2717,9 @@
       "book_total": 45.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 10.0,
+      "opening_spread_edge": 4.0,
       "market_win_prob": null,
-      "spread_edge": 10.0,
+      "spread_edge": 4.0,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -2741,13 +2741,13 @@
         "away_off_cpoe_r8": -1.4207,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 10.0,
+        "spread_edge": 4.0,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_CIN_PIT",
@@ -2781,11 +2781,11 @@
       "book_total": 47.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -2.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -2.5,
+      "spread_edge": 0.5,
       "total_edge": -2.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "UNDER",
       "is_dome": 0,
       "is_primetime": 0,
@@ -2805,13 +2805,13 @@
         "away_off_cpoe_r8": 3.3014,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -2.5,
+        "spread_edge": 0.5,
         "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_ARI_SF",
@@ -2845,9 +2845,9 @@
       "book_total": 46.5,
       "opening_spread": 11.5,
       "opening_total": null,
-      "opening_spread_edge": 29.5,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": 29.5,
+      "spread_edge": 6.5,
       "total_edge": 3.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -2869,13 +2869,13 @@
         "away_off_cpoe_r8": -0.3221,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 29.5,
+        "spread_edge": 6.5,
         "total_edge": 3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_MIN_TB",
@@ -2909,11 +2909,11 @@
       "book_total": 44.5,
       "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": -1.5,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": -1.5,
+      "spread_edge": -4.5,
       "total_edge": -1.5,
-      "spread_lean": "PUSH",
+      "spread_lean": "AWAY",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -2933,13 +2933,13 @@
         "away_off_cpoe_r8": -0.4209,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -1.5,
+        "spread_edge": -4.5,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_SEA_WAS",
@@ -2973,11 +2973,11 @@
       "book_total": 46.5,
       "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -6.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -6.5,
+      "spread_edge": 0.5,
       "total_edge": 4.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
@@ -2997,13 +2997,13 @@
         "away_off_cpoe_r8": 1.2488,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -6.5,
+        "spread_edge": 0.5,
         "total_edge": 4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_03_PHI_CHI",
@@ -3065,7 +3065,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_PIT_CLE",
@@ -3099,9 +3099,9 @@
       "book_total": 41.5,
       "opening_spread": -3.0,
       "opening_total": null,
-      "opening_spread_edge": -5.0,
+      "opening_spread_edge": 1.0,
       "market_win_prob": null,
-      "spread_edge": -5.0,
+      "spread_edge": 1.0,
       "total_edge": 0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3123,13 +3123,13 @@
         "away_off_cpoe_r8": -0.8219,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -5.0,
+        "spread_edge": 1.0,
         "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_TEN_BAL",
@@ -3163,9 +3163,9 @@
       "book_total": 47.5,
       "opening_spread": 8.5,
       "opening_total": null,
-      "opening_spread_edge": 23.5,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": 23.5,
+      "spread_edge": 6.5,
       "total_edge": 3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3187,13 +3187,13 @@
         "away_off_cpoe_r8": -1.4918,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 23.5,
+        "spread_edge": 6.5,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_NE_BUF",
@@ -3227,9 +3227,9 @@
       "book_total": 49.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 6.0,
+      "opening_spread_edge": 0.0,
       "market_win_prob": null,
-      "spread_edge": 6.0,
+      "spread_edge": 0.0,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3251,13 +3251,13 @@
         "away_off_cpoe_r8": 0.0588,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 6.0,
+        "spread_edge": 0.0,
         "total_edge": -0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_DET_CAR",
@@ -3291,9 +3291,9 @@
       "book_total": 47.5,
       "opening_spread": -3.0,
       "opening_total": null,
-      "opening_spread_edge": -11.0,
+      "opening_spread_edge": -5.0,
       "market_win_prob": null,
-      "spread_edge": -11.0,
+      "spread_edge": -5.0,
       "total_edge": -3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3315,13 +3315,13 @@
         "away_off_cpoe_r8": -0.3876,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -11.0,
+        "spread_edge": -5.0,
         "total_edge": -3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_NYJ_CHI",
@@ -3355,9 +3355,9 @@
       "book_total": 45.5,
       "opening_spread": 8.5,
       "opening_total": null,
-      "opening_spread_edge": 26.5,
+      "opening_spread_edge": 9.5,
       "market_win_prob": null,
-      "spread_edge": 26.5,
+      "spread_edge": 9.5,
       "total_edge": 2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3379,13 +3379,13 @@
         "away_off_cpoe_r8": -5.7366,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 26.5,
+        "spread_edge": 9.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_JAX_CIN",
@@ -3419,9 +3419,9 @@
       "book_total": 51.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": -0.5,
+      "opening_spread_edge": -5.5,
       "market_win_prob": null,
-      "spread_edge": -0.5,
+      "spread_edge": -5.5,
       "total_edge": -2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3443,13 +3443,13 @@
         "away_off_cpoe_r8": 2.554,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -0.5,
+        "spread_edge": -5.5,
         "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_DAL_HOU",
@@ -3483,9 +3483,9 @@
       "book_total": 47.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 5.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": 5.5,
+      "spread_edge": 0.5,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3507,13 +3507,13 @@
         "away_off_cpoe_r8": -1.0516,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 5.5,
+        "spread_edge": 0.5,
         "total_edge": -0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_KC_LV",
@@ -3547,11 +3547,11 @@
       "book_total": 43.5,
       "opening_spread": -5.5,
       "opening_total": null,
-      "opening_spread_edge": -8.5,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": -8.5,
+      "spread_edge": 2.5,
       "total_edge": -0.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -3571,13 +3571,13 @@
         "away_off_cpoe_r8": -4.3487,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -8.5,
+        "spread_edge": 2.5,
         "total_edge": -0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_MIA_MIN",
@@ -3611,9 +3611,9 @@
       "book_total": 43.5,
       "opening_spread": 7.5,
       "opening_total": null,
-      "opening_spread_edge": 15.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": 15.5,
+      "spread_edge": 0.5,
       "total_edge": 8.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3635,13 +3635,13 @@
         "away_off_cpoe_r8": 1.2736,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 15.5,
+        "spread_edge": 0.5,
         "total_edge": 8.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_ARI_NYG",
@@ -3675,9 +3675,9 @@
       "book_total": 45.5,
       "opening_spread": 7.0,
       "opening_total": null,
-      "opening_spread_edge": 19.0,
+      "opening_spread_edge": 5.0,
       "market_win_prob": null,
-      "spread_edge": 19.0,
+      "spread_edge": 5.0,
       "total_edge": 4.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -3699,13 +3699,13 @@
         "away_off_cpoe_r8": -1.7273,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 19.0,
+        "spread_edge": 5.0,
         "total_edge": 4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_LA_PHI",
@@ -3739,11 +3739,11 @@
       "book_total": 47.5,
       "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": -6.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -6.5,
+      "spread_edge": -1.5,
       "total_edge": 0.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -3763,13 +3763,13 @@
         "away_off_cpoe_r8": -1.4775,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -6.5,
+        "spread_edge": -1.5,
         "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_LAC_SEA",
@@ -3803,9 +3803,9 @@
       "book_total": 45.5,
       "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": 10.0,
+      "opening_spread_edge": 4.0,
       "market_win_prob": null,
-      "spread_edge": 10.0,
+      "spread_edge": 4.0,
       "total_edge": 1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -3827,13 +3827,13 @@
         "away_off_cpoe_r8": 0.8137,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 10.0,
+        "spread_edge": 4.0,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_DEN_SF",
@@ -3867,9 +3867,9 @@
       "book_total": 46.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 4.5,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": 4.5,
+      "spread_edge": -0.5,
       "total_edge": -4.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -3891,13 +3891,13 @@
         "away_off_cpoe_r8": -2.1922,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 4.5,
+        "spread_edge": -0.5,
         "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_GB_TB",
@@ -3959,7 +3959,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_IND_WAS",
@@ -3993,9 +3993,9 @@
       "book_total": 48.5,
       "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": 5.5,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": 5.5,
+      "spread_edge": 2.5,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4017,13 +4017,13 @@
         "away_off_cpoe_r8": -1.2902,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 5.5,
+        "spread_edge": 2.5,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_04_ATL_NO",
@@ -4057,9 +4057,9 @@
       "book_total": 45.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": 0.5,
+      "spread_edge": -4.5,
       "total_edge": 0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4081,13 +4081,13 @@
         "away_off_cpoe_r8": -1.4763,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
+        "spread_edge": -4.5,
         "total_edge": 0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_TB_DAL",
@@ -4121,9 +4121,9 @@
       "book_total": 52.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 9.5,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": 9.5,
+      "spread_edge": 2.5,
       "total_edge": -4.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
@@ -4145,13 +4145,13 @@
         "away_off_cpoe_r8": 2.0749,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 9.5,
+        "spread_edge": 2.5,
         "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_DET_ARI",
@@ -4185,9 +4185,9 @@
       "book_total": 49.5,
       "opening_spread": -8.5,
       "opening_total": null,
-      "opening_spread_edge": -17.5,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": -17.5,
+      "spread_edge": -0.5,
       "total_edge": -2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4209,13 +4209,13 @@
         "away_off_cpoe_r8": -1.7884,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -17.5,
+        "spread_edge": -0.5,
         "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_BAL_ATL",
@@ -4249,9 +4249,9 @@
       "book_total": 48.5,
       "opening_spread": -4.5,
       "opening_total": null,
-      "opening_spread_edge": -10.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -10.5,
+      "spread_edge": -1.5,
       "total_edge": 1.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4273,13 +4273,13 @@
         "away_off_cpoe_r8": 2.949,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -10.5,
+        "spread_edge": -1.5,
         "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_CHI_GB",
@@ -4341,7 +4341,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_PHI_JAX",
@@ -4375,9 +4375,9 @@
       "book_total": 43.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": 3.5,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": 3.5,
+      "spread_edge": 6.5,
       "total_edge": 5.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4399,13 +4399,13 @@
         "away_off_cpoe_r8": -0.5247,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 3.5,
+        "spread_edge": 6.5,
         "total_edge": 5.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_DEN_LAC",
@@ -4439,11 +4439,11 @@
       "book_total": 44.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 2.5,
+      "opening_spread_edge": -2.5,
       "market_win_prob": null,
-      "spread_edge": 2.5,
+      "spread_edge": -2.5,
       "total_edge": -0.5,
-      "spread_lean": "HOME",
+      "spread_lean": "AWAY",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -4463,13 +4463,13 @@
         "away_off_cpoe_r8": -2.186,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 2.5,
+        "spread_edge": -2.5,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_CIN_MIA",
@@ -4503,9 +4503,9 @@
       "book_total": 49.5,
       "opening_spread": -5.5,
       "opening_total": null,
-      "opening_spread_edge": -12.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -12.5,
+      "spread_edge": -1.5,
       "total_edge": -2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4527,13 +4527,13 @@
         "away_off_cpoe_r8": 4.6674,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -12.5,
+        "spread_edge": -1.5,
         "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_LV_NE",
@@ -4567,9 +4567,9 @@
       "book_total": 44.5,
       "opening_spread": 8.5,
       "opening_total": null,
-      "opening_spread_edge": 23.5,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": 23.5,
+      "spread_edge": 6.5,
       "total_edge": 2.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4591,13 +4591,13 @@
         "away_off_cpoe_r8": -2.7195,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 23.5,
+        "spread_edge": 6.5,
         "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_MIN_NO",
@@ -4631,9 +4631,9 @@
       "book_total": 44.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -1.5,
+      "opening_spread_edge": 1.5,
       "market_win_prob": null,
-      "spread_edge": -1.5,
+      "spread_edge": 1.5,
       "total_edge": 1.5,
       "spread_lean": "PUSH",
       "total_lean": "PUSH",
@@ -4655,13 +4655,13 @@
         "away_off_cpoe_r8": -0.0411,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -1.5,
+        "spread_edge": 1.5,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_CLE_NYJ",
@@ -4695,9 +4695,9 @@
       "book_total": 40.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 10.5,
+      "opening_spread_edge": 5.5,
       "market_win_prob": null,
-      "spread_edge": 10.5,
+      "spread_edge": 5.5,
       "total_edge": 3.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -4719,13 +4719,13 @@
         "away_off_cpoe_r8": -0.7637,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 10.5,
+        "spread_edge": 5.5,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_IND_PIT",
@@ -4759,9 +4759,9 @@
       "book_total": 47.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 2.5,
+      "opening_spread_edge": -2.5,
       "market_win_prob": null,
-      "spread_edge": 2.5,
+      "spread_edge": -2.5,
       "total_edge": -3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4783,13 +4783,13 @@
         "away_off_cpoe_r8": -1.5496,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 2.5,
+        "spread_edge": -2.5,
         "total_edge": -3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_SF_SEA",
@@ -4823,9 +4823,9 @@
       "book_total": 48.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 14.5,
+      "opening_spread_edge": 7.5,
       "market_win_prob": null,
-      "spread_edge": 14.5,
+      "spread_edge": 7.5,
       "total_edge": 4.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
@@ -4847,13 +4847,13 @@
         "away_off_cpoe_r8": 0.4656,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 14.5,
+        "spread_edge": 7.5,
         "total_edge": 4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_HOU_TEN",
@@ -4887,11 +4887,11 @@
       "book_total": 43.5,
       "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -8.5,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -8.5,
+      "spread_edge": -1.5,
       "total_edge": 1.5,
-      "spread_lean": "AWAY",
+      "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -4911,13 +4911,13 @@
         "away_off_cpoe_r8": -5.3017,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -8.5,
+        "spread_edge": -1.5,
         "total_edge": 1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_NYG_WAS",
@@ -4951,9 +4951,9 @@
       "book_total": 48.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 1.5,
+      "opening_spread_edge": -3.5,
       "market_win_prob": null,
-      "spread_edge": 1.5,
+      "spread_edge": -3.5,
       "total_edge": -1.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4975,13 +4975,13 @@
         "away_off_cpoe_r8": -0.6649,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 1.5,
+        "spread_edge": -3.5,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_05_BUF_LA",
@@ -5015,9 +5015,9 @@
       "book_total": 53.5,
       "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": 2.5,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": 2.5,
+      "spread_edge": -4.5,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -5039,13 +5039,13 @@
         "away_off_cpoe_r8": 3.0408,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 2.5,
+        "spread_edge": -4.5,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_SEA_DEN",
@@ -5079,9 +5079,9 @@
       "book_total": 43.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -7.5,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": -7.5,
+      "spread_edge": -4.5,
       "total_edge": 6.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -5096,13 +5096,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -7.5,
+        "spread_edge": -4.5,
         "total_edge": 6.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_CHI_ATL",
@@ -5157,7 +5157,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_BAL_CLE",
@@ -5212,7 +5212,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_DAL_GB",
@@ -5267,7 +5267,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_TEN_IND",
@@ -5322,7 +5322,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_HOU_JAX",
@@ -5356,9 +5356,9 @@
       "book_total": 41.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -2.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -2.5,
+      "spread_edge": 0.5,
       "total_edge": 7.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -5373,13 +5373,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -2.5,
+        "spread_edge": 0.5,
         "total_edge": 7.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_LAC_KC",
@@ -5437,7 +5437,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_ARI_LA",
@@ -5492,7 +5492,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_BUF_LV",
@@ -5547,7 +5547,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_NYJ_NE",
@@ -5581,9 +5581,9 @@
       "book_total": 42.5,
       "opening_spread": 9.5,
       "opening_total": null,
-      "opening_spread_edge": 19.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": 19.5,
+      "spread_edge": 0.5,
       "total_edge": 11.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -5598,13 +5598,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 19.5,
+        "spread_edge": 0.5,
         "total_edge": 11.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_NO_NYG",
@@ -5638,9 +5638,9 @@
       "book_total": 45.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 5.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": 5.5,
+      "spread_edge": 0.5,
       "total_edge": 3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -5655,13 +5655,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 5.5,
+        "spread_edge": 0.5,
         "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_CAR_PHI",
@@ -5719,7 +5719,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_PIT_TB",
@@ -5774,7 +5774,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_06_WAS_SF",
@@ -5829,7 +5829,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_NE_CHI",
@@ -5884,7 +5884,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_DEN_ARI",
@@ -5939,7 +5939,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_SF_ATL",
@@ -5994,7 +5994,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_CIN_BAL",
@@ -6049,7 +6049,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_TB_CAR",
@@ -6104,7 +6104,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_GB_DET",
@@ -6159,7 +6159,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_NYG_HOU",
@@ -6214,7 +6214,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_LA_LV",
@@ -6269,7 +6269,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_IND_MIN",
@@ -6324,7 +6324,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_PIT_NO",
@@ -6379,7 +6379,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_MIA_NYJ",
@@ -6434,7 +6434,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_KC_SEA",
@@ -6489,7 +6489,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_CLE_TEN",
@@ -6544,7 +6544,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_07_DAL_PHI",
@@ -6599,7 +6599,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_CAR_GB",
@@ -6654,7 +6654,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_BAL_BUF",
@@ -6709,7 +6709,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_TEN_CIN",
@@ -6764,7 +6764,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_ARI_DAL",
@@ -6819,7 +6819,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_KC_DEN",
@@ -6874,7 +6874,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_MIN_DET",
@@ -6929,7 +6929,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_IND_JAX",
@@ -6984,7 +6984,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_LAC_LA",
@@ -7039,7 +7039,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_NE_MIA",
@@ -7094,7 +7094,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_LV_NYJ",
@@ -7149,7 +7149,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_CLE_PIT",
@@ -7204,7 +7204,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_ATL_TB",
@@ -7259,7 +7259,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_PHI_WAS",
@@ -7314,7 +7314,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_08_CHI_SEA",
@@ -7369,7 +7369,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_JAX_BAL",
@@ -7424,7 +7424,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_CIN_ATL",
@@ -7479,7 +7479,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_DEN_CAR",
@@ -7534,7 +7534,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_TB_CHI",
@@ -7589,7 +7589,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_DAL_IND",
@@ -7644,7 +7644,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_NYJ_KC",
@@ -7699,7 +7699,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_HOU_LAC",
@@ -7754,7 +7754,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_DET_MIA",
@@ -7809,7 +7809,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_GB_NE",
@@ -7864,7 +7864,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_CLE_NO",
@@ -7919,7 +7919,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_NYG_PHI",
@@ -7974,7 +7974,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_ARI_SEA",
@@ -8029,7 +8029,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_LV_SF",
@@ -8084,7 +8084,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_LA_WAS",
@@ -8139,7 +8139,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_09_BUF_MIN",
@@ -8194,7 +8194,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_WAS_NYG",
@@ -8249,7 +8249,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_LA_ARI",
@@ -8304,7 +8304,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_KC_ATL",
@@ -8359,7 +8359,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_PIT_CIN",
@@ -8414,7 +8414,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_HOU_CLE",
@@ -8469,7 +8469,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_SF_DAL",
@@ -8524,7 +8524,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_NE_DET",
@@ -8579,7 +8579,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_MIN_GB",
@@ -8634,7 +8634,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_MIA_IND",
@@ -8689,7 +8689,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_SEA_LV",
@@ -8744,7 +8744,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_CAR_NO",
@@ -8799,7 +8799,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_BUF_NYJ",
@@ -8854,7 +8854,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_JAX_TEN",
@@ -8909,7 +8909,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_10_LAC_BAL",
@@ -8964,7 +8964,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_IND_HOU",
@@ -9019,7 +9019,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_MIA_BUF",
@@ -9074,7 +9074,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_BAL_CAR",
@@ -9129,7 +9129,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_NO_CHI",
@@ -9184,7 +9184,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_TEN_DAL",
@@ -9239,7 +9239,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_LV_DEN",
@@ -9294,7 +9294,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_TB_DET",
@@ -9349,7 +9349,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_ARI_KC",
@@ -9404,7 +9404,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_NYJ_LAC",
@@ -9459,7 +9459,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_JAX_NYG",
@@ -9514,7 +9514,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_PIT_PHI",
@@ -9569,7 +9569,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_MIN_SF",
@@ -9624,7 +9624,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_11_CIN_WAS",
@@ -9679,7 +9679,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_GB_LA",
@@ -9734,7 +9734,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_KC_BUF",
@@ -9789,7 +9789,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_PHI_DAL",
@@ -9844,7 +9844,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_CHI_DET",
@@ -9899,7 +9899,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_DEN_PIT",
@@ -9954,7 +9954,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_WAS_ARI",
@@ -10009,7 +10009,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_NO_CIN",
@@ -10064,7 +10064,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_LV_CLE",
@@ -10119,7 +10119,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_BAL_HOU",
@@ -10174,7 +10174,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_NYG_IND",
@@ -10229,7 +10229,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_TEN_JAX",
@@ -10284,7 +10284,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_NE_LAC",
@@ -10339,7 +10339,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_NYJ_MIA",
@@ -10394,7 +10394,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_ATL_MIN",
@@ -10449,7 +10449,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_SEA_SF",
@@ -10504,7 +10504,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_12_CAR_TB",
@@ -10559,7 +10559,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_KC_LA",
@@ -10614,7 +10614,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_PHI_ARI",
@@ -10669,7 +10669,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_DET_ATL",
@@ -10724,7 +10724,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_JAX_CHI",
@@ -10779,7 +10779,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_CIN_CLE",
@@ -10834,7 +10834,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_MIA_DEN",
@@ -10889,7 +10889,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_CAR_MIN",
@@ -10944,7 +10944,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_BUF_NE",
@@ -10999,7 +10999,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_GB_NO",
@@ -11054,7 +11054,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_SF_NYG",
@@ -11109,7 +11109,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_HOU_PIT",
@@ -11164,7 +11164,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_LAC_TB",
@@ -11219,7 +11219,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_WAS_TEN",
@@ -11274,7 +11274,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_13_DAL_SEA",
@@ -11329,7 +11329,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_MIN_NE",
@@ -11384,7 +11384,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_TB_BAL",
@@ -11439,7 +11439,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_NO_CAR",
@@ -11494,7 +11494,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_KC_CIN",
@@ -11549,7 +11549,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_ATL_CLE",
@@ -11604,7 +11604,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_TEN_DET",
@@ -11659,7 +11659,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_BUF_GB",
@@ -11714,7 +11714,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_LAC_LV",
@@ -11769,7 +11769,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_CHI_MIA",
@@ -11824,7 +11824,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_DEN_NYJ",
@@ -11879,7 +11879,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_IND_PHI",
@@ -11934,7 +11934,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_NYG_SEA",
@@ -11989,7 +11989,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_LA_SF",
@@ -12044,7 +12044,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_HOU_WAS",
@@ -12099,7 +12099,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_14_PIT_JAX",
@@ -12154,7 +12154,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_SF_LAC",
@@ -12209,7 +12209,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_CHI_BUF",
@@ -12264,7 +12264,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_SEA_PHI",
@@ -12319,7 +12319,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_NYJ_ARI",
@@ -12374,7 +12374,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_CIN_CAR",
@@ -12429,7 +12429,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_MIA_GB",
@@ -12484,7 +12484,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_JAX_HOU",
@@ -12539,7 +12539,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_DAL_LA",
@@ -12594,7 +12594,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_DEN_LV",
@@ -12649,7 +12649,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_DET_MIN",
@@ -12704,7 +12704,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_CLE_NYG",
@@ -12759,7 +12759,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_BAL_PIT",
@@ -12814,7 +12814,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_NO_TB",
@@ -12869,7 +12869,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_IND_TEN",
@@ -12924,7 +12924,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_ATL_WAS",
@@ -12979,7 +12979,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_15_NE_KC",
@@ -13034,7 +13034,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_HOU_PHI",
@@ -13089,7 +13089,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_GB_CHI",
@@ -13144,7 +13144,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_BUF_DEN",
@@ -13199,7 +13199,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_LA_SEA",
@@ -13254,7 +13254,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_TB_ATL",
@@ -13309,7 +13309,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_CLE_BAL",
@@ -13364,7 +13364,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_JAX_DAL",
@@ -13419,7 +13419,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_CIN_IND",
@@ -13474,7 +13474,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_SF_KC",
@@ -13529,7 +13529,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_TEN_LV",
@@ -13584,7 +13584,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_LAC_MIA",
@@ -13639,7 +13639,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_WAS_MIN",
@@ -13694,7 +13694,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_ARI_NO",
@@ -13749,7 +13749,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_NE_NYJ",
@@ -13804,7 +13804,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_CAR_PIT",
@@ -13859,7 +13859,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_16_NYG_DET",
@@ -13914,7 +13914,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_BAL_CIN",
@@ -13969,7 +13969,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_LV_ARI",
@@ -14024,7 +14024,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_NO_ATL",
@@ -14079,7 +14079,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_SEA_CAR",
@@ -14134,7 +14134,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_DET_CHI",
@@ -14189,7 +14189,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_IND_CLE",
@@ -14244,7 +14244,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_NYG_DAL",
@@ -14299,7 +14299,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_WAS_JAX",
@@ -14354,7 +14354,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_KC_LAC",
@@ -14409,7 +14409,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_BUF_MIA",
@@ -14464,7 +14464,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_DEN_NE",
@@ -14519,7 +14519,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_MIN_NYJ",
@@ -14574,7 +14574,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_PHI_SF",
@@ -14629,7 +14629,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_LA_TB",
@@ -14684,7 +14684,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_PIT_TEN",
@@ -14739,7 +14739,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_17_HOU_GB",
@@ -14794,7 +14794,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_SF_ARI",
@@ -14849,7 +14849,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_PIT_BAL",
@@ -14904,7 +14904,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_NYJ_BUF",
@@ -14959,7 +14959,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_ATL_CAR",
@@ -15014,7 +15014,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_CLE_CIN",
@@ -15069,7 +15069,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_LAC_DEN",
@@ -15124,7 +15124,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_DET_GB",
@@ -15179,7 +15179,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_TEN_HOU",
@@ -15234,7 +15234,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_JAX_IND",
@@ -15289,7 +15289,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_LV_KC",
@@ -15344,7 +15344,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_SEA_LA",
@@ -15399,7 +15399,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_CHI_MIN",
@@ -15454,7 +15454,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_MIA_NE",
@@ -15509,7 +15509,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_TB_NO",
@@ -15564,7 +15564,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_PHI_NYG",
@@ -15619,7 +15619,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     },
     {
       "game_id": "2026_18_DAL_WAS",
@@ -15674,7 +15674,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T17:49:54.766289+00:00"
+      "generated_at": "2026-07-13T18:27:26.364451+00:00"
     }
   ]
 }
