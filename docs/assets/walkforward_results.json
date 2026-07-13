@@ -2032,26 +2032,6 @@
       "total_lean_thr": 1.5
     }
   },
-  "_summary": {
-    "window_3": {
-      "n_folds": 10,
-      "mean_mae_spread": 10.5414,
-      "mean_ats_pct": 0.5457,
-      "mean_edge_ats_pct": 0.592,
-      "mean_edge_roi": 0.1301,
-      "mean_ats_pct_excl_covid": 0.5305,
-      "mean_edge_ats_pct_excl_covid": 0.5594
-    },
-    "window_4": {
-      "n_folds": 9,
-      "mean_mae_spread": 10.5659,
-      "mean_ats_pct": 0.5532,
-      "mean_edge_ats_pct": 0.5889,
-      "mean_edge_roi": 0.1243,
-      "mean_ats_pct_excl_covid": 0.5246,
-      "mean_edge_ats_pct_excl_covid": 0.5554
-    }
-  },
   "2016_w3": {
     "mae_home": 7.217,
     "mae_away": 7.03,
@@ -2782,6 +2762,26 @@
       "nn_w_spread": 0.25,
       "spread_lean_thr": 1.5,
       "total_lean_thr": 1.5
+    }
+  },
+  "_summary": {
+    "window_3": {
+      "n_folds": 13,
+      "mean_mae_spread": 10.4142,
+      "mean_ats_pct": 0.5415,
+      "mean_edge_ats_pct": 0.5913,
+      "mean_edge_roi": 0.1288,
+      "mean_ats_pct_excl_covid": 0.5356,
+      "mean_edge_ats_pct_excl_covid": 0.5742
+    },
+    "window_4": {
+      "n_folds": 13,
+      "mean_mae_spread": 10.408,
+      "mean_ats_pct": 0.5537,
+      "mean_edge_ats_pct": 0.5896,
+      "mean_edge_roi": 0.1256,
+      "mean_ats_pct_excl_covid": 0.536,
+      "mean_edge_ats_pct_excl_covid": 0.5697
     }
   }
 }

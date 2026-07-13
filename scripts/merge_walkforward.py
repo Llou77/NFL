@@ -34,6 +34,9 @@ def main() -> None:
             merged = json.loads(OUT.read_text())
         except json.JSONDecodeError:
             merged = {}
+    # The previous run's aggregate block must not be treated as a fold row
+    # (this exact mistake once crashed the summary step mid-script).
+    merged.pop("_summary", None)
 
     fragments = sorted(FRAG.glob("wf_w*_*.json")) if FRAG.exists() else []
     if not fragments:
@@ -51,7 +54,8 @@ def main() -> None:
     shutil.copy2(OUT, DOCS / "walkforward_results.json")
 
     # ── console summary + per-window aggregates ───────────────────────────
-    rows = [v for v in merged.values() if not v.get("skipped")]
+    rows = [v for k, v in merged.items()
+            if k != "_summary" and isinstance(v, dict) and not v.get("skipped")]
     rows.sort(key=lambda r: (r["window"], r["test_season"]))
     print(f"{'season':>6} {'win':>3} {'MAEsp':>6} {'MAEtot':>6} "
           f"{'ATS%':>6} {'OU%':>6} {'edgeATS%':>8} {'ROI':>7} {'covid':>5}")
