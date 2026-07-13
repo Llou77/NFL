@@ -59,11 +59,28 @@ kerüljenek, ne töltődjenek le minden futásnál; (3) közérthető folyamatle
    README hamis "weatherapi.com" forráshivatkozása javítva (időjárás a schedules
    feedből jön; a kód sehol nem hív weather API-t).
 
+8. **Spread-előjel bug (a verifikáció során találva):** az első zöld lépcsős futás
+   backtest-számai inkonzisztensek voltak — spread MAE őszinte (10,1–10,2), O/U
+   őszinte (49–54%), de ATS 76–83%. Ez az előjel-hiba ujjlenyomata: a totalnál
+   nincs hazai/vendég orientáció, a spreadnél van. Gyökérok: a kód azt
+   feltételezte, hogy `spread_line < 0` = hazai favorit, miközben az nflverse
+   schedules konvenciója FORDÍTOTT (pozitív = hazai favorit, cover:
+   `margin > spread_line`). Javítva 4 helyen: `evaluate.compute_metrics`
+   (threshold + vegas_fav_home), `evaluate.update_performance_from_latest`
+   (élő tracker), `predict._add_edges` (a NYILVÁNOS oldal HOME/AWAY value
+   címkéi eddig fordítva/torzítva számolódtak!), `feature_h2h.home_covered`.
+   A CLV opening-forrása (mrcaseb team-szintű vonalak) továbbra is
+   ellenőrizetlen orientációjú — proxynak jelölve.
+
 ### Következő lépések
 
-- `.freeze-trigger` push → frozen réteg felépül CI-ban → utána `.full-trigger` push
-  → lépcsős teljes futás ellenőrzése a data/logs/ alapján.
-- Ha a backtest-mátrix zöld: az oldal stale accuracy-számai maguktól frissülnek.
+- ✔ Frozen réteg felépült (67 fájl, 27,2 MB), lépcsős teljes futás zöld
+  (optimize ~13 p, train+predict ~6 p, backtest-mátrix+merge ~5 p — egyik job
+  sem éri el a 20 percet). Előjel-fix utáni backtest-újrafutás folyamatban.
+- Vonalforrás-egységesítés: `opening_spread`/`closing_spread` (mrcaseb,
+  team-orientált) vs `spread_line` (schedules, home-orientált) — az 1450–1459
+  körüli fillna keveri a kettőt; a `vegas_implied_power` előjele is fordított
+  (konzisztens feature-ként a modell megtanulja, de félrevezető). Külön kört érdemel.
 - Player ratings modul továbbra is kikapcsolva (temporal shift rework vár rá).
 
 **Feladat:** a korábbi chat-körökben azonosított javítások tényleges végrehajtása
