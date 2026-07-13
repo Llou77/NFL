@@ -1,63 +1,68 @@
 {
   "2024": {
-    "mae_home": 4.621,
-    "mae_away": 3.951,
-    "mae_total": 7.442,
-    "mae_spread": 4.13,
-    "ats_wins": 266,
-    "ats_losses": 13,
+    "mae_home": 7.593,
+    "mae_away": 6.888,
+    "mae_total": 9.926,
+    "mae_spread": 10.137,
+    "ats_wins": 232,
+    "ats_losses": 47,
     "ats_pushes": 1,
-    "ats_pct": 0.9534,
-    "edge_ats_wins": 198,
-    "edge_ats_losses": 1,
+    "ats_pct": 0.8315,
+    "edge_ats_wins": 196,
+    "edge_ats_losses": 30,
     "edge_ats_pushes": 1,
-    "edge_ats_pct": 0.995,
-    "edge_ats_n_games": 200,
-    "ou_wins": 207,
-    "ou_losses": 75,
+    "edge_ats_pct": 0.8673,
+    "edge_ats_n_games": 227,
+    "edge_profit_units": 148.18,
+    "edge_roi_flat_110": 0.6557,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 153,
+    "ou_losses": 129,
     "ou_pushes": 3,
-    "ou_pct": 0.734,
-    "r2_total": 0.4742,
-    "pred_spread_std": 12.14,
+    "ou_pct": 0.5426,
+    "r2_total": 0.0328,
+    "pred_spread_std": 9.24,
     "actual_spread_std": 14.44,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 7.449,
+        "mae_total": 9.842,
         "n": 272
       },
       "WC": {
-        "mae_total": 3.0,
+        "mae_total": 9.667,
         "n": 6
       }
     },
     "by_division_game": {
       "0": {
-        "mae_total": 7.011,
+        "mae_total": 9.636,
         "n": 187
       },
       "1": {
-        "mae_total": 8.265,
+        "mae_total": 10.48,
         "n": 98
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 7.444,
+        "mae_total": 10.23,
         "n": 187
       },
       "1": {
-        "mae_total": 7.439,
+        "mae_total": 9.347,
         "n": 98
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 6.73,
+        "mae_total": 11.111,
         "n": 63
       },
       "0": {
-        "mae_total": 7.644,
+        "mae_total": 9.59,
         "n": 222
       }
     },
@@ -69,64 +74,69 @@
     "window_type": "3-season"
   },
   "2025": {
-    "mae_home": 4.182,
-    "mae_away": 3.656,
-    "mae_total": 6.561,
-    "mae_spread": 4.035,
-    "ats_wins": 260,
-    "ats_losses": 20,
+    "mae_home": 7.691,
+    "mae_away": 7.825,
+    "mae_total": 11.088,
+    "mae_spread": 10.204,
+    "ats_wins": 214,
+    "ats_losses": 67,
     "ats_pushes": 4,
-    "ats_pct": 0.9286,
-    "edge_ats_wins": 191,
-    "edge_ats_losses": 6,
+    "ats_pct": 0.7616,
+    "edge_ats_wins": 194,
+    "edge_ats_losses": 39,
     "edge_ats_pushes": 3,
-    "edge_ats_pct": 0.9695,
-    "edge_ats_n_games": 200,
-    "ou_wins": 228,
-    "ou_losses": 57,
+    "edge_ats_pct": 0.8326,
+    "edge_ats_n_games": 236,
+    "edge_profit_units": 137.36,
+    "edge_roi_flat_110": 0.5895,
+    "avg_clv_pts": null,
+    "clv_positive_pct": null,
+    "n_clv_games": 0,
+    "ou_wins": 142,
+    "ou_losses": 143,
     "ou_pushes": 0,
-    "ou_pct": 0.8,
-    "r2_total": 0.6476,
-    "pred_spread_std": 12.65,
+    "ou_pct": 0.4982,
+    "r2_total": -0.0057,
+    "pred_spread_std": 10.21,
     "actual_spread_std": 14.13,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 6.592,
+        "mae_total": 11.088,
         "n": 272
       },
       "WC": {
-        "mae_total": 6.667,
+        "mae_total": 12.0,
         "n": 6
       }
     },
     "by_division_game": {
       "1": {
-        "mae_total": 6.434,
+        "mae_total": 11.333,
         "n": 99
       },
       "0": {
-        "mae_total": 6.629,
+        "mae_total": 10.957,
         "n": 186
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 6.4,
+        "mae_total": 10.316,
         "n": 190
       },
       "1": {
-        "mae_total": 6.884,
+        "mae_total": 12.632,
         "n": 95
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 6.534,
+        "mae_total": 12.707,
         "n": 58
       },
       "0": {
-        "mae_total": 6.568,
+        "mae_total": 10.674,
         "n": 227
       }
     },

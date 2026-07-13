@@ -1,0 +1,6 @@
+=== full_pipeline 2026-07-13T17:54Z — merge status: success ===
+backtest jobs: success
+--- merge log ---
+  merged backtest_2024.json: ['2024']
+  merged backtest_2025.json: ['2025']
+backtest_results.json: 2 season entries (2 updated from 2 fragment file(s))
