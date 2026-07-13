@@ -198,16 +198,27 @@ def run_optimize(args):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def run_backtest(args):
-    log.info("BACKTEST MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+    only = getattr(args, "backtest_season", None)
+    log.info("BACKTEST MODE%s  —  %s",
+             f" (season {only})" if only else "",
+             datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
 
     game_df = _build_features(force_data=False)
 
     from bayesian_optimizer import load_weights
     from evaluate import run_backtests
     weights = load_weights()
-    results = run_backtests(game_df, weights)
+    results = run_backtests(game_df, weights, only_season=only)
 
-    out = PRED_DIR / "backtest_results.json"
+    if only:
+        # CI matrix mode: one season per job, written as a fragment;
+        # scripts/merge_backtests.py combines the fragments afterwards.
+        frag_dir = PRED_DIR / "backtest_fragments"
+        frag_dir.mkdir(parents=True, exist_ok=True)
+        out = frag_dir / f"backtest_{only}.json"
+    else:
+        out = PRED_DIR / "backtest_results.json"
+
     with open(out, "w") as f:
         json.dump(results, f, indent=2, default=str)
     log.info("Backtest results → %s", out)
@@ -219,7 +230,8 @@ def run_backtest(args):
                  r.get("ats_pct", 0) * 100,
                  r.get("ou_pct", 0) * 100)
 
-    _copy_to_docs()
+    if not only:
+        _copy_to_docs()
     _write_status("success")
 
 
@@ -282,11 +294,17 @@ def main():
         "--force-data",
         action="store_true",
         default=False,
-        help="Force re-download all data even if cached",
+        help="Force re-download of live data (frozen closed-season data is "
+             "never re-downloaded — regenerate it with scripts/freeze_data.py)",
+    )
+    parser.add_argument(
+        "--backtest-season",
+        type=int,
+        default=None,
+        help="Backtest only this test season and write a fragment JSON "
+             "(used by the CI matrix for parallel backtesting)",
     )
     args = parser.parse_args()
-    # Make force_data accessible as attribute
-    args.force_data = args.force_data
 
     dispatch = {
         "full":             run_full,

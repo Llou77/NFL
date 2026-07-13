@@ -1,6 +1,0 @@
-2026-07-08T09:05Z — first honest baseline after leakage fixes (fc7226f)
-Touch this file (any change) and push to main to start a new baseline run.
-retrigger 07:52:22
-retrigger honest baseline 08:01:49
-
-2026-07-08T11:08Z — baseline after _is_expl_def crash fix

@@ -1,0 +1,69 @@
+# Standalone Stage 1: Bayesian weight optimisation only (~8-10 min).
+# Trigger:  date > .opt-trigger && git add .opt-trigger && git commit && git push
+name: Optimize (standalone)
+
+on:
+  push:
+    branches: [main]
+    paths: ['.opt-trigger']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-pipeline
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
+
+      - name: Bayesian optimisation
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode optimize 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Commit optimal weights
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add model/saved/optimal_weights.json model/saved/version.txt || true
+          git diff --staged --quiet || git commit -m "Optimize — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+      - name: Publish run log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== optimize(standalone) $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            echo "--- console (tail) ---"
+            tail -c 40000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/optimize_last.txt
+          git add data/logs/optimize_last.txt
+          git commit -m "Optimize run log" || true
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done

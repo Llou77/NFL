@@ -369,14 +369,43 @@ def _compute_wepa_weights(pbp: pd.DataFrame) -> pd.DataFrame:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _aggregate_pbp(seasons: list) -> pd.DataFrame:
-    from data_loader import get_pbp
+    """Team-game aggregates, built season by season.
 
-    try:
-        pbp = get_pbp(seasons)
-    except FileNotFoundError:
+    Closed seasons come from the committed frozen layer
+    (data/frozen/pbp_agg_{s}.parquet). Those files are produced by
+    scripts/freeze_data.py using the SAME _aggregate_pbp_core below, and the
+    aggregation is strictly per-game / per-season (groupbys on game_id and
+    season), so a per-season frozen result is identical to aggregating a
+    multi-season concat. Only seasons without a frozen file (the season in
+    progress) are aggregated from freshly fetched raw PBP.
+    """
+    from data_loader import get_pbp, load_frozen_pbp_agg
+
+    frames = []
+    for s in seasons:
+        agg = load_frozen_pbp_agg(s)
+        if agg is not None:
+            frames.append(agg)
+            continue
+        try:
+            pbp_s = get_pbp([s])
+        except FileNotFoundError:
+            logger.warning("  PBP %d: no raw data — skipped.", s)
+            continue
+        if len(pbp_s) == 0:
+            continue
+        frames.append(_aggregate_pbp_core(pbp_s))
+
+    if not frames:
         logger.warning("No PBP data available — skipping PBP features.")
-        return pd.DataFrame(columns=["game_id","team"])
+        return pd.DataFrame(columns=["game_id", "team"])
+    return pd.concat(frames, ignore_index=True)
 
+
+def _aggregate_pbp_core(pbp: pd.DataFrame) -> pd.DataFrame:
+    """The actual aggregation math for ONE pbp DataFrame (any season span).
+    Shared by the live path (_aggregate_pbp) and scripts/freeze_data.py —
+    a single source of truth guarantees frozen == live results."""
     if len(pbp) == 0:
         return pd.DataFrame(columns=["game_id","team"])
 

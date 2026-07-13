@@ -1,0 +1,232 @@
+# Staged full pipeline: optimize → train+predict → backtest (parallel) → merge.
+#
+# Replaces the old monolithic baseline_run.yml, whose single job ran 30-50
+# minutes and lost everything on one failure. Here every stage is its own
+# job: each finishes in well under 20 minutes, a failed stage can be re-run
+# individually from the Actions UI, and the backtest seasons run in PARALLEL.
+#
+# Trigger with a plain push (no Actions UI needed):
+#   date > .full-trigger && git add .full-trigger && git commit -m "run" && git push
+name: Full Pipeline (staged)
+
+on:
+  push:
+    branches: [main]
+    paths: ['.full-trigger']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-pipeline
+  cancel-in-progress: false
+
+jobs:
+  # ── Stage 1: Bayesian weight optimisation (~8-10 min) ─────────────────────
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
+
+      - name: Bayesian optimisation
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode optimize 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Commit optimal weights
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add model/saved/optimal_weights.json model/saved/version.txt || true
+          git diff --staged --quiet || git commit -m "Optimize — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+      - name: Publish stage log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== optimize $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            echo "--- console (tail) ---"
+            tail -c 40000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/optimize_last.txt
+          git add data/logs/optimize_last.txt
+          git commit -m "Optimize stage log" || true
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+  # ── Stage 2: train the ensemble + generate predictions (~8-12 min) ────────
+  train_predict:
+    needs: optimize
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main    # picks up the weights committed by the optimize job
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
+
+      - name: Cache model artifacts
+        uses: actions/cache@v4
+        with:
+          path: model/saved
+          key: model-saved-v2-${{ github.run_id }}
+          restore-keys: |
+            model-saved-v2-
+
+      - name: Train + predict
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode full 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Commit predictions
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          git add docs/assets/
+          git add data/predictions/predictions_latest.json data/predictions/performance.json || true
+          git add model/saved/optimal_weights.json model/saved/version.txt || true
+          git diff --staged --quiet || git commit -m "Train/predict — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+      - name: Publish stage log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== train_predict $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            echo "--- console (tail) ---"
+            tail -c 40000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/train_last.txt
+          git add data/logs/train_last.txt
+          git commit -m "Train stage log" || true
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+  # ── Stage 3: honest backtest, one season per PARALLEL job (~8-12 min) ─────
+  backtest:
+    needs: train_predict
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        # Test seasons with enough labeled training seasons before them.
+        # Extend this list as new seasons complete (e.g. add 2026 in 2027).
+        season: [2024, 2025]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
+
+      - name: Backtest season ${{ matrix.season }}
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode backtest --backtest-season ${{ matrix.season }} 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Upload fragment
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-fragment-${{ matrix.season }}
+          path: data/predictions/backtest_fragments/backtest_${{ matrix.season }}.json
+
+      - name: Upload console log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-log-${{ matrix.season }}-${{ github.run_number }}
+          path: run_console.log
+          retention-days: 14
+
+  # ── Stage 4: merge fragments and publish ──────────────────────────────────
+  merge_backtests:
+    # train_predict is listed too so its result is addressable in `if`
+    # (the needs context only exposes jobs named in `needs`).
+    needs: [train_predict, backtest]
+    if: ${{ always() && needs.train_predict.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: backtest-fragment-*
+          merge-multiple: true
+          path: data/predictions/backtest_fragments/
+
+      - name: Merge fragments
+        run: python3 scripts/merge_backtests.py 2>&1 | tee -a merge_console.log
+
+      - name: Commit backtest results + final log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== full_pipeline $(date -u '+%Y-%m-%dT%H:%MZ') — merge status: ${{ job.status }} ==="
+            echo "backtest jobs: ${{ needs.backtest.result }}"
+            echo "--- merge log ---"
+            cat merge_console.log 2>/dev/null || echo "(no merge log)"
+          } > data/logs/backtest_last.txt
+          git add data/logs/backtest_last.txt
+          git add data/predictions/backtest_results.json docs/assets/backtest_results.json || true
+          git diff --staged --quiet || git commit -m "Backtest results — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done

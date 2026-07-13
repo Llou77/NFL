@@ -6,7 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       force_data:
-        description: 'Force re-download all data'
+        description: 'Force re-download of live data'
+        required: false
+        default: 'false'
+        type: boolean
+      skip_guard:
+        description: 'Run even in the offseason (bypass guard)'
         required: false
         default: 'false'
         type: boolean
@@ -14,50 +19,76 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: nfl-pipeline
+  cancel-in-progress: false
+
 jobs:
   update-predictions:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Offseason guard BEFORE the expensive pip install: during the
+      # offseason there is nothing to predict and nothing new to learn,
+      # so a skipped run costs ~30 seconds instead of 15+ minutes.
+      - name: Offseason guard
+        id: guard
+        run: |
+          ARGS=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.skip_guard }}" = "true" ]; then
+            ARGS="--force"
+          fi
+          DECISION=$(python3 scripts/season_guard.py $ARGS)
+          echo "decision=$DECISION" >> "$GITHUB_OUTPUT"
+          echo "Guard decision: $DECISION"
+
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.decision == 'run'
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install dependencies (CPU-only torch)
+        if: steps.guard.outputs.decision == 'run'
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
 
       - name: Create directories
-        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets
+        if: steps.guard.outputs.decision == 'run'
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
 
-      # Save this run's freshly trained artifacts to the Actions cache so the
-      # Thursday predict-only job can restore them instead of retraining.
-      # (Artifacts are gitignored — committing them would bloat the repo.)
+      # Save this run's freshly trained artifacts so the Thursday
+      # predict-only job can restore them instead of retraining.
+      # v2 key: artifacts trained before the 2026-07 preprocessing fix
+      # (imputer keep_empty_features) are incompatible — never restore them.
       - name: Cache model artifacts
+        if: steps.guard.outputs.decision == 'run'
         uses: actions/cache@v4
         with:
           path: model/saved
-          key: model-saved-${{ github.run_id }}
+          key: model-saved-v2-${{ github.run_id }}
           restore-keys: |
-            model-saved-
+            model-saved-v2-
 
       - name: Run weekly pipeline
+        if: steps.guard.outputs.decision == 'run'
         run: |
+          set -o pipefail
           FORCE=""
           [ "${{ github.event.inputs.force_data }}" = "true" ] && FORCE="--force-data"
-          python model/pipeline.py --mode full $FORCE
+          python -u model/pipeline.py --mode full $FORCE 2>&1 | tee -a run_console.log
         env:
           PYTHONPATH: ${{ github.workspace }}/model
 
-      # NOTE: the old version also ran `git add model/saved/*.pkl` etc. —
-      # those paths are gitignored, so every one of those adds silently
-      # failed behind `|| true`. Only genuinely committable files are listed.
       - name: Commit updated predictions
+        if: steps.guard.outputs.decision == 'run'
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
@@ -65,7 +96,22 @@ jobs:
           git add data/predictions/predictions_latest.json data/predictions/performance.json || true
           git add model/saved/optimal_weights.json model/saved/version.txt || true
           git diff --staged --quiet || git commit -m "Weekly update — $(date -u '+%Y-%m-%d')"
-          git push
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+
+      - name: Publish run log
+        if: always() && steps.guard.outputs.decision == 'run'
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== weekly $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
+            echo "--- console (tail) ---"
+            tail -c 40000 run_console.log 2>/dev/null || echo "(no console log)"
+          } > data/logs/weekly_last.txt
+          git add data/logs/weekly_last.txt
+          git commit -m "Weekly run log" || true
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
 
       - name: Upload pipeline log on failure
         if: failure()

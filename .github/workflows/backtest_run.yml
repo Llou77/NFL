@@ -1,0 +1,104 @@
+# Standalone Stage 3: honest backtest, one season per PARALLEL job, then a
+# merge job that combines the per-season fragments and commits the result.
+# Trigger:  date > .backtest-trigger && git add .backtest-trigger && git commit && git push
+name: Backtest (parallel matrix)
+
+on:
+  push:
+    branches: [main]
+    paths: ['.backtest-trigger']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-pipeline
+  cancel-in-progress: false
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        # Test seasons with enough labeled training seasons before them.
+        # Extend as new seasons complete (e.g. add 2026 in 2027).
+        season: [2024, 2025]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies (CPU-only torch)
+        run: |
+          pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
+
+      - name: Backtest season ${{ matrix.season }}
+        run: |
+          set -o pipefail
+          python -u model/pipeline.py --mode backtest --backtest-season ${{ matrix.season }} 2>&1 | tee -a run_console.log
+        env:
+          PYTHONPATH: ${{ github.workspace }}/model
+
+      - name: Upload fragment
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-fragment-${{ matrix.season }}
+          path: data/predictions/backtest_fragments/backtest_${{ matrix.season }}.json
+
+      - name: Upload console log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-log-${{ matrix.season }}-${{ github.run_number }}
+          path: run_console.log
+          retention-days: 14
+
+  merge_backtests:
+    needs: backtest
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: backtest-fragment-*
+          merge-multiple: true
+          path: data/predictions/backtest_fragments/
+
+      - name: Merge fragments
+        run: python3 scripts/merge_backtests.py 2>&1 | tee -a merge_console.log
+
+      - name: Commit backtest results + log
+        if: always()
+        run: |
+          git config user.name  "NFL Predictor Bot"
+          git config user.email "nfl-bot@users.noreply.github.com"
+          mkdir -p data/logs
+          {
+            echo "=== backtest $(date -u '+%Y-%m-%dT%H:%MZ') — merge status: ${{ job.status }} ==="
+            echo "backtest jobs: ${{ needs.backtest.result }}"
+            echo "--- merge log ---"
+            cat merge_console.log 2>/dev/null || echo "(no merge log)"
+          } > data/logs/backtest_last.txt
+          git add data/logs/backtest_last.txt
+          git add data/predictions/backtest_results.json docs/assets/backtest_results.json || true
+          git diff --staged --quiet || git commit -m "Backtest results — $(date -u '+%Y-%m-%d %H:%M')"
+          for i in 1 2 3; do git push && break || git pull --rebase origin main; done

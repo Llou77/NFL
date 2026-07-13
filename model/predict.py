@@ -46,18 +46,20 @@ def ensemble_predict(
 
     Preprocessing mirrors train.py exactly:
       - Ridge + NN   → median-imputed + standard-scaled
-      - XGB + LGBM   → imputed then NaN re-introduced (native NaN handling)
+      - XGB + LGBM   → raw features, NaN preserved (native NaN handling)
 
     Returns (sub_preds_home, sub_preds_away, raw_home, raw_away) where the
     sub_preds dicts preserve _META_MODEL_ORDER for meta-learner stacking.
     """
-    X_raw    = np.asarray(X_raw, dtype=np.float64)
-    nan_mask = np.isnan(X_raw)
+    X_raw = np.asarray(X_raw, dtype=np.float64)
 
+    # Mirrors train.py: the imputer is fitted with keep_empty_features=True
+    # (stable column count), and the tree models receive the raw NaN-preserved
+    # matrix directly. The old impute-then-unimpute round-trip crashed with an
+    # IndexError whenever the imputer dropped all-NaN columns.
     X_imp  = models["imputer"].transform(X_raw)
     X_sc   = models["scaler"].transform(X_imp)
-    X_tree = X_imp.copy()
-    X_tree[nan_mask] = np.nan
+    X_tree = X_raw.copy()
 
     sub_home, sub_away = {}, {}
 

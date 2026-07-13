@@ -1,28 +1,27 @@
-name: Pre-Season Training
+# Pre-season kickoff: on the first Tuesday of August it dispatches the
+# STAGED full pipeline (optimize → train+predict → backtest matrix) instead
+# of duplicating those steps here in one monolithic job.
+# Note: workflow_dispatch fired with GITHUB_TOKEN is one of the documented
+# exceptions to GitHub's "GITHUB_TOKEN events don't trigger workflows" rule,
+# so this chain works without a personal access token.
+name: Pre-Season Kickoff
 
 on:
   schedule:
-    # CRON FIX: the old expression '0 12 1-7 8 2' fired on Aug 1-7 EVERY day
-    # PLUS every August Tuesday (day-of-month and day-of-week are OR-ed in
-    # cron) — ~11 runs instead of 1. Now: every August Tuesday, and the guard
-    # step below exits early unless it is the FIRST Tuesday (day <= 7).
+    # CRON FIX kept from the previous version: '0 12 1-7 8 2' fired ~11×
+    # (day-of-month and day-of-week are OR-ed). Every August Tuesday +
+    # first-Tuesday guard = exactly one run per year.
     - cron: '0 12 * 8 2'
   workflow_dispatch:
-    inputs:
-      run_backtest:
-        description: 'Run backtest suite after training'
-        required: false
-        default: 'true'
-        type: boolean
 
 permissions:
-  contents: write
+  contents: read
+  actions: write
 
 jobs:
-  preseason-train:
+  kickoff:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-
+    timeout-minutes: 10
     steps:
       - name: First-Tuesday guard (scheduled runs only)
         id: guard
@@ -34,60 +33,8 @@ jobs:
             echo "run=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/checkout@v4
+      - name: Kick off the staged full pipeline
         if: steps.guard.outputs.run == 'true'
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/setup-python@v5
-        if: steps.guard.outputs.run == 'true'
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install dependencies
-        if: steps.guard.outputs.run == 'true'
-        run: pip install -r requirements.txt
-
-      - name: Create directories
-        if: steps.guard.outputs.run == 'true'
-        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets
-
-      - name: Cache model artifacts
-        if: steps.guard.outputs.run == 'true'
-        uses: actions/cache@v4
-        with:
-          path: model/saved
-          key: model-saved-${{ github.run_id }}
-          restore-keys: |
-            model-saved-
-
-      - name: Step 1 — Bayesian optimisation
-        if: steps.guard.outputs.run == 'true'
-        run: python model/pipeline.py --mode optimize --force-data
         env:
-          PYTHONPATH: ${{ github.workspace }}/model
-
-      - name: Step 2 — Full train + predict
-        if: steps.guard.outputs.run == 'true'
-        run: python model/pipeline.py --mode full
-        env:
-          PYTHONPATH: ${{ github.workspace }}/model
-
-      - name: Step 3 — Backtesting
-        if: steps.guard.outputs.run == 'true' && github.event.inputs.run_backtest != 'false'
-        run: python model/pipeline.py --mode backtest
-        env:
-          PYTHONPATH: ${{ github.workspace }}/model
-        continue-on-error: true   # don't fail the whole job if backtest fails
-
-      - name: Commit artifacts
-        if: steps.guard.outputs.run == 'true'
-        run: |
-          git config user.name  "NFL Predictor Bot"
-          git config user.email "nfl-bot@users.noreply.github.com"
-          git add docs/assets/
-          git add model/saved/optimal_weights.json model/saved/version.txt || true
-          git add data/predictions/predictions_latest.json data/predictions/performance.json data/predictions/backtest_results.json || true
-          git diff --staged --quiet || git commit -m "Pre-season training — $(date -u '+%Y-%m-%d')"
-          git push
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run full_pipeline.yml -R ${{ github.repository }}
