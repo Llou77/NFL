@@ -14,6 +14,13 @@ venv/
 data/raw/*.parquet
 data/processed/*.parquet
 data/pipeline.log
+# NOTE: data/frozen/ IS committed — sealed closed-season data + per-season
+# PBP aggregates (see scripts/freeze_data.py). Do not ignore it.
+
+# CI scratch
+run_console.log
+merge_console.log
+data/predictions/backtest_fragments/
 
 # Model artifacts (large — not committed unless small)
 model/saved/*.pt

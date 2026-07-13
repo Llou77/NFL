@@ -25,6 +25,11 @@ ROOT    = Path(__file__).resolve().parent.parent
 RAW_DIR = ROOT / "data" / "raw"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 
+# Committed, sealed historical data (see scripts/freeze_data.py).
+# Closed seasons never change → they live in the repo and are read with
+# ZERO network access. Only current-season files are fetched live.
+FROZEN_DIR = ROOT / "data" / "frozen"
+
 # ── seasons ────────────────────────────────────────────────────────────────────
 
 def get_current_season(today: Optional[datetime] = None) -> int:
@@ -48,7 +53,10 @@ ALL_SEASONS      = WINDOW_SEASONS + [CURRENT_SEASON]
 # Including it distorts HFA features. Explicitly flagged so downstream code can handle.
 COVID_SEASONS    = [2020]
 
-EXTENDED_SEASONS = list(range(2014, CURRENT_SEASON + 1))   # for H2H 10-year lookback
+# NOTE: the old EXTENDED_SEASONS (2014+) raw-PBP downloads were removed:
+# nothing ever consumed them. The H2H 10-year lookback reads game SCORES
+# from the schedules table, not play-by-play — downloading ~8 extra PBP
+# seasons (~200 MB, several GB of RAM) every run was pure waste.
 BACKTEST_SEASONS = [s for s in range(2020, CURRENT_SEASON + 1) if s not in COVID_SEASONS]
 
 # ── nflverse base URL ──────────────────────────────────────────────────────────
@@ -81,16 +89,40 @@ def _fresh(name: str, max_hours: float = 24.0) -> bool:
     return (time.time() - path.stat().st_mtime) < max_hours * 3600
 
 
-def _fetch(url: str, fmt: str = "parquet") -> Optional[pd.DataFrame]:
-    """Download a parquet or CSV from a URL. Returns None on failure."""
-    try:
-        if fmt == "parquet":
-            return pd.read_parquet(url, engine="pyarrow")
-        else:
-            return pd.read_csv(url)
-    except Exception as e:
-        logger.warning("  Could not fetch %s — %s", url, e)
-        return None
+def _fetch(url, fmt: str = "parquet") -> Optional[pd.DataFrame]:
+    """Download a parquet or CSV. `url` may be a single URL or a list of
+    candidate URLs tried in order (nflverse has renamed several releases —
+    e.g. player_stats → stats_player in 2025). Returns None on failure."""
+    urls = url if isinstance(url, (list, tuple)) else [url]
+    for u in urls:
+        try:
+            if fmt == "parquet":
+                return pd.read_parquet(u, engine="pyarrow")
+            return pd.read_csv(u)
+        except Exception as e:
+            logger.warning("  Could not fetch %s — %s", u, e)
+    return None
+
+
+# ── frozen layer ───────────────────────────────────────────────────────────────
+
+def _load_frozen(name: str) -> Optional[pd.DataFrame]:
+    path = FROZEN_DIR / f"{name}.parquet"
+    if path.exists():
+        return pd.read_parquet(path)
+    return None
+
+
+def has_frozen(name: str) -> bool:
+    return (FROZEN_DIR / f"{name}.parquet").exists()
+
+
+def load_frozen_pbp_agg(season: int) -> Optional[pd.DataFrame]:
+    """Pre-computed per-season PBP team-game aggregate.
+    Built once per year by scripts/freeze_data.py with the exact same
+    aggregation code the live path uses (feature_engineering._aggregate_pbp_core),
+    so the result is identical to aggregating freshly downloaded raw PBP."""
+    return _load_frozen(f"pbp_agg_{season}")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -118,21 +150,37 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
             tables[key] = df
         else:
             existing = _load(key)
+            if existing is None:
+                existing = _load_frozen(key)   # offline fallback
             if existing is not None:
                 tables[key] = existing
 
     def _get_yearly(key_tpl, url_tpl, seasons, fmt="parquet", max_hours=24.0):
-        """Fetch per-season files and cache individually."""
+        """Per-season fetch with frozen-first loading.
+
+        Closed seasons (< CURRENT_SEASON) never change → read from the
+        committed data/frozen/ layer, no network. Only the current season
+        is fetched live. url_tpl may be one template or a list of templates
+        tried in order.
+        """
         frames = []
         for s in seasons:
             key = key_tpl.format(s)
-            if not force_refresh and _fresh(key, max_hours):
+            df  = None
+            if s < CURRENT_SEASON:
+                df = _load_frozen(key)
+            if df is None and not force_refresh and _fresh(key, max_hours):
                 df = _load(key)
-            else:
+            if df is None:
                 logger.info("Fetching %s …", key)
-                df = _fetch(url_tpl.format(s), fmt)
+                tpls = url_tpl if isinstance(url_tpl, list) else [url_tpl]
+                df = _fetch([t.format(s) for t in tpls], fmt)
                 if df is not None:
                     _save(df, key)
+                else:
+                    df = _load(key)              # stale local cache
+                    if df is None:
+                        df = _load_frozen(key)   # last resort
             if df is not None:
                 frames.append(df)
         return frames
@@ -143,8 +191,14 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
          fmt="csv", max_hours=6)
 
     # ── 2. Play-by-play (current + window seasons) ────────────────────────────
+    # Closed seasons are represented by their committed frozen AGGREGATE
+    # (data/frozen/pbp_agg_{s}.parquet) — the ~25 MB/season raw PBP is neither
+    # stored in the repo nor re-downloaded. Raw PBP is only fetched for
+    # seasons without a frozen aggregate (i.e. the season in progress).
     for s in ALL_SEASONS:
         key = f"pbp_{s}"
+        if s < CURRENT_SEASON and has_frozen(f"pbp_agg_{s}"):
+            continue   # feature layer reads the frozen aggregate directly
         url = f"{BASE}/pbp/play_by_play_{s}.parquet"
         if not force_refresh and _fresh(key, max_hours=12):
             df = _load(key)
@@ -153,29 +207,22 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
             df = _fetch(url)
             if df is not None:
                 _save(df, key)
+            else:
+                df = _load(key)   # stale cache fallback
         if df is not None:
             tables[key] = df
 
-    # Extended PBP for H2H (older seasons, refresh rarely)
-    for s in EXTENDED_SEASONS:
-        if s in ALL_SEASONS:
-            continue
-        key = f"pbp_{s}"
-        if not force_refresh and _fresh(key, max_hours=168):  # 1 week
-            df = _load(key)
-            if df is not None:
-                tables[key] = df
-            continue
-        logger.info("Fetching PBP %d (H2H history) …", s)
-        df = _fetch(f"{BASE}/pbp/play_by_play_{s}.parquet")
-        if df is not None:
-            _save(df, key)
-            tables[key] = df
+    # (The old "Extended PBP for H2H (2014+)" download block was deleted:
+    #  no code path ever read those files — H2H uses schedule scores.)
 
     # ── 3. Weekly player stats ────────────────────────────────────────────────
+    # nflverse renamed these releases in 2025: player_stats/player_stats_{s}
+    # → stats_player/stats_player_week_{s}. Old URL kept as fallback for
+    # pre-rename seasons.
     frames = _get_yearly(
-        "player_stats_weekly_{}", 
-        f"{BASE}/player_stats/player_stats_{{0}}.parquet",
+        "player_stats_weekly_{}",
+        [f"{BASE}/stats_player/stats_player_week_{{0}}.parquet",
+         f"{BASE}/player_stats/player_stats_{{0}}.parquet"],
         ALL_SEASONS, max_hours=12
     )
     if frames:
@@ -186,7 +233,8 @@ def load_all(force_refresh: bool = False) -> dict[str, pd.DataFrame]:
     # ── 4. Seasonal player stats ──────────────────────────────────────────────
     frames = _get_yearly(
         "player_stats_season_{}",
-        f"{BASE}/player_stats/player_stats_season_{{0}}.parquet",
+        [f"{BASE}/stats_player/stats_player_reg_{{0}}.parquet",
+         f"{BASE}/player_stats/player_stats_season_{{0}}.parquet"],
         ALL_SEASONS, max_hours=24
     )
     if frames:

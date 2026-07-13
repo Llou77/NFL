@@ -90,13 +90,25 @@ def train_all(
     # Ridge and NN cannot handle NaN → use median imputation for those only.
     # We save TWO preprocessors: one with imputation (Ridge/NN) and raw (trees).
 
-    imputer = SimpleImputer(strategy="median")
-    X_imp   = imputer.fit_transform(X_raw)   # for Ridge + NN
-
-    # For trees: replace imputed NaN with actual NaN (undo imputation for NaN cells)
+    # CRASH FIX (2026-07): SimpleImputer silently DROPS columns that contain
+    # no observed values (all-NaN), so its output can be NARROWER than the
+    # input (e.g. 376 → 363). The old code then applied a 376-wide nan_mask
+    # to the 363-wide output → IndexError, which killed every training run.
+    #   1) keep_empty_features=True keeps the column count stable (all-NaN
+    #      columns are filled with 0 for Ridge/NN).
+    #   2) Trees don't need the impute-then-unimpute round-trip at all:
+    #      X_imp with NaN re-introduced IS X_raw by construction. Use X_raw.
     nan_mask = np.isnan(X_raw)
-    X_tree   = X_imp.copy()
-    X_tree[nan_mask] = np.nan               # re-introduce NaN where it was
+    all_nan  = nan_mask.all(axis=0)
+    if all_nan.any():
+        dead = [feature_cols[i] for i in np.where(all_nan)[0]]
+        logger.warning("  %d features have NO observed values "
+                       "(0-filled for Ridge/NN, NaN for trees): %s",
+                       len(dead), dead[:10])
+
+    imputer = SimpleImputer(strategy="median", keep_empty_features=True)
+    X_imp   = imputer.fit_transform(X_raw)   # for Ridge + NN
+    X_tree  = X_raw.copy()                   # trees: raw scale, NaN preserved
 
     scaler  = StandardScaler()
     X_sc    = scaler.fit_transform(X_imp)   # Ridge + NN: imputed + scaled

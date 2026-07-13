@@ -44,6 +44,7 @@ PERF_PATH = ROOT / "data" / "predictions" / "performance.json"
 def run_backtests(
     game_df: pd.DataFrame,
     weights: Optional[dict] = None,
+    only_season: Optional[int] = None,
 ) -> dict:
     from feature_engineering import get_feature_columns
     from train import train_all, load_models
@@ -92,6 +93,15 @@ def run_backtests(
             {"train_seasons": [2022, 2023, 2024], "test_season": 2025, "window_type": "3-season"},
             {"train_seasons": [2021, 2022, 2023], "test_season": 2024, "window_type": "3-season"},
         ]
+
+    if only_season is not None:
+        backtest_configs = [c for c in backtest_configs
+                            if c["test_season"] == only_season]
+        if not backtest_configs:
+            logger.warning("No backtest configuration for season %s "
+                           "(not enough labeled training seasons before it) "
+                           "— returning empty result.", only_season)
+            return {}
 
     logger.info("Running %d backtest configurations", len(backtest_configs))
     all_results = {}

@@ -5,7 +5,66 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
 
 ---
 
-## 2026-07-08 — "Integrity round": szivárgás-zárás, stabilizálás, takarítás
+## 2026-07-13 — "Runtime round": crash-fix, frozen adatréteg, workflow-darabolás, doksi
+
+**Feladat:** (1) a pipeline nem futott le és/vagy 20+ percig tartott — gyökérok-javítás
+és futásidő-csökkentés darabolással; (2) offszezon: a lezárt szezonok adatai a repóba
+kerüljenek, ne töltődjenek le minden futásnál; (3) közérthető folyamatleírás.
+
+### Gyökérok (a 07-08-i baseline failure)
+
+- `train.py:99` — a `SimpleImputer` némán KIDOBJA a csupa-NaN oszlopokat (376→363),
+  a 376-széles `nan_mask` alkalmazása a 363-széles kimenetre → `IndexError`, a job
+  másodpercekkel a "Training on 1139 games" után meghalt. Ugyanez a minta a
+  `predict.py`-ban is élesben várta volna ugyanezt.
+- A 13 üres oszlop részben abból jött, hogy az nflverse 2025-ben átnevezte a player
+  stats release-eket (`player_stats/player_stats_{s}` → `stats_player/stats_player_week_{s}`),
+  a 2025-ös fájl azóta 404.
+
+### Elvégezve
+
+1. **Crash-fix:** `SimpleImputer(keep_empty_features=True)` (stabil oszlopszám; üres
+   oszlop: 0 a Ridge/NN-nek) + a fáknak `X_tree = X_raw` (az impute→unimpute
+   körforgás definíció szerint az X_raw-t rekonstruálta — bugosan). `predict.py`
+   tükörjavítás. Az Actions model-cache kulcs `model-saved-v2-` (régi, inkompatibilis
+   artifactok sosem állnak vissza).
+2. **Halott letöltés törölve:** a 2014–2021-es nyers PBP-t (8×~25 MB + több GB RAM)
+   SEMMI nem olvasta — a H2H a schedules eredményeiből számol. A blokk kikerült a
+   data_loaderből.
+3. **Frozen adatréteg:** `scripts/freeze_data.py` (CI-ban fut) a lezárt szezonok
+   (< CURRENT_SEASON) minden tábláját egyszer letölti és `data/frozen/`-be commitolja;
+   a nyers PBP-ből csak a szezononkénti csapat-meccs AGGREGÁTUM kerül be
+   (`pbp_agg_{s}.parquet`, ~0,2 MB/szezon) — ugyanazzal a kóddal számolva, amit az
+   éles út használ (`_aggregate_pbp_core`, egyetlen igazságforrás). `data_loader`
+   frozen-first: lezárt szezon = repóból, hálózat nélkül; élő csak a schedules,
+   lines és az aktuális szezon fájljai. Player stats URL-fix fallback-lánccal.
+   Méret-őr: >90 MB-os fájl = hard fail (git limit előtt).
+4. **Workflow-darabolás:** a monolit `baseline_run.yml` (30–50 perc egyben) törölve.
+   Helyette: `full_pipeline.yml` (lépcsős jobok: optimize → train+predict →
+   backtest-MÁTRIX szezononként párhuzamosan → merge) + önálló `optimize_run` /
+   `train_run` / `backtest_run` / `freeze_data` workflow-k saját trigger-fájllal.
+   Backtest-fragmentek artifactként utaznak, `scripts/merge_backtests.py` fésüli
+   össze (részleges hibánál a régi szezoneredmény megmarad). Minden lépcső
+   publikus logot commitol (`data/logs/*_last.txt`). Közös concurrency-group véd
+   az egyidejű futások git-versenyétől. `pre_season_train.yml` már csak dispatch-el.
+5. **Offszezon-őr:** `scripts/season_guard.py` (stdlib-only, a pip install ELŐTT fut)
+   — ha nincs meccs a [-3, +10] napos ablakban, a heti/csütörtöki cron ~30 mp alatt
+   kilép a korábbi 15+ perc helyett. Fail-open: ha a menetrend nem elérhető, fut.
+6. **Gyorsabb CI-install:** requirements-trim (shap/numba, polars, requests, bs4,
+   tqdm, dotenv, joblib, scipy, pytest, optuna-integration — egyiket sem importálta
+   semmi) + torch CPU-only wheel indexről (a PyPI-s default CUDA-t bundle-öl, ~4×
+   nagyobb). `--backtest-season` CLI arg + `only_season` az evaluate-ben a mátrixhoz.
+7. **Doksi:** README teljes újraírás (lépésenkénti folyamat, workflow-táblázat,
+   repó-térkép, teljes fogalomtár) + `README.hu.md` magyar változat. A korábbi
+   README hamis "weatherapi.com" forráshivatkozása javítva (időjárás a schedules
+   feedből jön; a kód sehol nem hív weather API-t).
+
+### Következő lépések
+
+- `.freeze-trigger` push → frozen réteg felépül CI-ban → utána `.full-trigger` push
+  → lépcsős teljes futás ellenőrzése a data/logs/ alapján.
+- Ha a backtest-mátrix zöld: az oldal stale accuracy-számai maguktól frissülnek.
+- Player ratings modul továbbra is kikapcsolva (temporal shift rework vár rá).
 
 **Feladat:** a korábbi chat-körökben azonosított javítások tényleges végrehajtása
 (a sandbox-resetek miatt korábban semmi nem került pushra), felesleg törlése,
