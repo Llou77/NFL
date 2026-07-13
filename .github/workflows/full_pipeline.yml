@@ -120,8 +120,14 @@ jobs:
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
           git add docs/assets/
-          git add data/predictions/predictions_latest.json data/predictions/performance.json || true
-          git add model/saved/optimal_weights.json model/saved/version.txt || true
+          # ONE pathspec per add: `git add A B || true` fails ENTIRELY when
+          # B does not exist, silently un-staging A too (performance.json is
+          # only written in-season — this kept the canonical
+          # data/predictions/predictions_latest.json stale since June).
+          git add data/predictions/predictions_latest.json || true
+          git add data/predictions/performance.json || true
+          git add model/saved/optimal_weights.json || true
+          git add model/saved/version.txt || true
           git diff --staged --quiet || git commit -m "Train/predict — $(date -u '+%Y-%m-%d %H:%M')"
           for i in 1 2 3; do git push && break || git pull --rebase origin main; done
 
