@@ -1,12 +1,94 @@
-=== walkforward merge 2026-07-13T22:06Z — status: success ===
+=== walkforward merge 2026-07-14T18:13Z — status: success ===
 fold jobs: success
 --- merge log ---
-Traceback (most recent call last):
-  File "/home/runner/work/NFL/NFL/scripts/merge_walkforward.py", line 158, in <module>
-    main()
-  File "/home/runner/work/NFL/NFL/scripts/merge_walkforward.py", line 55, in main
-    rows.sort(key=lambda r: (r["window"], r["test_season"]))
-  File "/home/runner/work/NFL/NFL/scripts/merge_walkforward.py", line 55, in <lambda>
-    rows.sort(key=lambda r: (r["window"], r["test_season"]))
-                             ~^^^^^^^^^^
-KeyError: 'window'
+season win  MAEsp MAEtot   ATS%    OU% edgeATS%     ROI covid
+  2013   3  11.07  11.14   44.0   52.1     40.0  -0.236      
+  2014   3  11.88  11.02   52.8   50.8     68.6   0.309      
+  2015   3  10.85  11.03   52.4   45.0     59.3   0.133      
+  2016   3   9.54  10.37   54.4   48.5     52.4   0.000      
+  2017   3  10.63  11.39   49.8   51.3     43.6  -0.168      
+  2018   3   9.98  11.13   54.7   53.4     70.0   0.336      
+  2019   3  10.32  11.21   58.0   48.9     66.7   0.273      
+  2020   3  10.80  11.12   48.5   50.0     62.8   0.199     x
+  2021   3  11.29  11.13   55.1   52.8     71.7   0.368     x
+  2022   3   9.51  12.55   61.7   44.8     65.8   0.257     x
+  2023   3  10.20  10.34   58.8   54.4     51.0  -0.026     x
+  2024   3  10.06   9.92   52.6   53.9     52.1  -0.005      
+  2025   3  10.30  11.05   53.6   49.1     57.9   0.105      
+  2013   4  11.09  11.11   49.4   52.1     32.1  -0.388      
+  2014   4  11.67  10.79   55.2   51.5     63.6   0.215      
+  2015   4  11.33  10.93   49.8   46.9     49.0  -0.065      
+  2016   4   9.62  10.29   55.8   50.0     57.1   0.091      
+  2017   4  10.49  11.45   51.0   48.7     48.6  -0.071      
+  2018   4   9.83  11.02   55.0   53.8     73.0   0.393      
+  2019   4  10.15  11.13   58.3   48.9     75.0   0.432      
+  2020   4  10.49  10.84   47.7   51.1     59.5   0.136     x
+  2021   4  10.84  10.83   58.8   55.7     72.9   0.391     x
+  2022   4   8.84  11.55   62.8   46.3     68.0   0.298     x
+  2023   4   9.97  10.53   60.2   53.7     63.5   0.211     x
+  2024   4  10.25  10.39   58.4   47.9     54.2   0.034     x
+  2025   4  10.30  11.04   56.1   50.9     58.3   0.114      
+
+summary: {
+  "window_3": {
+    "n_folds": 13,
+    "mean_mae_spread": 10.4947,
+    "mean_ats_pct": 0.5356,
+    "mean_edge_ats_pct": 0.586,
+    "mean_edge_roi": 0.1188,
+    "mean_ats_pct_excl_covid": 0.5247,
+    "mean_edge_ats_pct_excl_covid": 0.5673
+  },
+  "window_4": {
+    "n_folds": 13,
+    "mean_mae_spread": 10.3741,
+    "mean_ats_pct": 0.5527,
+    "mean_edge_ats_pct": 0.596,
+    "mean_edge_roi": 0.1378,
+    "mean_ats_pct_excl_covid": 0.5381,
+    "mean_edge_ats_pct_excl_covid": 0.571
+  },
+  "weight_stability": {
+    "w_oldest": {
+      "median": 0.518,
+      "cv_pct": 0.0,
+      "class": "stable"
+    },
+    "w_middle": {
+      "median": 0.62,
+      "cv_pct": 33.3,
+      "class": "medium"
+    },
+    "w_recent": {
+      "median": 0.891,
+      "cv_pct": 8.0,
+      "class": "stable"
+    },
+    "w_current": {
+      "median": 1.157,
+      "cv_pct": 8.0,
+      "class": "stable"
+    },
+    "wt_wc": {
+      "median": 0.646,
+      "cv_pct": 29.9,
+      "class": "medium"
+    },
+    "wt_div": {
+      "median": 0.604,
+      "cv_pct": 22.7,
+      "class": "medium"
+    },
+    "wt_con": {
+      "median": 0.562,
+      "cv_pct": 22.8,
+      "class": "medium"
+    },
+    "wt_sb": {
+      "median": 0.395,
+      "cv_pct": 0.0,
+      "class": "stable"
+    }
+  }
+}
+plot → /home/runner/work/NFL/NFL/docs/assets/walkforward_weights.png
