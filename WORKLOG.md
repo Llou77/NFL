@@ -33,6 +33,19 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
    körül, zajosak fixálása mediánra → 8→4 szabad paraméter; ha jóváhagyva,
    utána teljes walk-forward újrafutás validál. Trend-EXTRAPOLÁCIÓ továbbra
    sincs — a stabilitás pont az extrapoláció szükségtelenségét jelenti.
+4. **Stabilitás-korlátok IMPLEMENTÁLVA (tulaj jóváhagyta):**
+   `bayesian_optimizer.py` — `PINNED_PARAMS` (w_oldest=0.518, wt_sb=0.395,
+   fold-mediánok) + `NARROWED_RANGES` (w_recent 0.745–1.007, w_current
+   0.979–1.325, medián ±15%); w_middle és wt_wc/div/con teljes sávon marad
+   → 6 keresett (2 szűkített) + 2 rögzített. A konstansok SZÁNDÉKOSAN
+   hardcode-oltak provenienciával, nem auto-olvasottak a walkforward
+   JSON-ból — az öngerjesztő hurok (szűkített keresés → alacsony CV →
+   „stabil" → szűkítve marad) ellen. Újra-levezetés: `WF_UNCONSTRAINED=1`.
+   ŐSZINTESÉGI JEGYZET: a pin-értékek az ÖSSZES fold mediánjából jönnek,
+   így a validáló walk-forward foldjai formálisan látnak minimális
+   fold-közi információt (a hangolások stabilitását, nem a kimeneteket).
+   A validáció kérdése így: „árt-e a szűkítés?" — élesben (2026) a
+   korlátok kizárólag múltbeli adatból származnak, ott tiszta a helyzet.
 
 ## 2026-07-13 (2. kör) — Mély walk-forward szimuláció
 

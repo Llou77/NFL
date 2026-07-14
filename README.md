@@ -39,7 +39,7 @@ One full pipeline run (`model/pipeline.py --mode full`) does the following, in o
 7. **Generate predictions** (`predict.py`). Upcoming games are run through the exact same `ensemble_predict()` path the backtest uses (no train/serve skew), calibrated, scored for confidence, decorated with edge signals, and written to `data/predictions/predictions_latest.json`.
 8. **Publish**. Outputs are copied to `docs/assets/`, which GitHub Pages serves to the site.
 
-The **backtest** (`--mode backtest`) is separate: for each test season it retrains the full ensemble on the seasons before it, predicts the held-out season, and reports MAE / ATS / over-under / ROI / CLV. The **optimizer** (`--mode optimize`) is also separate and pre-season only: Optuna tunes the 8 sample-weight parameters (how much each training season and game type counts).
+The **backtest** (`--mode backtest`) is separate: for each test season it retrains the full ensemble on the seasons before it, predicts the held-out season, and reports MAE / ATS / over-under / ROI / CLV. The **optimizer** (`--mode optimize`) is also separate and pre-season only: Optuna tunes the sample-weight parameters (how much each training season and game type counts). Since the 2026-07 walk-forward stability study, 2 of the original 8 are pinned to their cross-fold medians (w_oldest, wt_sb — tuning them was noise-chasing) and 2 are narrowed to a ±15% band (w_recent, w_current — the data keeps agreeing on them); `WF_UNCONSTRAINED=1` restores the full search.
 
 ---
 
@@ -109,7 +109,7 @@ model/
   train.py               the 3-layer ensemble training + artifact save/load
   predict.py             the single shared prediction path (live + backtest)
   evaluate.py            backtests, ATS/ROI/CLV metrics, live performance reconciliation
-  bayesian_optimizer.py  Optuna search over the 8 sample-weight parameters
+  bayesian_optimizer.py  Optuna search over the sample weights (stability-constrained)
   confidence.py          confidence rating (model agreement / data completeness / H2H sample)
   season_analysis.py     per-season difficulty analysis
   player_ratings.py      DISABLED pending temporal-shift rework (leak risk)
@@ -165,7 +165,7 @@ docs/                    GitHub Pages site (index.html + assets/*.json)
 - **OOF (out-of-fold):** predictions made by a model on data it was not trained on, produced via cross-validation — the only honest inputs for training a meta-learner.
 - **TimeSeriesSplit:** cross-validation that always trains on the past and validates on the future (no shuffling), matching how the model is used in reality.
 - **Backtest:** simulating the past — train only on seasons before X, predict season X, compare with what happened.
-- **Bayesian optimisation (Optuna):** a guided search that proposes promising parameter combinations instead of trying all of them. Here it tunes 8 sample-weight parameters on a train/validation season split.
+- **Bayesian optimisation (Optuna):** a guided search that proposes promising parameter combinations instead of trying all of them. Here it tunes the sample weights on a train/validation season split — 6 searched (2 of them in stability-narrowed bands), 2 pinned by the walk-forward stability study.
 - **Sample weights:** how much each training game counts (recent seasons count more; playoff game types count differently).
 - **Variance calibration:** rescaling predicted spreads so their distribution width matches reality (blended models regress toward the mean).
 - **MAE (mean absolute error):** average absolute miss, in points.
