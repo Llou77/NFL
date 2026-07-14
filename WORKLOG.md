@@ -46,6 +46,15 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
    fold-közi információt (a hangolások stabilitását, nem a kimeneteket).
    A validáció kérdése így: „árt-e a szűkítés?" — élesben (2026) a
    korlátok kizárólag múltbeli adatból származnak, ott tiszta a helyzet.
+   **VALIDÁCIÓ EREDMÉNYE (26/26 fold zöld, ~19 perc):** fold-sorokból
+   azonos kóddal újraszámolt összevetés, korlátlan → korlátozott:
+   ablak=4 (az éles konfigurációhoz közelebbi): MAE 10,408→10,374,
+   ATS 55,4→55,3%, edgeATS 59,0→59,6%, ROI +12,6→+13,8% — azonos, ha
+   valami, hajszálnyival jobb. Ablak=3: MAE +0,08, ATS −0,6…−1,1pp —
+   enyhe negatív sodródás, messze a fold-zaj (SE≈1,3pp) alatt.
+   VERDIKT: a szűkítés nem árt, a szabad paraméterek 8→6(−2 sávos)
+   csökkentek → MARAD. Az új stabilitás-riport konzisztens:
+   w_recent/w_current CV 19%→8%, pinek triviálisan 0%.
 
 ## 2026-07-13 (2. kör) — Mély walk-forward szimuláció
 
