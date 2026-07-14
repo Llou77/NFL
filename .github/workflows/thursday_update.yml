@@ -65,10 +65,13 @@ jobs:
         if: steps.guard.outputs.decision == 'run'
         uses: actions/cache@v4
         with:
-          path: model/saved
-          key: model-saved-v2-${{ github.run_id }}
+          path: |
+            model/saved
+            !model/saved/optimal_weights.json
+            !model/saved/version.txt
+          key: model-saved-v3-${{ github.run_id }}
           restore-keys: |
-            model-saved-v2-
+            model-saved-v3-
 
       - name: Refresh predictions (predict-only, trains on cache miss)
         if: steps.guard.outputs.decision == 'run'

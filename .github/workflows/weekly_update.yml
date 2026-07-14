@@ -66,16 +66,20 @@ jobs:
 
       # Save this run's freshly trained artifacts so the Thursday
       # predict-only job can restore them instead of retraining.
-      # v2 key: artifacts trained before the 2026-07 preprocessing fix
-      # (imputer keep_empty_features) are incompatible — never restore them.
+      # CACHE SCOPE: the committed weight files are EXCLUDED — caching them
+      # let an old restored cache overwrite freshly committed optimize
+      # results. v3 key: v2 caches still contain weight files.
       - name: Cache model artifacts
         if: steps.guard.outputs.decision == 'run'
         uses: actions/cache@v4
         with:
-          path: model/saved
-          key: model-saved-v2-${{ github.run_id }}
+          path: |
+            model/saved
+            !model/saved/optimal_weights.json
+            !model/saved/version.txt
+          key: model-saved-v3-${{ github.run_id }}
           restore-keys: |
-            model-saved-v2-
+            model-saved-v3-
 
       - name: Run weekly pipeline
         if: steps.guard.outputs.decision == 'run'
