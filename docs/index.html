@@ -446,6 +446,7 @@
     <button class="nb" onclick="showPage('backtest',this)">Backtest Results</button>
     <button class="nb" onclick="showPage('performance',this)">Performance</button>
     <button class="nb" onclick="showPage('methodology',this)">Methodology</button>
+    <a href="walkforward.html" class="nb" style="text-decoration:none;display:flex;align-items:center">Walk-Forward ↗</a>
     <a href="insights.html" class="nb" style="text-decoration:none;display:flex;align-items:center">Model Insights ↗</a>
   </nav>
   <div class="hstat">
@@ -467,7 +468,7 @@
       <h1>2026 Predictions</h1>
       <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em">Updated every Tuesday — predictions for all 272 regular season games</div>
     </div>
-    <p>Machine learning ensemble trained on 3 seasons of play-by-play data. Every game scored, spreads and totals derived automatically.</p>
+    <p>Machine learning ensemble trained on the last four completed seasons plus the season in progress. Every game scored, spreads and totals derived automatically.</p>
   </div>
 
   <!-- Ticker in dark band -->
@@ -512,6 +513,13 @@
       <div class="chart-wrap"><div class="chart-label">Betting edge hit rate — games where model disagreed with Vegas (%)</div><canvas id="btAts" height="160"></canvas></div>
     </div>
     <div class="chart-wrap"><div class="chart-label">Average prediction error by game type</div><canvas id="btType" height="90"></canvas></div>
+
+    <div class="sh2" style="margin-top:2.5rem"><h2>Deep validation — walk-forward simulation</h2><span>13 test seasons (2013–2025) × two window lengths; every fold tuned only on its own past · <a href="walkforward.html" style="color:var(--g4)">full results ↗</a></span></div>
+    <div class="bt-exp">
+      <strong>Walk-forward</strong> slides the training window across history: train on the seasons before X, tune on pre-X data only, predict season X, repeat until today. Seasons touched by the 2020 no-fans COVID year are reported separately because home-field advantage collapsed that season.
+    </div>
+    <div class="data-grid" id="wfCards"><div class="lstate"><div class="spin"></div></div></div>
+    <div class="chart-wrap"><div class="chart-label">Tuned-weight drift &amp; per-season accuracy (regenerated on every walk-forward run)</div><img src="assets/walkforward_weights.png" alt="walk-forward chart" style="width:100%" onerror="this.parentNode.style.display='none'"></div>
   </div>
 </div>
 
@@ -548,8 +556,8 @@
           <p>How the model is run, what data it trains on, and how it updates automatically.</p>
         </div>
         <div class="msec-body">
-          <p>Every Tuesday during the NFL season, a GitHub Actions pipeline fetches updated statistics from nflverse, retrains a stacked ensemble on a rolling 3-season window (816 regular season + 39 playoff games), and publishes predictions for every upcoming game.</p>
-          <p>The model predicts a final score for both teams. Spread, total, and moneyline signals are derived from these two numbers. Season sample weights are auto-optimised each pre-season via Bayesian search (Optuna).</p>
+          <p>Every Tuesday during the NFL season, a GitHub Actions pipeline retrains a stacked ensemble on a rolling window of the <strong>last four completed seasons plus the season in progress</strong> (~1,100 labeled games) and publishes predictions for every upcoming game. Historical data for finished seasons is sealed into the repository once a year (the "frozen layer"), so weekly runs only download current-season files.</p>
+          <p>The model predicts a final score for both teams. Spread, total, and moneyline signals are derived from these two numbers. Season sample weights are auto-optimised each pre-season via Bayesian search (Optuna). The pipeline knows the 2021 schedule expansion (16 games/17 weeks → 17 games/18 weeks), so season-progress features mean the same thing in every era.</p>
         </div>
       </div>
 
@@ -570,7 +578,7 @@
       </div>
 
       <div class="msec">
-        <div class="msec-head"><h2>Features (~150)</h2><p>The statistics and signals the model uses to make each prediction.</p></div>
+        <div class="msec-head"><h2>Features (~370)</h2><p>The statistics and signals the model is allowed to see — a strict allowlist drops anything that could leak a game's own outcome.</p></div>
         <div class="msec-body">
           <h3>Rolling statistics — computed over the last 4, 8, and 16 games</h3>
           <div><span class="ftag" title="Expected Points Added per offensive play — measures how much each play improves scoring chances">Offensive efficiency (EPA/play)</span><span class="ftag" title="Expected Points Added allowed per defensive play">Defensive efficiency (EPA/play)</span><span class="ftag">Play success rate</span><span class="ftag" title="Expected Points Added per pass play">Passing efficiency</span><span class="ftag" title="Expected Points Added per run play">Rushing efficiency</span><span class="ftag" title="Completion Percentage Over Expected — how much better/worse the QB completes passes than the average QB would in the same situations">QB accuracy over expected</span><span class="ftag">Air yards per attempt</span><span class="ftag">3rd down conversion rate</span><span class="ftag">Red zone touchdown rate</span><span class="ftag">Turnover differential</span><span class="ftag">Sack rate allowed</span><span class="ftag">Field goal %</span><span class="ftag">Recent score differential</span><span class="ftag">Recent win rate</span></div>
@@ -588,9 +596,9 @@
         <div class="msec-body">
           <p>Every prediction carries a 0–100% score measuring model agreement and data completeness. Edge signals are suppressed for low-confidence games.</p>
           <div class="mlayers">
-            <div class="ml"><div class="ll">40% weight</div><div class="lt">Sub-model agreement</div><div class="ld">How closely all four sub-models agree on the prediction. Large disagreements lower the score.</div></div>
-            <div class="ml"><div class="ll">35% weight</div><div class="lt">Data completeness</div><div class="ld">How much of the expected input data was available. Quarterback and injury data are weighted more heavily.</div></div>
-            <div class="ml"><div class="ll">25% weight</div><div class="lt">Head-to-head sample size</div><div class="ld">How many historical meetings are available between these two teams. Division rivals meet often so score near 100%.</div></div>
+            <div class="ml"><div class="ll">55% weight</div><div class="lt">Sub-model agreement</div><div class="ld">How closely all four sub-models agree on the prediction. Large disagreements lower the score.</div></div>
+            <div class="ml"><div class="ll">30% weight</div><div class="lt">Data completeness</div><div class="ld">How much of the expected input data was available. Quarterback and injury data are weighted more heavily.</div></div>
+            <div class="ml"><div class="ll">15% weight</div><div class="lt">Head-to-head sample size</div><div class="ld">How many historical meetings are available between these two teams. Division rivals meet often so score near 100%.</div></div>
           </div>
         </div>
       </div>
@@ -598,9 +606,9 @@
       <div class="msec">
         <div class="msec-head"><h2>Data Sources</h2><p>All free and public.</p></div>
         <div class="msec-body">
-          <div><span class="ftag">nflverse/nfl_data_py</span><span class="ftag" title="Play-by-play data from every game">Play-by-play data (nflfastR)</span><span class="ftag">Next Gen Stats (NFL tracking data)</span><span class="ftag" title="Pro Football Reference advanced statistics">Advanced stats (Pro Football Reference)</span><span class="ftag" title="FTN Data manual charting — pass routes, coverage types, blocking assignments">Manual charting data (FTN)</span><span class="ftag">weatherapi.com</span></div>
+          <div><span class="ftag">nflverse release files</span><span class="ftag" title="Play-by-play data from every game">Play-by-play data (nflfastR)</span><span class="ftag">Next Gen Stats (NFL tracking data)</span><span class="ftag" title="Pro Football Reference advanced statistics">Advanced stats (Pro Football Reference)</span><span class="ftag" title="FTN Data manual charting — pass routes, coverage types, blocking assignments">Manual charting data (FTN)</span><span class="ftag" title="Lee Sharpe / nfldata games file — includes stadium, roof and game-day weather fields">Schedules &amp; weather (nfldata)</span><span class="ftag" title="mrcaseb/nfl-data historical betting line archive">Historical betting lines</span></div>
           <h3>Training window and data freshness</h3>
-          <p>816 regular season + 39 playoff games (3 full seasons). Each completed game enters the window and the oldest exits. Playoff games weighted at 0.6–0.75×. Season weights optimised annually by Bayesian search.</p>
+          <p>The last four completed seasons plus the season in progress (~1,100 labeled games). Each completed game enters the window and the oldest season exits. Playoff games weighted at ~0.4–0.7×. Season weights optimised each pre-season by Bayesian search; closed-season data comes from the committed frozen layer, so a renamed or deleted upstream file can never break a run.</p>
         </div>
       </div>
 
@@ -673,12 +681,12 @@ function fl(k){
 
 
 /* ══ STATE ═══════════════════════════════════════════════════ */
-let allP=[],perfD={},btD={};
+let allP=[],perfD={},btD={},wfD={};
 let curWeek=null,showAll=false,edgeOnly=false;
 let charts={};
 
 /* ══ INIT ════════════════════════════════════════════════════ */
-async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest()])}
+async function init(){await Promise.all([loadPredictions(),loadPerformance(),loadBacktest(),loadWalkforward()])}
 
 async function fj(urls){
   for(const u of urls){try{const r=await fetch(u+'?t='+Date.now());if(r.ok)return await r.json()}catch(_){}}
@@ -695,6 +703,26 @@ async function loadPredictions(){
 }
 async function loadPerformance(){const d=await fj(['assets/performance.json']);if(d)perfD=d;renderPerf()}
 async function loadBacktest(){const d=await fj(['assets/backtest_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/backtest_results.json']);if(d)btD=d;renderBacktest()}
+async function loadWalkforward(){const d=await fj(['assets/walkforward_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/walkforward_results.json']);if(d)wfD=d;renderWalkforward()}
+
+/* ══ WALK-FORWARD SUMMARY ════════════════════════════════════ */
+function renderWalkforward(){
+  const el=document.getElementById('wfCards');if(!el)return;
+  const s=wfD._summary;
+  if(!s){el.innerHTML='<div class="empty">Walk-forward results not published yet — run the Walk-Forward Simulation workflow.</div>';return}
+  el.innerHTML=Object.entries(s).filter(([k])=>k.startsWith('window_')).map(([k,v])=>{
+    const pct=x=>x!=null?(100*x).toFixed(1)+'%':'—';
+    return `<div class="d-card">
+      <div class="d-season">${k.replace('window_','')}-season window</div>
+      <div class="d-sub">${v.n_folds} held-out test seasons · nested tuning</div>
+      <div class="d-row"><span class="lbl">Average margin error</span><span class="val">±${v.mean_mae_spread!=null?v.mean_mae_spread.toFixed(2):'—'} pts</span></div>
+      <div class="d-row"><span class="lbl">Spread pick rate</span><span class="val">${pct(v.mean_ats_pct)}</span></div>
+      <div class="d-row"><span class="lbl">&nbsp;&nbsp;— excluding COVID seasons</span><span class="val dim">${pct(v.mean_ats_pct_excl_covid)}</span></div>
+      <div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Edge hit rate (excl. COVID)</span><span class="val ${v.mean_edge_ats_pct_excl_covid>0.524?'good':'warn'}">${pct(v.mean_edge_ats_pct_excl_covid)}</span></div>
+      <div class="d-row"><span class="lbl">Flat-stake ROI on edge games</span><span class="val ${v.mean_edge_roi>0?'good':'warn'}">${v.mean_edge_roi!=null?(v.mean_edge_roi>0?'+':'')+(100*v.mean_edge_roi).toFixed(1)+'%':'—'}</span></div>
+    </div>`;
+  }).join('');
+}
 
 /* ══ TICKER ══════════════════════════════════════════════════ */
 function buildTicker(){
@@ -776,7 +804,10 @@ function dHtml(g,h,a){
   const bd=g.confidence_breakdown||{};
   const cr=[['Sub-model agreement',bd.model_agreement,'#2d6a3f'],['Data completeness',bd.feature_completeness,'#1e4d7a'],['Head-to-head sample size',bd.h2h_data_quality,'#7a5e18'],['Injury report freshness',bd.injury_data_freshness,'#8b3030']];
   const cHtml=cr.map(([l,v,c])=>{const p=v!=null?Math.round(v*100):0;return`<div class="drow"><span class="dlbl">${l}</span><span class="dval">${p}%</span></div><div class="cbar"><div class="cbf" style="width:${p}%;background:${c}"></div></div>`}).join('');
-  const sd=[g.ci_home?`<div class="drow"><span class="dlbl">${h} range</span><span class="dval">${g.ci_home[0]}–${g.ci_home[1]} pts</span></div>`:'',g.ci_away?`<div class="drow"><span class="dlbl">${a} range</span><span class="dval">${g.ci_away[0]}–${g.ci_away[1]} pts</span></div>`:'',`<div class="drow"><span class="dlbl">Model spread</span><span class="dval">${g.predicted_spread>0?'+':''}${g.predicted_spread}</span></div>`,g.book_spread!=null?`<div class="drow"><span class="dlbl">Vegas spread</span><span class="dval">${g.book_spread}</span></div>`:'',g.total_edge!=null?`<div class="drow"><span class="dlbl">Total edge</span><span class="dval ${g.total_edge<-1?'pos':g.total_edge>1?'neg':''}">${g.total_edge>0?'+':''}${g.total_edge}</span></div>`:''  ].join('');
+  // spread_line is HOME-oriented (positive = home favored). Show both
+  // numbers in familiar sportsbook style: "HOME -3.5" / "AWAY -2.0".
+  const fmtSpr=v=>v==null?null:(v>0?`${h} −${Math.abs(v).toFixed(1)}`:v<0?`${a} −${Math.abs(v).toFixed(1)}`:'Pick’em');
+  const sd=[g.ci_home?`<div class="drow"><span class="dlbl">${h} range</span><span class="dval">${g.ci_home[0]}–${g.ci_home[1]} pts</span></div>`:'',g.ci_away?`<div class="drow"><span class="dlbl">${a} range</span><span class="dval">${g.ci_away[0]}–${g.ci_away[1]} pts</span></div>`:'',`<div class="drow"><span class="dlbl">Model line</span><span class="dval">${fmtSpr(g.predicted_spread)||'—'}</span></div>`,g.book_spread!=null?`<div class="drow"><span class="dlbl">Vegas line</span><span class="dval">${fmtSpr(g.book_spread)}</span></div>`:'',g.spread_edge!=null?`<div class="drow"><span class="dlbl" title="Model margin minus Vegas line — positive favors the home side">Spread edge</span><span class="dval">${g.spread_edge>0?'+':''}${(+g.spread_edge).toFixed(1)}</span></div>`:'',g.total_edge!=null?`<div class="drow"><span class="dlbl">Total edge</span><span class="dval ${g.total_edge<-1?'pos':g.total_edge>1?'neg':''}">${g.total_edge>0?'+':''}${g.total_edge}</span></div>`:''  ].join('');
   const fh=Object.entries(g.top_features||{}).filter(([k,v])=>typeof v==='number'&&!['spread_edge','total_edge','is_dome','high_wind','cold_game'].includes(k)).slice(0,6).map(([k,v])=>`<div class="drow"><span class="dlbl">${fl(k)}</span><span class="dval ${v>0.01?'pos':v<-0.01?'neg':''}">${Math.abs(v)>10?v.toFixed(0):v.toFixed(3)}</span></div>`).join('');
   return `<div class="dgrid"><div class="dsec"><h5>Confidence</h5>${cHtml}</div><div class="dsec"><h5>Score breakdown</h5>${sd}</div><div class="dsec"><h5>Key model signals</h5>${fh}</div></div>`;
 }

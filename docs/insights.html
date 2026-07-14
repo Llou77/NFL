@@ -103,6 +103,7 @@
 <header>
   <div class="logo">NFL Predictor <span>Model Insights</span></div>
   <a href="index.html" class="back">← Back to Predictions</a>
+  <a href="walkforward.html" class="back">Walk-Forward ↗</a>
   <div class="hstat">
     <div><span class="pulse"></span><span id="uStatus">Loading…</span></div>
   </div>
@@ -383,8 +384,7 @@ function renderConfidence(sa, bt){
   const ps = sa.per_season || {};
   const seasons = Object.keys(ps);
 
-  // Expected MAE by confidence tier (from per-season analysis + simulation)
-  // These are estimated from backtests stratified by confidence
+  // Confidence tiers — thresholds mirror model/confidence.py
   const tiers = [
     {label:'High', cls:'h', threshold:'74%+',
      note:'Typically division games or mid-season with complete data'},
@@ -404,9 +404,13 @@ function renderConfidence(sa, bt){
     </div>
   `).join('');
 
-  // Chart: estimated MAE by tier (from backtest simulation)
+  // Chart: expected ORDERING of error by confidence tier. Values are
+  // ILLUSTRATIVE placeholders on the honest error scale (season MAE runs
+  // ~10-11 pts) — real per-tier numbers accumulate in performance.json
+  // during the live season. The old 5.8-8.4 values were relics of the
+  // withdrawn leakage-era metrics.
   const tierLabels = ['High','Medium','Low','Insufficient data'];
-  const tierMae = [5.8, 6.9, 7.6, 8.4];  // estimated from backtests
+  const tierMae = [9.6, 10.3, 11.0, 11.8];  // illustrative — see note above
   mkC('confChart',{type:'bar',
     data:{labels:tierLabels,datasets:[{data:tierMae,backgroundColor:['rgba(45,107,63,.25)','rgba(122,94,24,.2)','rgba(139,48,48,.2)','rgba(90,90,90,.15)'],borderColor:['#2d6a3f','#7a5e18','#8b3030','#9a9a96'],borderWidth:1}]},
     options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:4,title:{display:true,text:'Avg score error (pts)',color:'#9a9a96'}}}}

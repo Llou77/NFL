@@ -437,6 +437,20 @@ def get_table(name: str) -> Optional[pd.DataFrame]:
     return _load(name)
 
 
+def regular_season_weeks(season: int) -> int:
+    """Final regular-season week number for a given season.
+    The league expanded in 2021: 16 games / 17 weeks (256 league games)
+    through 2020 → 17 games / 18 weeks (272 games) from 2021. Both eras
+    include one bye week per team."""
+    return 18 if int(season) >= 2021 else 17
+
+
+def regular_season_games(season: int) -> int:
+    """League-wide regular-season game count for a season (272 from 2021,
+    256 before)."""
+    return 272 if int(season) >= 2021 else 256
+
+
 def get_game_type_flag(game_type: str) -> float:
     """Return default training sample weight for a game_type string."""
     return {

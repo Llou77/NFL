@@ -5,6 +5,35 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
 
 ---
 
+## 2026-07-14 — Site-konzisztencia, súly-stabilitás, 2021-es szezonbővítés
+
+1. **Site audit + javítás:** a mező-kontraktusok rendben voltak, a TARTALOM
+   hazudott — a Methodology 3 szezonos ablakot, ~150 feature-t, 40/35/25
+   konfidencia-súlyokat és weatherapi.com forrást állított (valóság: 4+folyó
+   szezon, ~370 allowlisted feature, 55/30/15, időjárás a schedules feedből,
+   frozen réteg). Mind javítva. Walk-forward összegző kártyák + drift-ábra a
+   Backtest fül alján, nav-linkek (Walk-Forward ↗ mindhárom oldalon).
+   Vegas/model vonalak sportsbook-formázással (HOME −3.5) a home-pozitív
+   konvenció félreolvasása ellen. Az insights leak-korszaki fantázia per-tier
+   MAE számai (5.8–8.4) őszinte skálájú, explicit "illustrative" értékekre
+   cserélve.
+2. **2021-es bővítés (tulaj észrevétele):** 2020-ig 16 meccs/17 hét (256
+   liga-meccs), 2021-től 17 meccs/18 hét (272). A kód szinte mindenütt
+   meccs-alapú (gördülő ablakok, Elo), ezért egyetlen valódi hardcode volt:
+   `week_norm = week/18.0` — a régi szezonokban torzított. Javítva
+   éra-függő normalizálással + `regular_season_weeks/games` helperek a
+   data_loaderben.
+3. **Súly-stabilitás (a tulaj "megfordított zaj" ötlete — jogos):** a 26
+   fold független hangolásaiból paraméterenkénti CV: STABIL (<20%):
+   w_recent (medián 0.876), w_current (1.152) — ezek tartós tulajdonságok;
+   KÖZEPES (26–28%): w_middle, wt_wc/div/con; ZAJOS (38–43%): w_oldest,
+   wt_sb — ezek hangolása főleg zajkergetés. Auto-riport beépítve:
+   merge_walkforward → `_summary.weight_stability`. JAVASLAT (szándékosan
+   nem implementálva): stabilak Optuna-sávjának ±15%-ra szűkítése a medián
+   körül, zajosak fixálása mediánra → 8→4 szabad paraméter; ha jóváhagyva,
+   utána teljes walk-forward újrafutás validál. Trend-EXTRAPOLÁCIÓ továbbra
+   sincs — a stabilitás pont az extrapoláció szükségtelenségét jelenti.
+
 ## 2026-07-13 (2. kör) — Mély walk-forward szimuláció
 
 **Feladat (tulajdonosi javaslat, keményítve):** csúszó ablakos walk-forward a

@@ -1639,7 +1639,13 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
 
     tg["week"]        = pd.to_numeric(tg["week"], errors="coerce").fillna(1)
     tg["season_half"] = (tg["week"] > 9).astype(int)
-    tg["week_norm"]   = tg["week"] / 18.0
+    # 2021 schedule expansion: the regular season was 16 games / 17 weeks
+    # (256 league games) through 2020 and is 17 games / 18 weeks (272)
+    # since 2021. Normalize "season progress" by the era's own final REG
+    # week so week_norm means the same thing in every training season.
+    from data_loader import regular_season_weeks
+    _reg_weeks = tg["season"].map(regular_season_weeks).astype(float)
+    tg["week_norm"]   = tg["week"] / _reg_weeks
 
     dow = pd.to_numeric(tg["day_of_week"], errors="coerce").fillna(6)
     tg["is_sunday"]   = (dow == 6).astype(int)
