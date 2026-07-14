@@ -40,13 +40,19 @@ jobs:
       - name: Create directories
         run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
 
+      # CACHE SCOPE FIX: weight files are committed — caching them let an
+      # old restored cache overwrite freshly committed optimize results.
+      # v3 key: v2 caches still contain weight files.
       - name: Cache model artifacts
         uses: actions/cache@v4
         with:
-          path: model/saved
-          key: model-saved-v2-${{ github.run_id }}
+          path: |
+            model/saved
+            !model/saved/optimal_weights.json
+            !model/saved/version.txt
+          key: model-saved-v3-${{ github.run_id }}
           restore-keys: |
-            model-saved-v2-
+            model-saved-v3-
 
       - name: Train + predict
         run: |
