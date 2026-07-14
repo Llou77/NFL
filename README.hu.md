@@ -39,7 +39,7 @@ Egy teljes pipeline-futás (`model/pipeline.py --mode full`) sorrendben ezt csin
 7. **Predikciógenerálás** (`predict.py`). A közelgő meccsek pontosan ugyanazon az `ensemble_predict()` útvonalon mennek át, mint a backtestben (nincs train/serve eltérés), kalibrálva, megbízhatósági besorolással és edge-jelzésekkel, eredmény: `data/predictions/predictions_latest.json`.
 8. **Publikálás**. A kimenetek a `docs/assets/`-be másolódnak, ezt szolgálja ki a GitHub Pages.
 
-A **backtest** (`--mode backtest`) különálló: minden tesztszezonhoz újratanítja a teljes ensemble-t a megelőző szezonokon, megjósolja a kihagyott szezont, és MAE / ATS / over-under / ROI / CLV számokat ad. Az **optimalizáló** (`--mode optimize`) szintén különálló, szezon előtti lépés: az Optuna a 8 minta-súly paramétert hangolja (mennyit számítson az egyes tanítószezonok és meccstípusok).
+A **backtest** (`--mode backtest`) különálló: minden tesztszezonhoz újratanítja a teljes ensemble-t a megelőző szezonokon, megjósolja a kihagyott szezont, és MAE / ATS / over-under / ROI / CLV számokat ad. Az **optimalizáló** (`--mode optimize`) szintén különálló, szezon előtti lépés: az Optuna a minta-súly paramétereket hangolja (mennyit számítson az egyes tanítószezonok és meccstípusok). A 2026-07-es walk-forward stabilitás-vizsgálat óta az eredeti 8-ból 2 a fold-ok mediánjára van rögzítve (w_oldest, wt_sb — hangolásuk zajkergetés volt), 2 pedig ±15%-os sávra szűkítve (w_recent, w_current — ezekben az adat folyton egyetért); a `WF_UNCONSTRAINED=1` visszaadja a teljes keresést.
 
 ---
 
@@ -109,7 +109,7 @@ model/
   train.py               a 3 rétegű ensemble tanítása + artifact mentés/betöltés
   predict.py             az egyetlen közös predikciós útvonal (éles + backtest)
   evaluate.py            backtestek, ATS/ROI/CLV metrikák, élő teljesítmény-egyeztetés
-  bayesian_optimizer.py  Optuna-keresés a 8 minta-súly paraméteren
+  bayesian_optimizer.py  Optuna-keresés a minta-súlyokon (stabilitás-korlátokkal)
   confidence.py          megbízhatósági besorolás (modell-egyetértés / adatteljesség / H2H minta)
   season_analysis.py     szezononkénti nehézség-elemzés
   player_ratings.py      KIKAPCSOLVA az időbeli eltolás átdolgozásáig (szivárgásveszély)
@@ -165,7 +165,7 @@ docs/                    GitHub Pages oldal (index.html + assets/*.json)
 - **OOF (out-of-fold):** olyan predikció, amelyet a modell általa nem látott adatra ad, keresztvalidációval előállítva — az egyetlen becsületes bemenet egy meta-learner tanításához.
 - **TimeSeriesSplit:** keresztvalidáció, amely mindig a múlton tanít és a jövőn validál (nincs keverés) — ahogy a modellt a valóságban is használjuk.
 - **Backtest:** a múlt szimulálása — tanítás csak az X szezon előtti adatokon, X szezon megjóslása, összevetés a tényekkel.
-- **Bayes-optimalizálás (Optuna):** irányított keresés, amely ígéretes paraméter-kombinációkat javasol ahelyett, hogy mindet kipróbálná. Itt a 8 minta-súly paramétert hangolja tanító/validációs szezonfelosztáson.
+- **Bayes-optimalizálás (Optuna):** irányított keresés, amely ígéretes paraméter-kombinációkat javasol ahelyett, hogy mindet kipróbálná. Itt a minta-súlyokat hangolja tanító/validációs szezonfelosztáson — 6 keresett (ebből 2 stabilitás-szűkített sávban), 2 a walk-forward vizsgálat által rögzített.
 - **Minta-súlyok:** mennyit számít egy-egy tanítómeccs (a frissebb szezonok többet; a rájátszás-meccstípusok másképp).
 - **Variancia-kalibráció:** a becsült különbségek átskálázása, hogy szórásuk a valóságéhoz igazodjon (a kevert modellek az átlag felé húznak).
 - **MAE (átlagos abszolút hiba):** az átlagos tévedés nagysága, pontban.

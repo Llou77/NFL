@@ -24,10 +24,24 @@ EVERYTHING ELSE stays a research-backed constant in DEFAULT_WEIGHTS
 via load_weights). Tuning those honestly would require rebuilding features
 and retraining the full ensemble inside the objective — deliberately out of
 scope for a weekly CI job.
+
+SEARCH-SPACE CONSTRAINTS (2026-07 walk-forward stability study):
+  26 independent, UNconstrained per-fold tunings (13 test seasons × 2
+  window lengths, nested) classified every parameter by how much the data
+  keeps agreeing on it — see WORKLOG 2026-07-14 and docs/walkforward.html.
+    STABLE  (CV <20%): w_recent, w_current → searched only in a ±15% band
+            around the cross-fold median (less freedom = less overfitting).
+    NOISY   (CV >35%): w_oldest, wt_sb → PINNED to the cross-fold median;
+            26 tunings never agreed, searching them was noise-chasing.
+    MEDIUM  (w_middle, wt_wc, wt_div, wt_con): full range kept.
+  Set WF_UNCONSTRAINED=1 to restore the full 8-parameter search (needed
+  whenever the stability study itself is re-derived — feeding a constrained
+  search's low CV back into the constraint would be circular).
 """
 
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -38,6 +52,20 @@ logger = logging.getLogger(__name__)  # module logger
 
 ROOT       = Path(__file__).resolve().parent.parent
 WEIGHTS_PATH = ROOT / "model" / "saved" / "optimal_weights.json"
+
+# ── Walk-forward stability constraints (see module docstring) ─────────────────
+# DELIBERATE hardcoded constants with provenance, NOT auto-read from
+# walkforward_results.json: auto-feeding the study's own output back into
+# the search space would be a self-reinforcing loop (constrained search →
+# low CV → "stable" → stays constrained). Re-derive with WF_UNCONSTRAINED=1.
+PINNED_PARAMS = {
+    "w_oldest": 0.518,   # cross-fold median; CV 43% — tuning was noise
+    "wt_sb":    0.395,   # cross-fold median; CV 38% — one SB game/season
+}
+NARROWED_RANGES = {
+    "w_recent":  (0.745, 1.007),   # median 0.876 ± 15%; CV 19%
+    "w_current": (0.979, 1.325),   # median 1.152 ± 15%; CV 19%
+}
 
 # ── Defaults ──────────────────────────────────────────────────────────────────
 DEFAULT_WEIGHTS = {
@@ -190,24 +218,40 @@ def run_bayesian_optimization(
 
     # ONLY the parameters that actually influence the proxy objective are
     # searched — see the module docstring for why the other 18 were removed.
-    SEARCHED_PARAMS = (
-        "w_oldest", "w_middle", "w_recent", "w_current",
-        "wt_wc", "wt_div", "wt_con", "wt_sb",
-    )
+    # The 2026-07 stability study further pins/narrows the space (also in
+    # the docstring); WF_UNCONSTRAINED=1 restores the full 8-param search.
+    unconstrained = os.environ.get("WF_UNCONSTRAINED", "0") == "1"
+    if unconstrained:
+        logger.info("WF_UNCONSTRAINED=1 — full 8-parameter search space")
+    else:
+        logger.info("Constrained search: pinned %s | narrowed %s",
+                    PINNED_PARAMS,
+                    {k: v for k, v in NARROWED_RANGES.items()})
 
     def objective(trial):
-        w = {
-            # ── Season recency ────────────────────────────────────────
-            "w_oldest":  trial.suggest_float("w_oldest",  0.10, 0.90),
-            "w_middle":  trial.suggest_float("w_middle",  0.40, 1.10),
-            "w_recent":  trial.suggest_float("w_recent",  0.65, 1.20),
-            "w_current": trial.suggest_float("w_current", 0.85, 1.50),
-            # ── Game type ─────────────────────────────────────────────
-            "wt_wc":  trial.suggest_float("wt_wc",  0.35, 0.90),
-            "wt_div": trial.suggest_float("wt_div", 0.35, 0.90),
-            "wt_con": trial.suggest_float("wt_con", 0.35, 0.90),
-            "wt_sb":  trial.suggest_float("wt_sb",  0.20, 0.80),
-        }
+        if unconstrained:
+            w = {
+                "w_oldest":  trial.suggest_float("w_oldest",  0.10, 0.90),
+                "w_middle":  trial.suggest_float("w_middle",  0.40, 1.10),
+                "w_recent":  trial.suggest_float("w_recent",  0.65, 1.20),
+                "w_current": trial.suggest_float("w_current", 0.85, 1.50),
+                "wt_wc":  trial.suggest_float("wt_wc",  0.35, 0.90),
+                "wt_div": trial.suggest_float("wt_div", 0.35, 0.90),
+                "wt_con": trial.suggest_float("wt_con", 0.35, 0.90),
+                "wt_sb":  trial.suggest_float("wt_sb",  0.20, 0.80),
+            }
+        else:
+            w = {
+                "w_middle":  trial.suggest_float("w_middle", 0.40, 1.10),
+                "w_recent":  trial.suggest_float("w_recent",
+                                                 *NARROWED_RANGES["w_recent"]),
+                "w_current": trial.suggest_float("w_current",
+                                                 *NARROWED_RANGES["w_current"]),
+                "wt_wc":  trial.suggest_float("wt_wc",  0.35, 0.90),
+                "wt_div": trial.suggest_float("wt_div", 0.35, 0.90),
+                "wt_con": trial.suggest_float("wt_con", 0.35, 0.90),
+                **PINNED_PARAMS,
+            }
         # Non-searched params come from research-backed defaults so the
         # proxy sees the exact configuration production will use.
         return _trial_mae({**DEFAULT_WEIGHTS, **w})
@@ -216,12 +260,24 @@ def run_bayesian_optimization(
         direction="minimize",
         sampler=optuna.samplers.TPESampler(seed=42, n_startup_trials=15),
     )
-    # Seed with research-backed defaults (searched subset only)
-    study.enqueue_trial({k: DEFAULT_WEIGHTS[k] for k in SEARCHED_PARAMS})
+    # Seed with research-backed defaults (suggested subset only — pinned
+    # params must not appear in an enqueued trial)
+    if unconstrained:
+        seed_keys = ("w_oldest", "w_middle", "w_recent", "w_current",
+                     "wt_wc", "wt_div", "wt_con", "wt_sb")
+    else:
+        seed_keys = ("w_middle", "w_recent", "w_current",
+                     "wt_wc", "wt_div", "wt_con")
+    study.enqueue_trial({k: DEFAULT_WEIGHTS[k] for k in seed_keys})
 
     study.optimize(objective, n_trials=n_trials, timeout=timeout, show_progress_bar=False)
 
-    best     = {**DEFAULT_WEIGHTS, **study.best_params}
+    # Pinned params are not in study.best_params — merge them explicitly so
+    # they reach the saved weights (otherwise they would silently fall back
+    # to the pre-study DEFAULT_WEIGHTS values).
+    best = {**DEFAULT_WEIGHTS,
+            **({} if unconstrained else PINNED_PARAMS),
+            **study.best_params}
     best_mae = study.best_value
     logger.info("Optimisation complete. Best proxy MAE: %.4f", best_mae)
     logger.info("Best sample weights: %s",
