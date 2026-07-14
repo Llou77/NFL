@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T21:04:39.703663+00:00",
+  "generated_at": "2026-07-14T18:50:27.697867+00:00",
   "season": 2026,
   "n_games": 272,
   "predictions": [
@@ -65,7 +65,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_SF_LA",
@@ -129,7 +129,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_CHI_CAR",
@@ -193,7 +193,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_TB_CIN",
@@ -257,7 +257,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_NO_DET",
@@ -321,7 +321,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_BUF_HOU",
@@ -385,7 +385,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_BAL_IND",
@@ -395,10 +395,10 @@
       "game_date": "2026-09-13",
       "home_team": "IND",
       "away_team": "BAL",
-      "predicted_home_score": 17,
+      "predicted_home_score": 18,
       "predicted_away_score": 28,
-      "predicted_total": 45,
-      "predicted_spread": -11,
+      "predicted_total": 46,
+      "predicted_spread": -10,
       "ci_home": [
         18,
         23
@@ -419,10 +419,10 @@
       "book_total": 49.5,
       "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -7.5,
+      "opening_spread_edge": -6.5,
       "market_win_prob": null,
-      "spread_edge": -7.5,
-      "total_edge": -4.5,
+      "spread_edge": -6.5,
+      "total_edge": -3.5,
       "spread_lean": "AWAY",
       "total_lean": "UNDER",
       "is_dome": 1,
@@ -443,13 +443,13 @@
         "away_off_cpoe_r8": 0.3491,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -7.5,
-        "total_edge": -4.5,
+        "spread_edge": -6.5,
+        "total_edge": -3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_CLE_JAX",
@@ -513,7 +513,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_ARI_LAC",
@@ -577,7 +577,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_MIA_LV",
@@ -641,7 +641,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_GB_MIN",
@@ -705,7 +705,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_DAL_NYG",
@@ -769,7 +769,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_WAS_PHI",
@@ -833,7 +833,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_ATL_PIT",
@@ -897,7 +897,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_NYJ_TEN",
@@ -961,7 +961,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_01_DEN_KC",
@@ -1025,7 +1025,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_DET_BUF",
@@ -1089,7 +1089,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_SEA_ARI",
@@ -1153,7 +1153,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_CAR_ATL",
@@ -1215,7 +1215,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_NO_BAL",
@@ -1279,7 +1279,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_MIN_CHI",
@@ -1343,7 +1343,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_WAS_DAL",
@@ -1407,7 +1407,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_JAX_DEN",
@@ -1417,34 +1417,34 @@
       "game_date": "2026-09-20",
       "home_team": "DEN",
       "away_team": "JAX",
-      "predicted_home_score": 23,
-      "predicted_away_score": 23,
-      "predicted_total": 46,
-      "predicted_spread": 0,
+      "predicted_home_score": 25,
+      "predicted_away_score": 22,
+      "predicted_total": 47,
+      "predicted_spread": 3,
       "ci_home": [
-        21,
+        22,
         26
       ],
       "ci_away": [
-        13,
-        21
+        12,
+        22
       ],
-      "confidence_score": 0.5612,
+      "confidence_score": 0.5535,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5378,
+        "model_agreement": 0.5237,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 3.0,
+      "book_total": 43.5,
+      "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 0.0,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 0.0,
+      "total_edge": 3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -1465,11 +1465,13 @@
         "away_off_cpoe_r8": 1.849,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 0.0,
+        "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_CIN_HOU",
@@ -1533,7 +1535,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_IND_KC",
@@ -1597,7 +1599,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_LV_LAC",
@@ -1661,7 +1663,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_PIT_NE",
@@ -1725,7 +1727,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_GB_NYJ",
@@ -1789,7 +1791,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_MIA_SF",
@@ -1853,7 +1855,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_CLE_TB",
@@ -1917,7 +1919,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_PHI_TEN",
@@ -1981,7 +1983,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_02_NYG_LA",
@@ -2045,7 +2047,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_ATL_GB",
@@ -2109,7 +2111,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_LAC_BUF",
@@ -2173,7 +2175,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_CAR_CLE",
@@ -2237,7 +2239,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_BAL_DAL",
@@ -2301,7 +2303,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_LA_DEN",
@@ -2365,7 +2367,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_NYJ_DET",
@@ -2429,7 +2431,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_HOU_IND",
@@ -2493,7 +2495,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_NE_JAX",
@@ -2555,7 +2557,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_KC_MIA",
@@ -2619,7 +2621,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_LV_NO",
@@ -2683,7 +2685,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_TEN_NYG",
@@ -2747,7 +2749,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_CIN_PIT",
@@ -2811,7 +2813,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_ARI_SF",
@@ -2875,7 +2877,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_MIN_TB",
@@ -2939,7 +2941,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_SEA_WAS",
@@ -3003,7 +3005,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_03_PHI_CHI",
@@ -3065,7 +3067,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_PIT_CLE",
@@ -3129,7 +3131,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_TEN_BAL",
@@ -3193,7 +3195,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_NE_BUF",
@@ -3257,7 +3259,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_DET_CAR",
@@ -3321,7 +3323,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_NYJ_CHI",
@@ -3385,7 +3387,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_JAX_CIN",
@@ -3449,7 +3451,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_DAL_HOU",
@@ -3513,7 +3515,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_KC_LV",
@@ -3577,7 +3579,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_MIA_MIN",
@@ -3641,7 +3643,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_ARI_NYG",
@@ -3705,7 +3707,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_LA_PHI",
@@ -3769,7 +3771,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_LAC_SEA",
@@ -3833,7 +3835,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_DEN_SF",
@@ -3897,7 +3899,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_GB_TB",
@@ -3959,7 +3961,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_IND_WAS",
@@ -4023,7 +4025,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_04_ATL_NO",
@@ -4087,7 +4089,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_TB_DAL",
@@ -4151,7 +4153,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_DET_ARI",
@@ -4215,7 +4217,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_BAL_ATL",
@@ -4279,7 +4281,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_CHI_GB",
@@ -4341,7 +4343,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_PHI_JAX",
@@ -4405,7 +4407,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_DEN_LAC",
@@ -4469,7 +4471,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_CIN_MIA",
@@ -4533,7 +4535,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_LV_NE",
@@ -4597,7 +4599,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_MIN_NO",
@@ -4661,7 +4663,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_CLE_NYJ",
@@ -4725,7 +4727,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_IND_PIT",
@@ -4789,7 +4791,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_SF_SEA",
@@ -4853,7 +4855,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_HOU_TEN",
@@ -4917,7 +4919,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_NYG_WAS",
@@ -4981,7 +4983,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_05_BUF_LA",
@@ -5045,7 +5047,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_SEA_DEN",
@@ -5055,34 +5057,34 @@
       "game_date": "2026-10-15",
       "home_team": "DEN",
       "away_team": "SEA",
-      "predicted_home_score": 22,
+      "predicted_home_score": 21,
       "predicted_away_score": 28,
-      "predicted_total": 50,
-      "predicted_spread": -6,
+      "predicted_total": 49,
+      "predicted_spread": -7,
       "ci_home": [
-        21,
+        20,
         23
       ],
       "ci_away": [
-        22,
+        23,
         26
       ],
-      "confidence_score": 0.5579,
+      "confidence_score": 0.5601,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7868,
+        "model_agreement": 0.7907,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": -1.5,
+      "book_spread": -2.5,
       "book_total": 43.5,
-      "opening_spread": -1.5,
+      "opening_spread": -2.5,
       "opening_total": null,
       "opening_spread_edge": -4.5,
       "market_win_prob": null,
       "spread_edge": -4.5,
-      "total_edge": 6.5,
+      "total_edge": 5.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -5097,12 +5099,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": -4.5,
-        "total_edge": 6.5,
+        "total_edge": 5.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_CHI_ATL",
@@ -5157,7 +5159,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_BAL_CLE",
@@ -5212,7 +5214,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_DAL_GB",
@@ -5267,7 +5269,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_TEN_IND",
@@ -5322,7 +5324,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_HOU_JAX",
@@ -5379,7 +5381,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_LAC_KC",
@@ -5437,7 +5439,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_ARI_LA",
@@ -5492,7 +5494,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_BUF_LV",
@@ -5547,7 +5549,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_NYJ_NE",
@@ -5557,36 +5559,36 @@
       "game_date": "2026-10-18",
       "home_team": "NE",
       "away_team": "NYJ",
-      "predicted_home_score": 32,
-      "predicted_away_score": 22,
-      "predicted_total": 54,
-      "predicted_spread": 10,
+      "predicted_home_score": 27,
+      "predicted_away_score": 25,
+      "predicted_total": 52,
+      "predicted_spread": 2,
       "ci_home": [
-        27,
-        31
+        24,
+        27
       ],
       "ci_away": [
-        21,
-        24
+        25,
+        25
       ],
-      "confidence_score": 0.5468,
-      "confidence_label": "LOW",
+      "confidence_score": 0.5833,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7665,
+        "model_agreement": 0.833,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 9.5,
-      "book_total": 42.5,
-      "opening_spread": 9.5,
+      "book_spread": null,
+      "book_total": null,
+      "opening_spread": null,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": null,
       "market_win_prob": null,
-      "spread_edge": 0.5,
-      "total_edge": 11.5,
-      "spread_lean": "SUPPRESSED",
-      "total_lean": "SUPPRESSED",
+      "spread_edge": null,
+      "total_edge": null,
+      "spread_lean": "PUSH",
+      "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -5598,13 +5600,11 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
-        "total_edge": 11.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_NO_NYG",
@@ -5614,34 +5614,34 @@
       "game_date": "2026-10-18",
       "home_team": "NYG",
       "away_team": "NO",
-      "predicted_home_score": 26,
-      "predicted_away_score": 23,
+      "predicted_home_score": 25,
+      "predicted_away_score": 24,
       "predicted_total": 49,
-      "predicted_spread": 3,
+      "predicted_spread": 1,
       "ci_home": [
-        22,
+        21,
         23
       ],
       "ci_away": [
-        17,
+        16,
         24
       ],
-      "confidence_score": 0.5442,
+      "confidence_score": 0.5416,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7618,
+        "model_agreement": 0.7571,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 2.5,
-      "book_total": 45.5,
-      "opening_spread": 2.5,
+      "book_spread": null,
+      "book_total": null,
+      "opening_spread": null,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": null,
       "market_win_prob": null,
-      "spread_edge": 0.5,
-      "total_edge": 3.5,
+      "spread_edge": null,
+      "total_edge": null,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -5655,13 +5655,11 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
-        "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_CAR_PHI",
@@ -5719,7 +5717,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_PIT_TB",
@@ -5774,7 +5772,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_06_WAS_SF",
@@ -5829,7 +5827,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_NE_CHI",
@@ -5884,7 +5882,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_DEN_ARI",
@@ -5939,7 +5937,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_SF_ATL",
@@ -5994,7 +5992,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_CIN_BAL",
@@ -6049,7 +6047,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_TB_CAR",
@@ -6104,7 +6102,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_GB_DET",
@@ -6159,7 +6157,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_NYG_HOU",
@@ -6214,7 +6212,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_LA_LV",
@@ -6269,7 +6267,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_IND_MIN",
@@ -6324,7 +6322,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_PIT_NO",
@@ -6379,7 +6377,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_MIA_NYJ",
@@ -6434,7 +6432,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_KC_SEA",
@@ -6489,7 +6487,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_CLE_TEN",
@@ -6544,7 +6542,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_07_DAL_PHI",
@@ -6599,7 +6597,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_CAR_GB",
@@ -6654,7 +6652,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_BAL_BUF",
@@ -6709,7 +6707,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_TEN_CIN",
@@ -6719,10 +6717,10 @@
       "game_date": "2026-11-01",
       "home_team": "CIN",
       "away_team": "TEN",
-      "predicted_home_score": 26,
+      "predicted_home_score": 27,
       "predicted_away_score": 24,
-      "predicted_total": 50,
-      "predicted_spread": 2,
+      "predicted_total": 51,
+      "predicted_spread": 3,
       "ci_home": [
         24,
         28
@@ -6764,7 +6762,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_ARI_DAL",
@@ -6819,7 +6817,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_KC_DEN",
@@ -6874,7 +6872,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_MIN_DET",
@@ -6929,7 +6927,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_IND_JAX",
@@ -6984,7 +6982,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_LAC_LA",
@@ -7039,7 +7037,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_NE_MIA",
@@ -7094,7 +7092,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_LV_NYJ",
@@ -7149,7 +7147,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_CLE_PIT",
@@ -7204,7 +7202,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_ATL_TB",
@@ -7259,7 +7257,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_PHI_WAS",
@@ -7314,7 +7312,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_08_CHI_SEA",
@@ -7369,7 +7367,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_JAX_BAL",
@@ -7424,7 +7422,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_CIN_ATL",
@@ -7479,7 +7477,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_DEN_CAR",
@@ -7534,7 +7532,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_TB_CHI",
@@ -7589,7 +7587,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_DAL_IND",
@@ -7644,7 +7642,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_NYJ_KC",
@@ -7699,7 +7697,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_HOU_LAC",
@@ -7754,7 +7752,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_DET_MIA",
@@ -7809,7 +7807,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_GB_NE",
@@ -7864,7 +7862,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_CLE_NO",
@@ -7919,7 +7917,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_NYG_PHI",
@@ -7974,7 +7972,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_ARI_SEA",
@@ -8029,7 +8027,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_LV_SF",
@@ -8084,7 +8082,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_LA_WAS",
@@ -8139,7 +8137,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_09_BUF_MIN",
@@ -8194,7 +8192,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_WAS_NYG",
@@ -8249,7 +8247,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_LA_ARI",
@@ -8304,7 +8302,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_KC_ATL",
@@ -8359,7 +8357,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_PIT_CIN",
@@ -8414,7 +8412,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_HOU_CLE",
@@ -8469,7 +8467,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_SF_DAL",
@@ -8524,7 +8522,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_NE_DET",
@@ -8579,7 +8577,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_MIN_GB",
@@ -8634,7 +8632,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_MIA_IND",
@@ -8689,7 +8687,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_SEA_LV",
@@ -8744,7 +8742,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_CAR_NO",
@@ -8799,7 +8797,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_BUF_NYJ",
@@ -8854,7 +8852,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_JAX_TEN",
@@ -8909,7 +8907,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_10_LAC_BAL",
@@ -8964,7 +8962,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_IND_HOU",
@@ -9019,7 +9017,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_MIA_BUF",
@@ -9074,7 +9072,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_BAL_CAR",
@@ -9129,7 +9127,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_NO_CHI",
@@ -9184,7 +9182,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_TEN_DAL",
@@ -9239,7 +9237,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_LV_DEN",
@@ -9294,7 +9292,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_TB_DET",
@@ -9349,7 +9347,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_ARI_KC",
@@ -9404,7 +9402,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_NYJ_LAC",
@@ -9459,7 +9457,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_JAX_NYG",
@@ -9514,7 +9512,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_PIT_PHI",
@@ -9569,7 +9567,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_MIN_SF",
@@ -9624,7 +9622,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_11_CIN_WAS",
@@ -9679,7 +9677,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_GB_LA",
@@ -9734,7 +9732,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_KC_BUF",
@@ -9789,7 +9787,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_PHI_DAL",
@@ -9844,7 +9842,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_CHI_DET",
@@ -9899,7 +9897,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_DEN_PIT",
@@ -9954,7 +9952,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_WAS_ARI",
@@ -10009,7 +10007,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_NO_CIN",
@@ -10064,7 +10062,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_LV_CLE",
@@ -10119,7 +10117,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_BAL_HOU",
@@ -10174,7 +10172,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_NYG_IND",
@@ -10229,7 +10227,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_TEN_JAX",
@@ -10284,7 +10282,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_NE_LAC",
@@ -10339,7 +10337,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_NYJ_MIA",
@@ -10394,7 +10392,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_ATL_MIN",
@@ -10449,7 +10447,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_SEA_SF",
@@ -10504,7 +10502,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_12_CAR_TB",
@@ -10559,7 +10557,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_KC_LA",
@@ -10614,7 +10612,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_PHI_ARI",
@@ -10669,7 +10667,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_DET_ATL",
@@ -10724,7 +10722,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_JAX_CHI",
@@ -10779,7 +10777,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_CIN_CLE",
@@ -10834,7 +10832,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_MIA_DEN",
@@ -10889,7 +10887,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_CAR_MIN",
@@ -10944,7 +10942,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_BUF_NE",
@@ -10999,7 +10997,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_GB_NO",
@@ -11054,7 +11052,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_SF_NYG",
@@ -11109,7 +11107,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_HOU_PIT",
@@ -11164,7 +11162,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_LAC_TB",
@@ -11219,7 +11217,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_WAS_TEN",
@@ -11274,7 +11272,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_13_DAL_SEA",
@@ -11329,7 +11327,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_MIN_NE",
@@ -11384,7 +11382,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_TB_BAL",
@@ -11439,7 +11437,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_NO_CAR",
@@ -11494,7 +11492,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_KC_CIN",
@@ -11549,7 +11547,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_ATL_CLE",
@@ -11604,7 +11602,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_TEN_DET",
@@ -11659,7 +11657,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_BUF_GB",
@@ -11714,7 +11712,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_LAC_LV",
@@ -11769,7 +11767,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_CHI_MIA",
@@ -11824,7 +11822,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_DEN_NYJ",
@@ -11879,7 +11877,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_IND_PHI",
@@ -11934,7 +11932,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_NYG_SEA",
@@ -11989,7 +11987,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_LA_SF",
@@ -12044,7 +12042,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_HOU_WAS",
@@ -12099,7 +12097,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_14_PIT_JAX",
@@ -12154,7 +12152,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_SF_LAC",
@@ -12209,7 +12207,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_CHI_BUF",
@@ -12264,7 +12262,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_SEA_PHI",
@@ -12319,7 +12317,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_NYJ_ARI",
@@ -12374,7 +12372,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_CIN_CAR",
@@ -12429,7 +12427,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_MIA_GB",
@@ -12484,7 +12482,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_JAX_HOU",
@@ -12539,7 +12537,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_DAL_LA",
@@ -12594,7 +12592,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_DEN_LV",
@@ -12649,7 +12647,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_DET_MIN",
@@ -12704,7 +12702,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_CLE_NYG",
@@ -12759,7 +12757,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_BAL_PIT",
@@ -12814,7 +12812,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_NO_TB",
@@ -12869,7 +12867,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_IND_TEN",
@@ -12924,7 +12922,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_ATL_WAS",
@@ -12979,7 +12977,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_15_NE_KC",
@@ -13034,7 +13032,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_HOU_PHI",
@@ -13089,7 +13087,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_GB_CHI",
@@ -13144,7 +13142,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_BUF_DEN",
@@ -13199,7 +13197,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_LA_SEA",
@@ -13254,7 +13252,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_TB_ATL",
@@ -13309,7 +13307,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_CLE_BAL",
@@ -13364,7 +13362,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_JAX_DAL",
@@ -13419,7 +13417,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_CIN_IND",
@@ -13474,7 +13472,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_SF_KC",
@@ -13529,7 +13527,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_TEN_LV",
@@ -13584,7 +13582,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_LAC_MIA",
@@ -13639,7 +13637,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_WAS_MIN",
@@ -13694,7 +13692,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_ARI_NO",
@@ -13749,7 +13747,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_NE_NYJ",
@@ -13804,7 +13802,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_CAR_PIT",
@@ -13859,7 +13857,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_16_NYG_DET",
@@ -13914,7 +13912,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_BAL_CIN",
@@ -13969,7 +13967,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_LV_ARI",
@@ -14024,7 +14022,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_NO_ATL",
@@ -14079,7 +14077,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_SEA_CAR",
@@ -14134,7 +14132,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_DET_CHI",
@@ -14189,7 +14187,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_IND_CLE",
@@ -14244,7 +14242,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_NYG_DAL",
@@ -14299,7 +14297,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_WAS_JAX",
@@ -14354,7 +14352,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_KC_LAC",
@@ -14409,7 +14407,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_BUF_MIA",
@@ -14464,7 +14462,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_DEN_NE",
@@ -14519,7 +14517,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_MIN_NYJ",
@@ -14574,7 +14572,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_PHI_SF",
@@ -14629,7 +14627,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_LA_TB",
@@ -14684,7 +14682,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_PIT_TEN",
@@ -14739,7 +14737,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_17_HOU_GB",
@@ -14794,7 +14792,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_SF_ARI",
@@ -14849,7 +14847,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_PIT_BAL",
@@ -14904,7 +14902,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_NYJ_BUF",
@@ -14959,7 +14957,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_ATL_CAR",
@@ -15014,7 +15012,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_CLE_CIN",
@@ -15069,7 +15067,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_LAC_DEN",
@@ -15124,7 +15122,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_DET_GB",
@@ -15179,7 +15177,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_TEN_HOU",
@@ -15234,7 +15232,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_JAX_IND",
@@ -15289,7 +15287,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_LV_KC",
@@ -15344,7 +15342,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_SEA_LA",
@@ -15399,7 +15397,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_CHI_MIN",
@@ -15454,7 +15452,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_MIA_NE",
@@ -15509,7 +15507,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_TB_NO",
@@ -15564,7 +15562,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_PHI_NYG",
@@ -15619,7 +15617,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     },
     {
       "game_id": "2026_18_DAL_WAS",
@@ -15674,7 +15672,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-07-13T21:04:39.703663+00:00"
+      "generated_at": "2026-07-14T18:50:27.697867+00:00"
     }
   ]
 }
