@@ -1,68 +1,68 @@
 {
   "2024": {
-    "mae_home": 7.575,
-    "mae_away": 6.877,
-    "mae_total": 9.968,
-    "mae_spread": 10.263,
-    "ats_wins": 157,
-    "ats_losses": 120,
+    "mae_home": 8.274,
+    "mae_away": 7.498,
+    "mae_total": 12.123,
+    "mae_spread": 10.116,
+    "ats_wins": 147,
+    "ats_losses": 128,
     "ats_pushes": 4,
-    "ats_pct": 0.5668,
-    "edge_ats_wins": 32,
-    "edge_ats_losses": 23,
-    "edge_ats_pushes": 1,
-    "edge_ats_pct": 0.5818,
-    "edge_ats_n_games": 56,
-    "edge_profit_units": 6.09,
-    "edge_roi_flat_110": 0.1107,
+    "ats_pct": 0.5345,
+    "edge_ats_wins": 31,
+    "edge_ats_losses": 27,
+    "edge_ats_pushes": 2,
+    "edge_ats_pct": 0.5345,
+    "edge_ats_n_games": 60,
+    "edge_profit_units": 1.18,
+    "edge_roi_flat_110": 0.0204,
     "avg_clv_pts": null,
     "clv_positive_pct": null,
     "n_clv_games": 0,
-    "ou_wins": 165,
-    "ou_losses": 117,
+    "ou_wins": 152,
+    "ou_losses": 130,
     "ou_pushes": 3,
-    "ou_pct": 0.5851,
-    "r2_total": 0.0333,
-    "pred_spread_std": 9.31,
+    "ou_pct": 0.539,
+    "r2_total": -0.2876,
+    "pred_spread_std": 8.39,
     "actual_spread_std": 14.44,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 9.868,
+        "mae_total": 12.059,
         "n": 272
       },
       "WC": {
-        "mae_total": 10.667,
+        "mae_total": 15.833,
         "n": 6
       }
     },
     "by_division_game": {
       "0": {
-        "mae_total": 9.626,
+        "mae_total": 12.112,
         "n": 187
       },
       "1": {
-        "mae_total": 10.622,
+        "mae_total": 12.143,
         "n": 98
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 10.241,
+        "mae_total": 12.385,
         "n": 187
       },
       "1": {
-        "mae_total": 9.449,
+        "mae_total": 11.622,
         "n": 98
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 10.778,
+        "mae_total": 12.698,
         "n": 63
       },
       "0": {
-        "mae_total": 9.739,
+        "mae_total": 11.959,
         "n": 222
       }
     },
@@ -74,35 +74,35 @@
     "window_type": "3-season"
   },
   "2025": {
-    "mae_home": 7.691,
-    "mae_away": 7.825,
-    "mae_total": 11.088,
-    "mae_spread": 10.204,
-    "ats_wins": 140,
-    "ats_losses": 137,
+    "mae_home": 7.916,
+    "mae_away": 7.947,
+    "mae_total": 11.196,
+    "mae_spread": 10.572,
+    "ats_wins": 151,
+    "ats_losses": 131,
     "ats_pushes": 1,
-    "ats_pct": 0.5054,
-    "edge_ats_wins": 29,
-    "edge_ats_losses": 20,
+    "ats_pct": 0.5355,
+    "edge_ats_wins": 26,
+    "edge_ats_losses": 22,
     "edge_ats_pushes": 0,
-    "edge_ats_pct": 0.5918,
-    "edge_ats_n_games": 49,
-    "edge_profit_units": 6.36,
-    "edge_roi_flat_110": 0.1299,
+    "edge_ats_pct": 0.5417,
+    "edge_ats_n_games": 48,
+    "edge_profit_units": 1.64,
+    "edge_roi_flat_110": 0.0341,
     "avg_clv_pts": null,
     "clv_positive_pct": null,
     "n_clv_games": 0,
-    "ou_wins": 142,
-    "ou_losses": 143,
+    "ou_wins": 141,
+    "ou_losses": 144,
     "ou_pushes": 0,
-    "ou_pct": 0.4982,
-    "r2_total": -0.0057,
-    "pred_spread_std": 10.21,
+    "ou_pct": 0.4947,
+    "r2_total": -0.0313,
+    "pred_spread_std": 10.55,
     "actual_spread_std": 14.13,
     "n_games": 285,
     "by_game_type": {
       "REG": {
-        "mae_total": 11.088,
+        "mae_total": 11.173,
         "n": 272
       },
       "WC": {
@@ -112,31 +112,31 @@
     },
     "by_division_game": {
       "1": {
-        "mae_total": 11.333,
+        "mae_total": 11.535,
         "n": 99
       },
       "0": {
-        "mae_total": 10.957,
+        "mae_total": 11.016,
         "n": 186
       }
     },
     "by_dome": {
       "0": {
-        "mae_total": 10.316,
+        "mae_total": 10.432,
         "n": 190
       },
       "1": {
-        "mae_total": 12.632,
+        "mae_total": 12.726,
         "n": 95
       }
     },
     "by_primetime": {
       "1": {
-        "mae_total": 12.707,
+        "mae_total": 12.983,
         "n": 58
       },
       "0": {
-        "mae_total": 10.674,
+        "mae_total": 10.74,
         "n": 227
       }
     },
