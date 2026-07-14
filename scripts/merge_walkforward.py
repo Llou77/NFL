@@ -88,6 +88,29 @@ def main() -> None:
             "mean_ats_pct_excl_covid": _avg(clean, "ats_pct"),
             "mean_edge_ats_pct_excl_covid": _avg(clean, "edge_ats_pct"),
         }
+    # ── tuned-weight stability across folds ───────────────────────────────
+    # The "stable trend" idea (repo owner): where independent per-fold
+    # tunings keep agreeing on a value (low CV), that value is a durable
+    # property of the problem → candidate for pinning/narrowing the search.
+    # Where they disagree wildly, tuning is mostly chasing noise → also a
+    # candidate for fixing, for the opposite reason.
+    import statistics as _st
+    tuned_rows = [r for r in rows if r.get("tuned_weights")]
+    stability = {}
+    for key in TUNED_KEYS:
+        vals = [r["tuned_weights"][key] for r in tuned_rows
+                if key in r.get("tuned_weights", {})]
+        if len(vals) >= 4:
+            m = _st.mean(vals)
+            cv = (_st.stdev(vals) / abs(m)) if m else float("inf")
+            stability[key] = {
+                "median": round(_st.median(vals), 3),
+                "cv_pct": round(100 * cv, 1),
+                "class": ("stable" if cv < 0.20 else
+                          "medium" if cv < 0.40 else "noisy"),
+            }
+    summary["weight_stability"] = stability
+
     merged["_summary"] = summary
     OUT.write_text(json.dumps(merged, indent=2, default=str))
     shutil.copy2(OUT, DOCS / "walkforward_results.json")
