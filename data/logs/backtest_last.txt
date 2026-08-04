@@ -1,4 +1,4 @@
-=== full_pipeline 2026-07-14T19:18Z — merge status: success ===
+=== full_pipeline 2026-08-04T14:45Z — merge status: success ===
 backtest jobs: success
 --- merge log ---
   merged backtest_2024.json: ['2024']
