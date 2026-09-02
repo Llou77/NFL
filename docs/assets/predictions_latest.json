@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T14:38:50.256609+00:00",
+  "generated_at": "2026-09-02T23:43:36.213349+00:00",
   "season": 2026,
   "n_games": 272,
   "predictions": [
@@ -29,7 +29,7 @@
         "model_agreement": 0.6064,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
-        "injury_data_freshness": 0.42
+        "injury_data_freshness": 0.55
       },
       "book_spread": 3.5,
       "book_total": 44.5,
@@ -65,7 +65,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_SF_LA",
@@ -87,10 +87,10 @@
         13,
         22
       ],
-      "confidence_score": 0.585,
+      "confidence_score": 0.5834,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.581,
+        "model_agreement": 0.5782,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -129,7 +129,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_CHI_CAR",
@@ -151,10 +151,10 @@
         24,
         25
       ],
-      "confidence_score": 0.7382,
+      "confidence_score": 0.7365,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8595,
+        "model_agreement": 0.8565,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -193,7 +193,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_TB_CIN",
@@ -208,29 +208,29 @@
       "predicted_total": 46,
       "predicted_spread": 6,
       "ci_home": [
-        15,
-        24
+        14,
+        23
       ],
       "ci_away": [
         19,
         23
       ],
-      "confidence_score": 0.6064,
+      "confidence_score": 0.5992,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.62,
+        "model_agreement": 0.6069,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
       "book_spread": 3.5,
-      "book_total": 51.5,
+      "book_total": 50.5,
       "opening_spread": 3.5,
       "opening_total": null,
       "opening_spread_edge": 2.5,
       "market_win_prob": null,
       "spread_edge": 2.5,
-      "total_edge": -5.5,
+      "total_edge": -4.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
       "is_dome": 0,
@@ -252,12 +252,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 2.5,
-        "total_edge": -5.5,
+        "total_edge": -4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_NO_DET",
@@ -279,10 +279,10 @@
         17,
         20
       ],
-      "confidence_score": 0.7322,
+      "confidence_score": 0.7324,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8379,
+        "model_agreement": 0.8382,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -321,7 +321,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_BUF_HOU",
@@ -343,10 +343,10 @@
         15,
         25
       ],
-      "confidence_score": 0.6077,
+      "confidence_score": 0.6084,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6114,
+        "model_agreement": 0.6127,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -385,7 +385,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_BAL_IND",
@@ -407,10 +407,10 @@
         25,
         27
       ],
-      "confidence_score": 0.7304,
+      "confidence_score": 0.7318,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8344,
+        "model_agreement": 0.8371,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -449,7 +449,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_CLE_JAX",
@@ -464,17 +464,17 @@
       "predicted_total": 48,
       "predicted_spread": 16,
       "ci_home": [
-        25,
+        24,
         29
       ],
       "ci_away": [
-        19,
+        18,
         20
       ],
-      "confidence_score": 0.7313,
+      "confidence_score": 0.7159,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8471,
+        "model_agreement": 0.819,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -513,7 +513,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_ARI_LAC",
@@ -535,10 +535,10 @@
         15,
         19
       ],
-      "confidence_score": 0.582,
+      "confidence_score": 0.5801,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5757,
+        "model_agreement": 0.5722,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -577,7 +577,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_MIA_LV",
@@ -599,10 +599,10 @@
         19,
         22
       ],
-      "confidence_score": 0.6858,
+      "confidence_score": 0.6851,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7534,
+        "model_agreement": 0.7522,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -641,7 +641,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_GB_MIN",
@@ -663,10 +663,10 @@
         14,
         21
       ],
-      "confidence_score": 0.5319,
+      "confidence_score": 0.5336,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4736,
+        "model_agreement": 0.4767,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -705,7 +705,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_DAL_NYG",
@@ -727,10 +727,10 @@
         20,
         25
       ],
-      "confidence_score": 0.638,
+      "confidence_score": 0.6364,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6774,
+        "model_agreement": 0.6746,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -769,7 +769,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_WAS_PHI",
@@ -791,21 +791,21 @@
         16,
         20
       ],
-      "confidence_score": 0.6237,
+      "confidence_score": 0.6258,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6515,
+        "model_agreement": 0.6553,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 4.5,
+      "book_spread": 5.5,
       "book_total": 45.5,
-      "opening_spread": 4.5,
+      "opening_spread": 5.5,
       "opening_total": null,
-      "opening_spread_edge": 3.5,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": 3.5,
+      "spread_edge": 2.5,
       "total_edge": 0.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -827,13 +827,13 @@
         "away_off_cpoe_r8": 0.4447,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 3.5,
+        "spread_edge": 2.5,
         "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_ATL_PIT",
@@ -843,36 +843,36 @@
       "game_date": "2026-09-13",
       "home_team": "PIT",
       "away_team": "ATL",
-      "predicted_home_score": 20,
+      "predicted_home_score": 24,
       "predicted_away_score": 22,
-      "predicted_total": 42,
-      "predicted_spread": -2,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "ci_home": [
-        17,
-        20
+        18,
+        22
       ],
       "ci_away": [
-        20,
+        19,
         21
       ],
-      "confidence_score": 0.7246,
+      "confidence_score": 0.7015,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8348,
+        "model_agreement": 0.7928,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 3.0,
+      "book_spread": 3.5,
       "book_total": 42.5,
-      "opening_spread": 3.0,
+      "opening_spread": 3.5,
       "opening_total": null,
-      "opening_spread_edge": -5.0,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": -5.0,
-      "total_edge": -0.5,
-      "spread_lean": "AWAY",
-      "total_lean": "PUSH",
+      "spread_edge": -1.5,
+      "total_edge": 3.5,
+      "spread_lean": "PUSH",
+      "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -891,13 +891,13 @@
         "away_off_cpoe_r8": -0.9748,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -5.0,
-        "total_edge": -0.5,
+        "spread_edge": -1.5,
+        "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_NYJ_TEN",
@@ -919,10 +919,10 @@
         20,
         22
       ],
-      "confidence_score": 0.6513,
+      "confidence_score": 0.6506,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6906,
+        "model_agreement": 0.6895,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -961,7 +961,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_01_DEN_KC",
@@ -980,13 +980,13 @@
         17
       ],
       "ci_away": [
-        12,
+        13,
         20
       ],
-      "confidence_score": 0.6183,
+      "confidence_score": 0.6231,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6415,
+        "model_agreement": 0.6503,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1025,7 +1025,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_DET_BUF",
@@ -1040,17 +1040,17 @@
       "predicted_total": 50,
       "predicted_spread": 8,
       "ci_home": [
-        26,
+        25,
         32
       ],
       "ci_away": [
         20,
         23
       ],
-      "confidence_score": 0.6937,
+      "confidence_score": 0.6939,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7678,
+        "model_agreement": 0.7682,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1089,7 +1089,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_SEA_ARI",
@@ -1104,17 +1104,17 @@
       "predicted_total": 45,
       "predicted_spread": -9,
       "ci_home": [
-        17,
+        18,
         19
       ],
       "ci_away": [
         24,
         26
       ],
-      "confidence_score": 0.7428,
+      "confidence_score": 0.7445,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8679,
+        "model_agreement": 0.871,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1153,7 +1153,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_CAR_ATL",
@@ -1175,10 +1175,10 @@
         17,
         19
       ],
-      "confidence_score": 0.6351,
+      "confidence_score": 0.6339,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6722,
+        "model_agreement": 0.6701,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1217,7 +1217,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_NO_BAL",
@@ -1239,10 +1239,10 @@
         19,
         22
       ],
-      "confidence_score": 0.634,
+      "confidence_score": 0.6325,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6701,
+        "model_agreement": 0.6675,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1281,7 +1281,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_MIN_CHI",
@@ -1303,10 +1303,10 @@
         19,
         20
       ],
-      "confidence_score": 0.7417,
+      "confidence_score": 0.744,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.866,
+        "model_agreement": 0.8702,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1345,7 +1345,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_WAS_DAL",
@@ -1367,10 +1367,10 @@
         18,
         21
       ],
-      "confidence_score": 0.7062,
+      "confidence_score": 0.7076,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7905,
+        "model_agreement": 0.793,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1409,7 +1409,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_JAX_DEN",
@@ -1424,17 +1424,17 @@
       "predicted_total": 47,
       "predicted_spread": -3,
       "ci_home": [
-        21,
-        23
+        22,
+        24
       ],
       "ci_away": [
-        13,
+        14,
         23
       ],
-      "confidence_score": 0.6189,
+      "confidence_score": 0.6114,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6426,
+        "model_agreement": 0.629,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1473,7 +1473,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_CIN_HOU",
@@ -1495,10 +1495,10 @@
         17,
         24
       ],
-      "confidence_score": 0.6156,
+      "confidence_score": 0.6162,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6258,
+        "model_agreement": 0.6269,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1537,7 +1537,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_IND_KC",
@@ -1559,10 +1559,10 @@
         12,
         20
       ],
-      "confidence_score": 0.565,
+      "confidence_score": 0.5664,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5446,
+        "model_agreement": 0.5472,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1601,7 +1601,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_LV_LAC",
@@ -1623,10 +1623,10 @@
         18,
         20
       ],
-      "confidence_score": 0.6896,
+      "confidence_score": 0.6902,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7712,
+        "model_agreement": 0.7723,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1665,7 +1665,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_PIT_NE",
@@ -1687,10 +1687,10 @@
         21,
         27
       ],
-      "confidence_score": 0.621,
+      "confidence_score": 0.6202,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6482,
+        "model_agreement": 0.6467,
         "feature_completeness": 0.7818,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1729,7 +1729,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_GB_NYJ",
@@ -1748,13 +1748,13 @@
         19
       ],
       "ci_away": [
-        25,
-        27
+        26,
+        28
       ],
-      "confidence_score": 0.6496,
+      "confidence_score": 0.6471,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6986,
+        "model_agreement": 0.694,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1793,7 +1793,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_MIA_SF",
@@ -1857,7 +1857,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_CLE_TB",
@@ -1868,9 +1868,9 @@
       "home_team": "TB",
       "away_team": "CLE",
       "predicted_home_score": 26,
-      "predicted_away_score": 19,
-      "predicted_total": 45,
-      "predicted_spread": 7,
+      "predicted_away_score": 18,
+      "predicted_total": 44,
+      "predicted_spread": 8,
       "ci_home": [
         23,
         26
@@ -1879,24 +1879,24 @@
         18,
         19
       ],
-      "confidence_score": 0.712,
+      "confidence_score": 0.7036,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.812,
+        "model_agreement": 0.7966,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 5.5,
+      "book_spread": 6.5,
       "book_total": 42.5,
-      "opening_spread": 5.5,
+      "opening_spread": 6.5,
       "opening_total": null,
       "opening_spread_edge": 1.5,
       "market_win_prob": null,
       "spread_edge": 1.5,
-      "total_edge": 2.5,
+      "total_edge": 1.5,
       "spread_lean": "PUSH",
-      "total_lean": "OVER",
+      "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -1916,12 +1916,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 1.5,
-        "total_edge": 2.5,
+        "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_PHI_TEN",
@@ -1943,10 +1943,10 @@
         21,
         24
       ],
-      "confidence_score": 0.6461,
+      "confidence_score": 0.6449,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6812,
+        "model_agreement": 0.679,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -1985,7 +1985,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_02_NYG_LA",
@@ -2007,10 +2007,10 @@
         14,
         20
       ],
-      "confidence_score": 0.6506,
+      "confidence_score": 0.6522,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7004,
+        "model_agreement": 0.7032,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2049,7 +2049,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_ATL_GB",
@@ -2071,10 +2071,10 @@
         14,
         21
       ],
-      "confidence_score": 0.5782,
+      "confidence_score": 0.5762,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5686,
+        "model_agreement": 0.565,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2113,7 +2113,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_LAC_BUF",
@@ -2135,10 +2135,10 @@
         19,
         27
       ],
-      "confidence_score": 0.6029,
+      "confidence_score": 0.6042,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6043,
+        "model_agreement": 0.6066,
         "feature_completeness": 0.8018,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2177,7 +2177,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_CAR_CLE",
@@ -2199,10 +2199,10 @@
         18,
         20
       ],
-      "confidence_score": 0.6961,
+      "confidence_score": 0.6971,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7831,
+        "model_agreement": 0.7849,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2241,7 +2241,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_BAL_DAL",
@@ -2263,10 +2263,10 @@
         19,
         24
       ],
-      "confidence_score": 0.6777,
+      "confidence_score": 0.6781,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7387,
+        "model_agreement": 0.7394,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2305,7 +2305,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_LA_DEN",
@@ -2327,10 +2327,10 @@
         20,
         23
       ],
-      "confidence_score": 0.6643,
+      "confidence_score": 0.6616,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7252,
+        "model_agreement": 0.7204,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2369,7 +2369,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_NYJ_DET",
@@ -2391,10 +2391,10 @@
         16,
         18
       ],
-      "confidence_score": 0.6773,
+      "confidence_score": 0.6788,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7395,
+        "model_agreement": 0.7423,
         "feature_completeness": 0.8018,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2433,7 +2433,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_HOU_IND",
@@ -2449,16 +2449,16 @@
       "predicted_spread": 0,
       "ci_home": [
         18,
-        22
+        21
       ],
       "ci_away": [
         20,
         23
       ],
-      "confidence_score": 0.6927,
+      "confidence_score": 0.6948,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.766,
+        "model_agreement": 0.7697,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2497,7 +2497,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_NE_JAX",
@@ -2519,10 +2519,10 @@
         23,
         27
       ],
-      "confidence_score": 0.6319,
+      "confidence_score": 0.6261,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6679,
+        "model_agreement": 0.6574,
         "feature_completeness": 0.7818,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2561,7 +2561,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_KC_MIA",
@@ -2583,10 +2583,10 @@
         22,
         31
       ],
-      "confidence_score": 0.5931,
+      "confidence_score": 0.5935,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5959,
+        "model_agreement": 0.5964,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2625,7 +2625,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_LV_NO",
@@ -2650,7 +2650,7 @@
       "confidence_score": 0.6365,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6653,
+        "model_agreement": 0.6654,
         "feature_completeness": 0.8018,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2689,7 +2689,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_TEN_NYG",
@@ -2711,10 +2711,10 @@
         16,
         19
       ],
-      "confidence_score": 0.6378,
+      "confidence_score": 0.6385,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6771,
+        "model_agreement": 0.6784,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2753,7 +2753,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_CIN_PIT",
@@ -2775,10 +2775,10 @@
         21,
         25
       ],
-      "confidence_score": 0.6294,
+      "confidence_score": 0.6308,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.665,
+        "model_agreement": 0.6675,
         "feature_completeness": 0.7788,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2817,7 +2817,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_ARI_SF",
@@ -2839,10 +2839,10 @@
         21,
         23
       ],
-      "confidence_score": 0.728,
+      "confidence_score": 0.7291,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8349,
+        "model_agreement": 0.837,
         "feature_completeness": 0.7959,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2881,7 +2881,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_MIN_TB",
@@ -2903,10 +2903,10 @@
         21,
         25
       ],
-      "confidence_score": 0.7066,
+      "confidence_score": 0.7035,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8021,
+        "model_agreement": 0.7966,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2945,7 +2945,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_SEA_WAS",
@@ -2967,10 +2967,10 @@
         26,
         30
       ],
-      "confidence_score": 0.5987,
+      "confidence_score": 0.5997,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.606,
+        "model_agreement": 0.6079,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3009,7 +3009,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_03_PHI_CHI",
@@ -3031,10 +3031,10 @@
         11,
         19
       ],
-      "confidence_score": 0.6688,
+      "confidence_score": 0.6672,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7334,
+        "model_agreement": 0.7305,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3073,7 +3073,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_PIT_CLE",
@@ -3095,10 +3095,10 @@
         17,
         22
       ],
-      "confidence_score": 0.4716,
+      "confidence_score": 0.4713,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.491,
+        "model_agreement": 0.4905,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3137,7 +3137,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_TEN_BAL",
@@ -3159,10 +3159,10 @@
         16,
         22
       ],
-      "confidence_score": 0.562,
+      "confidence_score": 0.561,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6554,
+        "model_agreement": 0.6536,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3201,7 +3201,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_NE_BUF",
@@ -3223,10 +3223,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4748,
+      "confidence_score": 0.4761,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4891,
+        "model_agreement": 0.4917,
         "feature_completeness": 0.5858,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3265,7 +3265,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_DET_CAR",
@@ -3287,10 +3287,10 @@
         17,
         23
       ],
-      "confidence_score": 0.5222,
+      "confidence_score": 0.5238,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.583,
+        "model_agreement": 0.586,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3329,7 +3329,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_NYJ_CHI",
@@ -3351,10 +3351,10 @@
         10,
         21
       ],
-      "confidence_score": 0.4577,
+      "confidence_score": 0.4585,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4657,
+        "model_agreement": 0.4672,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3393,7 +3393,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_JAX_CIN",
@@ -3415,10 +3415,10 @@
         21,
         25
       ],
-      "confidence_score": 0.5561,
+      "confidence_score": 0.5431,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6463,
+        "model_agreement": 0.6227,
         "feature_completeness": 0.5688,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3457,7 +3457,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_DAL_HOU",
@@ -3472,17 +3472,17 @@
       "predicted_total": 47,
       "predicted_spread": 3,
       "ci_home": [
-        22,
+        23,
         24
       ],
       "ci_away": [
         19,
         22
       ],
-      "confidence_score": 0.6793,
+      "confidence_score": 0.6777,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8579,
+        "model_agreement": 0.8549,
         "feature_completeness": 0.5917,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3521,7 +3521,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_KC_LV",
@@ -3543,10 +3543,10 @@
         18,
         22
       ],
-      "confidence_score": 0.5988,
+      "confidence_score": 0.5966,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.713,
+        "model_agreement": 0.709,
         "feature_completeness": 0.5888,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3585,7 +3585,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_MIA_MIN",
@@ -3607,10 +3607,10 @@
         19,
         27
       ],
-      "confidence_score": 0.4315,
+      "confidence_score": 0.4296,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.4072,
+        "model_agreement": 0.4038,
         "feature_completeness": 0.5917,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3649,7 +3649,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_ARI_NYG",
@@ -3671,10 +3671,10 @@
         23,
         26
       ],
-      "confidence_score": 0.6549,
+      "confidence_score": 0.6554,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8259,
+        "model_agreement": 0.8269,
         "feature_completeness": 0.5688,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3713,7 +3713,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_LA_PHI",
@@ -3735,10 +3735,10 @@
         24,
         27
       ],
-      "confidence_score": 0.6672,
+      "confidence_score": 0.6673,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8467,
+        "model_agreement": 0.8469,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3777,7 +3777,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_LAC_SEA",
@@ -3841,7 +3841,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_DEN_SF",
@@ -3856,17 +3856,17 @@
       "predicted_total": 45,
       "predicted_spread": 1,
       "ci_home": [
-        19,
+        20,
         25
       ],
       "ci_away": [
         15,
         22
       ],
-      "confidence_score": 0.5223,
+      "confidence_score": 0.5308,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5723,
+        "model_agreement": 0.5878,
         "feature_completeness": 0.5917,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3905,7 +3905,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_GB_TB",
@@ -3927,10 +3927,10 @@
         20,
         24
       ],
-      "confidence_score": 0.6179,
+      "confidence_score": 0.6201,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.757,
+        "model_agreement": 0.7611,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3969,7 +3969,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_IND_WAS",
@@ -3991,10 +3991,10 @@
         16,
         22
       ],
-      "confidence_score": 0.4599,
+      "confidence_score": 0.461,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4698,
+        "model_agreement": 0.4718,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4033,7 +4033,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_04_ATL_NO",
@@ -4044,21 +4044,21 @@
       "home_team": "NO",
       "away_team": "ATL",
       "predicted_home_score": 24,
-      "predicted_away_score": 21,
-      "predicted_total": 45,
-      "predicted_spread": 3,
+      "predicted_away_score": 22,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "ci_home": [
         13,
         23
       ],
       "ci_away": [
         15,
-        21
+        22
       ],
-      "confidence_score": 0.5202,
+      "confidence_score": 0.5215,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5685,
+        "model_agreement": 0.5708,
         "feature_completeness": 0.5917,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4067,10 +4067,10 @@
       "book_total": 45.5,
       "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": 0.5,
-      "total_edge": -0.5,
+      "spread_edge": -0.5,
+      "total_edge": 0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 1,
@@ -4091,13 +4091,13 @@
         "away_off_cpoe_r8": -1.4763,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
-        "total_edge": -0.5,
+        "spread_edge": -0.5,
+        "total_edge": 0.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_TB_DAL",
@@ -4119,7 +4119,7 @@
         21,
         25
       ],
-      "confidence_score": 0.6764,
+      "confidence_score": 0.6765,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
         "model_agreement": 0.8591,
@@ -4161,7 +4161,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_DET_ARI",
@@ -4176,17 +4176,17 @@
       "predicted_total": 46,
       "predicted_spread": -8,
       "ci_home": [
-        12,
+        13,
         20
       ],
       "ci_away": [
         15,
         24
       ],
-      "confidence_score": 0.4628,
+      "confidence_score": 0.4644,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4831,
+        "model_agreement": 0.4861,
         "feature_completeness": 0.5569,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4225,7 +4225,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_BAL_ATL",
@@ -4247,10 +4247,10 @@
         26,
         31
       ],
-      "confidence_score": 0.5778,
+      "confidence_score": 0.576,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6906,
+        "model_agreement": 0.6873,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4289,7 +4289,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_CHI_GB",
@@ -4304,17 +4304,17 @@
       "predicted_total": 48,
       "predicted_spread": 2,
       "ci_home": [
-        15,
+        14,
         24
       ],
       "ci_away": [
         17,
         23
       ],
-      "confidence_score": 0.5279,
+      "confidence_score": 0.5265,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6015,
+        "model_agreement": 0.599,
         "feature_completeness": 0.5569,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4353,7 +4353,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_PHI_JAX",
@@ -4372,13 +4372,13 @@
         31
       ],
       "ci_away": [
-        17,
+        19,
         22
       ],
-      "confidence_score": 0.5713,
-      "confidence_label": "LOW",
+      "confidence_score": 0.5869,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6789,
+        "model_agreement": 0.7071,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4391,8 +4391,8 @@
       "market_win_prob": null,
       "spread_edge": 6.5,
       "total_edge": 1.5,
-      "spread_lean": "SUPPRESSED",
-      "total_lean": "SUPPRESSED",
+      "spread_lean": "HOME",
+      "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 1,
@@ -4417,7 +4417,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_DEN_LAC",
@@ -4439,10 +4439,10 @@
         14,
         22
       ],
-      "confidence_score": 0.5609,
+      "confidence_score": 0.5627,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6599,
+        "model_agreement": 0.6631,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4481,7 +4481,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_CIN_MIA",
@@ -4503,10 +4503,10 @@
         20,
         25
       ],
-      "confidence_score": 0.5141,
+      "confidence_score": 0.5152,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.578,
+        "model_agreement": 0.58,
         "feature_completeness": 0.554,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4545,7 +4545,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_LV_NE",
@@ -4564,13 +4564,13 @@
         25
       ],
       "ci_away": [
-        13,
+        14,
         20
       ],
       "confidence_score": 0.5556,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6566,
+        "model_agreement": 0.6567,
         "feature_completeness": 0.548,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4609,7 +4609,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_MIN_NO",
@@ -4631,10 +4631,10 @@
         21,
         25
       ],
-      "confidence_score": 0.5417,
+      "confidence_score": 0.5404,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6141,
+        "model_agreement": 0.6118,
         "feature_completeness": 0.5799,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4673,7 +4673,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_CLE_NYJ",
@@ -4695,10 +4695,10 @@
         15,
         22
       ],
-      "confidence_score": 0.5792,
-      "confidence_label": "LOW",
+      "confidence_score": 0.5816,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6948,
+        "model_agreement": 0.6991,
         "feature_completeness": 0.5569,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4711,8 +4711,8 @@
       "market_win_prob": null,
       "spread_edge": -5.5,
       "total_edge": 3.5,
-      "spread_lean": "SUPPRESSED",
-      "total_lean": "SUPPRESSED",
+      "spread_lean": "AWAY",
+      "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -4737,7 +4737,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_IND_PIT",
@@ -4759,10 +4759,10 @@
         12,
         22
       ],
-      "confidence_score": 0.4943,
+      "confidence_score": 0.4949,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5388,
+        "model_agreement": 0.5399,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4801,7 +4801,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_SF_SEA",
@@ -4865,7 +4865,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_HOU_TEN",
@@ -4880,17 +4880,17 @@
       "predicted_total": 45,
       "predicted_spread": -3,
       "ci_home": [
-        16,
+        15,
         21
       ],
       "ci_away": [
         19,
         22
       ],
-      "confidence_score": 0.6157,
+      "confidence_score": 0.6129,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7486,
+        "model_agreement": 0.7435,
         "feature_completeness": 0.5799,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4929,7 +4929,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_NYG_WAS",
@@ -4951,21 +4951,21 @@
         23,
         24
       ],
-      "confidence_score": 0.5734,
+      "confidence_score": 0.5739,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6827,
+        "model_agreement": 0.6836,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 2.5,
+      "book_spread": 1.5,
       "book_total": 48.5,
-      "opening_spread": 2.5,
+      "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": 1.5,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": 1.5,
+      "spread_edge": 2.5,
       "total_edge": -0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
@@ -4987,13 +4987,13 @@
         "away_off_cpoe_r8": -0.6649,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 1.5,
+        "spread_edge": 2.5,
         "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_05_BUF_LA",
@@ -5012,13 +5012,13 @@
         29
       ],
       "ci_away": [
-        16,
+        17,
         25
       ],
-      "confidence_score": 0.5006,
+      "confidence_score": 0.5032,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5519,
+        "model_agreement": 0.5566,
         "feature_completeness": 0.5569,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5057,7 +5057,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_SEA_DEN",
@@ -5079,10 +5079,10 @@
         21,
         23
       ],
-      "confidence_score": 0.5845,
+      "confidence_score": 0.5805,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.835,
+        "model_agreement": 0.8279,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5114,7 +5114,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_CHI_ATL",
@@ -5136,10 +5136,10 @@
         20,
         23
       ],
-      "confidence_score": 0.5282,
+      "confidence_score": 0.5277,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7328,
+        "model_agreement": 0.7319,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5171,7 +5171,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_BAL_CLE",
@@ -5193,10 +5193,10 @@
         20,
         24
       ],
-      "confidence_score": 0.4787,
+      "confidence_score": 0.4809,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6428,
+        "model_agreement": 0.6467,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5228,7 +5228,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_DAL_GB",
@@ -5244,16 +5244,16 @@
       "predicted_spread": 3,
       "ci_home": [
         21,
-        26
+        25
       ],
       "ci_away": [
         18,
         23
       ],
-      "confidence_score": 0.5145,
+      "confidence_score": 0.5125,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7078,
+        "model_agreement": 0.7043,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5285,7 +5285,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_TEN_IND",
@@ -5307,10 +5307,10 @@
         17,
         22
       ],
-      "confidence_score": 0.5661,
+      "confidence_score": 0.5682,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7907,
+        "model_agreement": 0.7946,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5342,7 +5342,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_HOU_JAX",
@@ -5353,21 +5353,21 @@
       "home_team": "JAX",
       "away_team": "HOU",
       "predicted_home_score": 28,
-      "predicted_away_score": 23,
-      "predicted_total": 51,
-      "predicted_spread": 5,
+      "predicted_away_score": 22,
+      "predicted_total": 50,
+      "predicted_spread": 6,
       "ci_home": [
         24,
         26
       ],
       "ci_away": [
-        16,
+        17,
         23
       ],
-      "confidence_score": 0.4986,
+      "confidence_score": 0.509,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6789,
+        "model_agreement": 0.6978,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5376,10 +5376,10 @@
       "book_total": 42.5,
       "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": 3.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 3.5,
-      "total_edge": 8.5,
+      "spread_edge": 4.5,
+      "total_edge": 7.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -5393,13 +5393,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 3.5,
-        "total_edge": 8.5,
+        "spread_edge": 4.5,
+        "total_edge": 7.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_LAC_KC",
@@ -5421,10 +5421,10 @@
         18,
         23
       ],
-      "confidence_score": 0.5517,
+      "confidence_score": 0.5523,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7094,
+        "model_agreement": 0.7104,
         "feature_completeness": 0.4386,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5459,7 +5459,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_ARI_LA",
@@ -5481,10 +5481,10 @@
         9,
         22
       ],
-      "confidence_score": 0.4129,
+      "confidence_score": 0.4136,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5232,
+        "model_agreement": 0.5244,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5516,7 +5516,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_BUF_LV",
@@ -5538,10 +5538,10 @@
         23,
         25
       ],
-      "confidence_score": 0.5213,
+      "confidence_score": 0.5218,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7125,
+        "model_agreement": 0.7134,
         "feature_completeness": 0.3314,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5573,7 +5573,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_NYJ_NE",
@@ -5592,13 +5592,13 @@
         31
       ],
       "ci_away": [
-        19,
+        20,
         23
       ],
-      "confidence_score": 0.4743,
+      "confidence_score": 0.4757,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6347,
+        "model_agreement": 0.6373,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5630,7 +5630,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_NO_NYG",
@@ -5687,7 +5687,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_CAR_PHI",
@@ -5709,10 +5709,10 @@
         15,
         20
       ],
-      "confidence_score": 0.528,
+      "confidence_score": 0.5306,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6662,
+        "model_agreement": 0.671,
         "feature_completeness": 0.4386,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5747,7 +5747,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_PIT_TB",
@@ -5769,10 +5769,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5754,
+      "confidence_score": 0.577,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8186,
+        "model_agreement": 0.8215,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5804,7 +5804,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_06_WAS_SF",
@@ -5826,10 +5826,10 @@
         20,
         23
       ],
-      "confidence_score": 0.4846,
+      "confidence_score": 0.4858,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6442,
+        "model_agreement": 0.6464,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5861,7 +5861,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_NE_CHI",
@@ -5883,10 +5883,10 @@
         10,
         24
       ],
-      "confidence_score": 0.329,
+      "confidence_score": 0.3309,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.3706,
+        "model_agreement": 0.3741,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5918,7 +5918,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_DEN_ARI",
@@ -5940,10 +5940,10 @@
         17,
         23
       ],
-      "confidence_score": 0.4558,
+      "confidence_score": 0.4615,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6028,
+        "model_agreement": 0.613,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5973,7 +5973,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_SF_ATL",
@@ -5984,33 +5984,33 @@
       "home_team": "ATL",
       "away_team": "SF",
       "predicted_home_score": 22,
-      "predicted_away_score": 25,
-      "predicted_total": 47,
-      "predicted_spread": -3,
+      "predicted_away_score": 26,
+      "predicted_total": 48,
+      "predicted_spread": -4,
       "ci_home": [
-        19,
-        26
+        18,
+        24
       ],
       "ci_away": [
-        14,
-        22
+        19,
+        24
       ],
-      "confidence_score": 0.3895,
-      "confidence_label": "WEAK",
+      "confidence_score": 0.4429,
+      "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4806,
+        "model_agreement": 0.5776,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -4.5,
+      "book_total": 47.5,
+      "opening_spread": -4.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -6024,11 +6024,13 @@
         "rest_diff": 1.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 0.5,
+        "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_CIN_BAL",
@@ -6047,13 +6049,13 @@
         27
       ],
       "ci_away": [
-        20,
+        21,
         25
       ],
-      "confidence_score": 0.5084,
+      "confidence_score": 0.5134,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6968,
+        "model_agreement": 0.7058,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6085,7 +6087,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_TB_CAR",
@@ -6107,10 +6109,10 @@
         21,
         23
       ],
-      "confidence_score": 0.5493,
+      "confidence_score": 0.5478,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7712,
+        "model_agreement": 0.7683,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6142,7 +6144,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_GB_DET",
@@ -6164,10 +6166,10 @@
         15,
         23
       ],
-      "confidence_score": 0.4749,
+      "confidence_score": 0.4766,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.625,
+        "model_agreement": 0.628,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6197,7 +6199,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_NYG_HOU",
@@ -6219,10 +6221,10 @@
         13,
         23
       ],
-      "confidence_score": 0.4866,
+      "confidence_score": 0.4862,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6463,
+        "model_agreement": 0.6454,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6254,7 +6256,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_LA_LV",
@@ -6276,10 +6278,10 @@
         22,
         27
       ],
-      "confidence_score": 0.4985,
+      "confidence_score": 0.4973,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6695,
+        "model_agreement": 0.6673,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6309,7 +6311,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_IND_MIN",
@@ -6324,29 +6326,29 @@
       "predicted_total": 51,
       "predicted_spread": 3,
       "ci_home": [
-        22,
-        26
+        23,
+        27
       ],
       "ci_away": [
-        17,
+        18,
         24
       ],
-      "confidence_score": 0.5096,
+      "confidence_score": 0.518,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.688,
+        "model_agreement": 0.7033,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 2.5,
+      "book_total": 46.5,
+      "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 0.5,
+      "total_edge": 4.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 1,
@@ -6360,11 +6362,13 @@
         "rest_diff": 7.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 0.5,
+        "total_edge": 4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_PIT_NO",
@@ -6386,10 +6390,10 @@
         21,
         23
       ],
-      "confidence_score": 0.5798,
-      "confidence_label": "LOW",
+      "confidence_score": 0.5815,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8173,
+        "model_agreement": 0.8203,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6402,8 +6406,8 @@
       "market_win_prob": null,
       "spread_edge": 3.5,
       "total_edge": 6.5,
-      "spread_lean": "SUPPRESSED",
-      "total_lean": "SUPPRESSED",
+      "spread_lean": "HOME",
+      "total_lean": "OVER",
       "is_dome": 1,
       "is_primetime": 0,
       "is_international": 1,
@@ -6421,7 +6425,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_MIA_NYJ",
@@ -6440,25 +6444,25 @@
         23
       ],
       "ci_away": [
-        21,
-        26
+        20,
+        27
       ],
-      "confidence_score": 0.4987,
+      "confidence_score": 0.4882,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6792,
+        "model_agreement": 0.66,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 2.5,
-      "book_total": 41.5,
-      "opening_spread": 2.5,
+      "book_spread": null,
+      "book_total": null,
+      "opening_spread": null,
       "opening_total": null,
-      "opening_spread_edge": -4.5,
+      "opening_spread_edge": null,
       "market_win_prob": null,
-      "spread_edge": -4.5,
-      "total_edge": 6.5,
+      "spread_edge": null,
+      "total_edge": null,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -6472,13 +6476,11 @@
         "rest_diff": -7.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -4.5,
-        "total_edge": 6.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_KC_SEA",
@@ -6500,10 +6502,10 @@
         19,
         22
       ],
-      "confidence_score": 0.5971,
+      "confidence_score": 0.5953,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8471,
+        "model_agreement": 0.8439,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6533,7 +6535,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_CLE_TEN",
@@ -6543,34 +6545,34 @@
       "game_date": "2026-10-25",
       "home_team": "TEN",
       "away_team": "CLE",
-      "predicted_home_score": 25,
-      "predicted_away_score": 24,
+      "predicted_home_score": 24,
+      "predicted_away_score": 25,
       "predicted_total": 49,
-      "predicted_spread": 1,
+      "predicted_spread": -1,
       "ci_home": [
-        19,
-        24
-      ],
-      "ci_away": [
-        19,
+        20,
         23
       ],
-      "confidence_score": 0.5406,
+      "ci_away": [
+        21,
+        24
+      ],
+      "confidence_score": 0.5623,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7444,
+        "model_agreement": 0.7838,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": 2.5,
-      "book_total": 40.5,
-      "opening_spread": 2.5,
+      "book_spread": null,
+      "book_total": null,
+      "opening_spread": null,
       "opening_total": null,
-      "opening_spread_edge": -1.5,
+      "opening_spread_edge": null,
       "market_win_prob": null,
-      "spread_edge": -1.5,
-      "total_edge": 8.5,
+      "spread_edge": null,
+      "total_edge": null,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 1,
@@ -6584,13 +6586,11 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -1.5,
-        "total_edge": 8.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_07_DAL_PHI",
@@ -6609,13 +6609,13 @@
         28
       ],
       "ci_away": [
-        20,
+        19,
         24
       ],
-      "confidence_score": 0.4492,
+      "confidence_score": 0.4479,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5891,
+        "model_agreement": 0.5867,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6645,7 +6645,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_CAR_GB",
@@ -6667,10 +6667,10 @@
         19,
         22
       ],
-      "confidence_score": 0.5061,
+      "confidence_score": 0.5053,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6943,
+        "model_agreement": 0.6928,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6700,7 +6700,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_BAL_BUF",
@@ -6722,10 +6722,10 @@
         15,
         24
       ],
-      "confidence_score": 0.3658,
+      "confidence_score": 0.3688,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.4282,
+        "model_agreement": 0.4336,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6755,7 +6755,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_TEN_CIN",
@@ -6777,10 +6777,10 @@
         18,
         23
       ],
-      "confidence_score": 0.5216,
+      "confidence_score": 0.5234,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7224,
+        "model_agreement": 0.7257,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6810,7 +6810,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_ARI_DAL",
@@ -6832,10 +6832,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4883,
+      "confidence_score": 0.486,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6509,
+        "model_agreement": 0.6467,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6865,7 +6865,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_KC_DEN",
@@ -6887,10 +6887,10 @@
         16,
         22
       ],
-      "confidence_score": 0.5284,
+      "confidence_score": 0.531,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7332,
+        "model_agreement": 0.7378,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6920,7 +6920,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_MIN_DET",
@@ -6942,10 +6942,10 @@
         12,
         23
       ],
-      "confidence_score": 0.4789,
+      "confidence_score": 0.4797,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6323,
+        "model_agreement": 0.6337,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6975,7 +6975,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_IND_JAX",
@@ -6991,16 +6991,16 @@
       "predicted_spread": 6,
       "ci_home": [
         24,
-        27
+        28
       ],
       "ci_away": [
-        15,
+        16,
         22
       ],
-      "confidence_score": 0.4678,
+      "confidence_score": 0.4889,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6229,
+        "model_agreement": 0.6614,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7030,7 +7030,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_LAC_LA",
@@ -7052,10 +7052,10 @@
         12,
         23
       ],
-      "confidence_score": 0.4223,
+      "confidence_score": 0.4215,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5403,
+        "model_agreement": 0.5387,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7085,7 +7085,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_NE_MIA",
@@ -7140,7 +7140,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_LV_NYJ",
@@ -7159,7 +7159,7 @@
         23
       ],
       "ci_away": [
-        20,
+        21,
         24
       ],
       "confidence_score": 0.5402,
@@ -7195,7 +7195,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_CLE_PIT",
@@ -7220,7 +7220,7 @@
       "confidence_score": 0.6149,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8919,
+        "model_agreement": 0.892,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7250,7 +7250,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_ATL_TB",
@@ -7272,10 +7272,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5415,
+      "confidence_score": 0.5405,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7569,
+        "model_agreement": 0.7552,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7305,7 +7305,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_PHI_WAS",
@@ -7327,10 +7327,10 @@
         20,
         22
       ],
-      "confidence_score": 0.5515,
+      "confidence_score": 0.5488,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7768,
+        "model_agreement": 0.7718,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7360,7 +7360,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_08_CHI_SEA",
@@ -7382,10 +7382,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4736,
+      "confidence_score": 0.475,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6226,
+        "model_agreement": 0.6251,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7415,7 +7415,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_JAX_BAL",
@@ -7430,17 +7430,17 @@
       "predicted_total": 50,
       "predicted_spread": -2,
       "ci_home": [
-        23,
+        22,
         25
       ],
       "ci_away": [
-        20,
+        18,
         24
       ],
-      "confidence_score": 0.549,
+      "confidence_score": 0.5175,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7755,
+        "model_agreement": 0.7181,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7470,7 +7470,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_CIN_ATL",
@@ -7492,10 +7492,10 @@
         18,
         23
       ],
-      "confidence_score": 0.4958,
+      "confidence_score": 0.4968,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6787,
+        "model_agreement": 0.6804,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7527,7 +7527,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_DEN_CAR",
@@ -7549,10 +7549,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5083,
+      "confidence_score": 0.5122,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7014,
+        "model_agreement": 0.7085,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7582,7 +7582,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_TB_CHI",
@@ -7604,10 +7604,10 @@
         13,
         24
       ],
-      "confidence_score": 0.4632,
+      "confidence_score": 0.463,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6243,
+        "model_agreement": 0.6238,
         "feature_completeness": 0.2995,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7637,7 +7637,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_DAL_IND",
@@ -7647,10 +7647,10 @@
       "game_date": "2026-11-08",
       "home_team": "IND",
       "away_team": "DAL",
-      "predicted_home_score": 23,
+      "predicted_home_score": 24,
       "predicted_away_score": 24,
-      "predicted_total": 47,
-      "predicted_spread": -1,
+      "predicted_total": 48,
+      "predicted_spread": 0,
       "ci_home": [
         23,
         27
@@ -7659,10 +7659,10 @@
         20,
         23
       ],
-      "confidence_score": 0.4991,
+      "confidence_score": 0.4992,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6754,
+        "model_agreement": 0.6755,
         "feature_completeness": 0.3254,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7692,7 +7692,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_NYJ_KC",
@@ -7708,16 +7708,16 @@
       "predicted_spread": -2,
       "ci_home": [
         23,
-        24
+        25
       ],
       "ci_away": [
         23,
         26
       ],
-      "confidence_score": 0.5895,
+      "confidence_score": 0.5929,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.849,
+        "model_agreement": 0.8553,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7747,7 +7747,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_HOU_LAC",
@@ -7769,10 +7769,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4805,
+      "confidence_score": 0.4796,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.646,
+        "model_agreement": 0.6445,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7802,7 +7802,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_DET_MIA",
@@ -7817,17 +7817,17 @@
       "predicted_total": 49,
       "predicted_spread": -1,
       "ci_home": [
-        21,
+        20,
         24
       ],
       "ci_away": [
         16,
         23
       ],
-      "confidence_score": 0.4565,
+      "confidence_score": 0.4571,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6025,
+        "model_agreement": 0.6035,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7857,7 +7857,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_GB_NE",
@@ -7879,10 +7879,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4801,
+      "confidence_score": 0.4835,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.655,
+        "model_agreement": 0.6612,
         "feature_completeness": 0.2995,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7912,7 +7912,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_CLE_NO",
@@ -7934,10 +7934,10 @@
         21,
         23
       ],
-      "confidence_score": 0.6074,
+      "confidence_score": 0.6076,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8706,
+        "model_agreement": 0.871,
         "feature_completeness": 0.3284,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7967,7 +7967,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_NYG_PHI",
@@ -7989,10 +7989,10 @@
         16,
         24
       ],
-      "confidence_score": 0.5334,
+      "confidence_score": 0.5329,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7502,
+        "model_agreement": 0.7494,
         "feature_completeness": 0.3025,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8022,7 +8022,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_ARI_SEA",
@@ -8044,10 +8044,10 @@
         19,
         25
       ],
-      "confidence_score": 0.5108,
+      "confidence_score": 0.5085,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7032,
+        "model_agreement": 0.6989,
         "feature_completeness": 0.3136,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8077,7 +8077,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_LV_SF",
@@ -8099,10 +8099,10 @@
         16,
         22
       ],
-      "confidence_score": 0.5593,
+      "confidence_score": 0.5601,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7864,
+        "model_agreement": 0.788,
         "feature_completeness": 0.3225,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8132,7 +8132,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_LA_WAS",
@@ -8154,10 +8154,10 @@
         19,
         24
       ],
-      "confidence_score": 0.4867,
+      "confidence_score": 0.4888,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6622,
+        "model_agreement": 0.666,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8187,7 +8187,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_09_BUF_MIN",
@@ -8209,10 +8209,10 @@
         8,
         24
       ],
-      "confidence_score": 0.3098,
+      "confidence_score": 0.3109,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.3264,
+        "model_agreement": 0.3283,
         "feature_completeness": 0.3343,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8242,7 +8242,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_WAS_NYG",
@@ -8264,10 +8264,10 @@
         20,
         23
       ],
-      "confidence_score": 0.5546,
+      "confidence_score": 0.5561,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7904,
+        "model_agreement": 0.7932,
         "feature_completeness": 0.2995,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8297,7 +8297,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_LA_ARI",
@@ -8319,10 +8319,10 @@
         16,
         23
       ],
-      "confidence_score": 0.4191,
+      "confidence_score": 0.4196,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6571,
+        "model_agreement": 0.6579,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8352,7 +8352,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_KC_ATL",
@@ -8377,7 +8377,7 @@
       "confidence_score": 0.4536,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6632,
+        "model_agreement": 0.6633,
         "feature_completeness": 0.196,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8407,7 +8407,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_PIT_CIN",
@@ -8422,17 +8422,17 @@
       "predicted_total": 49,
       "predicted_spread": -3,
       "ci_home": [
-        19,
+        18,
         23
       ],
       "ci_away": [
         13,
         24
       ],
-      "confidence_score": 0.4283,
+      "confidence_score": 0.4247,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5608,
+        "model_agreement": 0.5542,
         "feature_completeness": 0.2995,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8462,7 +8462,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_HOU_CLE",
@@ -8484,10 +8484,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5473,
+      "confidence_score": 0.5462,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.832,
+        "model_agreement": 0.83,
         "feature_completeness": 0.1989,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8517,7 +8517,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_SF_DAL",
@@ -8539,10 +8539,10 @@
         17,
         24
       ],
-      "confidence_score": 0.472,
+      "confidence_score": 0.4721,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.689,
+        "model_agreement": 0.6893,
         "feature_completeness": 0.2101,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8572,7 +8572,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_NE_DET",
@@ -8594,10 +8594,10 @@
         20,
         24
       ],
-      "confidence_score": 0.4679,
+      "confidence_score": 0.4691,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6768,
+        "model_agreement": 0.6789,
         "feature_completeness": 0.2189,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8629,7 +8629,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_MIN_GB",
@@ -8684,7 +8684,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_MIA_IND",
@@ -8739,7 +8739,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_SEA_LV",
@@ -8761,10 +8761,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4148,
+      "confidence_score": 0.4156,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6383,
+        "model_agreement": 0.6398,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8794,7 +8794,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_CAR_NO",
@@ -8816,10 +8816,10 @@
         21,
         25
       ],
-      "confidence_score": 0.5374,
+      "confidence_score": 0.5382,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7451,
+        "model_agreement": 0.7465,
         "feature_completeness": 0.3254,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8849,7 +8849,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_BUF_NYJ",
@@ -8871,10 +8871,10 @@
         12,
         24
       ],
-      "confidence_score": 0.4159,
+      "confidence_score": 0.4179,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5948,
+        "model_agreement": 0.5984,
         "feature_completeness": 0.196,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8904,7 +8904,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_JAX_TEN",
@@ -8920,16 +8920,16 @@
       "predicted_spread": -5,
       "ci_home": [
         19,
-        23
+        22
       ],
       "ci_away": [
-        19,
-        24
+        18,
+        23
       ],
-      "confidence_score": 0.4954,
+      "confidence_score": 0.4834,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6688,
+        "model_agreement": 0.6468,
         "feature_completeness": 0.3254,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8959,7 +8959,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_10_LAC_BAL",
@@ -8981,10 +8981,10 @@
         16,
         24
       ],
-      "confidence_score": 0.456,
+      "confidence_score": 0.4548,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6661,
+        "model_agreement": 0.6639,
         "feature_completeness": 0.1989,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9014,7 +9014,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_IND_HOU",
@@ -9036,10 +9036,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4938,
+      "confidence_score": 0.4962,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.782,
+        "model_agreement": 0.7863,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9069,7 +9069,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_MIA_BUF",
@@ -9091,10 +9091,10 @@
         22,
         25
       ],
-      "confidence_score": 0.4564,
+      "confidence_score": 0.4571,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7139,
+        "model_agreement": 0.7152,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9124,7 +9124,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_BAL_CAR",
@@ -9146,10 +9146,10 @@
         19,
         24
       ],
-      "confidence_score": 0.4766,
+      "confidence_score": 0.4793,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7615,
+        "model_agreement": 0.7665,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9179,7 +9179,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_NO_CHI",
@@ -9201,10 +9201,10 @@
         22,
         25
       ],
-      "confidence_score": 0.5259,
+      "confidence_score": 0.5266,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8512,
+        "model_agreement": 0.8526,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9234,7 +9234,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_TEN_DAL",
@@ -9256,10 +9256,10 @@
         23,
         25
       ],
-      "confidence_score": 0.4877,
+      "confidence_score": 0.4869,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7708,
+        "model_agreement": 0.7693,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9289,7 +9289,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_LV_DEN",
@@ -9311,10 +9311,10 @@
         22,
         25
       ],
-      "confidence_score": 0.5118,
+      "confidence_score": 0.51,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8256,
+        "model_agreement": 0.8224,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9344,7 +9344,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_TB_DET",
@@ -9366,10 +9366,10 @@
         22,
         26
       ],
-      "confidence_score": 0.4831,
+      "confidence_score": 0.4837,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7626,
+        "model_agreement": 0.7636,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9399,7 +9399,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_ARI_KC",
@@ -9421,10 +9421,10 @@
         21,
         26
       ],
-      "confidence_score": 0.5102,
+      "confidence_score": 0.5078,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8228,
+        "model_agreement": 0.8183,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9454,7 +9454,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_NYJ_LAC",
@@ -9476,10 +9476,10 @@
         20,
         26
       ],
-      "confidence_score": 0.4834,
+      "confidence_score": 0.485,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.774,
+        "model_agreement": 0.7768,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9509,7 +9509,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_JAX_NYG",
@@ -9520,21 +9520,21 @@
       "home_team": "NYG",
       "away_team": "JAX",
       "predicted_home_score": 22,
-      "predicted_away_score": 26,
-      "predicted_total": 48,
-      "predicted_spread": -4,
+      "predicted_away_score": 27,
+      "predicted_total": 49,
+      "predicted_spread": -5,
       "ci_home": [
         21,
         24
       ],
       "ci_away": [
-        19,
+        18,
         24
       ],
-      "confidence_score": 0.4807,
+      "confidence_score": 0.4508,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.769,
+        "model_agreement": 0.7146,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9564,7 +9564,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_PIT_PHI",
@@ -9586,10 +9586,10 @@
         21,
         26
       ],
-      "confidence_score": 0.4695,
+      "confidence_score": 0.468,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7486,
+        "model_agreement": 0.746,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9619,7 +9619,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_MIN_SF",
@@ -9641,10 +9641,10 @@
         21,
         26
       ],
-      "confidence_score": 0.4788,
+      "confidence_score": 0.4807,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7547,
+        "model_agreement": 0.7581,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9676,7 +9676,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_11_CIN_WAS",
@@ -9691,17 +9691,17 @@
       "predicted_total": 49,
       "predicted_spread": -5,
       "ci_home": [
-        22,
+        21,
         22
       ],
       "ci_away": [
         19,
         25
       ],
-      "confidence_score": 0.496,
+      "confidence_score": 0.4974,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7968,
+        "model_agreement": 0.7994,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9731,7 +9731,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_GB_LA",
@@ -9750,13 +9750,13 @@
         26
       ],
       "ci_away": [
-        21,
+        22,
         26
       ],
-      "confidence_score": 0.486,
+      "confidence_score": 0.4882,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7788,
+        "model_agreement": 0.7827,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9788,7 +9788,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_KC_BUF",
@@ -9810,10 +9810,10 @@
         24,
         27
       ],
-      "confidence_score": 0.4711,
+      "confidence_score": 0.4726,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7408,
+        "model_agreement": 0.7434,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9845,7 +9845,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_PHI_DAL",
@@ -9861,16 +9861,16 @@
       "predicted_spread": -3,
       "ci_home": [
         22,
-        27
+        28
       ],
       "ci_away": [
         22,
         25
       ],
-      "confidence_score": 0.4739,
+      "confidence_score": 0.4715,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7458,
+        "model_agreement": 0.7414,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9902,7 +9902,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_CHI_DET",
@@ -9924,10 +9924,10 @@
         23,
         26
       ],
-      "confidence_score": 0.4257,
+      "confidence_score": 0.4275,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6581,
+        "model_agreement": 0.6615,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9959,7 +9959,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_DEN_PIT",
@@ -9970,21 +9970,21 @@
       "home_team": "PIT",
       "away_team": "DEN",
       "predicted_home_score": 23,
-      "predicted_away_score": 25,
-      "predicted_total": 48,
-      "predicted_spread": -2,
+      "predicted_away_score": 24,
+      "predicted_total": 47,
+      "predicted_spread": -1,
       "ci_home": [
         18,
         22
       ],
       "ci_away": [
-        22,
+        23,
         24
       ],
-      "confidence_score": 0.5034,
+      "confidence_score": 0.5072,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8102,
+        "model_agreement": 0.8172,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9993,10 +9993,10 @@
       "book_total": 39.5,
       "opening_spread": -1.5,
       "opening_total": null,
-      "opening_spread_edge": -0.5,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": -0.5,
-      "total_edge": 8.5,
+      "spread_edge": 0.5,
+      "total_edge": 7.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -10010,13 +10010,13 @@
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -0.5,
-        "total_edge": 8.5,
+        "spread_edge": 0.5,
+        "total_edge": 7.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_WAS_ARI",
@@ -10038,10 +10038,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4754,
+      "confidence_score": 0.4756,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7595,
+        "model_agreement": 0.7597,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10071,7 +10071,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_NO_CIN",
@@ -10093,10 +10093,10 @@
         21,
         26
       ],
-      "confidence_score": 0.4834,
+      "confidence_score": 0.4839,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7739,
+        "model_agreement": 0.7749,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10126,7 +10126,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_LV_CLE",
@@ -10145,13 +10145,13 @@
         24
       ],
       "ci_away": [
-        21,
+        22,
         26
       ],
-      "confidence_score": 0.534,
+      "confidence_score": 0.5356,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8659,
+        "model_agreement": 0.8689,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10181,7 +10181,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_BAL_HOU",
@@ -10203,10 +10203,10 @@
         24,
         26
       ],
-      "confidence_score": 0.4533,
+      "confidence_score": 0.4522,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7083,
+        "model_agreement": 0.7063,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10236,7 +10236,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_NYG_IND",
@@ -10291,7 +10291,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_TEN_JAX",
@@ -10307,16 +10307,16 @@
       "predicted_spread": -1,
       "ci_home": [
         23,
-        25
+        26
       ],
       "ci_away": [
-        22,
+        23,
         25
       ],
-      "confidence_score": 0.5041,
+      "confidence_score": 0.5137,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8115,
+        "model_agreement": 0.829,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10346,7 +10346,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_NE_LAC",
@@ -10401,7 +10401,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_NYJ_MIA",
@@ -10423,10 +10423,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4986,
+      "confidence_score": 0.4992,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8017,
+        "model_agreement": 0.8026,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10456,7 +10456,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_ATL_MIN",
@@ -10478,10 +10478,10 @@
         23,
         26
       ],
-      "confidence_score": 0.5001,
+      "confidence_score": 0.5011,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7934,
+        "model_agreement": 0.7953,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10511,7 +10511,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_SEA_SF",
@@ -10521,10 +10521,10 @@
       "game_date": "2026-11-29",
       "home_team": "SF",
       "away_team": "SEA",
-      "predicted_home_score": 22,
+      "predicted_home_score": 23,
       "predicted_away_score": 26,
-      "predicted_total": 48,
-      "predicted_spread": -4,
+      "predicted_total": 49,
+      "predicted_spread": -3,
       "ci_home": [
         22,
         24
@@ -10566,7 +10566,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_12_CAR_TB",
@@ -10585,13 +10585,13 @@
         22
       ],
       "ci_away": [
-        17,
+        18,
         25
       ],
-      "confidence_score": 0.4829,
+      "confidence_score": 0.4844,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.773,
+        "model_agreement": 0.7758,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10621,7 +10621,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_KC_LA",
@@ -10643,10 +10643,10 @@
         18,
         26
       ],
-      "confidence_score": 0.4478,
+      "confidence_score": 0.446,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7093,
+        "model_agreement": 0.706,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10676,7 +10676,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_PHI_ARI",
@@ -10698,10 +10698,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4364,
+      "confidence_score": 0.4338,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6884,
+        "model_agreement": 0.6838,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10731,7 +10731,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_DET_ATL",
@@ -10753,10 +10753,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4433,
+      "confidence_score": 0.4443,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.701,
+        "model_agreement": 0.7029,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10786,7 +10786,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_JAX_CHI",
@@ -10797,21 +10797,21 @@
       "home_team": "CHI",
       "away_team": "JAX",
       "predicted_home_score": 23,
-      "predicted_away_score": 26,
-      "predicted_total": 49,
-      "predicted_spread": -3,
+      "predicted_away_score": 27,
+      "predicted_total": 50,
+      "predicted_spread": -4,
       "ci_home": [
         23,
-        26
-      ],
-      "ci_away": [
-        21,
         25
       ],
-      "confidence_score": 0.4883,
+      "ci_away": [
+        20,
+        25
+      ],
+      "confidence_score": 0.4809,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7829,
+        "model_agreement": 0.7693,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10841,7 +10841,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_CIN_CLE",
@@ -10863,10 +10863,10 @@
         20,
         24
       ],
-      "confidence_score": 0.5171,
+      "confidence_score": 0.5195,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8352,
+        "model_agreement": 0.8395,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10896,7 +10896,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_MIA_DEN",
@@ -10918,10 +10918,10 @@
         21,
         26
       ],
-      "confidence_score": 0.4949,
+      "confidence_score": 0.4955,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7949,
+        "model_agreement": 0.7959,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10951,7 +10951,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_CAR_MIN",
@@ -10973,10 +10973,10 @@
         24,
         26
       ],
-      "confidence_score": 0.49,
+      "confidence_score": 0.4913,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.775,
+        "model_agreement": 0.7775,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11006,7 +11006,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_BUF_NE",
@@ -11028,10 +11028,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4322,
+      "confidence_score": 0.4326,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6808,
+        "model_agreement": 0.6816,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11061,7 +11061,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_GB_NO",
@@ -11083,10 +11083,10 @@
         23,
         26
       ],
-      "confidence_score": 0.5162,
+      "confidence_score": 0.518,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8227,
+        "model_agreement": 0.8259,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11116,7 +11116,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_SF_NYG",
@@ -11171,7 +11171,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_HOU_PIT",
@@ -11193,10 +11193,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4549,
+      "confidence_score": 0.4522,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7221,
+        "model_agreement": 0.7172,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11226,7 +11226,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_LAC_TB",
@@ -11281,7 +11281,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_WAS_TEN",
@@ -11291,10 +11291,10 @@
       "game_date": "2026-12-06",
       "home_team": "TEN",
       "away_team": "WAS",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 26,
-      "predicted_total": 49,
-      "predicted_spread": -3,
+      "predicted_total": 48,
+      "predicted_spread": -4,
       "ci_home": [
         22,
         23
@@ -11303,10 +11303,10 @@
         18,
         24
       ],
-      "confidence_score": 0.4976,
+      "confidence_score": 0.4998,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7888,
+        "model_agreement": 0.7929,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11336,7 +11336,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_13_DAL_SEA",
@@ -11358,10 +11358,10 @@
         22,
         26
       ],
-      "confidence_score": 0.5033,
+      "confidence_score": 0.5011,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7992,
+        "model_agreement": 0.7952,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11391,7 +11391,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_MIN_NE",
@@ -11413,10 +11413,10 @@
         20,
         26
       ],
-      "confidence_score": 0.4413,
+      "confidence_score": 0.4421,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6973,
+        "model_agreement": 0.6989,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11446,7 +11446,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_TB_BAL",
@@ -11468,10 +11468,10 @@
         20,
         26
       ],
-      "confidence_score": 0.5068,
+      "confidence_score": 0.5054,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8164,
+        "model_agreement": 0.8139,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11501,7 +11501,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_NO_CAR",
@@ -11523,10 +11523,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4673,
+      "confidence_score": 0.469,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7448,
+        "model_agreement": 0.7477,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11556,7 +11556,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_KC_CIN",
@@ -11571,17 +11571,17 @@
       "predicted_total": 49,
       "predicted_spread": -7,
       "ci_home": [
-        22,
+        21,
         22
       ],
       "ci_away": [
         18,
         26
       ],
-      "confidence_score": 0.4725,
+      "confidence_score": 0.472,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7541,
+        "model_agreement": 0.7531,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11611,7 +11611,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_ATL_CLE",
@@ -11633,10 +11633,10 @@
         20,
         25
       ],
-      "confidence_score": 0.5016,
+      "confidence_score": 0.5041,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8071,
+        "model_agreement": 0.8117,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11666,7 +11666,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_TEN_DET",
@@ -11688,10 +11688,10 @@
         23,
         25
       ],
-      "confidence_score": 0.4625,
+      "confidence_score": 0.4638,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.725,
+        "model_agreement": 0.7274,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11721,7 +11721,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_BUF_GB",
@@ -11731,10 +11731,10 @@
       "game_date": "2026-12-13",
       "home_team": "GB",
       "away_team": "BUF",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 26,
-      "predicted_total": 49,
-      "predicted_spread": -3,
+      "predicted_total": 48,
+      "predicted_spread": -4,
       "ci_home": [
         21,
         22
@@ -11743,10 +11743,10 @@
         14,
         24
       ],
-      "confidence_score": 0.4208,
+      "confidence_score": 0.4195,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6601,
+        "model_agreement": 0.6577,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11776,7 +11776,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_LAC_LV",
@@ -11798,10 +11798,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4613,
+      "confidence_score": 0.4615,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7229,
+        "model_agreement": 0.7231,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11831,7 +11831,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_CHI_MIA",
@@ -11853,10 +11853,10 @@
         17,
         24
       ],
-      "confidence_score": 0.439,
+      "confidence_score": 0.44,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6932,
+        "model_agreement": 0.695,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11886,7 +11886,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_DEN_NYJ",
@@ -11908,10 +11908,10 @@
         14,
         24
       ],
-      "confidence_score": 0.356,
+      "confidence_score": 0.3574,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5424,
+        "model_agreement": 0.5449,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11941,7 +11941,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_IND_PHI",
@@ -11963,10 +11963,10 @@
         17,
         26
       ],
-      "confidence_score": 0.4356,
+      "confidence_score": 0.4368,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6871,
+        "model_agreement": 0.6892,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11996,7 +11996,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_NYG_SEA",
@@ -12051,7 +12051,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_LA_SF",
@@ -12073,10 +12073,10 @@
         20,
         24
       ],
-      "confidence_score": 0.4574,
+      "confidence_score": 0.4584,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7158,
+        "model_agreement": 0.7176,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12106,7 +12106,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_HOU_WAS",
@@ -12128,10 +12128,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4486,
+      "confidence_score": 0.4491,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7107,
+        "model_agreement": 0.7115,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12161,7 +12161,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_14_PIT_JAX",
@@ -12180,13 +12180,13 @@
         25
       ],
       "ci_away": [
-        20,
+        21,
         26
       ],
-      "confidence_score": 0.4876,
+      "confidence_score": 0.5133,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7816,
+        "model_agreement": 0.8283,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12216,7 +12216,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_SF_LAC",
@@ -12271,7 +12271,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_CHI_BUF",
@@ -12293,10 +12293,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4607,
+      "confidence_score": 0.4632,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7218,
+        "model_agreement": 0.7263,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12326,7 +12326,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_SEA_PHI",
@@ -12342,16 +12342,16 @@
       "predicted_spread": -5,
       "ci_home": [
         22,
-        26
+        27
       ],
       "ci_away": [
         16,
         24
       ],
-      "confidence_score": 0.3974,
+      "confidence_score": 0.3956,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6176,
+        "model_agreement": 0.6142,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12381,7 +12381,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_NYJ_ARI",
@@ -12403,10 +12403,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4721,
+      "confidence_score": 0.4738,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7535,
+        "model_agreement": 0.7566,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12436,7 +12436,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_CIN_CAR",
@@ -12458,10 +12458,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4575,
+      "confidence_score": 0.461,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7268,
+        "model_agreement": 0.7332,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12491,7 +12491,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_MIA_GB",
@@ -12507,16 +12507,16 @@
       "predicted_spread": -4,
       "ci_home": [
         23,
-        24
+        23
       ],
       "ci_away": [
-        17,
+        16,
         26
       ],
-      "confidence_score": 0.4554,
+      "confidence_score": 0.456,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.723,
+        "model_agreement": 0.7241,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12546,7 +12546,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_JAX_HOU",
@@ -12556,22 +12556,22 @@
       "game_date": "2026-12-20",
       "home_team": "HOU",
       "away_team": "JAX",
-      "predicted_home_score": 24,
+      "predicted_home_score": 23,
       "predicted_away_score": 27,
-      "predicted_total": 51,
-      "predicted_spread": -3,
+      "predicted_total": 50,
+      "predicted_spread": -4,
       "ci_home": [
         23,
         28
       ],
       "ci_away": [
-        22,
+        21,
         25
       ],
-      "confidence_score": 0.4387,
-      "confidence_label": "WEAK",
+      "confidence_score": 0.4509,
+      "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6817,
+        "model_agreement": 0.7039,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12601,7 +12601,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_DAL_LA",
@@ -12623,10 +12623,10 @@
         21,
         26
       ],
-      "confidence_score": 0.4725,
+      "confidence_score": 0.471,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7542,
+        "model_agreement": 0.7514,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12656,7 +12656,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_DEN_LV",
@@ -12678,10 +12678,10 @@
         17,
         23
       ],
-      "confidence_score": 0.4148,
+      "confidence_score": 0.4183,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6384,
+        "model_agreement": 0.6447,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12711,7 +12711,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_DET_MIN",
@@ -12733,10 +12733,10 @@
         16,
         26
       ],
-      "confidence_score": 0.4532,
+      "confidence_score": 0.4526,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7082,
+        "model_agreement": 0.707,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12766,7 +12766,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_CLE_NYG",
@@ -12788,10 +12788,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4932,
+      "confidence_score": 0.4943,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7917,
+        "model_agreement": 0.7938,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12821,7 +12821,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_BAL_PIT",
@@ -12843,10 +12843,10 @@
         18,
         25
       ],
-      "confidence_score": 0.4472,
+      "confidence_score": 0.4491,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7081,
+        "model_agreement": 0.7116,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12876,7 +12876,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_NO_TB",
@@ -12931,7 +12931,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_IND_TEN",
@@ -12946,17 +12946,17 @@
       "predicted_total": 48,
       "predicted_spread": -4,
       "ci_home": [
-        22,
+        21,
         23
       ],
       "ci_away": [
         16,
         24
       ],
-      "confidence_score": 0.4673,
+      "confidence_score": 0.4683,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7337,
+        "model_agreement": 0.7356,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12986,7 +12986,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_ATL_WAS",
@@ -13008,10 +13008,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4606,
+      "confidence_score": 0.463,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7324,
+        "model_agreement": 0.7369,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13041,7 +13041,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_15_NE_KC",
@@ -13060,13 +13060,13 @@
         22
       ],
       "ci_away": [
-        17,
+        18,
         24
       ],
-      "confidence_score": 0.4461,
+      "confidence_score": 0.4467,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7061,
+        "model_agreement": 0.7072,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13096,7 +13096,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_HOU_PHI",
@@ -13118,10 +13118,10 @@
         10,
         25
       ],
-      "confidence_score": 0.3438,
+      "confidence_score": 0.3442,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5202,
+        "model_agreement": 0.5209,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13153,7 +13153,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_GB_CHI",
@@ -13175,10 +13175,10 @@
         26,
         29
       ],
-      "confidence_score": 0.4818,
+      "confidence_score": 0.4819,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.771,
+        "model_agreement": 0.7711,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13210,7 +13210,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_BUF_DEN",
@@ -13232,10 +13232,10 @@
         23,
         26
       ],
-      "confidence_score": 0.4829,
+      "confidence_score": 0.4815,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.773,
+        "model_agreement": 0.7705,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13267,7 +13267,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_LA_SEA",
@@ -13287,12 +13287,12 @@
       ],
       "ci_away": [
         24,
-        25
+        26
       ],
-      "confidence_score": 0.5541,
+      "confidence_score": 0.5557,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8916,
+        "model_agreement": 0.8944,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13324,7 +13324,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_TB_ATL",
@@ -13346,10 +13346,10 @@
         16,
         25
       ],
-      "confidence_score": 0.4456,
+      "confidence_score": 0.4471,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7051,
+        "model_agreement": 0.7079,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13379,7 +13379,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_CLE_BAL",
@@ -13401,10 +13401,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4903,
+      "confidence_score": 0.4915,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7866,
+        "model_agreement": 0.7887,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13434,7 +13434,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_JAX_DAL",
@@ -13449,17 +13449,17 @@
       "predicted_total": 49,
       "predicted_spread": -3,
       "ci_home": [
-        23,
-        24
+        22,
+        23
       ],
       "ci_away": [
-        17,
+        15,
         24
       ],
-      "confidence_score": 0.4728,
+      "confidence_score": 0.464,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7437,
+        "model_agreement": 0.7277,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13489,7 +13489,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_CIN_IND",
@@ -13511,10 +13511,10 @@
         21,
         25
       ],
-      "confidence_score": 0.458,
+      "confidence_score": 0.4612,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7169,
+        "model_agreement": 0.7226,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13544,7 +13544,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_SF_KC",
@@ -13566,10 +13566,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4417,
+      "confidence_score": 0.442,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6982,
+        "model_agreement": 0.6986,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13599,7 +13599,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_TEN_LV",
@@ -13621,10 +13621,10 @@
         20,
         25
       ],
-      "confidence_score": 0.5023,
+      "confidence_score": 0.5042,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7974,
+        "model_agreement": 0.8009,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13654,7 +13654,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_LAC_MIA",
@@ -13709,7 +13709,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_WAS_MIN",
@@ -13731,10 +13731,10 @@
         19,
         26
       ],
-      "confidence_score": 0.4768,
+      "confidence_score": 0.4789,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.751,
+        "model_agreement": 0.7549,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13764,7 +13764,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_ARI_NO",
@@ -13786,10 +13786,10 @@
         21,
         26
       ],
-      "confidence_score": 0.5067,
+      "confidence_score": 0.505,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8054,
+        "model_agreement": 0.8024,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13819,7 +13819,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_NE_NYJ",
@@ -13841,10 +13841,10 @@
         12,
         23
       ],
-      "confidence_score": 0.3619,
+      "confidence_score": 0.3624,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.553,
+        "model_agreement": 0.554,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13874,7 +13874,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_CAR_PIT",
@@ -13890,16 +13890,16 @@
       "predicted_spread": -4,
       "ci_home": [
         23,
-        24
+        23
       ],
       "ci_away": [
         18,
         26
       ],
-      "confidence_score": 0.468,
+      "confidence_score": 0.4699,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.746,
+        "model_agreement": 0.7495,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13929,7 +13929,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_16_NYG_DET",
@@ -13945,16 +13945,16 @@
       "predicted_spread": -4,
       "ci_home": [
         22,
-        29
+        28
       ],
       "ci_away": [
         19,
         25
       ],
-      "confidence_score": 0.4324,
+      "confidence_score": 0.4336,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6704,
+        "model_agreement": 0.6725,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13984,7 +13984,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_BAL_CIN",
@@ -14006,10 +14006,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5099,
+      "confidence_score": 0.5126,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8221,
+        "model_agreement": 0.827,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14039,7 +14039,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_LV_ARI",
@@ -14061,10 +14061,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4725,
+      "confidence_score": 0.4709,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7541,
+        "model_agreement": 0.7512,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14094,7 +14094,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_NO_ATL",
@@ -14116,10 +14116,10 @@
         17,
         25
       ],
-      "confidence_score": 0.4576,
+      "confidence_score": 0.4588,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.727,
+        "model_agreement": 0.7292,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14149,7 +14149,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_SEA_CAR",
@@ -14171,10 +14171,10 @@
         15,
         24
       ],
-      "confidence_score": 0.3584,
+      "confidence_score": 0.3597,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5467,
+        "model_agreement": 0.549,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14204,7 +14204,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_DET_CHI",
@@ -14226,10 +14226,10 @@
         22,
         25
       ],
-      "confidence_score": 0.5039,
+      "confidence_score": 0.5052,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8113,
+        "model_agreement": 0.8136,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14259,7 +14259,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_IND_CLE",
@@ -14281,10 +14281,10 @@
         15,
         26
       ],
-      "confidence_score": 0.4339,
+      "confidence_score": 0.4328,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6839,
+        "model_agreement": 0.682,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14314,7 +14314,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_NYG_DAL",
@@ -14336,10 +14336,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4285,
+      "confidence_score": 0.4273,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6632,
+        "model_agreement": 0.661,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14369,7 +14369,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_WAS_JAX",
@@ -14379,22 +14379,22 @@
       "game_date": "2027-01-03",
       "home_team": "JAX",
       "away_team": "WAS",
-      "predicted_home_score": 24,
-      "predicted_away_score": 27,
+      "predicted_home_score": 25,
+      "predicted_away_score": 26,
       "predicted_total": 51,
-      "predicted_spread": -3,
+      "predicted_spread": -1,
       "ci_home": [
         23,
         25
       ],
       "ci_away": [
-        19,
+        20,
         25
       ],
-      "confidence_score": 0.4528,
+      "confidence_score": 0.4717,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7183,
+        "model_agreement": 0.7527,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14424,7 +14424,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_KC_LAC",
@@ -14446,10 +14446,10 @@
         14,
         25
       ],
-      "confidence_score": 0.399,
+      "confidence_score": 0.3982,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6206,
+        "model_agreement": 0.6191,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14479,7 +14479,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_BUF_MIA",
@@ -14490,21 +14490,21 @@
       "home_team": "MIA",
       "away_team": "BUF",
       "predicted_home_score": 23,
-      "predicted_away_score": 25,
-      "predicted_total": 48,
-      "predicted_spread": -2,
+      "predicted_away_score": 26,
+      "predicted_total": 49,
+      "predicted_spread": -3,
       "ci_home": [
         22,
-        23
+        22
       ],
       "ci_away": [
         12,
         24
       ],
-      "confidence_score": 0.4249,
+      "confidence_score": 0.4254,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6676,
+        "model_agreement": 0.6685,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14534,7 +14534,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_DEN_NE",
@@ -14556,10 +14556,10 @@
         18,
         25
       ],
-      "confidence_score": 0.445,
+      "confidence_score": 0.4488,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7042,
+        "model_agreement": 0.711,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14589,7 +14589,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_MIN_NYJ",
@@ -14611,10 +14611,10 @@
         12,
         24
       ],
-      "confidence_score": 0.3654,
+      "confidence_score": 0.3677,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5594,
+        "model_agreement": 0.5636,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14644,7 +14644,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_PHI_SF",
@@ -14666,10 +14666,10 @@
         16,
         25
       ],
-      "confidence_score": 0.4037,
+      "confidence_score": 0.4026,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6181,
+        "model_agreement": 0.616,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14699,7 +14699,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_LA_TB",
@@ -14721,10 +14721,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4288,
+      "confidence_score": 0.4299,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6746,
+        "model_agreement": 0.6766,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14754,7 +14754,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_PIT_TEN",
@@ -14776,10 +14776,10 @@
         16,
         24
       ],
-      "confidence_score": 0.3908,
+      "confidence_score": 0.3922,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5946,
+        "model_agreement": 0.5973,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14809,7 +14809,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_17_HOU_GB",
@@ -14824,17 +14824,17 @@
       "predicted_total": 48,
       "predicted_spread": -6,
       "ci_home": [
-        18,
+        17,
         22
       ],
       "ci_away": [
         14,
         24
       ],
-      "confidence_score": 0.3868,
+      "confidence_score": 0.3814,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5983,
+        "model_agreement": 0.5885,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14864,7 +14864,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_SF_ARI",
@@ -14886,10 +14886,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4298,
+      "confidence_score": 0.4289,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6829,
+        "model_agreement": 0.6814,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14919,7 +14919,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_PIT_BAL",
@@ -14941,10 +14941,10 @@
         18,
         26
       ],
-      "confidence_score": 0.4546,
+      "confidence_score": 0.4569,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7281,
+        "model_agreement": 0.7323,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14974,7 +14974,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_NYJ_BUF",
@@ -14996,10 +14996,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4494,
+      "confidence_score": 0.4516,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7077,
+        "model_agreement": 0.7116,
         "feature_completeness": 0.1006,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15029,7 +15029,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_ATL_CAR",
@@ -15051,10 +15051,10 @@
         17,
         25
       ],
-      "confidence_score": 0.4427,
+      "confidence_score": 0.4454,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7064,
+        "model_agreement": 0.7113,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15084,7 +15084,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_CLE_CIN",
@@ -15106,10 +15106,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4706,
+      "confidence_score": 0.4728,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7571,
+        "model_agreement": 0.7612,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15139,7 +15139,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_LAC_DEN",
@@ -15161,10 +15161,10 @@
         20,
         25
       ],
-      "confidence_score": 0.4735,
+      "confidence_score": 0.4765,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7623,
+        "model_agreement": 0.7678,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15194,7 +15194,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_DET_GB",
@@ -15216,10 +15216,10 @@
         17,
         25
       ],
-      "confidence_score": 0.444,
+      "confidence_score": 0.4457,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7089,
+        "model_agreement": 0.7119,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15249,7 +15249,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_TEN_HOU",
@@ -15271,10 +15271,10 @@
         22,
         25
       ],
-      "confidence_score": 0.4415,
-      "confidence_label": "LOW",
+      "confidence_score": 0.44,
+      "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6934,
+        "model_agreement": 0.6905,
         "feature_completeness": 0.1006,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15304,7 +15304,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_JAX_IND",
@@ -15320,16 +15320,16 @@
       "predicted_spread": -3,
       "ci_home": [
         22,
-        27
+        26
       ],
       "ci_away": [
-        19,
+        18,
         24
       ],
-      "confidence_score": 0.4609,
+      "confidence_score": 0.449,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7286,
+        "model_agreement": 0.707,
         "feature_completeness": 0.1006,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15359,7 +15359,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_LV_KC",
@@ -15381,10 +15381,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4758,
+      "confidence_score": 0.4754,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7667,
+        "model_agreement": 0.7659,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15414,7 +15414,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_SEA_LA",
@@ -15430,16 +15430,16 @@
       "predicted_spread": -3,
       "ci_home": [
         23,
-        25
+        24
       ],
       "ci_away": [
         18,
         24
       ],
-      "confidence_score": 0.4672,
+      "confidence_score": 0.4687,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.751,
+        "model_agreement": 0.7537,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15469,7 +15469,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_CHI_MIN",
@@ -15488,13 +15488,13 @@
         26
       ],
       "ci_away": [
-        19,
+        20,
         25
       ],
-      "confidence_score": 0.4454,
+      "confidence_score": 0.4484,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7004,
+        "model_agreement": 0.7059,
         "feature_completeness": 0.1006,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15524,7 +15524,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_MIA_NE",
@@ -15579,7 +15579,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_TB_NO",
@@ -15634,7 +15634,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_PHI_NYG",
@@ -15656,10 +15656,10 @@
         16,
         24
       ],
-      "confidence_score": 0.464,
+      "confidence_score": 0.4631,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7451,
+        "model_agreement": 0.7436,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15689,7 +15689,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     },
     {
       "game_id": "2026_18_DAL_WAS",
@@ -15708,13 +15708,13 @@
         24
       ],
       "ci_away": [
-        18,
+        17,
         26
       ],
-      "confidence_score": 0.4378,
+      "confidence_score": 0.4381,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6975,
+        "model_agreement": 0.6981,
         "feature_completeness": 0.0806,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -15744,7 +15744,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-01T14:38:50.256609+00:00"
+      "generated_at": "2026-09-02T23:43:36.213349+00:00"
     }
   ]
 }
