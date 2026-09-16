@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T14:44:36.692254+00:00",
+  "generated_at": "2026-09-16T23:59:30.041116+00:00",
   "season": 2026,
   "n_games": 256,
   "predictions": [
@@ -11,10 +11,10 @@
       "game_date": "2026-09-17",
       "home_team": "BUF",
       "away_team": "DET",
-      "predicted_home_score": 28,
+      "predicted_home_score": 27,
       "predicted_away_score": 23,
-      "predicted_total": 51,
-      "predicted_spread": 5,
+      "predicted_total": 50,
+      "predicted_spread": 4,
       "ci_home": [
         25,
         30
@@ -23,22 +23,22 @@
         23,
         25
       ],
-      "confidence_score": 0.6868,
+      "confidence_score": 0.6867,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7319,
+        "model_agreement": 0.726,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
-        "injury_data_freshness": 0.92
+        "injury_data_freshness": 1.0
       },
       "book_spread": 4.5,
-      "book_total": 53.5,
+      "book_total": 54.5,
       "opening_spread": 4.5,
       "opening_total": null,
-      "opening_spread_edge": 0.5,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": 0.5,
-      "total_edge": -2.5,
+      "spread_edge": -0.5,
+      "total_edge": -4.5,
       "spread_lean": "PUSH",
       "total_lean": "UNDER",
       "is_dome": 1,
@@ -59,13 +59,13 @@
         "away_off_cpoe_r8": -0.5035,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 0.5,
-        "total_edge": -2.5,
+        "spread_edge": -0.5,
+        "total_edge": -4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_SEA_ARI",
@@ -87,22 +87,22 @@
         23,
         25
       ],
-      "confidence_score": 0.7344,
+      "confidence_score": 0.7321,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8468,
+        "model_agreement": 0.8427,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": -4.5,
-      "book_total": 41.5,
-      "opening_spread": -4.5,
+      "book_spread": -3.5,
+      "book_total": 40.5,
+      "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -9.5,
+      "opening_spread_edge": -10.5,
       "market_win_prob": null,
-      "spread_edge": -9.5,
-      "total_edge": 2.5,
+      "spread_edge": -10.5,
+      "total_edge": 3.5,
       "spread_lean": "AWAY",
       "total_lean": "OVER",
       "is_dome": 0,
@@ -123,13 +123,13 @@
         "away_off_cpoe_r8": 1.123,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -9.5,
-        "total_edge": 2.5,
+        "spread_edge": -10.5,
+        "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_CAR_ATL",
@@ -144,28 +144,28 @@
       "predicted_total": 42,
       "predicted_spread": 2,
       "ci_home": [
-        14,
+        13,
         20
       ],
       "ci_away": [
         20,
         20
       ],
-      "confidence_score": 0.709,
+      "confidence_score": 0.7019,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8007,
+        "model_agreement": 0.7878,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": -1.5,
+      "book_spread": -2.5,
       "book_total": 43.5,
-      "opening_spread": -1.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": 3.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 3.5,
+      "spread_edge": 4.5,
       "total_edge": -1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -187,13 +187,13 @@
         "away_off_cpoe_r8": 1.3142,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 3.5,
+        "spread_edge": 4.5,
         "total_edge": -1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_NO_BAL",
@@ -215,10 +215,10 @@
         19,
         22
       ],
-      "confidence_score": 0.66,
+      "confidence_score": 0.6599,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7117,
+        "model_agreement": 0.7114,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
@@ -257,7 +257,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_MIN_CHI",
@@ -273,28 +273,28 @@
       "predicted_spread": 8,
       "ci_home": [
         19,
-        27
+        26
       ],
       "ci_away": [
         18,
         20
       ],
-      "confidence_score": 0.6384,
+      "confidence_score": 0.642,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6724,
+        "model_agreement": 0.6788,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": 5.5,
-      "book_total": 49.5,
-      "opening_spread": 5.5,
+      "book_spread": 4.5,
+      "book_total": 48.5,
+      "opening_spread": 4.5,
       "opening_total": null,
-      "opening_spread_edge": 2.5,
+      "opening_spread_edge": 3.5,
       "market_win_prob": null,
-      "spread_edge": 2.5,
-      "total_edge": -5.5,
+      "spread_edge": 3.5,
+      "total_edge": -4.5,
       "spread_lean": "HOME",
       "total_lean": "UNDER",
       "is_dome": 0,
@@ -315,13 +315,13 @@
         "away_off_cpoe_r8": -0.7576,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 2.5,
-        "total_edge": -5.5,
+        "spread_edge": 3.5,
+        "total_edge": -4.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_WAS_DAL",
@@ -331,34 +331,34 @@
       "game_date": "2026-09-20",
       "home_team": "DAL",
       "away_team": "WAS",
-      "predicted_home_score": 26,
+      "predicted_home_score": 27,
       "predicted_away_score": 21,
-      "predicted_total": 47,
-      "predicted_spread": 5,
+      "predicted_total": 48,
+      "predicted_spread": 6,
       "ci_home": [
-        22,
-        25
+        23,
+        26
       ],
       "ci_away": [
-        17,
+        16,
         21
       ],
-      "confidence_score": 0.7037,
+      "confidence_score": 0.7024,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7802,
+        "model_agreement": 0.7779,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": 3.5,
+      "book_spread": 4.5,
       "book_total": 50.5,
-      "opening_spread": 3.5,
+      "opening_spread": 4.5,
       "opening_total": null,
       "opening_spread_edge": 1.5,
       "market_win_prob": null,
       "spread_edge": 1.5,
-      "total_edge": -3.5,
+      "total_edge": -2.5,
       "spread_lean": "PUSH",
       "total_lean": "UNDER",
       "is_dome": 1,
@@ -380,12 +380,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 1.5,
-        "total_edge": -3.5,
+        "total_edge": -2.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_JAX_DEN",
@@ -401,28 +401,28 @@
       "predicted_spread": 2,
       "ci_home": [
         23,
-        27
+        28
       ],
       "ci_away": [
         14,
-        23
+        22
       ],
-      "confidence_score": 0.6091,
+      "confidence_score": 0.6121,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6191,
+        "model_agreement": 0.6245,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
       "book_spread": 2.5,
-      "book_total": 44.5,
+      "book_total": 45.5,
       "opening_spread": 2.5,
       "opening_total": null,
       "opening_spread_edge": -0.5,
       "market_win_prob": null,
       "spread_edge": -0.5,
-      "total_edge": 3.5,
+      "total_edge": 2.5,
       "spread_lean": "PUSH",
       "total_lean": "OVER",
       "is_dome": 0,
@@ -444,12 +444,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": -0.5,
-        "total_edge": 3.5,
+        "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_CIN_HOU",
@@ -468,13 +468,13 @@
         27
       ],
       "ci_away": [
-        19,
+        18,
         22
       ],
-      "confidence_score": 0.6918,
+      "confidence_score": 0.6913,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7585,
+        "model_agreement": 0.7576,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
@@ -513,7 +513,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_IND_KC",
@@ -528,29 +528,29 @@
       "predicted_total": 47,
       "predicted_spread": 15,
       "ci_home": [
-        21,
+        20,
         26
       ],
       "ci_away": [
-        14,
+        13,
         19
       ],
-      "confidence_score": 0.5898,
+      "confidence_score": 0.5882,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.584,
+        "model_agreement": 0.581,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
       "book_spread": 6.5,
-      "book_total": 47.5,
+      "book_total": 46.5,
       "opening_spread": 6.5,
       "opening_total": null,
       "opening_spread_edge": 8.5,
       "market_win_prob": null,
       "spread_edge": 8.5,
-      "total_edge": -0.5,
+      "total_edge": 0.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 0,
@@ -572,12 +572,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 8.5,
-        "total_edge": -0.5,
+        "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_LV_LAC",
@@ -599,21 +599,21 @@
         18,
         20
       ],
-      "confidence_score": 0.6924,
+      "confidence_score": 0.6878,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7705,
+        "model_agreement": 0.7622,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": 7.0,
+      "book_spread": 6.5,
       "book_total": 43.5,
-      "opening_spread": 7.0,
+      "opening_spread": 6.5,
       "opening_total": null,
-      "opening_spread_edge": 7.0,
+      "opening_spread_edge": 7.5,
       "market_win_prob": null,
-      "spread_edge": 7.0,
+      "spread_edge": 7.5,
       "total_edge": 0.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
@@ -635,13 +635,13 @@
         "away_off_cpoe_r8": 0.0431,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 7.0,
+        "spread_edge": 7.5,
         "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_PIT_NE",
@@ -663,10 +663,10 @@
         19,
         21
       ],
-      "confidence_score": 0.6654,
+      "confidence_score": 0.6661,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7214,
+        "model_agreement": 0.7227,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
@@ -705,7 +705,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_GB_NYJ",
@@ -727,21 +727,21 @@
         23,
         29
       ],
-      "confidence_score": 0.6582,
+      "confidence_score": 0.666,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7083,
+        "model_agreement": 0.7224,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": -4.5,
+      "book_spread": -3.5,
       "book_total": 44.5,
-      "opening_spread": -4.5,
+      "opening_spread": -3.5,
       "opening_total": null,
-      "opening_spread_edge": -7.5,
+      "opening_spread_edge": -8.5,
       "market_win_prob": null,
-      "spread_edge": -7.5,
+      "spread_edge": -8.5,
       "total_edge": 1.5,
       "spread_lean": "AWAY",
       "total_lean": "PUSH",
@@ -763,13 +763,13 @@
         "away_off_cpoe_r8": 1.4601,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": -7.5,
+        "spread_edge": -8.5,
         "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_MIA_SF",
@@ -791,22 +791,22 @@
         17,
         20
       ],
-      "confidence_score": 0.6866,
+      "confidence_score": 0.6832,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7491,
+        "model_agreement": 0.7429,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
-      "book_spread": 12.5,
-      "book_total": 45.5,
-      "opening_spread": 12.5,
+      "book_spread": 13.5,
+      "book_total": 44.5,
+      "opening_spread": 13.5,
       "opening_total": null,
-      "opening_spread_edge": 5.5,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": 5.5,
-      "total_edge": 4.5,
+      "spread_edge": 4.5,
+      "total_edge": 5.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
       "is_dome": 1,
@@ -827,13 +827,13 @@
         "away_off_cpoe_r8": 0.2402,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
-        "spread_edge": 5.5,
-        "total_edge": 4.5,
+        "spread_edge": 4.5,
+        "total_edge": 5.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_CLE_TB",
@@ -855,22 +855,22 @@
         14,
         18
       ],
-      "confidence_score": 0.6534,
+      "confidence_score": 0.6537,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6996,
+        "model_agreement": 0.7001,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.68
       },
       "book_spread": 8.5,
-      "book_total": 40.5,
+      "book_total": 41.5,
       "opening_spread": 8.5,
       "opening_total": null,
       "opening_spread_edge": 8.5,
       "market_win_prob": null,
       "spread_edge": 8.5,
-      "total_edge": 4.5,
+      "total_edge": 3.5,
       "spread_lean": "HOME",
       "total_lean": "OVER",
       "is_dome": 0,
@@ -892,12 +892,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 8.5,
-        "total_edge": 4.5,
+        "total_edge": 3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_PHI_TEN",
@@ -961,7 +961,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_02_NYG_LA",
@@ -983,22 +983,22 @@
         13,
         21
       ],
-      "confidence_score": 0.6523,
+      "confidence_score": 0.653,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7034,
+        "model_agreement": 0.6988,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
-        "injury_data_freshness": 0.55
+        "injury_data_freshness": 0.68
       },
       "book_spread": 7.0,
-      "book_total": 48.5,
+      "book_total": 47.5,
       "opening_spread": 7.0,
       "opening_total": null,
       "opening_spread_edge": 4.0,
       "market_win_prob": null,
       "spread_edge": 4.0,
-      "total_edge": 0.5,
+      "total_edge": 1.5,
       "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 0,
@@ -1020,12 +1020,12 @@
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
         "spread_edge": 4.0,
-        "total_edge": 0.5,
+        "total_edge": 1.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_ATL_GB",
@@ -1035,34 +1035,34 @@
       "game_date": "2026-09-24",
       "home_team": "GB",
       "away_team": "ATL",
-      "predicted_home_score": 22,
-      "predicted_away_score": 21,
+      "predicted_home_score": 25,
+      "predicted_away_score": 18,
       "predicted_total": 43,
-      "predicted_spread": 1,
+      "predicted_spread": 7,
       "ci_home": [
-        10,
-        20
+        14,
+        22
       ],
       "ci_away": [
-        12,
-        21
+        11,
+        20
       ],
-      "confidence_score": 0.5494,
+      "confidence_score": 0.5585,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5163,
+        "model_agreement": 0.5329,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 6.5,
+      "book_total": 46.5,
+      "opening_spread": 6.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 0.5,
+      "total_edge": -3.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -1083,11 +1083,13 @@
         "away_off_cpoe_r8": -1.6055,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 0.5,
+        "total_edge": -3.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_LAC_BUF",
@@ -1097,35 +1099,35 @@
       "game_date": "2026-09-27",
       "home_team": "BUF",
       "away_team": "LAC",
-      "predicted_home_score": 27,
-      "predicted_away_score": 18,
-      "predicted_total": 45,
-      "predicted_spread": 9,
+      "predicted_home_score": 31,
+      "predicted_away_score": 17,
+      "predicted_total": 48,
+      "predicted_spread": 14,
       "ci_home": [
-        23,
-        31
+        26,
+        33
       ],
       "ci_away": [
         19,
-        24
+        25
       ],
-      "confidence_score": 0.6049,
+      "confidence_score": 0.6055,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6064,
+        "model_agreement": 0.6074,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 4.5,
+      "book_total": 49.5,
+      "opening_spread": 4.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 9.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
+      "spread_edge": 9.5,
+      "total_edge": -1.5,
+      "spread_lean": "HOME",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -1145,11 +1147,13 @@
         "away_off_cpoe_r8": -0.6114,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 9.5,
+        "total_edge": -1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_CAR_CLE",
@@ -1159,36 +1163,36 @@
       "game_date": "2026-09-27",
       "home_team": "CLE",
       "away_team": "CAR",
-      "predicted_home_score": 17,
-      "predicted_away_score": 26,
+      "predicted_home_score": 18,
+      "predicted_away_score": 25,
       "predicted_total": 43,
-      "predicted_spread": -9,
+      "predicted_spread": -7,
       "ci_home": [
-        17,
-        19
+        15,
+        18
       ],
       "ci_away": [
-        17,
+        18,
         22
       ],
-      "confidence_score": 0.6976,
+      "confidence_score": 0.7014,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7858,
+        "model_agreement": 0.7928,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -2.5,
+      "book_total": 40.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": -4.5,
+      "total_edge": 2.5,
+      "spread_lean": "AWAY",
+      "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -1207,11 +1211,13 @@
         "away_off_cpoe_r8": 1.7298,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -4.5,
+        "total_edge": 2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_BAL_DAL",
@@ -1221,35 +1227,35 @@
       "game_date": "2026-09-27",
       "home_team": "DAL",
       "away_team": "BAL",
-      "predicted_home_score": 21,
-      "predicted_away_score": 28,
-      "predicted_total": 49,
+      "predicted_home_score": 22,
+      "predicted_away_score": 29,
+      "predicted_total": 51,
       "predicted_spread": -7,
       "ci_home": [
-        20,
-        22
+        22,
+        23
       ],
       "ci_away": [
-        17,
-        25
+        23,
+        26
       ],
-      "confidence_score": 0.6698,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.7457,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7242,
+        "model_agreement": 0.8624,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -3.0,
+      "book_total": 52.5,
+      "opening_spread": -3.0,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -4.0,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
+      "spread_edge": -4.0,
+      "total_edge": -1.5,
+      "spread_lean": "AWAY",
       "total_lean": "PUSH",
       "is_dome": 1,
       "is_primetime": 0,
@@ -1269,11 +1275,13 @@
         "away_off_cpoe_r8": 1.1228,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -4.0,
+        "total_edge": -1.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_LA_DEN",
@@ -1283,34 +1291,34 @@
       "game_date": "2026-09-27",
       "home_team": "DEN",
       "away_team": "LA",
-      "predicted_home_score": 22,
-      "predicted_away_score": 25,
+      "predicted_home_score": 23,
+      "predicted_away_score": 24,
       "predicted_total": 47,
-      "predicted_spread": -3,
+      "predicted_spread": -1,
       "ci_home": [
         20,
         25
       ],
       "ci_away": [
-        19,
-        22
+        21,
+        24
       ],
-      "confidence_score": 0.6318,
+      "confidence_score": 0.6684,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6662,
+        "model_agreement": 0.7327,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -2.5,
+      "book_total": 46.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 1.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 1.5,
+      "total_edge": 0.5,
       "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 0,
@@ -1331,11 +1339,13 @@
         "away_off_cpoe_r8": -1.5901,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 1.5,
+        "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_NYJ_DET",
@@ -1345,36 +1355,36 @@
       "game_date": "2026-09-27",
       "home_team": "DET",
       "away_team": "NYJ",
-      "predicted_home_score": 27,
-      "predicted_away_score": 22,
-      "predicted_total": 49,
-      "predicted_spread": 5,
+      "predicted_home_score": 34,
+      "predicted_away_score": 19,
+      "predicted_total": 53,
+      "predicted_spread": 15,
       "ci_home": [
-        21,
-        27
+        25,
+        32
       ],
       "ci_away": [
-        17,
+        18,
         22
       ],
       "confidence_score": 0.581,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5628,
+        "model_agreement": 0.5629,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 7.0,
+      "book_total": 48.5,
+      "opening_spread": 7.0,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 8.0,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 8.0,
+      "total_edge": 4.5,
+      "spread_lean": "HOME",
+      "total_lean": "OVER",
       "is_dome": 1,
       "is_primetime": 0,
       "is_international": 0,
@@ -1393,11 +1403,13 @@
         "away_off_cpoe_r8": -3.5429,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 8.0,
+        "total_edge": 4.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_HOU_IND",
@@ -1407,36 +1419,36 @@
       "game_date": "2026-09-27",
       "home_team": "IND",
       "away_team": "HOU",
-      "predicted_home_score": 17,
-      "predicted_away_score": 24,
-      "predicted_total": 41,
-      "predicted_spread": -7,
+      "predicted_home_score": 19,
+      "predicted_away_score": 23,
+      "predicted_total": 42,
+      "predicted_spread": -4,
       "ci_home": [
-        16,
-        19
+        17,
+        18
       ],
       "ci_away": [
-        21,
-        23
+        22,
+        26
       ],
-      "confidence_score": 0.7303,
+      "confidence_score": 0.7304,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8344,
+        "model_agreement": 0.8345,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -2.5,
+      "book_total": 45.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -1.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": -1.5,
+      "total_edge": -3.5,
       "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "total_lean": "UNDER",
       "is_dome": 1,
       "is_primetime": 0,
       "is_international": 0,
@@ -1455,11 +1467,13 @@
         "away_off_cpoe_r8": -2.2181,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -1.5,
+        "total_edge": -3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_NE_JAX",
@@ -1469,34 +1483,34 @@
       "game_date": "2026-09-27",
       "home_team": "JAX",
       "away_team": "NE",
-      "predicted_home_score": 21,
-      "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_home_score": 24,
+      "predicted_away_score": 22,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "ci_home": [
-        18,
+        20,
         26
       ],
       "ci_away": [
         19,
-        25
+        24
       ],
-      "confidence_score": 0.5419,
+      "confidence_score": 0.5369,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5027,
+        "model_agreement": 0.4936,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 2.5,
+      "book_total": 45.5,
+      "opening_spread": 2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -0.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": -0.5,
+      "total_edge": 0.5,
       "spread_lean": "SUPPRESSED",
       "total_lean": "SUPPRESSED",
       "is_dome": 0,
@@ -1517,11 +1531,13 @@
         "away_off_cpoe_r8": 1.9364,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -0.5,
+        "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_KC_MIA",
@@ -1531,36 +1547,36 @@
       "game_date": "2026-09-27",
       "home_team": "MIA",
       "away_team": "KC",
-      "predicted_home_score": 19,
+      "predicted_home_score": 20,
       "predicted_away_score": 22,
-      "predicted_total": 41,
-      "predicted_spread": -3,
+      "predicted_total": 42,
+      "predicted_spread": -2,
       "ci_home": [
-        18,
-        22
+        16,
+        21
       ],
       "ci_away": [
-        17,
-        23
+        20,
+        26
       ],
-      "confidence_score": 0.6294,
+      "confidence_score": 0.5976,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6618,
+        "model_agreement": 0.604,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -8.5,
+      "book_total": 44.5,
+      "opening_spread": -8.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 6.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 6.5,
+      "total_edge": -2.5,
+      "spread_lean": "HOME",
+      "total_lean": "UNDER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -1579,11 +1595,13 @@
         "away_off_cpoe_r8": -3.3799,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 6.5,
+        "total_edge": -2.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_LV_NO",
@@ -1593,36 +1611,36 @@
       "game_date": "2026-09-27",
       "home_team": "NO",
       "away_team": "LV",
-      "predicted_home_score": 23,
-      "predicted_away_score": 20,
+      "predicted_home_score": 25,
+      "predicted_away_score": 18,
       "predicted_total": 43,
-      "predicted_spread": 3,
+      "predicted_spread": 7,
       "ci_home": [
-        20,
-        23
+        21,
+        24
       ],
       "ci_away": [
-        20,
+        19,
         23
       ],
-      "confidence_score": 0.6854,
+      "confidence_score": 0.68,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7527,
+        "model_agreement": 0.7429,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 3.0,
+      "book_total": 45.5,
+      "opening_spread": 3.0,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 4.0,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 4.0,
+      "total_edge": -2.5,
+      "spread_lean": "HOME",
+      "total_lean": "UNDER",
       "is_dome": 1,
       "is_primetime": 0,
       "is_international": 0,
@@ -1641,11 +1659,13 @@
         "away_off_cpoe_r8": 0.0055,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 4.0,
+        "total_edge": -2.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_TEN_NYG",
@@ -1655,36 +1675,36 @@
       "game_date": "2026-09-27",
       "home_team": "NYG",
       "away_team": "TEN",
-      "predicted_home_score": 32,
-      "predicted_away_score": 14,
-      "predicted_total": 46,
-      "predicted_spread": 18,
+      "predicted_home_score": 40,
+      "predicted_away_score": 11,
+      "predicted_total": 51,
+      "predicted_spread": 29,
       "ci_home": [
-        25,
-        28
+        26,
+        33
       ],
       "ci_away": [
-        17,
+        15,
         20
       ],
-      "confidence_score": 0.6433,
+      "confidence_score": 0.6087,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.687,
+        "model_agreement": 0.6242,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 5.5,
+      "book_total": 43.5,
+      "opening_spread": 5.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 23.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 23.5,
+      "total_edge": 7.5,
+      "spread_lean": "HOME",
+      "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -1703,11 +1723,13 @@
         "away_off_cpoe_r8": -1.1859,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 23.5,
+        "total_edge": 7.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_CIN_PIT",
@@ -1717,35 +1739,35 @@
       "game_date": "2026-09-27",
       "home_team": "PIT",
       "away_team": "CIN",
-      "predicted_home_score": 18,
-      "predicted_away_score": 28,
-      "predicted_total": 46,
-      "predicted_spread": -10,
+      "predicted_home_score": 19,
+      "predicted_away_score": 26,
+      "predicted_total": 45,
+      "predicted_spread": -7,
       "ci_home": [
         19,
-        23
+        22
       ],
       "ci_away": [
         21,
-        26
+        27
       ],
-      "confidence_score": 0.6262,
+      "confidence_score": 0.6376,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6559,
+        "model_agreement": 0.6767,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -2.5,
+      "book_total": 45.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -4.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
+      "spread_edge": -4.5,
+      "total_edge": -0.5,
+      "spread_lean": "AWAY",
       "total_lean": "PUSH",
       "is_dome": 0,
       "is_primetime": 0,
@@ -1765,11 +1787,13 @@
         "away_off_cpoe_r8": 3.3195,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -4.5,
+        "total_edge": -0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_ARI_SF",
@@ -1779,36 +1803,36 @@
       "game_date": "2026-09-27",
       "home_team": "SF",
       "away_team": "ARI",
-      "predicted_home_score": 26,
-      "predicted_away_score": 21,
-      "predicted_total": 47,
-      "predicted_spread": 5,
+      "predicted_home_score": 32,
+      "predicted_away_score": 19,
+      "predicted_total": 51,
+      "predicted_spread": 13,
       "ci_home": [
-        23,
-        28
+        27,
+        32
       ],
       "ci_away": [
-        21,
-        23
+        20,
+        22
       ],
-      "confidence_score": 0.7008,
+      "confidence_score": 0.7017,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7807,
+        "model_agreement": 0.7823,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 8.5,
+      "book_total": 47.5,
+      "opening_spread": 8.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 4.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 4.5,
+      "total_edge": 3.5,
+      "spread_lean": "HOME",
+      "total_lean": "OVER",
       "is_dome": 1,
       "is_primetime": 0,
       "is_international": 0,
@@ -1827,11 +1851,13 @@
         "away_off_cpoe_r8": 0.062,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 4.5,
+        "total_edge": 3.5,
         "is_dome": 1,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_MIN_TB",
@@ -1841,34 +1867,34 @@
       "game_date": "2026-09-27",
       "home_team": "TB",
       "away_team": "MIN",
-      "predicted_home_score": 21,
-      "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_home_score": 24,
+      "predicted_away_score": 22,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "ci_home": [
-        19,
-        25
+        20,
+        26
       ],
       "ci_away": [
-        19,
+        20,
         24
       ],
-      "confidence_score": 0.6109,
+      "confidence_score": 0.6142,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6282,
+        "model_agreement": 0.6342,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 1.5,
+      "book_total": 45.5,
+      "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 0.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "PUSH",
       "total_lean": "PUSH",
       "is_dome": 0,
@@ -1889,11 +1915,13 @@
         "away_off_cpoe_r8": -0.6201,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 0.5,
+        "total_edge": 0.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_SEA_WAS",
@@ -1903,36 +1931,36 @@
       "game_date": "2026-09-27",
       "home_team": "WAS",
       "away_team": "SEA",
-      "predicted_home_score": 17,
-      "predicted_away_score": 30,
-      "predicted_total": 47,
-      "predicted_spread": -13,
+      "predicted_home_score": 19,
+      "predicted_away_score": 29,
+      "predicted_total": 48,
+      "predicted_spread": -10,
       "ci_home": [
-        19,
-        27
+        20,
+        25
       ],
       "ci_away": [
-        23,
+        25,
         28
       ],
-      "confidence_score": 0.5773,
-      "confidence_label": "LOW",
+      "confidence_score": 0.6288,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5671,
+        "model_agreement": 0.6607,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": -2.5,
+      "book_total": 41.5,
+      "opening_spread": -2.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": -7.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "SUPPRESSED",
-      "total_lean": "SUPPRESSED",
+      "spread_edge": -7.5,
+      "total_edge": 6.5,
+      "spread_lean": "AWAY",
+      "total_lean": "OVER",
       "is_dome": 0,
       "is_primetime": 0,
       "is_international": 0,
@@ -1951,11 +1979,13 @@
         "away_off_cpoe_r8": 1.2392,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": -7.5,
+        "total_edge": 6.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_03_PHI_CHI",
@@ -1965,36 +1995,36 @@
       "game_date": "2026-09-28",
       "home_team": "CHI",
       "away_team": "PHI",
-      "predicted_home_score": 20,
-      "predicted_away_score": 19,
-      "predicted_total": 39,
-      "predicted_spread": 1,
+      "predicted_home_score": 22,
+      "predicted_away_score": 18,
+      "predicted_total": 40,
+      "predicted_spread": 4,
       "ci_home": [
-        18,
-        21
+        19,
+        22
       ],
       "ci_away": [
-        12,
-        18
+        14,
+        19
       ],
-      "confidence_score": 0.6637,
+      "confidence_score": 0.6767,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7242,
+        "model_agreement": 0.7477,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
       },
-      "book_spread": null,
-      "book_total": null,
-      "opening_spread": null,
+      "book_spread": 1.5,
+      "book_total": 47.5,
+      "opening_spread": 1.5,
       "opening_total": null,
-      "opening_spread_edge": null,
+      "opening_spread_edge": 2.5,
       "market_win_prob": null,
-      "spread_edge": null,
-      "total_edge": null,
-      "spread_lean": "PUSH",
-      "total_lean": "PUSH",
+      "spread_edge": 2.5,
+      "total_edge": -7.5,
+      "spread_lean": "HOME",
+      "total_lean": "UNDER",
       "is_dome": 0,
       "is_primetime": 1,
       "is_international": 0,
@@ -2013,11 +2043,13 @@
         "away_off_cpoe_r8": -0.4478,
         "h2h_avg_margin": 0.0,
         "h2h_win_rate": 0.5,
+        "spread_edge": 2.5,
+        "total_edge": -7.5,
         "is_dome": 0,
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_PIT_CLE",
@@ -2039,10 +2071,10 @@
         16,
         21
       ],
-      "confidence_score": 0.677,
+      "confidence_score": 0.6782,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7483,
+        "model_agreement": 0.7505,
         "feature_completeness": 0.7847,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2079,7 +2111,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_TEN_BAL",
@@ -2089,10 +2121,10 @@
       "game_date": "2026-10-04",
       "home_team": "BAL",
       "away_team": "TEN",
-      "predicted_home_score": 32,
+      "predicted_home_score": 31,
       "predicted_away_score": 16,
-      "predicted_total": 48,
-      "predicted_spread": 16,
+      "predicted_total": 47,
+      "predicted_spread": 15,
       "ci_home": [
         21,
         27
@@ -2141,7 +2173,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_NE_BUF",
@@ -2163,10 +2195,10 @@
         16,
         22
       ],
-      "confidence_score": 0.5181,
+      "confidence_score": 0.5175,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4501,
+        "model_agreement": 0.4491,
         "feature_completeness": 0.8018,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2203,7 +2235,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_DET_CAR",
@@ -2214,9 +2246,9 @@
       "home_team": "CAR",
       "away_team": "DET",
       "predicted_home_score": 16,
-      "predicted_away_score": 28,
-      "predicted_total": 44,
-      "predicted_spread": -12,
+      "predicted_away_score": 29,
+      "predicted_total": 45,
+      "predicted_spread": -13,
       "ci_home": [
         16,
         22
@@ -2265,7 +2297,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_NYJ_CHI",
@@ -2287,10 +2319,10 @@
         11,
         18
       ],
-      "confidence_score": 0.6006,
+      "confidence_score": 0.6011,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.611,
+        "model_agreement": 0.6119,
         "feature_completeness": 0.7818,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2327,7 +2359,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_JAX_CIN",
@@ -2349,10 +2381,10 @@
         16,
         25
       ],
-      "confidence_score": 0.5102,
+      "confidence_score": 0.5094,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.4482,
+        "model_agreement": 0.4468,
         "feature_completeness": 0.7788,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2389,7 +2421,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_DAL_HOU",
@@ -2451,7 +2483,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_KC_LV",
@@ -2461,10 +2493,10 @@
       "game_date": "2026-10-04",
       "home_team": "LV",
       "away_team": "KC",
-      "predicted_home_score": 20,
+      "predicted_home_score": 19,
       "predicted_away_score": 19,
-      "predicted_total": 39,
-      "predicted_spread": 1,
+      "predicted_total": 38,
+      "predicted_spread": 0,
       "ci_home": [
         16,
         20
@@ -2513,7 +2545,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_MIA_MIN",
@@ -2575,7 +2607,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_ARI_NYG",
@@ -2597,10 +2629,10 @@
         20,
         25
       ],
-      "confidence_score": 0.649,
+      "confidence_score": 0.6485,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.699,
+        "model_agreement": 0.6981,
         "feature_completeness": 0.7818,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -2637,7 +2669,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_LA_PHI",
@@ -2699,7 +2731,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_LAC_SEA",
@@ -2761,7 +2793,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_DEN_SF",
@@ -2823,7 +2855,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_GB_TB",
@@ -2885,7 +2917,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_IND_WAS",
@@ -2947,7 +2979,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_04_ATL_NO",
@@ -2969,10 +3001,10 @@
         15,
         20
       ],
-      "confidence_score": 0.6613,
+      "confidence_score": 0.6628,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7089,
+        "model_agreement": 0.7115,
         "feature_completeness": 0.8047,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3009,7 +3041,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_TB_DAL",
@@ -3019,10 +3051,10 @@
       "game_date": "2026-10-08",
       "home_team": "DAL",
       "away_team": "TB",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 24,
-      "predicted_total": 47,
-      "predicted_spread": -1,
+      "predicted_total": 46,
+      "predicted_spread": -2,
       "ci_home": [
         21,
         26
@@ -3071,7 +3103,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_DET_ARI",
@@ -3133,7 +3165,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_BAL_ATL",
@@ -3195,7 +3227,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_CHI_GB",
@@ -3205,10 +3237,10 @@
       "game_date": "2026-10-11",
       "home_team": "GB",
       "away_team": "CHI",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 27,
-      "predicted_total": 50,
-      "predicted_spread": -4,
+      "predicted_total": 49,
+      "predicted_spread": -5,
       "ci_home": [
         19,
         24
@@ -3257,7 +3289,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_PHI_JAX",
@@ -3268,9 +3300,9 @@
       "home_team": "JAX",
       "away_team": "PHI",
       "predicted_home_score": 26,
-      "predicted_away_score": 22,
-      "predicted_total": 48,
-      "predicted_spread": 4,
+      "predicted_away_score": 23,
+      "predicted_total": 49,
+      "predicted_spread": 3,
       "ci_home": [
         24,
         29
@@ -3319,7 +3351,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_DEN_LAC",
@@ -3329,10 +3361,10 @@
       "game_date": "2026-10-11",
       "home_team": "LAC",
       "away_team": "DEN",
-      "predicted_home_score": 24,
+      "predicted_home_score": 23,
       "predicted_away_score": 20,
-      "predicted_total": 44,
-      "predicted_spread": 4,
+      "predicted_total": 43,
+      "predicted_spread": 3,
       "ci_home": [
         18,
         22
@@ -3381,7 +3413,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_CIN_MIA",
@@ -3396,17 +3428,17 @@
       "predicted_total": 44,
       "predicted_spread": -8,
       "ci_home": [
-        19,
+        18,
         23
       ],
       "ci_away": [
         15,
         22
       ],
-      "confidence_score": 0.5245,
+      "confidence_score": 0.5234,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.5889,
+        "model_agreement": 0.5868,
         "feature_completeness": 0.5688,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3443,7 +3475,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_LV_NE",
@@ -3465,10 +3497,10 @@
         14,
         19
       ],
-      "confidence_score": 0.559,
+      "confidence_score": 0.5607,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6532,
+        "model_agreement": 0.6562,
         "feature_completeness": 0.5658,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3505,7 +3537,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_MIN_NO",
@@ -3527,10 +3559,10 @@
         19,
         22
       ],
-      "confidence_score": 0.5517,
+      "confidence_score": 0.552,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6257,
+        "model_agreement": 0.6264,
         "feature_completeness": 0.5917,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3567,7 +3599,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_CLE_NYJ",
@@ -3589,10 +3621,10 @@
         20,
         24
       ],
-      "confidence_score": 0.5892,
+      "confidence_score": 0.5911,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7049,
+        "model_agreement": 0.7083,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3629,7 +3661,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_IND_PIT",
@@ -3691,7 +3723,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_SF_SEA",
@@ -3753,7 +3785,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_HOU_TEN",
@@ -3815,7 +3847,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_NYG_WAS",
@@ -3837,10 +3869,10 @@
         20,
         22
       ],
-      "confidence_score": 0.54,
+      "confidence_score": 0.5401,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6154,
+        "model_agreement": 0.6156,
         "feature_completeness": 0.5717,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -3877,7 +3909,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_05_BUF_LA",
@@ -3887,10 +3919,10 @@
       "game_date": "2026-10-12",
       "home_team": "LA",
       "away_team": "BUF",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 29,
-      "predicted_total": 50,
-      "predicted_spread": -8,
+      "predicted_total": 49,
+      "predicted_spread": -9,
       "ci_home": [
         20,
         25
@@ -3939,7 +3971,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_SEA_DEN",
@@ -4001,7 +4033,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_CHI_ATL",
@@ -4063,7 +4095,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_BAL_CLE",
@@ -4085,10 +4117,10 @@
         21,
         27
       ],
-      "confidence_score": 0.5676,
+      "confidence_score": 0.5666,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6722,
+        "model_agreement": 0.6703,
         "feature_completeness": 0.5599,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4125,7 +4157,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_DAL_GB",
@@ -4187,7 +4219,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_TEN_IND",
@@ -4249,7 +4281,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_HOU_JAX",
@@ -4311,7 +4343,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_LAC_KC",
@@ -4373,7 +4405,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_ARI_LA",
@@ -4435,7 +4467,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_BUF_LV",
@@ -4497,7 +4529,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_NYJ_NE",
@@ -4519,10 +4551,10 @@
         18,
         22
       ],
-      "confidence_score": 0.5288,
+      "confidence_score": 0.531,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6048,
+        "model_agreement": 0.6087,
         "feature_completeness": 0.554,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4559,7 +4591,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_NO_NYG",
@@ -4575,16 +4607,16 @@
       "predicted_spread": -7,
       "ci_home": [
         20,
-        24
+        25
       ],
       "ci_away": [
         21,
-        26
+        25
       ],
-      "confidence_score": 0.5777,
+      "confidence_score": 0.5788,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.692,
+        "model_agreement": 0.694,
         "feature_completeness": 0.5569,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4621,7 +4653,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_CAR_PHI",
@@ -4683,7 +4715,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_PIT_TB",
@@ -4745,7 +4777,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_06_WAS_SF",
@@ -4807,7 +4839,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_NE_CHI",
@@ -4829,10 +4861,10 @@
         8,
         25
       ],
-      "confidence_score": 0.2647,
+      "confidence_score": 0.2633,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.2537,
+        "model_agreement": 0.2511,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -4862,7 +4894,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_DEN_ARI",
@@ -4917,7 +4949,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_SF_ATL",
@@ -4972,7 +5004,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_CIN_BAL",
@@ -4994,10 +5026,10 @@
         22,
         26
       ],
-      "confidence_score": 0.4935,
+      "confidence_score": 0.4934,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6051,
+        "model_agreement": 0.605,
         "feature_completeness": 0.4356,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5030,7 +5062,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_TB_CAR",
@@ -5088,7 +5120,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_GB_DET",
@@ -5146,7 +5178,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_NYG_HOU",
@@ -5168,10 +5200,10 @@
         17,
         23
       ],
-      "confidence_score": 0.5114,
+      "confidence_score": 0.5103,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6914,
+        "model_agreement": 0.6894,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5201,7 +5233,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_LA_LV",
@@ -5256,7 +5288,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_IND_MIN",
@@ -5314,7 +5346,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_PIT_NO",
@@ -5336,10 +5368,10 @@
         20,
         22
       ],
-      "confidence_score": 0.5865,
+      "confidence_score": 0.5859,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8278,
+        "model_agreement": 0.8268,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5369,7 +5401,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_MIA_NYJ",
@@ -5391,10 +5423,10 @@
         22,
         25
       ],
-      "confidence_score": 0.6199,
+      "confidence_score": 0.62,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.835,
+        "model_agreement": 0.8351,
         "feature_completeness": 0.4356,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5427,7 +5459,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_KC_SEA",
@@ -5485,7 +5517,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_CLE_TEN",
@@ -5504,13 +5536,13 @@
         23
       ],
       "ci_away": [
-        22,
+        21,
         25
       ],
-      "confidence_score": 0.566,
+      "confidence_score": 0.5666,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7906,
+        "model_agreement": 0.7916,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5540,7 +5572,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_07_DAL_PHI",
@@ -5595,7 +5627,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_CAR_GB",
@@ -5650,7 +5682,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_BAL_BUF",
@@ -5705,7 +5737,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_TEN_CIN",
@@ -5727,10 +5759,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5274,
+      "confidence_score": 0.5271,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7313,
+        "model_agreement": 0.7307,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -5760,7 +5792,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_ARI_DAL",
@@ -5815,7 +5847,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_KC_DEN",
@@ -5870,7 +5902,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_MIN_DET",
@@ -5925,7 +5957,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_IND_JAX",
@@ -5980,7 +6012,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_LAC_LA",
@@ -6035,7 +6067,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_NE_MIA",
@@ -6057,10 +6089,10 @@
         13,
         25
       ],
-      "confidence_score": 0.358,
+      "confidence_score": 0.3565,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.4233,
+        "model_agreement": 0.4205,
         "feature_completeness": 0.3173,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6090,7 +6122,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_LV_NYJ",
@@ -6100,10 +6132,10 @@
       "game_date": "2026-11-01",
       "home_team": "NYJ",
       "away_team": "LV",
-      "predicted_home_score": 22,
+      "predicted_home_score": 21,
       "predicted_away_score": 25,
-      "predicted_total": 47,
-      "predicted_spread": -3,
+      "predicted_total": 46,
+      "predicted_spread": -4,
       "ci_home": [
         21,
         23
@@ -6112,10 +6144,10 @@
         20,
         24
       ],
-      "confidence_score": 0.5641,
+      "confidence_score": 0.5646,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7996,
+        "model_agreement": 0.8006,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6145,7 +6177,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_CLE_PIT",
@@ -6167,10 +6199,10 @@
         23,
         25
       ],
-      "confidence_score": 0.5393,
+      "confidence_score": 0.5402,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7546,
+        "model_agreement": 0.7561,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6200,7 +6232,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_ATL_TB",
@@ -6255,7 +6287,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_PHI_WAS",
@@ -6310,7 +6342,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_08_CHI_SEA",
@@ -6365,7 +6397,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_JAX_BAL",
@@ -6420,7 +6452,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_CIN_ATL",
@@ -6442,10 +6474,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4638,
+      "confidence_score": 0.4633,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6172,
+        "model_agreement": 0.6163,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6475,7 +6507,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_DEN_CAR",
@@ -6530,7 +6562,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_TB_CHI",
@@ -6585,7 +6617,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_DAL_IND",
@@ -6640,7 +6672,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_NYJ_KC",
@@ -6662,10 +6694,10 @@
         23,
         25
       ],
-      "confidence_score": 0.5737,
+      "confidence_score": 0.5743,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8171,
+        "model_agreement": 0.8183,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6695,7 +6727,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_HOU_LAC",
@@ -6705,10 +6737,10 @@
       "game_date": "2026-11-08",
       "home_team": "LAC",
       "away_team": "HOU",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 27,
-      "predicted_total": 48,
-      "predicted_spread": -6,
+      "predicted_total": 47,
+      "predicted_spread": -7,
       "ci_home": [
         20,
         22
@@ -6750,7 +6782,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_DET_MIA",
@@ -6805,7 +6837,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_GB_NE",
@@ -6827,10 +6859,10 @@
         16,
         24
       ],
-      "confidence_score": 0.4547,
+      "confidence_score": 0.4553,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6007,
+        "model_agreement": 0.6017,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6860,7 +6892,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_CLE_NO",
@@ -6882,10 +6914,10 @@
         23,
         25
       ],
-      "confidence_score": 0.5578,
+      "confidence_score": 0.5564,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7757,
+        "model_agreement": 0.7731,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6915,7 +6947,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_NYG_PHI",
@@ -6925,22 +6957,22 @@
       "game_date": "2026-11-08",
       "home_team": "PHI",
       "away_team": "NYG",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 24,
-      "predicted_total": 47,
-      "predicted_spread": -1,
+      "predicted_total": 46,
+      "predicted_spread": -2,
       "ci_home": [
         22,
         23
       ],
       "ci_away": [
-        18,
+        17,
         23
       ],
-      "confidence_score": 0.5537,
+      "confidence_score": 0.5529,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7807,
+        "model_agreement": 0.7792,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -6970,7 +7002,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_ARI_SEA",
@@ -7025,7 +7057,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_LV_SF",
@@ -7080,7 +7112,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_LA_WAS",
@@ -7135,7 +7167,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_09_BUF_MIN",
@@ -7190,7 +7222,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_WAS_NYG",
@@ -7206,16 +7238,16 @@
       "predicted_spread": -8,
       "ci_home": [
         20,
-        22
+        23
       ],
       "ci_away": [
         22,
         24
       ],
-      "confidence_score": 0.5512,
+      "confidence_score": 0.5511,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7762,
+        "model_agreement": 0.7759,
         "feature_completeness": 0.3143,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7245,7 +7277,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_LA_ARI",
@@ -7300,7 +7332,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_KC_ATL",
@@ -7355,7 +7387,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_PIT_CIN",
@@ -7377,10 +7409,10 @@
         18,
         23
       ],
-      "confidence_score": 0.5008,
+      "confidence_score": 0.5007,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6862,
+        "model_agreement": 0.686,
         "feature_completeness": 0.3114,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7410,7 +7442,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_HOU_CLE",
@@ -7432,10 +7464,10 @@
         20,
         24
       ],
-      "confidence_score": 0.5525,
+      "confidence_score": 0.5526,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7817,
+        "model_agreement": 0.782,
         "feature_completeness": 0.3084,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7465,7 +7497,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_SF_DAL",
@@ -7520,7 +7552,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_NE_DET",
@@ -7542,10 +7574,10 @@
         15,
         24
       ],
-      "confidence_score": 0.3921,
+      "confidence_score": 0.3907,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.4791,
+        "model_agreement": 0.4768,
         "feature_completeness": 0.3284,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7575,7 +7607,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_MIN_GB",
@@ -7630,7 +7662,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_MIA_IND",
@@ -7685,7 +7717,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_SEA_LV",
@@ -7740,7 +7772,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_CAR_NO",
@@ -7756,16 +7788,16 @@
       "predicted_spread": -3,
       "ci_home": [
         21,
-        22
+        23
       ],
       "ci_away": [
         22,
         24
       ],
-      "confidence_score": 0.6145,
+      "confidence_score": 0.6136,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8787,
+        "model_agreement": 0.8772,
         "feature_completeness": 0.3373,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7795,7 +7827,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_BUF_NYJ",
@@ -7817,10 +7849,10 @@
         18,
         23
       ],
-      "confidence_score": 0.5564,
+      "confidence_score": 0.558,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7905,
+        "model_agreement": 0.7935,
         "feature_completeness": 0.3054,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -7850,7 +7882,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_JAX_TEN",
@@ -7860,10 +7892,10 @@
       "game_date": "2026-11-15",
       "home_team": "TEN",
       "away_team": "JAX",
-      "predicted_home_score": 19,
+      "predicted_home_score": 18,
       "predicted_away_score": 28,
-      "predicted_total": 47,
-      "predicted_spread": -9,
+      "predicted_total": 46,
+      "predicted_spread": -10,
       "ci_home": [
         17,
         20
@@ -7905,7 +7937,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_10_LAC_BAL",
@@ -7960,7 +7992,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_IND_HOU",
@@ -7971,9 +8003,9 @@
       "home_team": "HOU",
       "away_team": "IND",
       "predicted_home_score": 24,
-      "predicted_away_score": 24,
-      "predicted_total": 48,
-      "predicted_spread": 0,
+      "predicted_away_score": 25,
+      "predicted_total": 49,
+      "predicted_spread": -1,
       "ci_home": [
         22,
         26
@@ -8015,7 +8047,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_MIA_BUF",
@@ -8026,9 +8058,9 @@
       "home_team": "BUF",
       "away_team": "MIA",
       "predicted_home_score": 25,
-      "predicted_away_score": 25,
-      "predicted_total": 50,
-      "predicted_spread": 0,
+      "predicted_away_score": 26,
+      "predicted_total": 51,
+      "predicted_spread": -1,
       "ci_home": [
         24,
         29
@@ -8070,7 +8102,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_BAL_CAR",
@@ -8125,7 +8157,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_NO_CHI",
@@ -8147,10 +8179,10 @@
         14,
         24
       ],
-      "confidence_score": 0.4082,
+      "confidence_score": 0.4079,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5226,
+        "model_agreement": 0.5222,
         "feature_completeness": 0.3025,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8180,7 +8212,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_TEN_DAL",
@@ -8235,7 +8267,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_LV_DEN",
@@ -8290,7 +8322,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_TB_DET",
@@ -8345,7 +8377,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_ARI_KC",
@@ -8400,7 +8432,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_NYJ_LAC",
@@ -8422,10 +8454,10 @@
         19,
         25
       ],
-      "confidence_score": 0.51,
+      "confidence_score": 0.5111,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7658,
+        "model_agreement": 0.7678,
         "feature_completeness": 0.196,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8455,7 +8487,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_JAX_NYG",
@@ -8477,10 +8509,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4356,
+      "confidence_score": 0.4337,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5725,
+        "model_agreement": 0.5691,
         "feature_completeness": 0.3025,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8510,7 +8542,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_PIT_PHI",
@@ -8565,7 +8597,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_MIN_SF",
@@ -8620,7 +8652,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_11_CIN_WAS",
@@ -8642,10 +8674,10 @@
         19,
         24
       ],
-      "confidence_score": 0.5543,
+      "confidence_score": 0.5534,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7899,
+        "model_agreement": 0.7882,
         "feature_completeness": 0.2995,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -8675,7 +8707,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_GB_LA",
@@ -8730,7 +8762,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_KC_BUF",
@@ -8785,7 +8817,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_PHI_DAL",
@@ -8840,7 +8872,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_CHI_DET",
@@ -8895,7 +8927,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_DEN_PIT",
@@ -8905,10 +8937,10 @@
       "game_date": "2026-11-27",
       "home_team": "PIT",
       "away_team": "DEN",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 26,
-      "predicted_total": 47,
-      "predicted_spread": -5,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         23
@@ -8950,7 +8982,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_WAS_ARI",
@@ -8960,10 +8992,10 @@
       "game_date": "2026-11-29",
       "home_team": "ARI",
       "away_team": "WAS",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 26,
-      "predicted_total": 47,
-      "predicted_spread": -5,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         27
@@ -9005,7 +9037,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_NO_CIN",
@@ -9027,10 +9059,10 @@
         20,
         25
       ],
-      "confidence_score": 0.4544,
+      "confidence_score": 0.4532,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7212,
+        "model_agreement": 0.7191,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9060,7 +9092,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_LV_CLE",
@@ -9082,10 +9114,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4801,
+      "confidence_score": 0.4795,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7679,
+        "model_agreement": 0.7668,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9115,7 +9147,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_BAL_HOU",
@@ -9170,7 +9202,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_NYG_IND",
@@ -9192,10 +9224,10 @@
         23,
         25
       ],
-      "confidence_score": 0.4439,
+      "confidence_score": 0.4434,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6912,
+        "model_agreement": 0.6904,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9225,7 +9257,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_TEN_JAX",
@@ -9280,7 +9312,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_NE_LAC",
@@ -9302,10 +9334,10 @@
         13,
         24
       ],
-      "confidence_score": 0.449,
+      "confidence_score": 0.4467,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7113,
+        "model_agreement": 0.7073,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9335,7 +9367,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_NYJ_MIA",
@@ -9357,10 +9389,10 @@
         19,
         25
       ],
-      "confidence_score": 0.4474,
+      "confidence_score": 0.4485,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7086,
+        "model_agreement": 0.7105,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9390,7 +9422,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_ATL_MIN",
@@ -9445,7 +9477,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_SEA_SF",
@@ -9500,7 +9532,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_12_CAR_TB",
@@ -9555,7 +9587,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_KC_LA",
@@ -9610,7 +9642,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_PHI_ARI",
@@ -9620,10 +9652,10 @@
       "game_date": "2026-12-06",
       "home_team": "ARI",
       "away_team": "PHI",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_total": 45,
+      "predicted_spread": -5,
       "ci_home": [
         20,
         26
@@ -9665,7 +9697,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_DET_ATL",
@@ -9720,7 +9752,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_JAX_CHI",
@@ -9775,7 +9807,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_CIN_CLE",
@@ -9785,22 +9817,22 @@
       "game_date": "2026-12-06",
       "home_team": "CLE",
       "away_team": "CIN",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_total": 45,
+      "predicted_spread": -5,
       "ci_home": [
         20,
-        25
+        26
       ],
       "ci_away": [
-        22,
+        21,
         23
       ],
-      "confidence_score": 0.4944,
+      "confidence_score": 0.4923,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.794,
+        "model_agreement": 0.7902,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9830,7 +9862,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_MIA_DEN",
@@ -9840,10 +9872,10 @@
       "game_date": "2026-12-06",
       "home_team": "DEN",
       "away_team": "MIA",
-      "predicted_home_score": 25,
+      "predicted_home_score": 24,
       "predicted_away_score": 25,
-      "predicted_total": 50,
-      "predicted_spread": 0,
+      "predicted_total": 49,
+      "predicted_spread": -1,
       "ci_home": [
         23,
         26
@@ -9885,7 +9917,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_CAR_MIN",
@@ -9896,9 +9928,9 @@
       "home_team": "MIN",
       "away_team": "CAR",
       "predicted_home_score": 25,
-      "predicted_away_score": 24,
-      "predicted_total": 49,
-      "predicted_spread": 1,
+      "predicted_away_score": 25,
+      "predicted_total": 50,
+      "predicted_spread": 0,
       "ci_home": [
         23,
         28
@@ -9940,7 +9972,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_BUF_NE",
@@ -9951,9 +9983,9 @@
       "home_team": "NE",
       "away_team": "BUF",
       "predicted_home_score": 20,
-      "predicted_away_score": 25,
-      "predicted_total": 45,
-      "predicted_spread": -5,
+      "predicted_away_score": 26,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         26
@@ -9962,10 +9994,10 @@
         20,
         24
       ],
-      "confidence_score": 0.4367,
+      "confidence_score": 0.4345,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6891,
+        "model_agreement": 0.6851,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -9995,7 +10027,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_GB_NO",
@@ -10005,10 +10037,10 @@
       "game_date": "2026-12-06",
       "home_team": "NO",
       "away_team": "GB",
-      "predicted_home_score": 20,
+      "predicted_home_score": 19,
       "predicted_away_score": 26,
-      "predicted_total": 46,
-      "predicted_spread": -6,
+      "predicted_total": 45,
+      "predicted_spread": -7,
       "ci_home": [
         20,
         25
@@ -10017,10 +10049,10 @@
         23,
         25
       ],
-      "confidence_score": 0.5151,
+      "confidence_score": 0.5133,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.8206,
+        "model_agreement": 0.8173,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10050,7 +10082,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_SF_NYG",
@@ -10072,10 +10104,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4516,
+      "confidence_score": 0.4499,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7161,
+        "model_agreement": 0.713,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10105,7 +10137,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_HOU_PIT",
@@ -10160,7 +10192,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_LAC_TB",
@@ -10215,7 +10247,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_WAS_TEN",
@@ -10270,7 +10302,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_13_DAL_SEA",
@@ -10325,7 +10357,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_MIN_NE",
@@ -10335,10 +10367,10 @@
       "game_date": "2026-12-10",
       "home_team": "NE",
       "away_team": "MIN",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 26,
-      "predicted_total": 47,
-      "predicted_spread": -5,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         27
@@ -10347,10 +10379,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4423,
+      "confidence_score": 0.4403,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.6992,
+        "model_agreement": 0.6955,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10380,7 +10412,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_TB_BAL",
@@ -10435,7 +10467,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_NO_CAR",
@@ -10457,10 +10489,10 @@
         18,
         24
       ],
-      "confidence_score": 0.4286,
+      "confidence_score": 0.4288,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6744,
+        "model_agreement": 0.6747,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10490,7 +10522,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_KC_CIN",
@@ -10512,10 +10544,10 @@
         17,
         24
       ],
-      "confidence_score": 0.441,
-      "confidence_label": "LOW",
+      "confidence_score": 0.44,
+      "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6969,
+        "model_agreement": 0.695,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10545,7 +10577,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_ATL_CLE",
@@ -10567,10 +10599,10 @@
         21,
         24
       ],
-      "confidence_score": 0.4794,
+      "confidence_score": 0.4783,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7666,
+        "model_agreement": 0.7647,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10600,7 +10632,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_TEN_DET",
@@ -10655,7 +10687,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_BUF_GB",
@@ -10710,7 +10742,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_LAC_LV",
@@ -10765,7 +10797,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_CHI_MIA",
@@ -10820,7 +10852,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_DEN_NYJ",
@@ -10842,10 +10874,10 @@
         18,
         23
       ],
-      "confidence_score": 0.4168,
+      "confidence_score": 0.418,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6528,
+        "model_agreement": 0.655,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10875,7 +10907,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_IND_PHI",
@@ -10930,7 +10962,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_NYG_SEA",
@@ -10952,10 +10984,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4502,
+      "confidence_score": 0.4495,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7026,
+        "model_agreement": 0.7014,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -10985,7 +11017,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_LA_SF",
@@ -11040,7 +11072,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_HOU_WAS",
@@ -11095,7 +11127,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_14_PIT_JAX",
@@ -11150,7 +11182,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_SF_LAC",
@@ -11205,7 +11237,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_CHI_BUF",
@@ -11260,7 +11292,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_SEA_PHI",
@@ -11315,7 +11347,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_NYJ_ARI",
@@ -11337,10 +11369,10 @@
         21,
         25
       ],
-      "confidence_score": 0.4577,
+      "confidence_score": 0.4588,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7272,
+        "model_agreement": 0.7292,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11370,7 +11402,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_CIN_CAR",
@@ -11392,10 +11424,10 @@
         19,
         24
       ],
-      "confidence_score": 0.4323,
+      "confidence_score": 0.4314,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.681,
+        "model_agreement": 0.6794,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11425,7 +11457,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_MIA_GB",
@@ -11480,7 +11512,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_JAX_HOU",
@@ -11535,7 +11567,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_DAL_LA",
@@ -11590,7 +11622,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_DEN_LV",
@@ -11600,10 +11632,10 @@
       "game_date": "2026-12-20",
       "home_team": "LV",
       "away_team": "DEN",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_total": 44,
+      "predicted_spread": -4,
       "ci_home": [
         20,
         26
@@ -11645,7 +11677,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_DET_MIN",
@@ -11700,7 +11732,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_CLE_NYG",
@@ -11722,10 +11754,10 @@
         20,
         25
       ],
-      "confidence_score": 0.4543,
+      "confidence_score": 0.4522,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.721,
+        "model_agreement": 0.7173,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11755,7 +11787,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_BAL_PIT",
@@ -11766,9 +11798,9 @@
       "home_team": "PIT",
       "away_team": "BAL",
       "predicted_home_score": 20,
-      "predicted_away_score": 25,
-      "predicted_total": 45,
-      "predicted_spread": -5,
+      "predicted_away_score": 26,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         28
@@ -11810,7 +11842,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_NO_TB",
@@ -11830,12 +11862,12 @@
       ],
       "ci_away": [
         20,
-        25
+        24
       ],
-      "confidence_score": 0.466,
+      "confidence_score": 0.4659,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7423,
+        "model_agreement": 0.7422,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -11865,7 +11897,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_IND_TEN",
@@ -11920,7 +11952,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_ATL_WAS",
@@ -11975,7 +12007,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_15_NE_KC",
@@ -11997,10 +12029,10 @@
         18,
         24
       ],
-      "confidence_score": 0.4712,
+      "confidence_score": 0.4702,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7517,
+        "model_agreement": 0.7499,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12030,7 +12062,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_HOU_PHI",
@@ -12085,7 +12117,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_GB_CHI",
@@ -12140,7 +12172,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_BUF_DEN",
@@ -12195,7 +12227,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_LA_SEA",
@@ -12250,7 +12282,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_TB_ATL",
@@ -12305,7 +12337,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_CLE_BAL",
@@ -12324,13 +12356,13 @@
         26
       ],
       "ci_away": [
-        21,
+        20,
         25
       ],
-      "confidence_score": 0.483,
+      "confidence_score": 0.4819,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7733,
+        "model_agreement": 0.7711,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12360,7 +12392,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_JAX_DAL",
@@ -12370,10 +12402,10 @@
       "game_date": "2026-12-27",
       "home_team": "DAL",
       "away_team": "JAX",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_total": 45,
+      "predicted_spread": -5,
       "ci_home": [
         20,
         26
@@ -12415,7 +12447,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_CIN_IND",
@@ -12437,10 +12469,10 @@
         22,
         24
       ],
-      "confidence_score": 0.4393,
+      "confidence_score": 0.4385,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6828,
+        "model_agreement": 0.6813,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12470,7 +12502,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_SF_KC",
@@ -12525,7 +12557,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_TEN_LV",
@@ -12580,7 +12612,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_LAC_MIA",
@@ -12635,7 +12667,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_WAS_MIN",
@@ -12690,7 +12722,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_ARI_NO",
@@ -12700,10 +12732,10 @@
       "game_date": "2026-12-27",
       "home_team": "NO",
       "away_team": "ARI",
-      "predicted_home_score": 21,
+      "predicted_home_score": 20,
       "predicted_away_score": 26,
-      "predicted_total": 47,
-      "predicted_spread": -5,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "ci_home": [
         20,
         27
@@ -12712,10 +12744,10 @@
         22,
         25
       ],
-      "confidence_score": 0.4669,
+      "confidence_score": 0.4653,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.733,
+        "model_agreement": 0.7302,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12745,7 +12777,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_NE_NYJ",
@@ -12755,10 +12787,10 @@
       "game_date": "2026-12-27",
       "home_team": "NYJ",
       "away_team": "NE",
-      "predicted_home_score": 21,
-      "predicted_away_score": 24,
+      "predicted_home_score": 20,
+      "predicted_away_score": 25,
       "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_spread": -5,
       "ci_home": [
         20,
         24
@@ -12767,10 +12799,10 @@
         13,
         24
       ],
-      "confidence_score": 0.3873,
+      "confidence_score": 0.3876,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5993,
+        "model_agreement": 0.5998,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12800,7 +12832,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_CAR_PIT",
@@ -12811,9 +12843,9 @@
       "home_team": "PIT",
       "away_team": "CAR",
       "predicted_home_score": 22,
-      "predicted_away_score": 25,
-      "predicted_total": 47,
-      "predicted_spread": -3,
+      "predicted_away_score": 26,
+      "predicted_total": 48,
+      "predicted_spread": -4,
       "ci_home": [
         21,
         26
@@ -12855,7 +12887,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_16_NYG_DET",
@@ -12871,16 +12903,16 @@
       "predicted_spread": -4,
       "ci_home": [
         21,
-        27
+        26
       ],
       "ci_away": [
-        21,
+        20,
         25
       ],
-      "confidence_score": 0.4644,
+      "confidence_score": 0.4634,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7285,
+        "model_agreement": 0.7267,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12910,7 +12942,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_BAL_CIN",
@@ -12932,10 +12964,10 @@
         18,
         24
       ],
-      "confidence_score": 0.4466,
+      "confidence_score": 0.4455,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.707,
+        "model_agreement": 0.7051,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -12965,7 +12997,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_LV_ARI",
@@ -13020,7 +13052,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_NO_ATL",
@@ -13039,13 +13071,13 @@
         26
       ],
       "ci_away": [
-        18,
+        17,
         25
       ],
-      "confidence_score": 0.4107,
+      "confidence_score": 0.4108,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6418,
+        "model_agreement": 0.642,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13075,7 +13107,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_SEA_CAR",
@@ -13130,7 +13162,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_DET_CHI",
@@ -13185,7 +13217,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_IND_CLE",
@@ -13201,16 +13233,16 @@
       "predicted_spread": -6,
       "ci_home": [
         20,
-        23
+        24
       ],
       "ci_away": [
         16,
         25
       ],
-      "confidence_score": 0.4189,
+      "confidence_score": 0.4183,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6568,
+        "model_agreement": 0.6556,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13240,7 +13272,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_NYG_DAL",
@@ -13262,10 +13294,10 @@
         18,
         23
       ],
-      "confidence_score": 0.4168,
+      "confidence_score": 0.416,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6419,
+        "model_agreement": 0.6404,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13295,7 +13327,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_WAS_JAX",
@@ -13350,7 +13382,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_KC_LAC",
@@ -13405,7 +13437,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_BUF_MIA",
@@ -13460,7 +13492,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_DEN_NE",
@@ -13475,17 +13507,17 @@
       "predicted_total": 47,
       "predicted_spread": -7,
       "ci_home": [
-        21,
+        20,
         27
       ],
       "ci_away": [
         23,
         25
       ],
-      "confidence_score": 0.4511,
+      "confidence_score": 0.449,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7152,
+        "model_agreement": 0.7114,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13515,7 +13547,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_MIN_NYJ",
@@ -13537,10 +13569,10 @@
         15,
         24
       ],
-      "confidence_score": 0.3755,
+      "confidence_score": 0.377,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5778,
+        "model_agreement": 0.5806,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13570,7 +13602,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_PHI_SF",
@@ -13625,7 +13657,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_LA_TB",
@@ -13680,7 +13712,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_PIT_TEN",
@@ -13735,7 +13767,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_17_HOU_GB",
@@ -13790,7 +13822,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_SF_ARI",
@@ -13845,7 +13877,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_PIT_BAL",
@@ -13900,7 +13932,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_NYJ_BUF",
@@ -13922,10 +13954,10 @@
         17,
         24
       ],
-      "confidence_score": 0.4354,
+      "confidence_score": 0.4361,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.6757,
+        "model_agreement": 0.677,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -13955,7 +13987,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_ATL_CAR",
@@ -14010,7 +14042,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_CLE_CIN",
@@ -14021,9 +14053,9 @@
       "home_team": "CIN",
       "away_team": "CLE",
       "predicted_home_score": 21,
-      "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_away_score": 26,
+      "predicted_total": 47,
+      "predicted_spread": -5,
       "ci_home": [
         19,
         23
@@ -14032,10 +14064,10 @@
         14,
         25
       ],
-      "confidence_score": 0.3516,
+      "confidence_score": 0.3505,
       "confidence_label": "WEAK",
       "confidence_breakdown": {
-        "model_agreement": 0.5344,
+        "model_agreement": 0.5322,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14065,7 +14097,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_LAC_DEN",
@@ -14076,9 +14108,9 @@
       "home_team": "DEN",
       "away_team": "LAC",
       "predicted_home_score": 21,
-      "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_away_score": 26,
+      "predicted_total": 47,
+      "predicted_spread": -5,
       "ci_home": [
         21,
         23
@@ -14120,7 +14152,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_DET_GB",
@@ -14131,9 +14163,9 @@
       "home_team": "GB",
       "away_team": "DET",
       "predicted_home_score": 20,
-      "predicted_away_score": 24,
-      "predicted_total": 44,
-      "predicted_spread": -4,
+      "predicted_away_score": 25,
+      "predicted_total": 45,
+      "predicted_spread": -5,
       "ci_home": [
         20,
         24
@@ -14175,7 +14207,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_TEN_HOU",
@@ -14230,7 +14262,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_JAX_IND",
@@ -14285,7 +14317,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_LV_KC",
@@ -14340,7 +14372,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_SEA_LA",
@@ -14395,7 +14427,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_CHI_MIN",
@@ -14405,10 +14437,10 @@
       "game_date": "2027-01-10",
       "home_team": "MIN",
       "away_team": "CHI",
-      "predicted_home_score": 22,
+      "predicted_home_score": 21,
       "predicted_away_score": 25,
-      "predicted_total": 47,
-      "predicted_spread": -3,
+      "predicted_total": 46,
+      "predicted_spread": -4,
       "ci_home": [
         21,
         29
@@ -14450,7 +14482,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_MIA_NE",
@@ -14466,16 +14498,16 @@
       "predicted_spread": -1,
       "ci_home": [
         23,
-        27
+        28
       ],
       "ci_away": [
         24,
         25
       ],
-      "confidence_score": 0.5093,
+      "confidence_score": 0.508,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.821,
+        "model_agreement": 0.8186,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14505,7 +14537,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_TB_NO",
@@ -14527,10 +14559,10 @@
         20,
         25
       ],
-      "confidence_score": 0.4621,
+      "confidence_score": 0.4607,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7244,
+        "model_agreement": 0.7217,
         "feature_completeness": 0.1124,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14560,7 +14592,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_PHI_NYG",
@@ -14571,21 +14603,21 @@
       "home_team": "NYG",
       "away_team": "PHI",
       "predicted_home_score": 21,
-      "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_away_score": 25,
+      "predicted_total": 46,
+      "predicted_spread": -4,
       "ci_home": [
-        21,
+        20,
         26
       ],
       "ci_away": [
         20,
         23
       ],
-      "confidence_score": 0.4779,
+      "confidence_score": 0.4761,
       "confidence_label": "LOW",
       "confidence_breakdown": {
-        "model_agreement": 0.7639,
+        "model_agreement": 0.7606,
         "feature_completeness": 0.0924,
         "h2h_data_quality": 0.2,
         "injury_data_freshness": 0.42
@@ -14615,7 +14647,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     },
     {
       "game_id": "2026_18_DAL_WAS",
@@ -14670,7 +14702,7 @@
         "high_wind": 0,
         "cold_game": 0
       },
-      "generated_at": "2026-09-15T14:44:36.692254+00:00"
+      "generated_at": "2026-09-16T23:59:30.041116+00:00"
     }
   ]
 }
