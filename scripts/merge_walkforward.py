@@ -22,6 +22,11 @@ OUT  = ROOT / "data" / "predictions" / "walkforward_results.json"
 DOCS = ROOT / "docs" / "assets"
 
 
+def _pct(x):
+    """Percentage for printing/plotting; NaN (a gap) when there were no games."""
+    return float("nan") if x is None else 100 * x
+
+
 def _mean(rows, key):
     vals = [r[key] for r in rows if r.get(key) is not None]
     return round(st.mean(vals), 4) if vals else None
@@ -44,8 +49,8 @@ def main() -> None:
     for r in rows:
         print(f"{r['test_season']:>6} {r['window']:>3} {r['mae_spread']:>6.2f} "
               f"{r['vegas_mae_spread'] or float('nan'):>6.2f} {r['mae_total']:>6.2f} "
-              f"{r['vegas_mae_total'] or float('nan'):>6.2f} {100 * (r['ats_pct'] or 0):>5.1f} "
-              f"{100 * (r['edge_ats_pct'] or 0):>5.1f} {r['edge_ats_n']:>4}")
+              f"{r['vegas_mae_total'] or float('nan'):>6.2f} {_pct(r['ats_pct']):>5.1f} "
+              f"{_pct(r['edge_ats_pct']):>5.1f} {r['edge_ats_n']:>4}")
 
     summary = {}
     for w in sorted({r["window"] for r in rows}):
@@ -85,8 +90,8 @@ def main() -> None:
         sel = [r for r in rows if r["window"] == w]
         xs = [r["test_season"] for r in sel]
         axes[0].plot(xs, [r["mae_spread"] for r in sel], "o-", label=f"model (window {w})")
-        axes[1].plot(xs, [100 * (r["ats_pct"] or 0) for r in sel], "o-", label=f"ATS, all games (window {w})")
-        axes[1].plot(xs, [100 * (r["edge_ats_pct"] or 0) for r in sel], "s--", alpha=0.6,
+        axes[1].plot(xs, [_pct(r["ats_pct"]) for r in sel], "o-", label=f"ATS, all games (window {w})")
+        axes[1].plot(xs, [_pct(r["edge_ats_pct"]) for r in sel], "s--", alpha=0.6,
                      label=f"ATS, edge games (window {w})")
     vegas = {r["test_season"]: r["vegas_mae_spread"] for r in rows}
     axes[0].plot(sorted(vegas), [vegas[s] for s in sorted(vegas)], "k:", label="Vegas line")

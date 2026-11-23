@@ -64,11 +64,12 @@ def run_backtest(game_df: pd.DataFrame, test_season: int, n_train_seasons: int =
     result = compute_metrics(np.round(home), np.round(away), df_test)
     result.update({"test_season": test_season, "train_seasons": train_seasons,
                    "model_version": models["version"]})
+    pct = lambda x: "n/a" if x is None else f"{100 * x:.1f}%"  # noqa: E731
     logger.info("  %d: spread MAE %.2f (Vegas %.2f) | total MAE %.2f (Vegas %.2f) | "
-                "ATS %.1f%% | edge ATS %.1f%% (n=%d)", test_season,
+                "ATS %s | edge ATS %s (n=%d)", test_season,
                 result["mae_spread"], result["vegas_mae_spread"], result["mae_total"],
-                result["vegas_mae_total"], 100 * result["ats_pct"],
-                100 * result["edge_ats_pct"], result["edge_ats_n"])
+                result["vegas_mae_total"], pct(result["ats_pct"]),
+                pct(result["edge_ats_pct"]), result["edge_ats_n"])
     return result
 
 
