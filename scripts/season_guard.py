@@ -26,7 +26,11 @@ import sys
 import urllib.request
 from datetime import date, timedelta
 
-SCHEDULE_URL = "http://www.habitatring.com/games.csv"
+# nflverse's canonical schedule, then Lee Sharpe's older mirror of the same file
+SCHEDULE_URLS = [
+    "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+    "http://www.habitatring.com/games.csv",
+]
 LOOKBACK_DAYS  = 3
 LOOKAHEAD_DAYS = 10
 
@@ -37,12 +41,17 @@ def main() -> None:
         print("guard: --force given, skipping schedule check", file=sys.stderr)
         return
 
-    try:
-        raw = urllib.request.urlopen(SCHEDULE_URL, timeout=30).read()
-        rows = list(csv.DictReader(io.StringIO(raw.decode("utf-8", "replace"))))
-    except Exception as e:  # noqa: BLE001 — fail-open by design
+    rows = None
+    for url in SCHEDULE_URLS:
+        try:
+            raw = urllib.request.urlopen(url, timeout=30).read()
+            rows = list(csv.DictReader(io.StringIO(raw.decode("utf-8", "replace"))))
+            break
+        except Exception as e:  # noqa: BLE001 — try the next source
+            print(f"guard: could not fetch {url} ({e})", file=sys.stderr)
+    if rows is None:
         print("run")
-        print(f"guard: schedule fetch failed ({e}) — failing open", file=sys.stderr)
+        print("guard: no schedule source reachable — failing open", file=sys.stderr)
         return
 
     today = date.today()

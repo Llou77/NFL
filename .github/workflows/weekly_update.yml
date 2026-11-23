@@ -2,18 +2,21 @@ name: Weekly NFL Prediction Update
 
 on:
   schedule:
-    - cron: '0 10 * * 2'   # Every Tuesday 10:00 UTC (6am ET)
+    # Tuesday 10:23 UTC. Off the top of the hour on purpose: GitHub delays
+    # (or drops) scheduled runs at :00 under load — the old '0 10' slot
+    # actually started 6-9 hours late every week in 2026.
+    - cron: '23 10 * * 2'
   workflow_dispatch:
     inputs:
       force_data:
         description: 'Force re-download of live data'
         required: false
-        default: 'false'
+        default: false
         type: boolean
       skip_guard:
         description: 'Run even in the offseason (bypass guard)'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 permissions:
@@ -27,26 +30,20 @@ jobs:
   update-predictions:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Offseason guard BEFORE the expensive pip install: during the
-      # offseason there is nothing to predict and nothing new to learn,
-      # so a skipped run costs ~30 seconds instead of 15+ minutes.
+      # Runs before the pip install: an offseason run exits in ~30 seconds.
       - name: Offseason guard
         id: guard
         run: |
           ARGS=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.skip_guard }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.skip_guard }}" = "true" ]; then
             ARGS="--force"
           fi
-          DECISION=$(python3 scripts/season_guard.py $ARGS)
-          echo "decision=$DECISION" >> "$GITHUB_OUTPUT"
-          echo "Guard decision: $DECISION"
+          echo "decision=$(python3 scripts/season_guard.py $ARGS)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v5
         if: steps.guard.outputs.decision == 'run'
@@ -60,58 +57,41 @@ jobs:
           pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
 
-      - name: Create directories
-        if: steps.guard.outputs.decision == 'run'
-        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
-
-      # Save this run's freshly trained artifacts so the Thursday
-      # predict-only job can restore them instead of retraining.
-      # CACHE SCOPE: the committed weight files are EXCLUDED — caching them
-      # let an old restored cache overwrite freshly committed optimize
-      # results. v3 key: v2 caches still contain weight files.
+      # Saves this run's trained model so the Thursday job can reuse it.
+      # version.txt is committed, so it is excluded from the cache.
       - name: Cache model artifacts
         if: steps.guard.outputs.decision == 'run'
         uses: actions/cache@v4
         with:
           path: |
             model/saved
-            !model/saved/optimal_weights.json
             !model/saved/version.txt
-          key: model-saved-v3-${{ github.run_id }}
-          restore-keys: |
-            model-saved-v3-
+          key: model-saved-v4-${{ github.run_id }}
+          restore-keys: model-saved-v4-
 
       - name: Run weekly pipeline
         if: steps.guard.outputs.decision == 'run'
         run: |
           set -o pipefail
           FORCE=""
-          [ "${{ github.event.inputs.force_data }}" = "true" ] && FORCE="--force-data"
+          [ "${{ inputs.force_data }}" = "true" ] && FORCE="--force-data"
           python -u model/pipeline.py --mode full $FORCE 2>&1 | tee -a run_console.log
-        env:
-          PYTHONPATH: ${{ github.workspace }}/model
 
       - name: Commit updated predictions
         if: steps.guard.outputs.decision == 'run'
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          git add docs/assets/
-          # ONE pathspec per add: `git add A B || true` fails ENTIRELY when
-          # B does not exist, silently un-staging A too.
-          git add data/predictions/predictions_latest.json || true
-          git add data/predictions/performance.json || true
-          git add model/saved/optimal_weights.json || true
-          git add model/saved/version.txt || true
+          git add docs/assets/ data/predictions/predictions_latest.json \
+                  data/predictions/performance.json model/saved/version.txt
           git diff --staged --quiet || git commit -m "Weekly update — $(date -u '+%Y-%m-%d')"
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+          bash scripts/push_with_retry.sh
 
       - name: Publish run log
         if: always() && steps.guard.outputs.decision == 'run'
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          mkdir -p data/logs
           {
             echo "=== weekly $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
             echo "--- console (tail) ---"
@@ -119,12 +99,4 @@ jobs:
           } > data/logs/weekly_last.txt
           git add data/logs/weekly_last.txt
           git commit -m "Weekly run log" || true
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
-
-      - name: Upload pipeline log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-log-${{ github.run_number }}
-          path: data/pipeline.log
-          retention-days: 14
+          bash scripts/push_with_retry.sh

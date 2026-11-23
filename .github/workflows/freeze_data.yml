@@ -2,8 +2,8 @@
 # downloaded once and stored in the repo, so normal pipeline runs need zero
 # network access for historical data (see scripts/freeze_data.py).
 #
-# Run it: once now, then once a year after the Super Bowl (cron below), or
-# whenever you want to re-seal:  date > .freeze-trigger && git add ... && push
+# Runs once a year after the Super Bowl (cron below); start it manually from
+# the Actions UI or with a push touching .freeze-trigger to re-seal.
 name: Freeze Historical Data
 
 on:
@@ -15,10 +15,10 @@ on:
       force:
         description: 'Re-download and overwrite existing frozen files'
         required: false
-        default: 'false'
+        default: false
         type: boolean
   schedule:
-    - cron: '0 6 1 4 *'   # April 1st, yearly — seals the season that just ended
+    - cron: '37 6 1 4 *'   # April 1st, yearly — seals the season that just ended
 
 permissions:
   contents: write
@@ -35,14 +35,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      # freeze only needs the data stack, not torch — keep it light
+      # the freeze only needs the data stack, not the ML libraries
       - name: Install dependencies
         run: pip install pandas==2.2.2 numpy==1.26.4 pyarrow==16.1.0
 
@@ -50,7 +49,7 @@ jobs:
         run: |
           set -o pipefail
           FORCE=""
-          [ "${{ github.event.inputs.force }}" = "true" ] && FORCE="--force"
+          [ "${{ inputs.force }}" = "true" ] && FORCE="--force"
           python -u scripts/freeze_data.py $FORCE 2>&1 | tee -a run_console.log
 
       - name: Commit frozen data
@@ -59,14 +58,13 @@ jobs:
           git config user.email "nfl-bot@users.noreply.github.com"
           git add data/frozen/
           git diff --staged --quiet || git commit -m "Freeze historical data — $(date -u '+%Y-%m-%d')"
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+          bash scripts/push_with_retry.sh
 
       - name: Publish run log
         if: always()
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          mkdir -p data/logs
           {
             echo "=== freeze $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
             echo "--- console (tail) ---"
@@ -74,4 +72,4 @@ jobs:
           } > data/logs/freeze_last.txt
           git add data/logs/freeze_last.txt
           git commit -m "Freeze run log" || true
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+          bash scripts/push_with_retry.sh
