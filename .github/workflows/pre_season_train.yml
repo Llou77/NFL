@@ -1,6 +1,5 @@
 # Pre-season kickoff: on the first Tuesday of August it dispatches the
-# STAGED full pipeline (optimize → train+predict → backtest matrix) instead
-# of duplicating those steps here in one monolithic job.
+# staged full pipeline (train+predict → backtest matrix → merge).
 # Note: workflow_dispatch fired with GITHUB_TOKEN is one of the documented
 # exceptions to GitHub's "GITHUB_TOKEN events don't trigger workflows" rule,
 # so this chain works without a personal access token.
@@ -8,10 +7,10 @@ name: Pre-Season Kickoff
 
 on:
   schedule:
-    # CRON FIX kept from the previous version: '0 12 1-7 8 2' fired ~11×
-    # (day-of-month and day-of-week are OR-ed). Every August Tuesday +
-    # first-Tuesday guard = exactly one run per year.
-    - cron: '0 12 * 8 2'
+    # Every August Tuesday + the first-Tuesday guard below = one run a year
+    # ('0 12 1-7 8 2' would fire ~11 times: cron ORs day-of-month and
+    # day-of-week).
+    - cron: '17 12 * 8 2'
   workflow_dispatch:
 
 permissions:
