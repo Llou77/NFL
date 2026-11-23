@@ -5,6 +5,94 @@ Folyamatos munkanapló — bármelyik későbbi session innen tudja folytatni.
 
 ---
 
+## 2026-11-23 — Teljes audit, v2.0 modell
+
+**Kiindulás:** élő 2026, 1–10. hét (150 meccs, v1.1): spread-MAE 11,11 vs. Vegas 9,62;
+total-MAE 11,22 vs. 10,51; ATS 67–80 (45,6%); 3+ pontos „edge” meccsek 43–53, ROI −14,5%.
+A backtest 55% ATS-t és +12% ROI-t ígért — az eltérés oka nem balszerencse volt.
+
+### Talált hibák (mind adaton ellenőrizve)
+
+1. **×1,8-es variancia-nyújtás** (`variance_scale`): a jóslatok szórását a kimenetelek
+   szórásához igazította. Hibás cél — az optimális jóslat szűkebb, mint a kimenetel
+   (jel + zaj). Önmagában ~0,4 pont spread-MAE veszteség 2025-ön, és tömegesen gyártott
+   hamis 3+ pontos „edge”-eket. Ráadásul az adott batch átlaga körül skálázott, így egy
+   meccs jóslata attól függött, mely más meccsekkel együtt jósoltuk.
+2. **Train/serve eltérés — 34 feature mindig hiányzott a közelgő meccseknél:** QB-forma és
+   NGS (a meccs hetére mergelve, ami lejátszás előtt üres), meccsnapi időjárás és
+   bírók (a feed csak meccs után tölti). A backtest látta őket, az éles jóslat soha.
+   Sérülés-riportok: a keddi futáskor a heti riport még nem létezik → szintén kivéve.
+3. **H2H teljesen halott:** a pivot eldobta a csapatoszlopokat → mind a 10 h2h oszlop
+   konstans volt minden meccsen; ráadásul „LAR” kód (az nflverse „LA”-t használ).
+4. **Halott/hamis feature-ök:** preseason win total (forrás 2020-ban véget ért → 0 egyezés),
+   mrcaseb vonalak (2021-ben véget ért → az „opening”/„hist” spread a spread_line másolata,
+   a total/moneyline 100% üres, a CLV-metrika üres), draft-minőség (nincs `pfr_av` oszlop →
+   mindig 0), qb_changed (a heti keret „első” QB-ja = valódi kezdő csak 34%-ban; a flag 59%-ban
+   helyes), dome-flag (8 csapatnál rossz), nemzetközi meccsek (2025 mind kimaradt),
+   primetime (19:00/19:15 MNF kimaradt), `vegas_implied_power` előjel, turnover-luck blokk
+   (soha nem futott le), duplikált oszlopok (season_hfa, era_adj, blended turnover gap).
+5. **Az Optuna-optimalizálás zajt hangolt:** a 26 korlátlan walk-forward fold egyik
+   súlya sem különböztethető meg a keresési tartományon vett egyenletes eloszlástól
+   (KS p = 0,13–0,89); a „stabil/zajos” besorolás pusztán a tartományszélességet mérte.
+   A júliusi szűkítés/rögzítés ezért értelmetlen volt. Optimalizáló törölve, fix súlyok
+   (`model/settings.py`).
+6. **Metrikák:** három különböző „edge”-definíció (README: 3+ pont; kód: 1,5 pont; backtest:
+   eltérő győztes); az O/U csak a leanelt meccseken számolt, az ATS mindenen; a site
+   „spread direction ~90%, nem fogadási metrika” szövege a szivárgásos korszakból maradt.
+7. **Site:** az „insights” oldal júniusi, szivárgásos szezonelemzést mutatott (4,8 pontos
+   spread-MAE, same-game feature-ök), a konfidencia-tier ábra kitalált számokat; a
+   `model_version` mezőt a site várta, a pipeline nem írta.
+8. **Infra:** a cron pontosan órára volt időzítve → hetente 3,5–9 órás késés; a push-retry
+   ciklus zölden is végződhetett push nélkül; a PFR/NGS letöltés megkerülte a frozen
+   réteget; a letöltött táblák többségét (snap, depth chart, FTN, PFR, contracts, combine,
+   draft, officials, …) semmi nem olvasta — 35 MB a frozen rétegben.
+9. **Adatvédelem:** 10 publikus commit szerzője/committere a munkahelyi e-mail.
+   Csak history-újraírással + force pushsal tüntethető el — a tulaj döntése, nincs megcsinálva.
+
+### v2.0 — mi változott
+
+- Feature-szabály: csak az használható, ami kezdőrúgás előtt ismert **és** a heti futáskor
+  a következő meccsre is elérhető. Gördülő statok a csapat teljes meccs-idővonalán
+  (a következő meccs pontosan azt az ablakot kapja, amit egy történelmi sor tanításkor).
+- QB-váltás/QB start share a schedule kezdő-QB mezőiből (lejátszott meccsekre + a következő
+  hétre publikált); edzőváltás meccsenként; keretfolytonosság a heti keretekből (week 1
+  vs. előző szezon utolsó hete); Elo 1999 óta (nincs hidegindítás az ablakban); HFA és
+  szezon-pontátlag teljes történetből; franchise-térkép (OAK→LV, SD→LAC, STL→LA).
+- **Piac-tudatos meta-learner:** ha a vonal publikált, a Ridge blender a négy modell mellett
+  a Vegas által implikált pontszámot is látja (OOF-on illesztve). Illesztett piaci súly ≈1,0–1,1:
+  a modell lényegében a piacot követi kis korrekciókkal — ez a becsületes viselkedés egy olyan
+  modelltől, amelynek nincs kimutatott önálló előnye.
+- Nincs variancia-kalibráció; egyetlen edge-definíció: |modell − vonal| ≥ 3 pont
+  (`settings.SPREAD_EDGE_PTS`), mindenhol azonos ATS/O/U (minden meccs).
+- `performance.json`: minden rekord `model_version`-t kap (a korábbiak „v1.1”),
+  `by_model_version` bontás, Vegas-MAE minden összesítés mellett. A meglévő 150 rekord
+  származtatott mezői újraszámolva (a jóslatok/eredmények érintetlenek; az ATS mind a 150-nél azonos).
+- Törölve: `bayesian_optimizer.py`, `player_ratings.py`, `season_analysis.py`, `optimize_run.yml`,
+  `season_analysis.yml`, `docs/insights.html`, szezonelemzés JSON-ok, nem használt frozen táblák
+  (59 → 24 MB), optuna függőség.
+- Workflow: órán kívüli cronok, `scripts/push_with_retry.sh` (pirosra vált, ha nem sikerül),
+  dinamikus backtest/walk-forward szezonlista, cache-kulcs v4 (a régi artifactok sosem töltődnek vissza).
+
+### Validáció (lokálisan, a commitolt kóddal)
+
+Kitartott 2025 (tanítás 2022–24, 285 meccs), spread-MAE / total-MAE:
+régi modell ahogy publikált 10,28 / 11,09; ahogy élesben működött (hiányzó feature-ök) 10,53 / 11,05;
+**v2.0 9,74 / 10,46**; Vegas 9,67 / 10,42. 2026 7–11. hét (83 meccs): régi élő-szimuláció 9,45 / 10,87,
+**v2.0 9,28 / 10,15**, Vegas 9,10 / 10,20. 3+ pontos edge-meccs 2025-ben: 188 → 12.
+Ablációk (2025): sérülés-feature −0,04, H2H ±0,06, régi Elo ±0,03, régi súlyok −0,16/+0,13,
+időjárás −0,16/+0,23, seed-zaj a totalon ±0,12 — egyik sem magyaráz rendszerszintű különbséget;
+a nagy nyereség a nyújtás elhagyása és a piaci horgony. Walk-forward 2013–2025: lásd
+`docs/walkforward.html`.
+
+### Nyitott / következő
+
+- Force push a munkahelyi e-mail eltávolításához (tulaj döntése).
+- Szombati predict-only futás a pénteki végleges sérülés-státuszok után — csak ha a
+  sérülés-feature-ök ugyanazzal az időzítéssel kerülnek a tanítóadatba is.
+- Red zone aggregátum: az extra-point (PAT) játékok is benne vannak a red zone sorokban
+  (yardline 15). Javítása a frozen pbp_agg teljes újragenerálását igényli → offszezonban.
+- A v2.0 élő rekordja a 2026-os 12. héttől indul; a v1.1 és v2.0 külön követve.
+
 ## 2026-07-14 — Site-konzisztencia, súly-stabilitás, 2021-es szezonbővítés
 
 1. **Site audit + javítás:** a mező-kontraktusok rendben voltak, a TARTALOM
@@ -184,6 +272,8 @@ kerüljenek, ne töltődjenek le minden futásnál; (3) közérthető folyamatle
   körüli fillna keveri a kettőt; a `vegas_implied_power` előjele is fordított
   (konzisztens feature-ként a modell megtanulja, de félrevezető). Külön kört érdemel.
 - Player ratings modul továbbra is kikapcsolva (temporal shift rework vár rá).
+
+## 2026-07-08 — Szivárgás-lezárás, stabilitás, takarítás
 
 **Feladat:** a korábbi chat-körökben azonosított javítások tényleges végrehajtása
 (a sandbox-resetek miatt korábban semmi nem került pushra), felesleg törlése,
