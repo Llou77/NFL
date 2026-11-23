@@ -48,7 +48,7 @@ def run_backtest(game_df: pd.DataFrame, test_season: int, n_train_seasons: int =
     from train import load_models, train_all
 
     labeled = game_df[game_df["target_home_score"].notna()]
-    train_seasons = sorted(s for s in labeled["season"].unique()
+    train_seasons = sorted(int(s) for s in labeled["season"].unique()
                            if test_season - n_train_seasons <= s < test_season)
     df_train = labeled[labeled["season"].isin(train_seasons)]
     df_test = labeled[labeled["season"] == test_season]
