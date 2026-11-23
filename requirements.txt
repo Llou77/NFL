@@ -1,29 +1,16 @@
-# NFL Score Predictor — Python Dependencies
-# Python 3.11+ required
-#
-# 2026-07 trim: every package here is actually imported by model/ or
-# scripts/. The old list also pulled in requests, beautifulsoup4, polars,
-# shap (numba/llvmlite!), optuna-integration, tqdm, python-dotenv, joblib,
-# scipy and pytest — none of them imported anywhere. Removing them cuts
-# CI install time substantially. (scipy/joblib still arrive implicitly as
-# scikit-learn dependencies.)
+# NFL Score Predictor — Python dependencies (Python 3.11)
 #
 # CI installs torch first from the CPU-only wheel index
-# (https://download.pytorch.org/whl/cpu) — the default PyPI wheel bundles
-# CUDA and is ~4x larger for zero benefit on GitHub runners.
+# (https://download.pytorch.org/whl/cpu); the default PyPI wheel bundles CUDA
+# and is several times larger for no benefit on GitHub runners.
 
-# ── Data ────────────────────────────────────────────────────────
+# Data
 pandas==2.2.2
 numpy==1.26.4
 pyarrow==16.1.0
 
-# ── Machine Learning ────────────────────────────────────────────
+# Machine learning
 scikit-learn==1.5.0
 xgboost==2.0.3
 lightgbm==4.3.0
-
-# ── Deep Learning ───────────────────────────────────────────────
 torch==2.3.0
-
-# ── Bayesian Optimisation ───────────────────────────────────────
-optuna==3.6.1

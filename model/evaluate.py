@@ -1,26 +1,17 @@
 """
-evaluate.py
-===========
-Backtesting framework and ongoing performance tracking.
+evaluate.py — backtests and the live track record.
 
-Backtest design:
-  Train: 2022+2023+2024  → Test: 2025
-  Train: 2021+2022+2023  → Test: 2024
-  Train: 2020+2021+2022  → Test: 2023
-
-ATS logic (corrected):
-  A model ATS "WIN" means: the model picked the correct side of the spread.
-  i.e. model predicted home margin M, book spread S (home perspective, neg = home favored):
-    - Model pick: HOME if M > -S, AWAY if M < -S
-    - Outcome: home covered if actual_margin > -S
-    - WIN if model_pick == actual_cover_side
-
-Metrics tracked:
-  MAE (score, total, spread)
-  ATS record (corrected definition)
-  Over/Under record
-  Calibration (R², predicted vs actual distribution)
-  Performance by confidence tier, game_type, weather, division
+Definitions used everywhere (backtest, walk-forward, live tracker, site):
+  spread_line   home-oriented, POSITIVE when the home team is favoured; the
+                home team covers iff (home − away) > spread_line.
+  ATS           the model "picks" the side its margin favours relative to
+                the line, on EVERY game with a line; push = no decision.
+  O/U           same idea for the total, on every game with a total.
+  edge game     |model − line| ≥ settings.SPREAD_EDGE_PTS (totals:
+                TOTAL_EDGE_PTS); these are the leans shown on the site.
+  ROI           flat 1-unit bets at −110 on edge games.
+Every model metric is reported next to the same metric for the Vegas line
+itself, which is the bar a useful model has to clear.
 """
 
 import json
@@ -31,560 +22,260 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
+import settings
+
 logger = logging.getLogger(__name__)
 
 ROOT      = Path(__file__).resolve().parent.parent
-PERF_PATH = ROOT / "data" / "predictions" / "performance.json"
+PRED_DIR  = ROOT / "data" / "predictions"
+PERF_PATH = PRED_DIR / "performance.json"
+
+# Live predictions published before the 2026-11 audit carry no version tag.
+PRE_AUDIT_VERSION = "v1.1"
+WIN_PAYOUT = 100.0 / 110.0
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  BACKTEST RUNNER
+#  BACKTEST
 # ══════════════════════════════════════════════════════════════════════════════
 
-def run_backtests(
-    game_df: pd.DataFrame,
-    weights: Optional[dict] = None,
-    only_season: Optional[int] = None,
-) -> dict:
+def run_backtest(game_df: pd.DataFrame, test_season: int, n_train_seasons: int = 4) -> dict:
+    """Train on the `n_train_seasons` seasons before `test_season` (the same
+    window production uses), predict every game of `test_season` through the
+    production prediction path, and score it."""
     from feature_engineering import get_feature_columns
-    from train import train_all, load_models
+    from predict import ensemble_predict
+    from train import load_models, train_all
 
-    feature_cols = get_feature_columns(game_df)
+    labeled = game_df[game_df["target_home_score"].notna()]
+    train_seasons = sorted(int(s) for s in labeled["season"].unique()
+                           if test_season - n_train_seasons <= s < test_season)
+    df_train = labeled[labeled["season"].isin(train_seasons)]
+    df_test = labeled[labeled["season"] == test_season]
+    if len(df_train) < 150 or len(df_test) < 50:
+        raise ValueError(f"Backtest {test_season}: not enough games "
+                         f"(train={len(df_train)}, test={len(df_test)}).")
+    logger.info("Backtest: train %s → test %d (%d / %d games)",
+                train_seasons, test_season, len(df_train), len(df_test))
 
-    # Auto-detect available labeled seasons
-    available = sorted(
-        game_df[game_df["target_home_score"].notna()]["season"].unique()
-    )
-    logger.info("Available labeled seasons for backtesting: %s", available)
-
-    # Build backtest configs dynamically:
-    # - 3-season window (standard): test most recent 2 seasons
-    # - 5-season window (extended): test if data goes far enough back
-    backtest_configs = []
-
-    # Standard 3-season window
-    for test_s in sorted(available)[-3:]:
-        train_end  = test_s - 1
-        train_start = train_end - 2  # 3 seasons
-        train_s = [s for s in available if train_start <= s <= train_end]
-        if len(train_s) >= 2 and test_s in available:
-            backtest_configs.append({
-                "train_seasons": train_s,
-                "test_season":   test_s,
-                "window_type":   "3-season",
-            })
-
-    # Extended 5-season window (if enough data)
-    for test_s in sorted(available)[-2:]:
-        train_end   = test_s - 1
-        train_start = train_end - 4  # 5 seasons
-        train_s = [s for s in available if train_start <= s <= train_end]
-        if len(train_s) >= 4 and test_s in available:
-            # Only add if different from already-added 3-season configs
-            backtest_configs.append({
-                "train_seasons": train_s,
-                "test_season":   test_s,
-                "window_type":   "5-season",
-            })
-
-    if not backtest_configs:
-        # Fallback to hardcoded if not enough data detected
-        backtest_configs = [
-            {"train_seasons": [2022, 2023, 2024], "test_season": 2025, "window_type": "3-season"},
-            {"train_seasons": [2021, 2022, 2023], "test_season": 2024, "window_type": "3-season"},
-        ]
-
-    if only_season is not None:
-        backtest_configs = [c for c in backtest_configs
-                            if c["test_season"] == only_season]
-        if not backtest_configs:
-            logger.warning("No backtest configuration for season %s "
-                           "(not enough labeled training seasons before it) "
-                           "— returning empty result.", only_season)
-            return {}
-
-    logger.info("Running %d backtest configurations", len(backtest_configs))
-    all_results = {}
-
-    for config in backtest_configs:
-        train_s = config["train_seasons"]
-        test_s  = config["test_season"]
-
-        df_train = game_df[
-            game_df["season"].isin(train_s) &
-            game_df["target_home_score"].notna()
-        ].copy()
-        df_test = game_df[
-            (game_df["season"] == test_s) &
-            game_df["target_home_score"].notna()
-        ].copy()
-
-        if len(df_train) < 50 or len(df_test) < 10:
-            logger.warning("  Skipping backtest for %s — insufficient data", test_s)
-            continue
-
-        logger.info("  Backtest: train %s → test %s (%d / %d games)",
-                    train_s, test_s, len(df_train), len(df_test))
-
-        train_all(df_train, feature_cols, weights, current_season=test_s, run_cv=False)
-        models = load_models()
-
-        # TRAIN/SERVE SKEW FIX: use the exact same ensemble path as live
-        # prediction (predict.ensemble_predict). The old code fed SCALED
-        # features to the tree models here while the live pipeline fed raw
-        # NaN-preserved features — the backtest measured a different model
-        # than the one deployed.
-        from predict import ensemble_predict
-        model_feature_cols = models.get("feature_cols", feature_cols)
-        X_test = df_test.reindex(columns=model_feature_cols,
-                                 fill_value=np.nan)[model_feature_cols].values
-        _, _, raw_home, raw_away = ensemble_predict(models, X_test, apply_calibration=True)
-
-        pred_home = np.round(raw_home).astype(float)
-        pred_away = np.round(raw_away).astype(float)
-
-        actual_home = df_test["target_home_score"].values.astype(float)
-        actual_away = df_test["target_away_score"].values.astype(float)
-
-        result = compute_metrics(pred_home, pred_away, actual_home, actual_away, df_test)
-        result["train_seasons"] = train_s
-        result["test_season"]   = test_s
-        result["window_type"]   = config.get("window_type", "3-season")
-
-        # Use unique key: season + window type for 5-season configs
-        key = str(test_s)
-        if config.get("window_type") == "5-season":
-            key = f"{test_s}_5yr"
-        all_results[key] = result
-
-        logger.info("    [%s] MAE home=%.2f away=%.2f total=%.2f | ATS=%.1f%% | OU=%.1f%%",
-                    config.get("window_type", "3s"),
-                    result["mae_home"], result["mae_away"], result["mae_total"],
-                    result["ats_pct"] * 100, result["ou_pct"] * 100)
-
-    return all_results
+    train_all(df_train, get_feature_columns(game_df), current_season=test_season)
+    models = load_models()
+    _, _, home, away = ensemble_predict(models, df_test[models["feature_cols"]].to_numpy())
+    result = compute_metrics(np.round(home), np.round(away), df_test)
+    result.update({"test_season": test_season, "train_seasons": train_seasons,
+                   "model_version": models["version"]})
+    pct = lambda x: "n/a" if x is None else f"{100 * x:.1f}%"  # noqa: E731
+    logger.info("  %d: spread MAE %.2f (Vegas %.2f) | total MAE %.2f (Vegas %.2f) | "
+                "ATS %s | edge ATS %s (n=%d)", test_season,
+                result["mae_spread"], result["vegas_mae_spread"], result["mae_total"],
+                result["vegas_mae_total"], pct(result["ats_pct"]),
+                pct(result["edge_ats_pct"]), result["edge_ats_n"])
+    return result
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  CORE METRICS
+#  METRICS
 # ══════════════════════════════════════════════════════════════════════════════
 
-def compute_metrics(
-    pred_home: np.ndarray,
-    pred_away: np.ndarray,
-    actual_home: np.ndarray,
-    actual_away: np.ndarray,
-    df: Optional[pd.DataFrame] = None,
-) -> dict:
-    """
-    Compute all evaluation metrics.
+def _record(picks: np.ndarray, outcome: np.ndarray) -> tuple:
+    """picks/outcome: +1 / −1 sides (0 = no pick / push). Returns (wins, losses)."""
+    decided = (picks != 0) & (outcome != 0)
+    wins = int(np.sum(decided & (picks == outcome)))
+    return wins, int(np.sum(decided)) - wins
 
-    ATS definition (corrected):
-      WIN  = model picked the CORRECT side of the Vegas spread
-      LOSS = model picked the WRONG side
-      PUSH = actual margin exactly equals spread (rare)
 
-    This is the standard betting ATS definition.
-    ~52% is break-even with -110 vig. >55% is meaningful edge.
-    """
-    pred_total    = pred_home  + pred_away
-    pred_spread   = pred_home  - pred_away
-    actual_total  = actual_home + actual_away
-    actual_spread = actual_home - actual_away
+def compute_metrics(pred_home, pred_away, df: pd.DataFrame) -> dict:
+    """Accuracy vs actual results, side-by-side with the Vegas line."""
+    ph, pa = np.asarray(pred_home, float), np.asarray(pred_away, float)
+    ah = df["target_home_score"].to_numpy(float)
+    aa = df["target_away_score"].to_numpy(float)
+    line = pd.to_numeric(df["spread_line"], errors="coerce").to_numpy(float)
+    total = pd.to_numeric(df["total_line"], errors="coerce").to_numpy(float)
+    pm, am, pt, at = ph - pa, ah - aa, ph + pa, ah + aa
+    hs, ht = ~np.isnan(line), ~np.isnan(total)
 
-    mae_home   = float(np.mean(np.abs(pred_home   - actual_home)))
-    mae_away   = float(np.mean(np.abs(pred_away   - actual_away)))
-    mae_total  = float(np.mean(np.abs(pred_total  - actual_total)))
-    mae_spread = float(np.mean(np.abs(pred_spread - actual_spread)))
+    s_edge, t_edge = pm - line, pt - total
+    s_pick, s_out = np.sign(np.nan_to_num(s_edge)), np.sign(np.nan_to_num(am - line))
+    t_pick, t_out = np.sign(np.nan_to_num(t_edge)), np.sign(np.nan_to_num(at - total))
+    s_big = hs & (np.abs(np.nan_to_num(s_edge)) >= settings.SPREAD_EDGE_PTS)
+    t_big = ht & (np.abs(np.nan_to_num(t_edge)) >= settings.TOTAL_EDGE_PTS)
 
-    # R² on total
-    ss_res   = float(np.sum((pred_total - actual_total) ** 2))
-    ss_tot   = float(np.sum((actual_total - np.mean(actual_total)) ** 2))
-    r2_total = 1.0 - ss_res / max(ss_tot, 1e-9)
+    ats_w, ats_l = _record(s_pick[hs], s_out[hs])
+    edge_w, edge_l = _record(s_pick[s_big], s_out[s_big])
+    ou_w, ou_l = _record(t_pick[ht], t_out[ht])
+    eou_w, eou_l = _record(t_pick[t_big], t_out[t_big])
+    pct = lambda w, l: round(w / (w + l), 4) if w + l else None  # noqa: E731
+    roi = lambda w, l: round((w * WIN_PAYOUT - l) / (w + l), 4) if w + l else None  # noqa: E731
 
-    # Variance of predictions vs. actuals (measures regression-to-mean)
-    pred_spread_std  = float(np.std(pred_spread))
-    actual_spread_std = float(np.std(actual_spread))
-
-    # ── ATS (two separate metrics) ─────────────────────────────────────────
-    #
-    # METRIC 1 — Directional Accuracy
-    #   "Did the model correctly predict which side of the spread covered?"
-    #   Will be ~85-92% because model spread correlates with actual outcome.
-    #   NOT a betting metric — has no relationship to profitability.
-    #
-    # METRIC 2 — True Edge ATS (the ONLY meaningful betting metric)
-    #   Only count games where the model and Vegas FAVOR DIFFERENT TEAMS.
-    #   SIGN CONVENTION (fixed 2026-07): nflverse schedules spread_line is
-    #   HOME-oriented and POSITIVE when the home team is favored.
-    #   book_spread > 0  → Vegas favors home
-    #   model_spread > 0 → model favors home
-    #   Baseline: ~50% on random. >52.4% = break-even with -110 odds.
-    #   (The old code assumed the opposite sign; that inflated ATS to
-    #   76-83% while spread MAE and O/U stayed honest — the exact
-    #   fingerprint of a sign bug, since totals have no home/away side.)
-    #
-    dir_wins = dir_losses = dir_pushes = 0
-    edge_wins = edge_losses = edge_pushes = 0
-    clv_vals = np.array([])   # closing-line-value proxy per picked game
-
-    if df is not None and "spread_line" in df.columns:
-        df_aligned = df.reset_index(drop=True)
-        book_spread = pd.to_numeric(df_aligned["spread_line"], errors="coerce")
-        valid = book_spread.notna()
-
-        if valid.any():
-            bs  = book_spread[valid].values   # POSITIVE = home favored (nflverse)
-            ph  = pred_home[valid]
-            pa  = pred_away[valid]
-            ah  = actual_home[valid]
-            aa  = actual_away[valid]
-
-            actual_margin = ah - aa
-            model_margin  = ph - pa
-            # Cover threshold: home covers iff actual_margin > spread_line
-            threshold = bs
-
-            model_pick_home  = model_margin > threshold
-            model_pick_away  = model_margin < threshold
-            home_covered     = actual_margin > threshold
-            away_covered     = actual_margin < threshold
-            push             = np.abs(actual_margin - threshold) < 0.5
-
-            ats_win_arr  = (model_pick_home & home_covered) | (model_pick_away & away_covered)
-            ats_loss_arr = (model_pick_home & away_covered) | (model_pick_away & home_covered)
-
-            dir_wins   = int((ats_win_arr  & ~push).sum())
-            dir_losses = int((ats_loss_arr & ~push).sum())
-            dir_pushes = int(push.sum())
-
-            # TRUE EDGE: model and Vegas must favor DIFFERENT teams
-            # Vegas favors home if spread_line > 0 (nflverse convention)
-            # Model favors home if model_margin > 0 (positive home margin)
-            vegas_fav_home = bs > 0
-            model_fav_home = model_margin > 0
-
-            # Only count games where they disagree on which team wins
-            disagrees = (vegas_fav_home != model_fav_home)
-
-            edge_win_arr  = ats_win_arr  & disagrees
-            edge_loss_arr = ats_loss_arr & disagrees
-            edge_push_arr = push         & disagrees
-
-            edge_wins   = int((edge_win_arr  & ~push).sum())
-            edge_losses = int((edge_loss_arr & ~push).sum())
-            edge_pushes = int(edge_push_arr.sum())
-
-            # ── CLV proxy (closing line value) ──────────────────────────
-            # If the model "bet" at the OPENING line, did the market move
-            # toward the model by close? Positive CLV = the model got a
-            # better number than the closing consensus — the strongest
-            # known predictor of long-term betting profitability.
-            # Proxy caveat: uses consensus open/close medians, not real
-            # obtainable prices.
-            if "opening_spread" in df_aligned.columns:
-                opening = pd.to_numeric(
-                    df_aligned["opening_spread"], errors="coerce"
-                )[valid].values
-                # CAVEAT: opening_spread comes from a different source
-                # (mrcaseb team-level lines) whose orientation is not yet
-                # verified/unified with schedules — CLV is a rough proxy
-                # until the line sources are consolidated. Assumed here to
-                # share the home-positive convention for consistency.
-                thr_open  = opening             # home must-cover at open
-                thr_close = threshold           # home must-cover at close
-                has_open  = ~np.isnan(thr_open) & (np.abs(thr_close - thr_open) > 1e-9)
-                clv_raw = np.where(
-                    model_pick_home, thr_close - thr_open,
-                    np.where(model_pick_away, thr_open - thr_close, np.nan),
-                )
-                clv_vals = clv_raw[has_open & ~np.isnan(clv_raw)]
-
-    dir_pct  = dir_wins  / max(dir_wins  + dir_losses,  1)
-    edge_pct = edge_wins / max(edge_wins + edge_losses, 1)
-    n_edge   = edge_wins + edge_losses + edge_pushes
-
-    # ── ROI at flat -110 stakes on edge games (the honest money metric) ────
-    # 1 unit staked per edge game; win pays 100/110, loss costs the unit.
-    n_bets      = edge_wins + edge_losses
-    edge_profit = edge_wins * (100.0 / 110.0) - edge_losses * 1.0
-    edge_roi    = edge_profit / n_bets if n_bets > 0 else 0.0
-
-    avg_clv          = float(np.mean(clv_vals)) if len(clv_vals) else None
-    clv_positive_pct = float(np.mean(clv_vals > 0)) if len(clv_vals) else None
-
-    ats_wins   = dir_wins
-    ats_losses = dir_losses
-    ats_pushes = dir_pushes
-    ats_pct    = dir_pct
-
-    # ── Over/Under ─────────────────────────────────────────────────────────
-    ou_wins = ou_losses = ou_pushes = 0
-
-    if df is not None and "total_line" in df.columns:
-        df_aligned = df.reset_index(drop=True)
-        book_total = pd.to_numeric(df_aligned["total_line"], errors="coerce")
-        valid = book_total.notna()
-
-        if valid.any():
-            bt  = book_total[valid].values
-            pt  = pred_total[valid]
-            at  = actual_total[valid]
-
-            model_over  = pt > bt
-            actual_over = at > bt
-            actual_under = at < bt
-            actual_push = at == bt
-
-            ou_win_arr  = ((model_over & actual_over) | (~model_over & actual_under))
-            ou_loss_arr = ((model_over & actual_under) | (~model_over & actual_over))
-
-            ou_wins   = int((ou_win_arr  & ~actual_push).sum())
-            ou_losses = int((ou_loss_arr & ~actual_push).sum())
-            ou_pushes = int(actual_push.sum())
-
-    ou_pct = ou_wins / max(ou_wins + ou_losses, 1)
-
-    result = {
-        "mae_home":          round(mae_home,   3),
-        "mae_away":          round(mae_away,   3),
-        "mae_total":         round(mae_total,  3),
-        "mae_spread":        round(mae_spread, 3),
-        # Directional ATS: did model pick correct side? (~90% due to spread correlation)
-        "ats_wins":          ats_wins,
-        "ats_losses":        ats_losses,
-        "ats_pushes":        ats_pushes,
-        "ats_pct":           round(ats_pct,    4),
-        # Edge ATS: only games where model and Vegas favor DIFFERENT teams
-        # (the real betting metric — >52.4% beats -110 vig)
-        "edge_ats_wins":     edge_wins,
-        "edge_ats_losses":   edge_losses,
-        "edge_ats_pushes":   edge_pushes,
-        "edge_ats_pct":      round(edge_pct,   4),
-        "edge_ats_n_games":  n_edge,
-        # ROI at flat 1-unit, -110 stakes across all edge games
-        "edge_profit_units": round(edge_profit, 2),
-        "edge_roi_flat_110": round(edge_roi,    4),
-        # Closing-line-value proxy (model "bets" the opening line)
-        "avg_clv_pts":       round(avg_clv, 3)          if avg_clv          is not None else None,
-        "clv_positive_pct":  round(clv_positive_pct, 4) if clv_positive_pct is not None else None,
-        "n_clv_games":       int(len(clv_vals)),
-        "ou_wins":           ou_wins,
-        "ou_losses":         ou_losses,
-        "ou_pushes":         ou_pushes,
-        "ou_pct":            round(ou_pct,     4),
-        "r2_total":          round(r2_total,   4),
-        "pred_spread_std":   round(pred_spread_std,   2),
-        "actual_spread_std": round(actual_spread_std, 2),
-        "n_games":           len(pred_home),
+    out = {
+        "n_games": int(len(df)),
+        "mae_home": round(float(np.mean(np.abs(ph - ah))), 3),
+        "mae_away": round(float(np.mean(np.abs(pa - aa))), 3),
+        "mae_spread": round(float(np.mean(np.abs(pm - am))), 3),
+        "mae_total": round(float(np.mean(np.abs(pt - at))), 3),
+        "vegas_mae_spread": round(float(np.mean(np.abs(line[hs] - am[hs]))), 3) if hs.any() else None,
+        "vegas_mae_total": round(float(np.mean(np.abs(total[ht] - at[ht]))), 3) if ht.any() else None,
+        "model_mae_spread_same_games": round(float(np.mean(np.abs(pm[hs] - am[hs]))), 3) if hs.any() else None,
+        "ats_wins": ats_w, "ats_losses": ats_l, "ats_pct": pct(ats_w, ats_l),
+        "edge_ats_wins": edge_w, "edge_ats_losses": edge_l, "edge_ats_n": edge_w + edge_l,
+        "edge_ats_pct": pct(edge_w, edge_l), "edge_roi_flat_110": roi(edge_w, edge_l),
+        "ou_wins": ou_w, "ou_losses": ou_l, "ou_pct": pct(ou_w, ou_l),
+        "edge_ou_wins": eou_w, "edge_ou_losses": eou_l, "edge_ou_pct": pct(eou_w, eou_l),
+        "pred_spread_std": round(float(np.std(pm)), 2),
+        "vegas_spread_std": round(float(np.std(line[hs])), 2) if hs.any() else None,
+        "actual_spread_std": round(float(np.std(am)), 2),
+        "edge_threshold_pts": settings.SPREAD_EDGE_PTS,
     }
-
-    if df is not None:
-        for col in ["game_type", "is_division_game", "is_dome", "is_primetime"]:
-            result[f"by_{col.replace('is_','')}"] = _breakdown_by(
-                pred_home, pred_away, actual_home, actual_away, df, col
-            )
-
-    return result
-
-
-def _breakdown_by(ph, pa, ah, aa, df, col):
-    if col not in df.columns:
-        return {}
-    df2 = df.reset_index(drop=True)
-    result = {}
-    for val in df2[col].dropna().unique():
-        mask = (df2[col] == val).values
-        if mask.sum() < 5:
-            continue
-        mae = float(np.mean(np.abs(ph[mask] + pa[mask] - ah[mask] - aa[mask])))
-        result[str(val)] = {"mae_total": round(mae, 3), "n": int(mask.sum())}
-    return result
+    if "game_type" in df.columns:
+        gt = df["game_type"].to_numpy()
+        out["by_game_type"] = {
+            str(t): {"n": int((gt == t).sum()),
+                     "mae_total": round(float(np.mean(np.abs(pt - at)[gt == t])), 3)}
+            for t in pd.unique(gt) if (gt == t).sum() >= 5}
+    return out
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  LIVE SEASON PERFORMANCE
+#  LIVE TRACK RECORD
 # ══════════════════════════════════════════════════════════════════════════════
 
 def update_performance_from_latest(game_df: pd.DataFrame) -> Optional[dict]:
-    """
-    Reconcile the PREVIOUSLY published predictions with games that have since
-    completed, and update performance.json.
-
-    Call this BEFORE regenerating predictions_latest.json — the committed
-    file is the only persisted record of what the model predicted (the CI
-    checkout starts clean every run, so the archive/ folder is always empty).
-    Without this call performance.json is never updated at all.
-    """
-    latest_path = ROOT / "data" / "predictions" / "predictions_latest.json"
-    if not latest_path.exists():
-        logger.info("No previous predictions_latest.json — skipping performance update.")
+    """Match the last PUBLISHED predictions (the committed
+    predictions_latest.json, i.e. what was on the site before kickoff) with
+    games completed since, and update performance.json. Must run before the
+    file is overwritten."""
+    latest = PRED_DIR / "predictions_latest.json"
+    if not latest.exists():
+        return _migrate_if_needed()
+    payload = json.loads(latest.read_text())
+    preds = pd.DataFrame(payload.get("predictions", []))
+    if preds.empty:
         return None
+    done = game_df[game_df["target_home_score"].notna()].set_index("game_id")
+    preds = preds[preds["game_id"].isin(done.index)]
+    if preds.empty:
+        logger.info("Performance update: no newly completed predicted games.")
+        return _migrate_if_needed()
+    default_version = payload.get("model_version") or PRE_AUDIT_VERSION
+    logger.info("Performance update: reconciling %d completed games.", len(preds))
 
-    try:
-        with open(latest_path) as f:
-            payload = json.load(f)
-        records = payload.get("predictions", [])
-        if not records:
-            return None
-        preds_df = pd.DataFrame(records)
-
-        completed = game_df[game_df["target_home_score"].notna()][
-            ["game_id", "target_home_score", "target_away_score"]
-        ].rename(columns={
-            "target_home_score": "home_score",
-            "target_away_score": "away_score",
-        })
-        if len(completed) == 0:
-            return None
-
-        overlap = set(preds_df["game_id"]) & set(completed["game_id"])
-        if not overlap:
-            logger.info("Performance update: no newly completed predicted games.")
-            return None
-
-        logger.info("Performance update: reconciling %d completed games.", len(overlap))
-        return update_season_performance(preds_df, completed)
-    except Exception as e:
-        # Never let bookkeeping kill the prediction pipeline
-        logger.warning("Performance update failed (non-fatal): %s", e)
-        return None
-
-
-def update_season_performance(
-    predictions_df: pd.DataFrame,
-    results_df: pd.DataFrame,
-) -> dict:
-    if PERF_PATH.exists():
-        with open(PERF_PATH) as f:
-            perf = json.load(f)
-    else:
-        perf = {"games": [], "summary": {}}
-
-    merged = predictions_df.merge(
-        results_df[["game_id", "home_score", "away_score"]],
-        on="game_id", how="inner",
-    )
-
-    existing_ids = {g["game_id"] for g in perf["games"]}
-
-    for _, row in merged.iterrows():
-        pred_h = int(row.get("predicted_home_score", 0))
-        pred_a = int(row.get("predicted_away_score", 0))
-        act_h  = int(row.get("home_score", 0))
-        act_a  = int(row.get("away_score", 0))
-
-        book_spread = row.get("book_spread")
-        book_total  = row.get("book_total")
-
-        # ATS result — SIGN FIX (2026-07): book_spread is home-oriented,
-        # positive = home favored; home covers iff margin > spread_line.
-        ats_result = None
-        if book_spread is not None and not (isinstance(book_spread, float) and np.isnan(book_spread)):
-            threshold    = float(book_spread)
-            actual_margin = act_h - act_a
-            model_margin  = pred_h - pred_a
-            if actual_margin == threshold:
-                ats_result = "PUSH"
-            elif ((model_margin > threshold) == (actual_margin > threshold)):
-                ats_result = "WIN"
-            else:
-                ats_result = "LOSS"
-
-        # OU result
-        ou_result = None
-        total_lean = row.get("total_lean", "PUSH")
-        if book_total is not None and not (isinstance(book_total, float) and np.isnan(book_total)) \
-                and total_lean not in ("SUPPRESSED", "PUSH"):
-            actual_total = act_h + act_a
-            if actual_total == float(book_total):
-                ou_result = "PUSH"
-            elif (actual_total > float(book_total) and total_lean == "OVER") or \
-                 (actual_total < float(book_total) and total_lean == "UNDER"):
-                ou_result = "WIN"
-            else:
-                ou_result = "LOSS"
-
-        record = {
-            "game_id":          str(row["game_id"]),
-            "week":             int(row.get("week", 0)),
-            "game_type":        str(row.get("game_type", "REG")),
-            "home_team":        str(row.get("home_team", "")),
-            "away_team":        str(row.get("away_team", "")),
-            "predicted_home":   pred_h,
-            "predicted_away":   pred_a,
-            "actual_home":      act_h,
-            "actual_away":      act_a,
-            "error_home":       pred_h - act_h,
-            "error_away":       pred_a - act_a,
-            "error_total":      (pred_h + pred_a) - (act_h + act_a),
-            "error_spread":     (pred_h - pred_a) - (act_h - act_a),
-            "confidence_label": str(row.get("confidence_label", "LOW")),
-            "confidence_score": float(row.get("confidence_score", 0.5)),
-            "spread_lean":      str(row.get("spread_lean", "PUSH")),
-            "total_lean":       total_lean,
-            "book_spread":      book_spread,
-            "book_total":       book_total,
-            "ats_result":       ats_result,
-            "ou_result":        ou_result,
+    perf = json.loads(PERF_PATH.read_text()) if PERF_PATH.exists() else {"games": []}
+    games = {g["game_id"]: g for g in perf["games"]}
+    for _, p in preds.iterrows():
+        games[p["game_id"]] = {
+            "game_id": p["game_id"], "week": int(p["week"]),
+            "game_type": p.get("game_type", "REG"),
+            "home_team": p["home_team"], "away_team": p["away_team"],
+            "predicted_home": int(p["predicted_home_score"]),
+            "predicted_away": int(p["predicted_away_score"]),
+            "actual_home": int(done.at[p["game_id"], "target_home_score"]),
+            "actual_away": int(done.at[p["game_id"], "target_away_score"]),
+            "book_spread": _clean(p.get("book_spread")), "book_total": _clean(p.get("book_total")),
+            "confidence_label": p.get("confidence_label"),
+            "confidence_score": p.get("confidence_score"),
+            "model_version": p.get("model_version") or default_version,
         }
-
-        if record["game_id"] in existing_ids:
-            perf["games"] = [g if g["game_id"] != record["game_id"] else record
-                             for g in perf["games"]]
-        else:
-            perf["games"].append(record)
-
-    perf["summary"]    = _compute_summary(perf["games"])
-    perf["updated_at"] = pd.Timestamp.now(tz="UTC").isoformat()
-
-    with open(PERF_PATH, "w") as f:
-        json.dump(perf, f, indent=2)
-
+    perf = rebuild_performance(list(games.values()))
+    PERF_PATH.write_text(json.dumps(perf, indent=2))
     logger.info("Performance updated: %d games tracked", len(perf["games"]))
     return perf
 
 
-def _compute_summary(games: list) -> dict:
-    if not games:
-        return {}
+def _migrate_if_needed() -> Optional[dict]:
+    """Bring a pre-audit performance.json (no model versions, old result
+    definitions) to the current format; the stored predictions are kept."""
+    if not PERF_PATH.exists():
+        return None
+    perf = json.loads(PERF_PATH.read_text())
+    if "by_model_version" in perf:
+        return None
+    perf = rebuild_performance(perf.get("games", []))
+    PERF_PATH.write_text(json.dumps(perf, indent=2))
+    logger.info("performance.json migrated to the current format (%d games)", len(perf["games"]))
+    return perf
 
-    errors_t = [g["error_total"]  for g in games]
-    errors_s = [g["error_spread"] for g in games]
-    errors_h = [g["error_home"]   for g in games]
-    errors_a = [g["error_away"]   for g in games]
 
-    ats_games = [g for g in games if g.get("ats_result") in ("WIN", "LOSS")]
-    ats_wins  = sum(1 for g in ats_games if g["ats_result"] == "WIN")
-    ou_games  = [g for g in games if g.get("ou_result") in ("WIN", "LOSS")]
-    ou_wins   = sum(1 for g in ou_games  if g["ou_result"]  == "WIN")
+def _clean(v):
+    return None if v is None or (isinstance(v, float) and np.isnan(v)) else float(v)
 
-    conf_breakdown = {}
-    for label in ("HIGH", "MEDIUM", "LOW", "WEAK"):
-        tier = [g for g in games if g.get("confidence_label") == label]
-        if tier:
-            t_err = [g["error_total"] for g in tier]
-            t_ats = [g for g in tier if g.get("ats_result") in ("WIN","LOSS")]
-            conf_breakdown[label] = {
-                "n":         len(tier),
-                "mae_total": round(float(np.mean(np.abs(t_err))), 3),
-                "ats_pct":   round(sum(1 for g in t_ats if g["ats_result"]=="WIN") / max(len(t_ats),1), 4),
-            }
 
+def rebuild_performance(games: list) -> dict:
+    """(Re)derive every per-game result and the summary from the stored
+    predicted/actual/line numbers, so the definitions stay consistent."""
+    for g in games:
+        g.setdefault("model_version", PRE_AUDIT_VERSION)
+        pm = g["predicted_home"] - g["predicted_away"]
+        am = g["actual_home"] - g["actual_away"]
+        pt = g["predicted_home"] + g["predicted_away"]
+        at = g["actual_home"] + g["actual_away"]
+        g["error_home"] = g["predicted_home"] - g["actual_home"]
+        g["error_away"] = g["predicted_away"] - g["actual_away"]
+        g["error_spread"], g["error_total"] = pm - am, pt - at
+        g["ats_result"] = _side_result(pm, am, g.get("book_spread"))
+        g["ou_result"] = _side_result(pt, at, g.get("book_total"))
+        bs, bt = g.get("book_spread"), g.get("book_total")
+        g["spread_edge"] = None if bs is None else pm - bs
+        g["total_edge"] = None if bt is None else pt - bt
+        g["edge_game"] = g["spread_edge"] is not None and abs(g["spread_edge"]) >= settings.SPREAD_EDGE_PTS
+        for stale in ("spread_lean", "total_lean"):   # pre-audit fields (1.5-pt rule)
+            g.pop(stale, None)
+    games.sort(key=lambda g: (g["week"], g["game_id"]))
+    versions = sorted({g["model_version"] for g in games})
     return {
-        "n_games":    len(games),
-        "mae_home":   round(float(np.mean(np.abs(errors_h))), 3),
-        "mae_away":   round(float(np.mean(np.abs(errors_a))), 3),
-        "mae_total":  round(float(np.mean(np.abs(errors_t))), 3),
-        "mae_spread": round(float(np.mean(np.abs(errors_s))), 3),
-        "ats_record": f"{ats_wins}-{len(ats_games)-ats_wins}",
-        "ats_pct":    round(ats_wins / max(len(ats_games), 1), 4),
-        "ou_record":  f"{ou_wins}-{len(ou_games)-ou_wins}",
-        "ou_pct":     round(ou_wins  / max(len(ou_games),  1), 4),
-        "confidence_breakdown": conf_breakdown,
+        "games": games,
+        "summary": _summary(games),
+        "by_model_version": {v: _summary([g for g in games if g["model_version"] == v])
+                             for v in versions},
+        "definitions": {"edge_threshold_pts": settings.SPREAD_EDGE_PTS,
+                        "ats_ou": "model side vs the line at publication time, every game"},
+        "updated_at": pd.Timestamp.now(tz="UTC").isoformat(),
     }
 
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
-    print("evaluate.py — run via: pipeline.py --mode backtest")
+def _side_result(pred: float, actual: float, line) -> Optional[str]:
+    if line is None:
+        return None
+    if actual == line:
+        return "PUSH"
+    if pred == line:
+        return None                      # model exactly on the number: no pick
+    return "WIN" if (pred > line) == (actual > line) else "LOSS"
+
+
+def _summary(games: list) -> dict:
+    if not games:
+        return {}
+
+    def rec(rows, key):
+        w = sum(1 for g in rows if g[key] == "WIN")
+        lo = sum(1 for g in rows if g[key] == "LOSS")
+        return f"{w}-{lo}", (round(w / (w + lo), 4) if w + lo else None), w, lo
+
+    with_line = [g for g in games if g.get("book_spread") is not None]
+    with_total = [g for g in games if g.get("book_total") is not None]
+    edge = [g for g in games if g["edge_game"]]
+    ats, ats_pct, _, _ = rec(games, "ats_result")
+    ou, ou_pct, _, _ = rec(games, "ou_result")
+    e_rec, e_pct, ew, el = rec(edge, "ats_result")
+    mae = lambda xs: round(float(np.mean(np.abs(xs))), 3) if xs else None  # noqa: E731
+    tiers = {}
+    for label in ("HIGH", "MEDIUM", "LOW", "WEAK"):
+        t = [g for g in games if g.get("confidence_label") == label]
+        if t:
+            tiers[label] = {"n": len(t), "mae_spread": mae([g["error_spread"] for g in t]),
+                            "mae_total": mae([g["error_total"] for g in t]),
+                            "ats_pct": rec(t, "ats_result")[1]}
+    return {
+        "n_games": len(games),
+        "mae_home": mae([g["error_home"] for g in games]),
+        "mae_away": mae([g["error_away"] for g in games]),
+        "mae_spread": mae([g["error_spread"] for g in games]),
+        "mae_total": mae([g["error_total"] for g in games]),
+        "vegas_mae_spread": mae([g["book_spread"] - (g["actual_home"] - g["actual_away"]) for g in with_line]),
+        "vegas_mae_total": mae([g["book_total"] - (g["actual_home"] + g["actual_away"]) for g in with_total]),
+        "ats_record": ats, "ats_pct": ats_pct,
+        "ou_record": ou, "ou_pct": ou_pct,
+        "edge_record": e_rec, "edge_pct": e_pct,
+        "edge_roi_flat_110": round((ew * WIN_PAYOUT - el) / (ew + el), 4) if ew + el else None,
+        "confidence_breakdown": tiers,
+    }

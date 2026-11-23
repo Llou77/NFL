@@ -2,13 +2,15 @@ name: Thursday Night Game Update
 
 on:
   schedule:
-    - cron: '0 22 * * 3'   # Every Wednesday 22:00 UTC (6pm ET)
+    # Wednesday 21:41 UTC, before Thursday Night Football (off the hour on
+    # purpose — see weekly_update.yml).
+    - cron: '41 21 * * 3'
   workflow_dispatch:
     inputs:
       skip_guard:
         description: 'Run even in the offseason (bypass guard)'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 permissions:
@@ -21,26 +23,22 @@ concurrency:
 jobs:
   thursday-update:
     runs-on: ubuntu-latest
-    # If the artifact cache misses, predict_only falls back to a full
-    # training run — hence more than a predict-only job would need.
+    # predict_only retrains when the cached model is missing or stale, so
+    # allow for a full training run.
     timeout-minutes: 30
-
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Offseason guard
         id: guard
         run: |
           ARGS=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.skip_guard }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.skip_guard }}" = "true" ]; then
             ARGS="--force"
           fi
-          DECISION=$(python3 scripts/season_guard.py $ARGS)
-          echo "decision=$DECISION" >> "$GITHUB_OUTPUT"
-          echo "Guard decision: $DECISION"
+          echo "decision=$(python3 scripts/season_guard.py $ARGS)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-python@v5
         if: steps.guard.outputs.decision == 'run'
@@ -54,52 +52,37 @@ jobs:
           pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
 
-      - name: Create directories
-        if: steps.guard.outputs.decision == 'run'
-        run: mkdir -p data/raw data/processed data/predictions/archive model/saved docs/assets data/logs
-
-      # Model artifacts are gitignored — restore the most recent trained set
-      # from the Actions cache (saved by the weekly run). On a cache miss the
-      # pipeline falls back to training instead of crashing.
       - name: Restore model artifacts
         if: steps.guard.outputs.decision == 'run'
         uses: actions/cache@v4
         with:
           path: |
             model/saved
-            !model/saved/optimal_weights.json
             !model/saved/version.txt
-          key: model-saved-v3-${{ github.run_id }}
-          restore-keys: |
-            model-saved-v3-
+          key: model-saved-v4-${{ github.run_id }}
+          restore-keys: model-saved-v4-
 
-      - name: Refresh predictions (predict-only, trains on cache miss)
+      - name: Refresh predictions
         if: steps.guard.outputs.decision == 'run'
         run: |
           set -o pipefail
           python -u model/pipeline.py --mode predict_only 2>&1 | tee -a run_console.log
-        env:
-          PYTHONPATH: ${{ github.workspace }}/model
 
       - name: Commit updated predictions
         if: steps.guard.outputs.decision == 'run'
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          git add docs/assets/
-          # ONE pathspec per add: `git add A B || true` fails ENTIRELY when
-          # B does not exist, silently un-staging A too.
-          git add data/predictions/predictions_latest.json || true
-          git add data/predictions/performance.json || true
+          git add docs/assets/ data/predictions/predictions_latest.json \
+                  data/predictions/performance.json model/saved/version.txt
           git diff --staged --quiet || git commit -m "TNF refresh — $(date -u '+%Y-%m-%d')"
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+          bash scripts/push_with_retry.sh
 
       - name: Publish run log
         if: always() && steps.guard.outputs.decision == 'run'
         run: |
           git config user.name  "NFL Predictor Bot"
           git config user.email "nfl-bot@users.noreply.github.com"
-          mkdir -p data/logs
           {
             echo "=== thursday $(date -u '+%Y-%m-%dT%H:%MZ') — status: ${{ job.status }} ==="
             echo "--- console (tail) ---"
@@ -107,4 +90,4 @@ jobs:
           } > data/logs/thursday_last.txt
           git add data/logs/thursday_last.txt
           git commit -m "Thursday run log" || true
-          for i in 1 2 3; do git push && break || git pull --rebase origin main; done
+          bash scripts/push_with_retry.sh

@@ -1,13 +1,18 @@
 """
-feature_engineering.py
-=======================
-Builds the full game-level feature matrix from nflverse raw data.
+feature_engineering.py — builds the game-level feature matrix.
 
-Key design decisions:
-- No lambda functions inside groupby.agg() — unreliable in pandas 2.x
-- No iterrows() — all merges are vectorized
-- Strict temporal ordering: rolling windows use shift(1) to prevent leakage
-- Graceful degradation: every data source is optional with sensible defaults
+Two rules decide whether a column may become a model feature:
+  1. it is knowable before kickoff of the game it describes (no same-game
+     statistics, no post-game ratings), and
+  2. it is also AVAILABLE for genuinely upcoming games when the weekly job
+     runs. A column that exists for every historical game but is always
+     missing for the next game (game-day weather, referee crews, final injury
+     statuses) teaches the model a pattern it can never use live.
+
+Rolling statistics are computed on each team's full game timeline (played
+and upcoming games): the value for a game is the mean over the team's last N
+PLAYED games before it, so the next upcoming game sees exactly the window a
+historical game saw in training.
 """
 
 import logging
@@ -17,45 +22,34 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
+import settings
+
 logger = logging.getLogger(__name__)
 
 ROOT          = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = ROOT / "data" / "processed"
 PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-ROLLING_SHORT = 4
-ROLLING_MED   = 8
-ROLLING_LONG  = 16
+ROLLING_WINDOWS = ((4, "r4"), (8, "r8"), (16, "r16"))
 
-# ── Elo constants ──────────────────────────────────────────────────────────────
-# NOTE: these were previously referenced but never defined → NameError at runtime.
-ELO_START = 1500.0   # league-average baseline rating
-ELO_K     = 20.0     # default update rate (overridden by optimal_weights.json)
-# ══════════════════════════════════════════════════════════════════════════════
-#  DATA AVAILABILITY CONSTANTS
-#  Used to flag features that are only available from certain seasons onwards.
-#  Tree models (XGB, LGB) handle NaN natively — these flags let them learn
-#  "data missing" as a meaningful signal rather than imputing a fake value.
-# ══════════════════════════════════════════════════════════════════════════════
-
-# defenders_in_box / number_of_pass_rushers: NGS tracking, reliable from 2019+
+# Feature families that only exist from a given season on (lets the tree
+# models tell "not measured in this era" apart from a real value).
 COVERAGE_COMPLEXITY_MIN_SEASON = 2019
-
-# WEPA requires wp (win probability) and game_seconds_remaining in PBP
-# Both are available from 2014+ in nflfastR — no restriction needed
 WEPA_MIN_SEASON = 2014
+NGS_MIN_SEASON  = 2016
 
-# NGS passing/rushing/receiving stats: available from 2016+
-NGS_MIN_SEASON = 2016
+# Relocated franchises: older schedule rows use the old abbreviation.
+# Team-history features (Elo, head-to-head, QB/coach changes, HFA) follow
+# the franchise, not the city.
+FRANCHISE = {"STL": "LA", "SD": "LAC", "OAK": "LV"}
 
-# NFL divisions for rivalry detection
-_DIVISIONS = [
-    {"DAL","NYG","PHI","WAS"}, {"CHI","DET","GB","MIN"},
-    {"ATL","CAR","NO","TB"},   {"ARI","LAR","SF","SEA"},
-    {"BUF","MIA","NE","NYJ"},  {"BAL","CIN","CLE","PIT"},
-    {"HOU","IND","JAX","TEN"}, {"DEN","KC","LV","LAC"},
-]
-_DOME_TEAMS = {"BUF","DAL","DET","HOU","IND","LAR","LV","MIN","NO","SEA","SF","TEN"}
+# Fallback only, for games whose `roof` is not filled in yet (retractable
+# roofs are mostly decided on game day). nflverse uses "LA" for the Rams.
+_INDOOR_TEAMS = {"ARI", "ATL", "DAL", "DET", "HOU", "IND", "LA", "LAC", "LV", "MIN", "NO"}
+
+
+def _franchise(s: pd.Series) -> pd.Series:
+    return s.replace(FRANCHISE)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -63,250 +57,151 @@ _DOME_TEAMS = {"BUF","DAL","DET","HOU","IND","LAR","LV","MIN","NO","SEA","SF","T
 # ══════════════════════════════════════════════════════════════════════════════
 
 def build_all_features(seasons: Optional[list] = None) -> pd.DataFrame:
-    """Build full game-level feature matrix. Returns one row per game."""
+    """Build the full game-level feature matrix. Returns one row per game."""
     from data_loader import ALL_SEASONS
-    if seasons is None:
-        seasons = ALL_SEASONS
-
+    seasons = seasons or ALL_SEASONS
     logger.info("Building game feature matrix for seasons %s …", seasons)
 
-    games    = _build_game_base(seasons)
+    games = _build_game_base(seasons)
     logger.info("  Base games: %d", len(games))
-
-    pbp_agg  = _aggregate_pbp(seasons)
+    pbp_agg = _aggregate_pbp(seasons)
     logger.info("  PBP agg: %d team-game rows", len(pbp_agg))
 
-    tg       = _build_team_games(games, pbp_agg)
-    logger.info("  Team-game table: %d rows", len(tg))
-
+    tg = _build_team_games(games, pbp_agg)
     tg = _add_rolling(tg)
-    tg = _add_qb_features(tg, seasons)
-    tg = _add_injury_features(tg)
-    tg = _add_elo(tg)
-    tg = _add_cross_season(tg)
-    tg = _add_official_features(tg)
-    tg = _add_ngs_features(tg, seasons)
-    tg = _add_contextual(tg)
+    tg = _add_qb_form(tg)
+    tg = _add_ngs_features(tg)
 
-    from data_loader import get_game_type_flag
-    tg["game_type_weight"] = tg["game_type"].map(
-        lambda g: get_game_type_flag(g)
-    )
-
-    tg.to_parquet(PROCESSED_DIR / "team_games.parquet", index=False)
+    team_history = _schedule_team_games()     # every game since 1999, long format
+    tg = _add_elo(tg, team_history)
+    tg = _add_qb_and_coach_changes(tg, team_history)
+    tg = _add_roster_continuity(tg)
+    tg = _add_contextual(tg, team_history)
 
     game_df = _pivot_to_game(tg)
-
-    # Player ratings and positional matchup gaps (added at game level after pivot)
-    #
-    # DISABLED BY DEFAULT: ratings are currently computed from same-game
-    # performance Z-scores and merged on (team, season, week) WITHOUT a
-    # temporal shift — i.e. the model would see how players performed in the
-    # game it is predicting. Re-enable only after the module is reworked to
-    # use shift(1) rolling ratings. (Even when enabled, get_feature_columns
-    # excludes these columns via the allowlist.)
-    import os
-    if os.environ.get("ENABLE_PLAYER_RATINGS", "0") == "1":
-        try:
-            from player_ratings import build_player_ratings
-            game_df = build_player_ratings(game_df, seasons)
-            n_rating_cols = sum(1 for c in game_df.columns if "rating" in c or "_gap" in c)
-            logger.info("  Player ratings: %d rating/gap columns added", n_rating_cols)
-        except Exception as e:
-            logger.warning("  Player ratings skipped (non-fatal): %s", e)
-    else:
-        logger.info("  Player ratings: disabled (pending temporal-shift rework)")
-
     game_df.to_parquet(PROCESSED_DIR / "game_features.parquet", index=False)
     logger.info("  Final game matrix: %d rows × %d cols", len(game_df), len(game_df.columns))
-
     return game_df
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  FEATURE ALLOWLIST
-#
-#  Leakage policy: a column is a legal feature ONLY if it is knowable BEFORE
-#  kickoff. Anything not explicitly allowed here is dropped — new raw columns
-#  default to EXCLUDED. This replaces the old denylist, which silently let
-#  same-game box-score aggregates (off_epa_per_play, turnovers, fg_pct, …)
-#  into the matrix and produced fake 90%+ backtest accuracy.
+#  FEATURE ALLOWLIST — anything not allowed here never reaches the model
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Rolling features are built with shift(1) → strictly pre-game.
+# Lagged rolling statistics (see _lagged_rolling).
 _ROLLING_SUFFIXES = ("_r4", "_r8", "_r16")
 
-# Per-side pre-game columns (appear as home_<base> / away_<base> after pivot).
+# Per-team columns; they appear as home_<base> / away_<base> after the pivot.
 _PREGAME_SIDE_BASES = {
-    # Elo (assigned pre-update, see _add_elo)
-    "elo_pre_game", "elo_expected_win_prob",
-    "vegas_implied_power", "elo_vegas_divergence",
-    # Schedule context
-    "rest_days", "is_bye_week", "is_short_week", "week_num",
-    # Injuries / availability (report published before the game)
-    "qb_available", "off_availability_score", "def_availability_score",
-    "injury_report_severity", "injury_data_freshness",
-    # Cross-season priors
-    "vegas_preseason_wins", "roster_continuity", "draft_quality_score",
-    "qb_changed", "coach_changed", "team_instability", "qb_era_reliability",
-    "team_specific_hfa",
-    # Pre-game market data
-    "book_spread_hist", "opening_spread",
-    "market_win_prob", "market_win_prob_vigfree",
-    # Data availability flags
-    "wepa_available", "coverage_available", "ngs_available",
+    "elo_pre_game", "elo_expected_win_prob", "vegas_implied_power", "elo_vegas_divergence",
+    "rest_days", "is_bye_week", "is_short_week",
+    "roster_continuity", "qb_changed", "qb_start_share", "coach_changed",
+    "team_instability", "team_specific_hfa",
 }
 
-# Shared (game-level) pre-game columns.
+# Game-level columns.
 _PREGAME_SHARED = {
-    "spread_line", "total_line", "temp", "wind", "humidity",
+    "spread_line", "total_line",
     "is_dome", "is_primetime", "is_international", "is_division_game",
-    "high_wind", "extreme_wind", "cold_game", "very_cold_game",
     "is_sunday", "is_thursday", "is_monday", "is_saturday",
-    "ref_home_win_rate", "ref_total_tendency",
-    "opening_total", "book_total_hist", "opening_spread",
-    "season_avg_total", "scoring_era_adj", "rolling_hfa", "season_hfa",
+    "season_avg_total", "scoring_era_adj", "rolling_hfa",
+    "rest_diff", "elo_gap", "elo_vs_spread", "coverage_complexity_gap",
     "wepa_available", "coverage_available", "ngs_available",
-    "rest_diff", "elo_gap", "coverage_complexity_gap", "market_win_prob_gap",
-    "elo_vs_opening_spread", "era_adj_vs_opening_total",
     "week_norm", "season_half",
 }
 
 
 def get_feature_columns(game_df: pd.DataFrame) -> list:
-    """
-    Return feature columns via ALLOWLIST (see policy above).
-
-    Allowed:
-      - any *_r4 / *_r8 / *_r16 column (rolling, shift(1)-lagged)
-      - h2h_* columns (computed from strictly earlier games)
-      - home_/away_-prefixed columns whose base is in _PREGAME_SIDE_BASES
-      - shared game-level columns in _PREGAME_SHARED
-    Everything else (same-game box-score aggregates, raw NGS, player-rating
-    columns pending temporal shift, metadata, targets) is dropped and logged.
-    """
+    """Model features = numeric columns allowed by the allowlist above, plus
+    h2h_* (computed from strictly earlier games). Logs what it drops."""
     allowed, dropped = [], []
     for c in game_df.columns:
-        if not pd.api.types.is_numeric_dtype(game_df[c]):
+        if not pd.api.types.is_numeric_dtype(game_df[c]) or c.startswith("target_"):
             continue
-        if c.startswith("target_"):
-            continue
-        if c.endswith(_ROLLING_SUFFIXES) or c.startswith("h2h_"):
-            allowed.append(c)
-        elif c.startswith(("home_", "away_")) and c.split("_", 1)[1] in _PREGAME_SIDE_BASES:
-            allowed.append(c)
-        elif c in _PREGAME_SHARED:
+        if (c.endswith(_ROLLING_SUFFIXES) or c.startswith("h2h_") or c in _PREGAME_SHARED
+                or (c.startswith(("home_", "away_")) and c.split("_", 1)[1] in _PREGAME_SIDE_BASES)):
             allowed.append(c)
         else:
             dropped.append(c)
-    if dropped:
-        logger.info(
-            "get_feature_columns: allowlist kept %d, dropped %d columns "
-            "(examples of dropped: %s)",
-            len(allowed), len(dropped), ", ".join(dropped[:8]),
-        )
+    logger.info("get_feature_columns: allowlist kept %d, dropped %d columns "
+                "(examples of dropped: %s)", len(allowed), len(dropped), ", ".join(dropped[:8]))
     return allowed
 
 
-def load_processed() -> pd.DataFrame:
-    """Load the cached game features parquet if it exists."""
-    p = PROCESSED_DIR / "game_features.parquet"
-    if p.exists():
-        return pd.read_parquet(p)
-    raise FileNotFoundError("game_features.parquet not found — run build_all_features() first.")
+# ══════════════════════════════════════════════════════════════════════════════
+#  BASE TABLES FROM THE SCHEDULE
+# ══════════════════════════════════════════════════════════════════════════════
+
+_GAME_TYPES = {"REG": "REG", "WC": "WC", "DIV": "DIV", "CON": "CON", "CCG": "CON",
+               "SB": "SB", "POST": "WC"}
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 1: BASE GAME TABLE FROM SCHEDULES
-# ══════════════════════════════════════════════════════════════════════════════
+def _prepare_schedule(sched: pd.DataFrame) -> pd.DataFrame:
+    """Normalise the raw schedule (shared by the game base and the history)."""
+    s = sched.copy()
+    s["season"] = pd.to_numeric(s["season"], errors="coerce")
+    s["week"] = pd.to_numeric(s["week"], errors="coerce")
+    s["game_type"] = s["game_type"].astype(str).str.upper().map(_GAME_TYPES).fillna("REG")
+    s["game_date"] = pd.to_datetime(s["gameday"], errors="coerce")
+    for c in ("home_score", "away_score", "spread_line", "total_line"):
+        s[c] = pd.to_numeric(s.get(c), errors="coerce")
+    return s
+
 
 def _build_game_base(seasons: list) -> pd.DataFrame:
     from data_loader import get_schedules
-    sched = get_schedules()
-
-    # Normalise season column (may be int or str)
-    sched["season"] = pd.to_numeric(sched["season"], errors="coerce")
+    sched = _prepare_schedule(get_schedules())
     sched = sched[sched["season"].isin(seasons)].copy()
+    if sched.empty:
+        raise ValueError(f"No schedule data for seasons {seasons} — run load_all() first.")
 
-    if len(sched) == 0:
-        raise ValueError(f"No schedule data found for seasons {seasons}. "
-                         "Run data_loader.load_all() first.")
-
-    # Normalise game_type
-    gt_map = {"REG":"REG","reg":"REG","WC":"WC","DIV":"DIV",
-               "CON":"CON","CCG":"CON","SB":"SB","POST":"WC"}
-    gt_col = "game_type" if "game_type" in sched.columns else None
-    if gt_col:
-        sched["game_type"] = sched[gt_col].astype(str).str.upper().map(gt_map).fillna("REG")
-    else:
-        sched["game_type"] = "REG"
-
-    # Date
-    date_col = next((c for c in ["gameday","game_date","date"] if c in sched.columns), None)
-    sched["game_date"] = pd.to_datetime(sched[date_col], errors="coerce") if date_col else pd.NaT
-
-    # Day of week
     sched["day_of_week"] = sched["game_date"].dt.dayofweek.fillna(6).astype(int)
 
-    # Primetime
-    time_col = next((c for c in ["gametime","game_time"] if c in sched.columns), None)
-    if time_col:
-        sched["is_primetime"] = sched[time_col].astype(str).str.contains(
-            r"20:|21:|19:30|8:20|8:15", regex=True, na=False
-        ).astype(int)
-    else:
-        sched["is_primetime"] = 0
+    # gametime is US Eastern on a 24h clock: 19:00 or later = night game
+    # (TNF/SNF/MNF incl. the 19:15 Monday doubleheaders).
+    hour = pd.to_numeric(sched["gametime"].astype(str).str.split(":").str[0], errors="coerce")
+    sched["is_primetime"] = (hour >= 19).astype(int)
 
-    # International
-    intl_kw = ["tottenham","wembley","allianz","azteca","melbourne",
-               "maracana","bernabeu","stade de france"]
-    venue_col = next((c for c in ["stadium","venue","location"] if c in sched.columns), None)
-    if venue_col:
-        sched["is_international"] = sched[venue_col].astype(str).str.lower().apply(
-            lambda v: int(any(k in v for k in intl_kw))
-        )
-    else:
-        sched["is_international"] = 0
+    # Roof per GAME (handles neutral sites and retractable roofs); the team
+    # list is only a fallback for games whose roof is not published yet.
+    roof = sched["roof"].astype(str).str.lower()
+    known = roof.isin(["dome", "closed", "outdoors", "open"])
+    sched["is_dome"] = np.where(known, roof.isin(["dome", "closed"]),
+                                sched["home_team"].isin(_INDOOR_TEAMS)).astype(int)
 
-    # Dome
-    home_col = "home_team" if "home_team" in sched.columns else "home"
-    sched["is_dome"] = sched[home_col].isin(_DOME_TEAMS).astype(int)
+    # Neutral-site regular-season games are the international series (the
+    # stadium names are unreliable: 2025 lists the nominal home stadium).
+    sched["is_international"] = ((sched["location"] == "Neutral")
+                                 & (sched["game_type"] == "REG")).astype(int)
+    sched["is_division_game"] = pd.to_numeric(sched["div_game"], errors="coerce").fillna(0).astype(int)
 
-    # Division rivalry
-    away_col = "away_team" if "away_team" in sched.columns else "away"
-    if "div_game" in sched.columns:
-        sched["is_division_game"] = sched["div_game"].fillna(0).astype(int)
-    else:
-        sched["is_division_game"] = sched.apply(
-            lambda r: int(any(r[home_col] in d and r[away_col] in d
-                              for d in _DIVISIONS)), axis=1
-        )
-
-    # Score columns
-    for col, default_col in [("home_score","home_score"),("away_score","away_score")]:
-        if col not in sched.columns:
-            sched[col] = np.nan
-
-    # Rename to standard
-    rename = {}
-    if home_col != "home_team": rename[home_col] = "home_team"
-    if away_col != "away_team": rename[away_col] = "away_team"
-    sched = sched.rename(columns=rename)
-
-    keep = [c for c in [
-        "game_id","season","week","game_type","game_date",
-        "home_team","away_team","home_score","away_score",
-        "spread_line","total_line","home_moneyline","away_moneyline",
-        "stadium","roof","temp","wind","humidity",
-        "day_of_week","is_primetime","is_international","is_dome","is_division_game",
-        "referee",
-    ] if c in sched.columns]
-
+    keep = ["game_id", "season", "week", "game_type", "game_date",
+            "home_team", "away_team", "home_score", "away_score",
+            "spread_line", "total_line", "day_of_week",
+            "is_primetime", "is_international", "is_dome", "is_division_game"]
     return sched[keep].reset_index(drop=True)
 
 
+def _schedule_team_games() -> pd.DataFrame:
+    """Every scheduled game since 1999 in long format (one row per team per
+    game) with franchise-normalised team codes. Used for features that need
+    history from before the training window: Elo, QB/coach changes, HFA."""
+    from data_loader import get_schedules
+    s = _prepare_schedule(get_schedules())
+    s["neutral"] = s.get("location", pd.Series("Home", index=s.index)).eq("Neutral")
+    cols = ["game_id", "season", "week", "game_type", "game_date", "neutral"]
+    home = s[cols].assign(team=_franchise(s["home_team"]), opponent=_franchise(s["away_team"]),
+                          team_score=s["home_score"], opp_score=s["away_score"],
+                          qb_id=s.get("home_qb_id"), coach=s.get("home_coach"), is_home=1)
+    away = s[cols].assign(team=_franchise(s["away_team"]), opponent=_franchise(s["home_team"]),
+                          team_score=s["away_score"], opp_score=s["home_score"],
+                          qb_id=s.get("away_qb_id"), coach=s.get("away_coach"), is_home=0)
+    out = pd.concat([home, away], ignore_index=True)
+    return out.sort_values(["team", "game_date", "game_id"]).reset_index(drop=True)
+
+
 # ══════════════════════════════════════════════════════════════════════════════
-#  WEPA HELPER: Play-type weights for Weighted EPA
+#  WEIGHTED EPA
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _compute_wepa_weights(pbp: pd.DataFrame) -> pd.DataFrame:
@@ -362,6 +257,7 @@ def _compute_wepa_weights(pbp: pd.DataFrame) -> pd.DataFrame:
     pbp["_wepa"]        = pbp["epa"] * pbp["_wepa_weight"]
 
     return pbp
+
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -682,64 +578,12 @@ def _aggregate_pbp_core(pbp: pd.DataFrame) -> pd.DataFrame:
             )
         logger.debug("  Coverage complexity: %d game-team rows", len(cov_def))
 
-    # ── Turnover Luck Correction (Harvard 2014, covers.com research) ─────
-    # 54% of turnovers are luck. We compute rolling vs season baseline divergence.
-    # A team winning the turnover battle far above their season average is "lucky"
-    # and will likely regress.
-
-    to_luck = pd.DataFrame(columns=["game_id","team"])
-    if "_to_committed" in pbp.columns:
-        # Season-level expected turnover rate (per play)
-        season_to_rates = {}
-        if "season" in pbp.columns:
-            for season, grp in pbp.groupby("season"):
-                pass_plays = (grp["play_type"] == "pass").sum()
-                total_ints = grp["interception"].sum()
-                total_fumb = grp["fumble_lost"].sum()
-                # Expected rates per pass/run attempt
-                int_rate  = total_ints / max(pass_plays, 1)
-                fumb_rate = total_fumb / max(len(grp), 1)
-                season_to_rates[season] = {"int_rate": int_rate, "fumb_rate": fumb_rate}
-
-        # Per-game turnover luck: actual - expected
-        to_by_game = (
-            pbp[pbp["posteam"].notna()]
-            .groupby(["game_id","posteam","season"])
-            .agg(
-                actual_int    =("interception", "sum"),
-                actual_fumb   =("fumble_lost",  "sum"),
-                pass_attempts =("pass_attempt", "sum"),
-                rush_attempts =("rush_attempt", "sum"),
-            )
-            .reset_index()
-            .rename(columns={"posteam":"team"})
-        )
-
-        if len(to_by_game) > 0 and season_to_rates:
-            def _expected_to(row):
-                rates = season_to_rates.get(row["season"], {"int_rate": 0.025, "fumb_rate": 0.01})
-                exp_int  = row["pass_attempts"] * rates["int_rate"]
-                exp_fumb = row["rush_attempts"] * rates["fumb_rate"]
-                return exp_int + exp_fumb
-
-            to_by_game["expected_to"] = to_by_game.apply(_expected_to, axis=1)
-            to_by_game["actual_to"]   = to_by_game["actual_int"] + to_by_game["actual_fumb"]
-            # Luck = actual - expected (positive = lucky, will regress)
-            to_by_game["turnover_luck"] = to_by_game["actual_to"] - to_by_game["expected_to"]
-            # Skill-adjusted turnovers: actual - 0.54 × luck component
-            to_by_game["to_skill_adj"] = (
-                to_by_game["actual_to"] -
-                0.54 * to_by_game["turnover_luck"].clip(lower=0)
-            )
-            to_luck = to_by_game[["game_id","team","turnover_luck","to_skill_adj"]]
-            logger.debug("  Turnover luck: %d game-team rows", len(to_luck))
-
     # ── Merge all ────────────────────────────────────────────────────────
 
     result = off_base.copy()
     for df in [off_pass, off_rush, off_expl, td3_off, rz_off,
                def_base, def_pass, def_rush, def_expl, td3_def, rz_def,
-               to_off, to_def, pace, fg, cov_def, to_luck]:
+               to_off, to_def, pace, fg, cov_def]:
         if len(df) > 0:
             result = result.merge(df, on=["game_id","team"], how="left")
 
@@ -747,1010 +591,327 @@ def _aggregate_pbp_core(pbp: pd.DataFrame) -> pd.DataFrame:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  STEP 3: TEAM-GAME TABLE (vectorized, no iterrows)
+#  TEAM-GAME TABLE + LAGGED ROLLING STATISTICS
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _build_team_games(games: pd.DataFrame, pbp_agg: pd.DataFrame) -> pd.DataFrame:
-    """
-    Vectorized reshape: create one row per (team, game) by stacking
-    home and away perspectives from the schedule.
-    """
-    # Shared game-level columns
-    shared_cols = [c for c in [
-        "game_id","season","week","game_type","game_date",
-        "spread_line","total_line","temp","wind","humidity",
-        "is_dome","is_primetime","is_international","is_division_game",
-        "day_of_week","referee",
-    ] if c in games.columns]
-
-    # Home perspective
-    home_map = {
-        "home_team":"team", "away_team":"opponent",
-        "home_score":"team_score", "away_score":"opp_score",
-    }
-    home = games[shared_cols + [c for c in home_map if c in games.columns]].copy()
-    home = home.rename(columns=home_map)
-    home["is_home"] = 1
-
-    # Away perspective
-    away_map = {
-        "away_team":"team", "home_team":"opponent",
-        "away_score":"team_score", "home_score":"opp_score",
-    }
-    away = games[shared_cols + [c for c in away_map if c in games.columns]].copy()
-    away = away.rename(columns=away_map)
-    away["is_home"] = 0
-
-    # Stack
+    """One row per (team, game): the home and the away perspective stacked."""
+    shared = ["game_id", "season", "week", "game_type", "game_date", "spread_line",
+              "total_line", "is_dome", "is_primetime", "is_international",
+              "is_division_game", "day_of_week"]
+    home = games[shared + ["home_team", "away_team", "home_score", "away_score"]].rename(
+        columns={"home_team": "team", "away_team": "opponent",
+                 "home_score": "team_score", "away_score": "opp_score"}).assign(is_home=1)
+    away = games[shared + ["away_team", "home_team", "away_score", "home_score"]].rename(
+        columns={"away_team": "team", "home_team": "opponent",
+                 "away_score": "team_score", "home_score": "opp_score"}).assign(is_home=0)
     tg = pd.concat([home, away], ignore_index=True)
+    tg["franchise"] = _franchise(tg["team"])
 
-    # Merge PBP
-    if len(pbp_agg) > 0 and "team" in pbp_agg.columns:
-        tg = tg.merge(pbp_agg, on=["game_id","team"], how="left")
+    if len(pbp_agg) and "team" in pbp_agg.columns:
+        tg = tg.merge(pbp_agg, on=["game_id", "team"], how="left")
 
-    tg = tg.sort_values(["season","week","game_date","game_id","team"]).reset_index(drop=True)
-
-    # ── Data availability flags ─────────────────────────────────────────────
-    # These binary flags tell tree models whether a feature family is available
-    # for a given season. Tree models learn "if flag=0, ignore this feature group"
-    # without us having to impute fake values.
     tg["wepa_available"]     = (tg["season"] >= WEPA_MIN_SEASON).astype(np.float32)
     tg["coverage_available"] = (tg["season"] >= COVERAGE_COMPLEXITY_MIN_SEASON).astype(np.float32)
     tg["ngs_available"]      = (tg["season"] >= NGS_MIN_SEASON).astype(np.float32)
+    return tg.sort_values(["season", "week", "game_date", "game_id", "team"]).reset_index(drop=True)
 
-    return tg
+
+def _lagged_rolling(df: pd.DataFrame, cols: list, windows=ROLLING_WINDOWS,
+                    min_periods=lambda n: max(1, n // 2), group: str = "team") -> pd.DataFrame:
+    """For every row: mean of the column over the previous N rows of the same
+    team that HAVE a value (i.e. games already played). Unplayed games carry
+    NaN and are skipped, so every upcoming game gets the window ending at the
+    team's last played game. `df` must be sorted chronologically per team."""
+    out = {}
+    for col in cols:
+        for _, sfx in windows:
+            out[f"{col}_{sfx}"] = pd.Series(np.nan, index=df.index)
+    for _, idx in df.groupby(group, sort=False).groups.items():
+        sub = df.loc[idx]
+        for col in cols:
+            v = sub[col]
+            have = v.notna()
+            for n, sfx in windows:
+                r = v[have].rolling(n, min_periods=min_periods(n)).mean()
+                out[f"{col}_{sfx}"].loc[idx] = r.reindex(sub.index).shift(1).ffill().values
+    return pd.concat([df, pd.DataFrame(out, index=df.index)], axis=1)
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 4: ROLLING FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
+_ROLLED_STATS = [
+    "off_epa_per_play", "off_success_rate", "off_yards_per_play", "off_pass_epa", "off_cpoe",
+    "off_air_yards_per_att", "off_rush_epa", "off_rush_yards_per_att", "off_third_down_rate",
+    "off_rz_success_rate", "off_rz_td_rate", "off_explosive_play_rate", "off_sack_rate",
+    "off_wpa", "off_wepa_per_play", "off_wepa_total",
+    "def_epa_per_play", "def_success_rate", "def_yards_per_play", "def_pass_epa",
+    "def_rush_epa", "def_explosive_allowed", "def_third_down_allowed",
+    "def_rz_success_allowed", "def_rz_td_allowed", "def_sack_rate", "def_pressure_rate",
+    "def_avg_defenders_box", "def_avg_pass_rushers", "def_coverage_complexity",
+    "turnovers_committed", "turnovers_forced", "interceptions", "fumbles_lost",
+    "fg_pct", "shotgun_rate", "no_huddle_rate", "team_score", "opp_score",
+]
+
 
 def _add_rolling(tg: pd.DataFrame) -> pd.DataFrame:
-    stat_cols = [c for c in [
-        # Standard EPA features
-        "off_epa_per_play","off_success_rate","off_yards_per_play",
-        "off_pass_epa","off_cpoe","off_air_yards_per_att","off_rush_epa",
-        "off_rush_yards_per_att","off_third_down_rate","off_rz_success_rate",
-        "off_rz_td_rate","off_explosive_play_rate","off_sack_rate","off_wpa",
-        "def_epa_per_play","def_success_rate","def_yards_per_play",
-        "def_pass_epa","def_rush_epa","def_explosive_allowed",
-        "def_third_down_allowed","def_rz_success_allowed","def_rz_td_allowed",
-        "def_sack_rate","def_pressure_rate",
-        # WEPA: Weighted EPA (nfelo research — more predictive than raw EPA)
-        "off_wepa_per_play","off_wepa_total",
-        # Coverage complexity (NFL Operations 2024 research)
-        "def_avg_defenders_box","def_avg_pass_rushers","def_coverage_complexity",
-        # Turnover luck correction (Harvard 2014, covers.com)
-        "turnovers_committed","turnovers_forced","interceptions","fumbles_lost",
-        "turnover_luck","to_skill_adj",
-        # Standard other features
-        "fg_pct","shotgun_rate","no_huddle_rate","team_score","opp_score",
-    ] if c in tg.columns]
+    tg = tg.sort_values(["franchise", "game_date", "game_id"]).reset_index(drop=True)
+    played = tg["team_score"].notna() & tg["opp_score"].notna()
+    tg["turnover_diff"] = np.where(played, tg.get("turnovers_forced") - tg.get("turnovers_committed"), np.nan) \
+        if "turnovers_forced" in tg.columns else np.nan
+    tg["score_diff"] = np.where(played, tg["team_score"] - tg["opp_score"], np.nan)
+    tg["win"] = np.where(played, (tg["team_score"] > tg["opp_score"]).astype(float), np.nan)
 
-    frames = []
-    for _, grp in tg.groupby("team", sort=False):
-        grp = grp.sort_values("game_date").copy()
-
-        # Build all new rolling columns in a dict, then concat once — avoids fragmentation
-        new_cols: dict = {}
-
-        for col in stat_cols:
-            s = grp[col].shift(1)
-            for N, sfx in [(ROLLING_SHORT,"r4"),(ROLLING_MED,"r8"),(ROLLING_LONG,"r16")]:
-                new_cols[f"{col}_{sfx}"] = s.rolling(N, min_periods=max(1, N//2)).mean()
-
-        # Derived: turnover diff
-        if "turnovers_committed" in grp.columns and "turnovers_forced" in grp.columns:
-            td = (grp["turnovers_forced"] - grp["turnovers_committed"]).shift(1)
-            for N, sfx in [(4,"r4"),(8,"r8"),(16,"r16")]:
-                new_cols[f"turnover_diff_{sfx}"] = td.rolling(N, min_periods=1).mean()
-
-        # Derived: score diff + win rate
-        if "team_score" in grp.columns and "opp_score" in grp.columns:
-            sd = (grp["team_score"] - grp["opp_score"]).shift(1)
-            wr = (grp["team_score"] > grp["opp_score"]).astype(float).shift(1)
-            for N, sfx in [(4,"r4"),(8,"r8"),(16,"r16")]:
-                new_cols[f"score_diff_{sfx}"] = sd.rolling(N, min_periods=1).mean()
-                new_cols[f"win_rate_{sfx}"]   = wr.rolling(N, min_periods=1).mean()
-
-        # Single concat for all new columns — no fragmentation
-        new_df = pd.DataFrame(new_cols, index=grp.index)
-        grp = pd.concat([grp, new_df], axis=1)
-        frames.append(grp)
-
-    return pd.concat(frames, ignore_index=True).sort_values(
-        ["season","week","game_date","game_id"]
-    ).reset_index(drop=True)
+    tg = _lagged_rolling(tg, [c for c in _ROLLED_STATS if c in tg.columns], group="franchise")
+    tg = _lagged_rolling(tg, ["turnover_diff", "score_diff", "win"], min_periods=lambda n: 1,
+                         group="franchise")
+    tg = tg.rename(columns={f"win_{s}": f"win_rate_{s}" for _, s in ROLLING_WINDOWS})
+    return tg.drop(columns=["turnover_diff", "score_diff", "win"])
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 5: QB FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
+def _merge_weekly_and_roll(tg: pd.DataFrame, weekly: pd.DataFrame, cols: list,
+                           windows, min_periods) -> pd.DataFrame:
+    """Attach per-(team, season, week) values to every team-game (NaN for games
+    not played yet) and roll them along each franchise's game timeline."""
+    weekly = (weekly.assign(franchise=_franchise(weekly["team"]))
+              .groupby(["franchise", "season", "week"], as_index=False)[cols].mean())
+    base = tg[["franchise", "season", "week", "game_date", "game_id"]].merge(
+        weekly, on=["franchise", "season", "week"], how="left")
+    base = base.sort_values(["franchise", "game_date", "game_id"]).reset_index(drop=True)
+    rolled = _lagged_rolling(base, cols, windows=windows, min_periods=min_periods,
+                             group="franchise")
+    new_cols = [c for c in rolled.columns if c not in base.columns]
+    return tg.merge(rolled[["franchise", "game_id"] + new_cols],
+                    on=["franchise", "game_id"], how="left")
 
-def _add_qb_features(tg: pd.DataFrame, seasons: list) -> pd.DataFrame:
+
+def _add_qb_form(tg: pd.DataFrame) -> pd.DataFrame:
+    """Rolling passing form of each week's starting QB (most attempts)."""
     from data_loader import get_table
     ps = get_table("player_stats_weekly")
-    if ps is None:
-        logger.warning("player_stats_weekly not available — skipping QB features")
+    if ps is None or not {"team", "season", "week", "position", "attempts", "passing_epa"} <= set(ps.columns):
+        logger.warning("player_stats_weekly unavailable — QB form features skipped")
         return tg
+    ps = ps[ps["position"] == "QB"].copy()
+    for c in ("season", "week", "attempts", "passing_epa", "pacr"):
+        if c in ps.columns:
+            ps[c] = pd.to_numeric(ps[c], errors="coerce")
+    ps = (ps.sort_values("attempts", ascending=False)
+            .groupby(["team", "season", "week"], as_index=False).first())
+    ps["qb_epa_per_att"] = ps["passing_epa"] / ps["attempts"].clip(lower=1)
+    cols = ["qb_epa_per_att"] + (["qb_pacr"] if "pacr" in ps.columns else [])
+    ps = ps.rename(columns={"pacr": "qb_pacr"})
+    return _merge_weekly_and_roll(tg, ps, cols, ROLLING_WINDOWS, lambda n: 1)
 
-    ps["season"] = pd.to_numeric(ps.get("season", 0), errors="coerce")
-    ps = ps[ps["season"].isin(seasons)].copy()
 
-    # Keep QBs only
-    if "position" in ps.columns:
-        ps = ps[ps["position"] == "QB"]
-
-    team_col = next((c for c in ["recent_team","team","team_abbr"] if c in ps.columns), None)
-    if team_col is None:
-        return tg
-    ps = ps.rename(columns={team_col: "team"})
-
-    # Starter = most attempts per team/week
-    if "attempts" in ps.columns:
-        ps["attempts"] = pd.to_numeric(ps["attempts"], errors="coerce").fillna(0)
-        ps = (ps.sort_values("attempts", ascending=False)
-                .groupby(["team","season","week"]).first().reset_index())
-
-    if "passing_epa" in ps.columns and "attempts" in ps.columns:
-        ps["qb_epa_per_att"] = (
-            pd.to_numeric(ps["passing_epa"], errors="coerce") /
-            ps["attempts"].clip(lower=1)
-        )
-
-    qb_roll_cols = [c for c in ["qb_epa_per_att","dakota","pacr"] if c in ps.columns]
-    for col in qb_roll_cols:
-        ps[col] = pd.to_numeric(ps[col], errors="coerce")
-
-    if not qb_roll_cols:
-        return tg
-
-    frames = []
-    for _, grp in ps.groupby("team", sort=False):
-        grp = grp.sort_values(["season","week"]).copy()
-        for col in qb_roll_cols:
-            s = grp[col].shift(1)
-            for N, sfx in [(4,"r4"),(8,"r8"),(16,"r16")]:
-                grp[f"qb_{col}_{sfx}"] = s.rolling(N, min_periods=1).mean()
-        frames.append(grp)
-
-    if not frames:
-        return tg
-
-    ps_rolled = pd.concat(frames, ignore_index=True)
-    qb_feat_cols = ["team","season","week"] + [
-        c for c in ps_rolled.columns if c.startswith("qb_") and "_r" in c
+def _add_ngs_features(tg: pd.DataFrame) -> pd.DataFrame:
+    """Next Gen Stats team form, 4-game lagged rolling mean. Week-0 rows are
+    season summaries and are dropped (they would leak the whole season)."""
+    from data_loader import get_table
+    configs = [
+        ("ngs_passing",   "ngs_pass", ["avg_time_to_throw", "avg_completed_air_yards", "aggressiveness"]),
+        ("ngs_rushing",   "ngs_rush", ["efficiency", "rush_yards_over_expected_per_att", "avg_time_to_los"]),
+        ("ngs_receiving", "ngs_recv", ["avg_separation", "avg_intended_air_yards", "catch_percentage"]),
     ]
-    tg = tg.merge(ps_rolled[qb_feat_cols], on=["team","season","week"], how="left")
-    return tg
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 6: INJURY FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
-
-_STATUS_SCORE = {
-    "Active":1.0,"Probable":0.95,"Questionable":0.75,
-    "Doubtful":0.25,"Out":0.0,"IR":0.0,"PUP":0.0,"DNP":0.5,
-}
-_OFF_POS = {"QB","WR","RB","TE","OT","OG","C"}
-_DEF_POS = {"DE","DT","LB","CB","S"}
-_POS_W   = {"QB":5.0,"WR":2.0,"RB":2.0,"TE":1.5,
-            "OT":1.2,"OG":1.0,"C":1.0,"DE":1.2,"DT":1.0,
-            "LB":1.0,"CB":1.2,"S":1.0}
-
-
-def _add_injury_features(tg: pd.DataFrame) -> pd.DataFrame:
-    from data_loader import get_table
-    inj = get_table("injuries")
-
-    defaults = {
-        "qb_available":1.0,"off_availability_score":1.0,
-        "def_availability_score":1.0,"injury_report_severity":0.0,
-        "injury_data_freshness":0.65,
-    }
-
-    if inj is None or len(inj) == 0:
-        for k, v in defaults.items():
-            tg[k] = v
-        return tg
-
-    # Vectorized availability scoring
-    if "report_status" not in inj.columns:
-        for k, v in defaults.items():
-            tg[k] = v
-        return tg
-
-    inj = inj.copy()
-    inj["status_score"] = inj["report_status"].map(_STATUS_SCORE).fillna(0.75)
-    inj["pos_weight"]   = inj["position"].map(_POS_W).fillna(1.0)
-    inj["weighted"]     = inj["status_score"] * inj["pos_weight"]
-    inj["is_off"] = inj["position"].isin(_OFF_POS).astype(int)
-    inj["is_def"] = inj["position"].isin(_DEF_POS).astype(int)
-    inj["is_qb"]  = (inj["position"] == "QB").astype(int)
-    inj["is_out"] = inj["report_status"].isin(["Out","Doubtful","IR","PUP"]).astype(int)
-
-    team_col = next((c for c in ["team","team_abbr"] if c in inj.columns), None)
-    if team_col is None:
-        for k, v in defaults.items():
-            tg[k] = v
-        return tg
-    inj = inj.rename(columns={team_col:"team"})
-
-    grp_cols = [c for c in ["team","season","week"] if c in inj.columns]
-    if len(grp_cols) < 2:
-        for k, v in defaults.items():
-            tg[k] = v
-        return tg
-
-    # Vectorized: separate aggregation per position group, then merge
-    # Avoids lambda-in-agg closure bugs with pandas 2.x
-    qb_agg = (
-        inj[inj["is_qb"] == 1].groupby(grp_cols)["status_score"]
-        .max().reset_index().rename(columns={"status_score": "qb_available"})
-    )
-    off_agg = (
-        inj[inj["is_off"] == 1].groupby(grp_cols)["weighted"]
-        .mean().reset_index().rename(columns={"weighted": "off_availability_score"})
-    )
-    def_agg = (
-        inj[inj["is_def"] == 1].groupby(grp_cols)["weighted"]
-        .mean().reset_index().rename(columns={"weighted": "def_availability_score"})
-    )
-    severity_agg = (
-        inj.groupby(grp_cols)["is_out"]
-        .sum().reset_index().rename(columns={"is_out": "injury_report_severity"})
-    )
-    agg = severity_agg.copy()
-    for sub in [qb_agg, off_agg, def_agg]:
-        agg = agg.merge(sub, on=grp_cols, how="left")
-    agg = agg.fillna({"qb_available":1.0,"off_availability_score":1.0,
-                      "def_availability_score":1.0,"injury_report_severity":0.0})
-
-    tg = tg.merge(agg, on=grp_cols, how="left")
-    for col, val in [("qb_available",1.0),("off_availability_score",1.0),
-                     ("def_availability_score",1.0),("injury_report_severity",0.0)]:
-        tg[col] = tg[col].fillna(val)
-    tg["injury_data_freshness"] = 0.65
-    return tg
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 7: ELO RATINGS
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _add_elo(tg: pd.DataFrame) -> pd.DataFrame:
-    """
-    Elo ratings with strict two-phase update per game.
-
-    BUG FIX: the previous implementation iterated over team-rows and updated
-    the Elo dict as soon as it hit the home row. Whenever the home row sorted
-    before the away row (~half of all games), the away row then read the
-    POST-game rating as its pre-game feature — a direct outcome leak.
-    Now every game is processed once: both sides' pre-game values are recorded
-    FIRST, and the rating update happens strictly afterwards.
-    """
-    from bayesian_optimizer import load_weights as _lw
-    _w = _lw()
-    ELO_K_DYN    = float(_w.get("elo_k",           ELO_K))
-    ELO_REG      = float(_w.get("elo_regression",   0.67))
-    ELO_MOV      = float(_w.get("elo_mov_mult",     2.2))
-
-    # One record per game, strict chronological order
-    game_cols = ["game_id", "season", "week", "game_date",
-                 "team", "opponent", "team_score", "opp_score"]
-    games = (
-        tg[tg["is_home"] == 1][[c for c in game_cols if c in tg.columns]]
-        .sort_values(["season", "week", "game_date", "game_id"])
-        .reset_index(drop=True)
-    )
-
-    elo: dict = {}
-    pre_elo_map: dict = {}   # (game_id, team) → pre-game Elo
-    exp_map:     dict = {}   # (game_id, team) → pre-game expected win prob
-    prev_season = None
-
-    for row in games.itertuples(index=False):
-        # Seasonal regression toward mean at season boundary
-        if prev_season is not None and row.season != prev_season:
-            for t in list(elo):
-                elo[t] = ELO_START + ELO_REG * (elo[t] - ELO_START)
-        prev_season = row.season
-
-        home, away = row.team, row.opponent
-        if pd.isna(home) or pd.isna(away):
+    for table, prefix, cols in configs:
+        t = get_table(table)
+        if t is None or "team_abbr" not in t.columns or "week" not in t.columns:
             continue
+        cols = [c for c in cols if c in t.columns]
+        t = t.rename(columns={"team_abbr": "team"})
+        t["week"] = pd.to_numeric(t["week"], errors="coerce")
+        t = t[t["week"] > 0].copy()
+        for c in cols:
+            t[c] = pd.to_numeric(t[c], errors="coerce")
+        agg = t.groupby(["team", "season", "week"], as_index=False)[cols].mean()
+        agg = agg.rename(columns={c: f"{prefix}_{c}" for c in cols})
+        tg = _merge_weekly_and_roll(tg, agg, [f"{prefix}_{c}" for c in cols],
+                                    ((4, "r4"),), lambda n: 1)
+    return tg
 
-        h_elo  = elo.get(home, ELO_START)
-        a_elo  = elo.get(away, ELO_START)
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  ELO (full history since 1999, two-phase update)
+# ══════════════════════════════════════════════════════════════════════════════
+
+def _add_elo(tg: pd.DataFrame, hist: pd.DataFrame) -> pd.DataFrame:
+    """Pre-game Elo for every game since 1999 (no cold start inside the
+    training window). Both teams' pre-game ratings are recorded before
+    either is updated, so a game never sees its own result."""
+    games = (hist[hist["is_home"] == 1]
+             .sort_values(["season", "week", "game_date", "game_id"]))
+    elo, pre, exp = {}, {}, {}
+    prev_season = None
+    for g in games.itertuples(index=False):
+        if prev_season is not None and g.season != prev_season:
+            for t in elo:
+                elo[t] = settings.ELO_START + settings.ELO_REGRESSION * (elo[t] - settings.ELO_START)
+        prev_season = g.season
+        h, a = g.team, g.opponent
+        h_elo, a_elo = elo.get(h, settings.ELO_START), elo.get(a, settings.ELO_START)
         e_home = 1.0 / (1.0 + 10 ** ((a_elo - h_elo) / 400.0))
+        pre[(g.game_id, h)], pre[(g.game_id, a)] = h_elo, a_elo
+        exp[(g.game_id, h)], exp[(g.game_id, a)] = e_home, 1.0 - e_home
+        if pd.notna(g.team_score) and pd.notna(g.opp_score):
+            mov = np.log(abs(g.team_score - g.opp_score) + 1) * settings.ELO_MOV_MULT / (
+                abs(h_elo - a_elo) * 0.001 + 1.0)
+            actual = 1.0 if g.team_score > g.opp_score else (0.5 if g.team_score == g.opp_score else 0.0)
+            delta = settings.ELO_K * mov * (actual - e_home)
+            elo[h], elo[a] = h_elo + delta, a_elo - delta
 
-        # Phase 1 — BOTH sides get pre-game values before any update
-        pre_elo_map[(row.game_id, home)] = h_elo
-        pre_elo_map[(row.game_id, away)] = a_elo
-        exp_map[(row.game_id, home)]     = e_home
-        exp_map[(row.game_id, away)]     = 1.0 - e_home
-
-        # Phase 2 — update ratings from the result (if the game is played)
-        h_score, a_score = row.team_score, row.opp_score
-        if pd.notna(h_score) and pd.notna(a_score):
-            margin   = abs(h_score - a_score)
-            mov_mult = np.log(margin + 1) * ELO_MOV / (
-                abs(h_elo - a_elo) * 0.001 + 1.0
-            )
-            h_actual = 1.0 if h_score > a_score else (0.5 if h_score == a_score else 0.0)
-            delta = ELO_K_DYN * mov_mult * (h_actual - e_home)
-            elo[home] = h_elo + delta
-            elo[away] = a_elo - delta
-
-    keys = list(zip(tg["game_id"], tg["team"]))
-    tg = tg.copy()
-    tg["elo_pre_game"]          = [pre_elo_map.get(k, np.nan) for k in keys]
-    tg["elo_expected_win_prob"] = [exp_map.get(k, np.nan)     for k in keys]
-
-    if "spread_line" in tg.columns:
-        tg["vegas_implied_power"] = np.where(
-            tg["is_home"] == 1,
-            -tg["spread_line"].fillna(0) / 2.0,
-             tg["spread_line"].fillna(0) / 2.0,
-        )
-        tg["elo_vegas_divergence"] = (
-            tg["elo_expected_win_prob"] -
-            (0.5 + tg["vegas_implied_power"].fillna(0) / 28.0)
-        )
-
+    keys = list(zip(tg["game_id"], tg["franchise"], strict=True))
+    tg["elo_pre_game"] = [pre.get(k, np.nan) for k in keys]
+    tg["elo_expected_win_prob"] = [exp.get(k, np.nan) for k in keys]
+    # spread_line is home-oriented and POSITIVE when the home team is
+    # favoured, so the home side's implied edge is +spread/2.
+    half = tg["spread_line"] / 2.0
+    tg["vegas_implied_power"] = np.where(tg["is_home"] == 1, half, -half)
+    tg["elo_vegas_divergence"] = tg["elo_expected_win_prob"] - (0.5 + tg["vegas_implied_power"] / 28.0)
     return tg
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  STEP 8: CROSS-SEASON FEATURES
+#  QB / COACH CHANGES AND ROSTER CONTINUITY
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 8: CROSS-SEASON FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
+def _add_qb_and_coach_changes(tg: pd.DataFrame, hist: pd.DataFrame) -> pd.DataFrame:
+    """Starting-QB and head-coach changes from the schedule, which names the
+    starting QB of every played game and of next week's games, and the head
+    coach of every game.
+      qb_changed     — this game's starter is not the team's main starter of
+                       the previous season
+      qb_start_share — share of the team's previous 8 games started by this
+                       game's QB (how much the team's rolling QB/offense form
+                       actually reflects him)
+      coach_changed  — this game's head coach did not coach the team's last
+                       game of the previous season
+    Starters not announced yet (games 2+ weeks out) are assumed to be the
+    team's most recent starter."""
+    h = hist.copy()
+    h["qb_id"] = h.groupby("team")["qb_id"].ffill()
+    played = h["team_score"].notna()
 
-def _add_cross_season(tg: pd.DataFrame) -> pd.DataFrame:
-    from data_loader import get_table
+    primary = (h[played & (h["game_type"] == "REG")]
+               .groupby(["team", "season"])["qb_id"]
+               .agg(lambda x: x.value_counts().index[0] if x.notna().any() else np.nan))
+    prev_primary = primary.rename("prev_primary").reset_index()
+    prev_primary["season"] += 1
+    h = h.merge(prev_primary, on=["team", "season"], how="left")
+    h["qb_changed"] = (h["qb_id"].notna() & h["prev_primary"].notna()
+                       & (h["qb_id"] != h["prev_primary"])).astype(int)
 
-    tg = _add_win_totals(tg)
-    tg = _add_roster_continuity(tg)
-    tg = _add_draft_quality(tg)
-    tg = _add_qb_coach_change_flags(tg)
-    tg = _add_game_lines(tg)
-    return tg
+    share = np.full(len(h), np.nan)
+    for _, idx in h.groupby("team", sort=False).groups.items():
+        qbs = h.loc[idx, "qb_id"].to_numpy()
+        was_played = played.loc[idx].to_numpy()
+        prior: list = []
+        for j, i in enumerate(idx):
+            if prior and pd.notna(qbs[j]):
+                share[h.index.get_loc(i)] = np.mean([q == qbs[j] for q in prior[-8:]])
+            if was_played[j]:
+                prior.append(qbs[j])
+    h["qb_start_share"] = share
 
+    last_coach = (h[played].groupby(["team", "season"])["coach"].last()
+                  .rename("prev_coach").reset_index())
+    last_coach["season"] += 1
+    h = h.merge(last_coach, on=["team", "season"], how="left")
+    h["coach_changed"] = (h["coach"].notna() & h["prev_coach"].notna()
+                          & (h["coach"] != h["prev_coach"])).astype(int)
 
-def _add_win_totals(tg: pd.DataFrame) -> pd.DataFrame:
-    """Vegas preseason win totals — correct nflverse/nfldata source.
-    Columns: season, team, line (the O/U wins line), over_odds, under_odds
-    """
-    from data_loader import get_table
-    wt = get_table("win_totals")
-
-    if wt is None or len(wt) == 0:
-        tg["vegas_preseason_wins"] = np.nan
-        return tg
-
-    # Correct column names from nflverse/nfldata win_totals.csv
-    # season | team | line | over_odds | under_odds
-    team_col = next((c for c in ["team", "team_abbr"] if c in wt.columns), None)
-    line_col  = next((c for c in ["line", "wins", "win_total", "over_under",
-                                   "implied_wins"] if c in wt.columns), None)
-
-    if team_col is None or line_col is None or "season" not in wt.columns:
-        logger.warning("win_totals: unexpected columns %s", list(wt.columns))
-        tg["vegas_preseason_wins"] = np.nan
-        return tg
-
-    wt = wt.copy()
-    wt = wt.rename(columns={team_col: "team", line_col: "vegas_preseason_wins"})
-    wt["season"] = pd.to_numeric(wt["season"], errors="coerce")
-    wt["vegas_preseason_wins"] = pd.to_numeric(wt["vegas_preseason_wins"], errors="coerce")
-
-    # Take consensus line (average if multiple books)
-    wt_agg = (wt.groupby(["team", "season"])["vegas_preseason_wins"]
-              .mean().reset_index())
-
-    tg = tg.merge(wt_agg, on=["team", "season"], how="left")
-    filled = tg["vegas_preseason_wins"].notna().sum()
-    logger.info("  win_totals: %d team-season rows matched", filled)
+    feats = h[["game_id", "team", "qb_changed", "qb_start_share", "coach_changed"]].rename(
+        columns={"team": "franchise"})
+    tg = tg.merge(feats, on=["game_id", "franchise"], how="left")
+    tg["qb_changed"] = tg["qb_changed"].fillna(0)
+    tg["coach_changed"] = tg["coach_changed"].fillna(0)
+    tg["team_instability"] = 0.6 * tg["qb_changed"] + 0.4 * tg["coach_changed"]
+    logger.info("  QB changes: %d team-games, coach changes: %d team-games",
+                int(tg["qb_changed"].sum()), int(tg["coach_changed"].sum()))
     return tg
 
 
 def _add_roster_continuity(tg: pd.DataFrame) -> pd.DataFrame:
+    """Share of last season's final active roster that is on this season's
+    week-1 active roster (both known before the season's games)."""
     from data_loader import get_table
-    rosters = get_table("rosters")
-
-    if rosters is None or len(rosters) == 0:
-        tg["roster_continuity"] = 0.5
+    rw = get_table("rosters_weekly")
+    tg["roster_continuity"] = np.nan
+    if rw is None or not {"team", "season", "week", "gsis_id", "status"} <= set(rw.columns):
         return tg
-
-    team_col = next((c for c in ["team", "team_abbr"] if c in rosters.columns), None)
-    id_col   = next((c for c in ["gsis_id", "player_id"] if c in rosters.columns), None)
-
-    if team_col is None or id_col is None or "season" not in rosters.columns:
-        tg["roster_continuity"] = 0.5
-        return tg
-
-    rosters = rosters.copy()
-    rosters["season"] = pd.to_numeric(rosters["season"], errors="coerce")
-    rosters = rosters.rename(columns={team_col: "team"})
-
+    rw = rw[(rw["status"] == "ACT") & rw["gsis_id"].notna()].copy()
+    rw["team"] = _franchise(rw["team"])
+    rw["season"] = pd.to_numeric(rw["season"], errors="coerce")
+    rw["week"] = pd.to_numeric(rw["week"], errors="coerce")
+    if "game_type" in rw.columns:
+        rw = rw[rw["game_type"].fillna("REG") == "REG"]
+    first = rw[rw["week"] == rw.groupby(["team", "season"])["week"].transform("min")]
+    last = rw[rw["week"] == rw.groupby(["team", "season"])["week"].transform("max")]
+    first_ids = first.groupby(["team", "season"])["gsis_id"].agg(set)
+    last_ids = last.groupby(["team", "season"])["gsis_id"].agg(set)
     cont = {}
-    for (team, season), grp in rosters.groupby(["team", "season"]):
-        prev = rosters[(rosters["team"] == team) & (rosters["season"] == season - 1)]
-        if len(prev) == 0:
-            cont[(team, season)] = 0.5
-            continue
-        cur_ids  = set(grp[id_col].dropna())
-        prev_ids = set(prev[id_col].dropna())
-        cont[(team, season)] = len(cur_ids & prev_ids) / max(len(prev_ids), 1)
-
-    # Vectorized lookup
-    tg["roster_continuity"] = tg.apply(
-        lambda r: cont.get((r["team"], r["season"]), 0.5), axis=1
-    )
-    return tg
-
-
-def _add_draft_quality(tg: pd.DataFrame) -> pd.DataFrame:
-    from data_loader import get_table
-    dp = get_table("draft_picks")
-
-    if dp is None or len(dp) == 0 or "pfr_av" not in dp.columns:
-        tg["draft_quality_score"] = 0.0
-        return tg
-
-    team_col = next((c for c in ["team", "team_abbr"] if c in dp.columns), None)
-    if team_col is None or "season" not in dp.columns:
-        tg["draft_quality_score"] = 0.0
-        return tg
-
-    dp = dp.copy()
-    dp["pfr_av"] = pd.to_numeric(dp["pfr_av"], errors="coerce").fillna(0)
-    dp = dp.rename(columns={team_col: "team"})
-    dp["season"] = pd.to_numeric(dp["season"], errors="coerce")
-
-    dq = (dp.groupby(["team", "season"])["pfr_av"]
-          .sum().reset_index()
-          .rename(columns={"pfr_av": "draft_quality_score"}))
-    tg = tg.merge(dq, on=["team", "season"], how="left")
-    tg["draft_quality_score"] = tg["draft_quality_score"].fillna(0)
-    return tg
-
-
-def _add_qb_coach_change_flags(tg: pd.DataFrame) -> pd.DataFrame:
-    """
-    QB and head coach change flags — quantifies the single biggest
-    unmeasured cross-season signal.
-
-    Simulation showed QB changes cause ~4pt extra prediction error in week 1,
-    decaying to ~1pt by week 6. This flag lets the model discount prior-season
-    EPA stats when the QB changed.
-
-    Sources: weekly rosters (QB depth chart position) + schedules (coaches).
-    Falls back gracefully if data is unavailable.
-    """
-    from data_loader import get_table
-    import re
-
-    # ── QB change flag ────────────────────────────────────────────────────────
-    weekly = get_table("rosters_weekly")
-    qb_changed: dict = {}     # (team, season) → bool
-
-    if weekly is not None and len(weekly) > 0:
-        team_col = next((c for c in ["team", "team_abbr"] if c in weekly.columns), None)
-        name_col = next((c for c in ["full_name", "player_name"] if c in weekly.columns), None)
-        pos_col  = next((c for c in ["depth_chart_position", "position"] if c in weekly.columns), None)
-
-        if all(c is not None for c in [team_col, name_col, pos_col]) and "season" in weekly.columns:
-            wr = weekly.copy()
-            wr["season"] = pd.to_numeric(wr["season"], errors="coerce")
-            wr["week"]   = pd.to_numeric(wr.get("week", 1), errors="coerce").fillna(1)
-            wr = wr.rename(columns={team_col: "team", name_col: "pname"})
-
-            # QB starters: highest depth_chart rank among QBs, week 1
-            qb_w1 = wr[
-                wr[pos_col].isin(["QB"]) &
-                (wr["week"] == 1)
-            ].groupby(["team", "season"])["pname"].first().reset_index()
-
-            for _, row in qb_w1.iterrows():
-                team, season = row["team"], row["season"]
-                prev_qbs = qb_w1[
-                    (qb_w1["team"] == team) &
-                    (qb_w1["season"] == season - 1)
-                ]
-                if len(prev_qbs) == 0:
-                    qb_changed[(team, season)] = False
-                else:
-                    qb_changed[(team, season)] = (
-                        row["pname"] != prev_qbs.iloc[0]["pname"]
-                    )
-
-    if qb_changed:
-        tg["qb_changed"] = tg.apply(
-            lambda r: int(qb_changed.get((r["team"], r["season"]), False)), axis=1
-        )
-        n_changed = tg["qb_changed"].sum()
-        logger.info("  qb_changed: %d team-season observations flagged", int(n_changed))
-    else:
-        tg["qb_changed"] = 0
-
-    # ── QB change EPA penalty ─────────────────────────────────────────────────
-    # When QB changed, discount prior-season QB EPA by (1 - decay factor)
-    # Week 1 → 0% reliability of prior QB stats; week 8 → ~80% reliability
-    if "week" in tg.columns and "qb_changed" in tg.columns:
-        tg["week_num"] = pd.to_numeric(tg["week"], errors="coerce").fillna(9)
-        # Reliability: 0 at week 1, rising to ~1 by week 8
-        tg["qb_era_reliability"] = np.where(
-            tg["qb_changed"] == 1,
-            np.clip(1 - np.exp(-0.35 * (tg["week_num"] - 1)), 0, 1),
-            1.0
-        )
-    else:
-        tg["qb_era_reliability"] = 1.0
-
-    # ── Coach change flag ──────────────────────────────────────────────────────
-    # Check from schedules if there's a coach column; otherwise use schedule-
-    # derived heuristic (win% change > threshold suggests coaching change).
-    # Minimal implementation — will be enhanced once coach data is loaded.
-    sched = get_table("schedules")
-
-    if sched is not None:
-        # Try explicit coach columns
-        coach_col = next((c for c in ["home_coach", "away_coach", "coach"]
-                          if c in (sched.columns if sched is not None else [])), None)
-        if coach_col:
-            # Build dict: (team, season) → coach name from week 1
-            sched_c = sched.copy()
-            sched_c["season"] = pd.to_numeric(sched_c.get("season", 0), errors="coerce")
-            coaches: dict = {}
-            # Home teams
-            if "home_team" in sched_c.columns and "home_coach" in sched_c.columns:
-                hc = sched_c.groupby(["home_team", "season"])["home_coach"].first()
-                for (team, season), coach in hc.items():
-                    coaches[(team, season)] = str(coach)
-            # Away teams
-            if "away_team" in sched_c.columns and "away_coach" in sched_c.columns:
-                ac = sched_c.groupby(["away_team", "season"])["away_coach"].first()
-                for (team, season), coach in ac.items():
-                    if (team, season) not in coaches:
-                        coaches[(team, season)] = str(coach)
-
-            if coaches:
-                def _coach_changed(row):
-                    cur  = coaches.get((row["team"], row["season"]))
-                    prev = coaches.get((row["team"], row["season"] - 1))
-                    if cur is None or prev is None:
-                        return 0
-                    return int(cur != prev)
-                tg["coach_changed"] = tg.apply(_coach_changed, axis=1)
-                logger.info("  coach_changed: %d flagged", int(tg["coach_changed"].sum()))
-            else:
-                tg["coach_changed"] = 0
-        else:
-            tg["coach_changed"] = 0
-    else:
-        tg["coach_changed"] = 0
-
-    # Combined instability score (used in confidence calculation)
-    tg["team_instability"] = (
-        tg["qb_changed"].fillna(0) * 0.6 +
-        tg["coach_changed"].fillna(0) * 0.4
-    )
-
-    return tg
-
-
-def _add_game_lines(tg: pd.DataFrame) -> pd.DataFrame:
-    """
-    Add historical game-level book spreads, totals and opening lines.
-
-    Opening spread = oddsmaker's pure estimate before public money moves it.
-    This is more informative than closing spread as a model input because:
-      - Not contaminated by public betting patterns
-      - Represents the market's best pre-information estimate
-      - Model divergence from opening spread = genuine edge signal
-
-    Model divergence from opening spread (model_vs_market_gap) is one of the
-    strongest available betting edge indicators.
-
-    Columns: game_id, market_type, abbr (team), lines, odds, opening_lines, opening_odds
-    """
-    from data_loader import get_table
-    gl = get_table("game_lines")
-
-    if gl is None or len(gl) == 0 or "game_id" not in gl.columns:
-        return tg
-
-    try:
-        gl["lines"]          = pd.to_numeric(gl["lines"],          errors="coerce")
-        gl["opening_lines"]  = pd.to_numeric(gl["opening_lines"],  errors="coerce")
-        gl["odds"]           = pd.to_numeric(gl["odds"],           errors="coerce")
-        gl["opening_odds"]   = pd.to_numeric(gl["opening_odds"],   errors="coerce")
-
-        # ── CLOSING spread (consensus across books) ───────────────────────
-        spreads_close = (
-            gl[gl["market_type"] == "spread"]
-            .groupby(["game_id", "abbr"])["lines"]
-            .median()
-            .reset_index()
-            .rename(columns={"lines": "book_spread_hist", "abbr": "team"})
-        )
-
-        # ── OPENING spread (pre-public-money estimate) ────────────────────
-        spreads_open = (
-            gl[(gl["market_type"] == "spread") & gl["opening_lines"].notna()]
-            .groupby(["game_id", "abbr"])["opening_lines"]
-            .median()
-            .reset_index()
-            .rename(columns={"opening_lines": "opening_spread", "abbr": "team"})
-        )
-
-        # ── CLOSING total ─────────────────────────────────────────────────
-        totals_close = (
-            gl[gl["market_type"] == "total"]
-            .groupby("game_id")["lines"]
-            .median()
-            .reset_index()
-            .rename(columns={"lines": "book_total_hist"})
-        )
-
-        # ── OPENING total ─────────────────────────────────────────────────
-        totals_open = (
-            gl[(gl["market_type"] == "total") & gl["opening_lines"].notna()]
-            .groupby("game_id")["opening_lines"]
-            .median()
-            .reset_index()
-            .rename(columns={"opening_lines": "opening_total"})
-        )
-
-        # ── Money line → implied win probability ──────────────────────────
-        # Formula: negative line → prob = |line| / (|line| + 100)
-        #          positive line → prob = 100 / (line + 100)
-        # Use closing money line; opening as fallback
-        def _ml_to_prob(ml_series: pd.Series) -> pd.Series:
-            ml = pd.to_numeric(ml_series, errors="coerce")
-            prob = np.where(
-                ml < 0,
-                np.abs(ml) / (np.abs(ml) + 100),
-                np.where(ml > 0, 100 / (ml + 100), np.nan)
-            )
-            # Remove vig: normalize so home+away probs sum to ~1
-            return pd.Series(prob, index=ml_series.index)
-
-        ml_data = gl[gl["market_type"] == "money_line"].copy()
-        if len(ml_data) > 0 and "abbr" in ml_data.columns:
-            ml_data["implied_prob"] = _ml_to_prob(ml_data["odds"])
-            ml_agg = (
-                ml_data[ml_data["implied_prob"].notna()]
-                .groupby(["game_id", "abbr"])["implied_prob"]
-                .median()
-                .reset_index()
-                .rename(columns={"implied_prob": "market_win_prob", "abbr": "team"})
-            )
-        else:
-            ml_agg = pd.DataFrame(columns=["game_id", "team", "market_win_prob"])
-
-        # ── Merge all into tg ──────────────────────────────────────────────
-        if len(spreads_close) > 0:
-            tg = tg.merge(spreads_close, on=["game_id", "team"], how="left")
-        if len(spreads_open) > 0:
-            tg = tg.merge(spreads_open,  on=["game_id", "team"], how="left")
-        if len(totals_close) > 0:
-            tg = tg.merge(totals_close,  on="game_id", how="left")
-        if len(totals_open) > 0:
-            tg = tg.merge(totals_open,   on="game_id", how="left")
-        if len(ml_agg) > 0:
-            tg = tg.merge(ml_agg,        on=["game_id", "team"], how="left")
-
-        # ── Fill closing with opening if missing ──────────────────────────
-        if "opening_spread" in tg.columns and "book_spread_hist" in tg.columns:
-            tg["book_spread_hist"] = tg["book_spread_hist"].fillna(tg["opening_spread"])
-        if "spread_line" in tg.columns:
-            tg["book_spread_hist"] = tg.get("book_spread_hist",
-                pd.Series(np.nan, index=tg.index)).fillna(tg["spread_line"])
-            # Use spread_line as opening fallback too
-            if "opening_spread" not in tg.columns:
-                tg["opening_spread"] = tg["spread_line"]
-            else:
-                tg["opening_spread"] = tg["opening_spread"].fillna(tg["spread_line"])
-
-        # ── Vig-free implied probability ──────────────────────────────────
-        # Remove overround so probabilities sum to 1 per game
-        if "market_win_prob" in tg.columns:
-            # For each game, normalize home + away implied probs
-            game_prob_sum = (
-                tg.groupby("game_id")["market_win_prob"]
-                .transform("sum")
-            )
-            tg["market_win_prob_vigfree"] = tg["market_win_prob"] / game_prob_sum.clip(lower=0.5)
-
-        n_open  = tg["opening_spread"].notna().sum() if "opening_spread" in tg.columns else 0
-        n_close = tg["book_spread_hist"].notna().sum() if "book_spread_hist" in tg.columns else 0
-        logger.info("  game_lines: opening_spread=%d rows, closing_spread=%d rows",
-                    n_open, n_close)
-
-    except Exception as e:
-        logger.warning("  game_lines merge failed: %s", e)
-
+    for (team, season), cur in first_ids.items():
+        prev = last_ids.get((team, season - 1))
+        if prev:
+            cont[(team, season)] = len(cur & prev) / len(prev)
+    tg["roster_continuity"] = [cont.get(k, np.nan) for k in zip(tg["franchise"], tg["season"], strict=True)]
     return tg
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  STEP 9: OFFICIAL / REFEREE TENDENCIES
+#  CONTEXT: REST, CALENDAR, SCORING ERA, HOME-FIELD ADVANTAGE
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _add_official_features(tg: pd.DataFrame) -> pd.DataFrame:
-    """
-    Referee tendencies from STRICTLY PRIOR games only.
-
-    LEAK FIX: the previous version averaged over the referee's entire career —
-    including the current game's own outcome and future games. Now each played
-    game gets the referee's expanding stats over games before it; unplayed
-    games get stats over all played games (all of which are prior to them).
-    """
-    from data_loader import get_schedules
-    sched = get_schedules()
-
-    if "referee" not in sched.columns or "home_score" not in sched.columns:
-        tg["ref_home_win_rate"]  = np.nan
-        tg["ref_total_tendency"] = np.nan
-        return tg
-
-    MIN_PRIOR_GAMES = 10
-
-    sched = sched.copy()
-    hs = pd.to_numeric(sched["home_score"], errors="coerce")
-    as_ = pd.to_numeric(sched["away_score"], errors="coerce")
-    sched["_total"]    = hs + as_
-    sched["_home_win"] = (hs > as_).astype(float)
-
-    date_col = next((c for c in ["gameday", "game_date", "date"] if c in sched.columns), None)
-    sched["_gdate"] = pd.to_datetime(sched[date_col], errors="coerce") if date_col else pd.NaT
-
-    played = sched[sched["_total"].notna() & sched["referee"].notna()].copy()
-    played = played.sort_values(["_gdate", "game_id"]).reset_index(drop=True)
-
-    # Expanding PRIOR stats per referee (cumsum-minus-self, no lambdas)
-    grp = played.groupby("referee", sort=False)
-    n_prior   = grp.cumcount().astype(float)
-    hw_prior  = grp["_home_win"].cumsum() - played["_home_win"]
-    tot_prior = grp["_total"].cumsum()    - played["_total"]
-    enough    = n_prior >= MIN_PRIOR_GAMES
-    played["ref_home_win_rate"]  = np.where(enough, hw_prior  / n_prior.replace(0, np.nan), np.nan)
-    played["ref_total_tendency"] = np.where(enough, tot_prior / n_prior.replace(0, np.nan), np.nan)
-
-    per_game = played[["game_id", "ref_home_win_rate", "ref_total_tendency"]]
-
-    # Unplayed games: referee career stats over ALL played games (all prior)
-    ref_final = (
-        played.groupby("referee")
-        .agg(_hw=("_home_win", "mean"), _tot=("_total", "mean"), _n=("game_id", "count"))
-        .reset_index()
-    )
-    ref_final = ref_final[ref_final["_n"] >= MIN_PRIOR_GAMES]
-
-    unplayed = sched[sched["_total"].isna() & sched["referee"].notna()][["game_id", "referee"]]
-    unplayed = unplayed.merge(ref_final, on="referee", how="left")
-    unplayed = unplayed.rename(columns={"_hw": "ref_home_win_rate", "_tot": "ref_total_tendency"})
-    per_game = pd.concat(
-        [per_game, unplayed[["game_id", "ref_home_win_rate", "ref_total_tendency"]]],
-        ignore_index=True,
-    ).drop_duplicates(subset=["game_id"])
-
-    tg = tg.merge(per_game, on="game_id", how="left")
-    return tg
+def _hfa_by_season(hist: pd.DataFrame) -> pd.Series:
+    """League home-field advantage per completed season: average home minus
+    average away points, neutral-site games excluded."""
+    done = hist[hist["team_score"].notna() & ~hist["neutral"]]
+    home = done[done["is_home"] == 1].groupby("season")["team_score"].mean()
+    away = done[done["is_home"] == 0].groupby("season")["team_score"].mean()
+    return (home - away).dropna()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 10: NGS FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
+def _add_contextual(tg: pd.DataFrame, hist: pd.DataFrame) -> pd.DataFrame:
+    tg = tg.sort_values(["team", "season", "game_date"]).copy()
+    prev_date = tg.groupby(["team", "season"])["game_date"].shift(1)
+    tg["rest_days"]     = (tg["game_date"] - prev_date).dt.days.fillna(10).clip(1, 21)
+    tg["is_bye_week"]   = (tg["rest_days"] > 10).astype(int)
+    tg["is_short_week"] = (tg["rest_days"] < 6).astype(int)
 
-def _add_ngs_features(tg: pd.DataFrame, seasons: list) -> pd.DataFrame:
-    """
-    Next Gen Stats as LAGGED rolling features.
-
-    LEAK FIX: the previous version merged the CURRENT week's NGS values onto
-    the game row — the model saw how the team threw/ran in the very game it
-    was predicting. Now values are shift(1)-lagged and rolled (4-game mean),
-    so every NGS feature describes form BEFORE kickoff. Column names carry the
-    _r4 suffix, which also makes them pass the feature allowlist.
-    """
-    from data_loader import get_table
-
-    ngs_configs = [
-        ("ngs_passing", "ngs_pass", ["avg_time_to_throw","avg_completed_air_yards","aggressiveness"]),
-        ("ngs_rushing", "ngs_rush", ["efficiency","rush_yards_over_expected_per_att","avg_time_to_los"]),
-        ("ngs_receiving","ngs_recv",["avg_separation","avg_intended_air_yards","catch_percentage"]),
-    ]
-
-    for tbl_name, prefix, cols in ngs_configs:
-        tbl = get_table(tbl_name)
-        if tbl is None or len(tbl) == 0:
-            continue
-
-        team_col = next((c for c in ["team_abbr","team","possession_team"] if c in tbl.columns), None)
-        if team_col is None:
-            continue
-
-        tbl = tbl.rename(columns={team_col:"team"})
-        available = [c for c in cols if c in tbl.columns]
-        if not available:
-            continue
-
-        # Require week granularity — a (team, season)-level merge would inject
-        # full-season aggregates (i.e. future games) into every row.
-        if not {"team", "season", "week"}.issubset(tbl.columns):
-            logger.warning("  %s: no week column — skipped (season-level merge would leak)", tbl_name)
-            continue
-
-        grp_cols = ["team", "season", "week"]
-        # NGS files contain week=0 SEASON-SUMMARY rows. If those survive, the
-        # shift(1) rolling below would pull a full-season aggregate into the
-        # early weeks of the SAME season — a leak. Keep true weekly rows only.
-        tbl["week"] = pd.to_numeric(tbl["week"], errors="coerce")
-        tbl = tbl[tbl["week"] > 0].copy()
-        tbl["week"] = tbl["week"].astype(int)
-        for c in available:
-            tbl[c] = pd.to_numeric(tbl[c], errors="coerce")
-        tbl_agg = tbl.groupby(grp_cols)[available].mean().reset_index()
-        tbl_agg = tbl_agg.rename(columns={c: f"{prefix}_{c}" for c in available})
-        renamed = [f"{prefix}_{c}" for c in available]
-
-        # shift(1) + rolling(4) per team → strictly pre-game form signal
-        frames = []
-        for _, grp in tbl_agg.groupby("team", sort=False):
-            grp = grp.sort_values(["season", "week"]).copy()
-            for c in renamed:
-                grp[f"{c}_r4"] = grp[c].shift(1).rolling(4, min_periods=1).mean()
-            frames.append(grp)
-        tbl_rolled = pd.concat(frames, ignore_index=True)
-
-        keep = grp_cols + [f"{c}_r4" for c in renamed]
-        tg = tg.merge(tbl_rolled[keep], on=grp_cols, how="left")
-
-    return tg
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  STEP 11: CONTEXTUAL FEATURES
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
-    tg = tg.sort_values(["team","season","game_date"]).copy()
-
-    tg["prev_game_date"] = tg.groupby(["team","season"])["game_date"].shift(1)
-    tg["rest_days"]      = (tg["game_date"] - tg["prev_game_date"]).dt.days.fillna(10).clip(1, 21)
-    tg["is_bye_week"]    = (tg["rest_days"] > 10).astype(int)
-    tg["is_short_week"]  = (tg["rest_days"] < 6).astype(int)
-
-    if "wind" in tg.columns:
-        wind = pd.to_numeric(tg["wind"], errors="coerce").fillna(0)
-        tg["high_wind"]    = ((wind >= 15) & (tg["is_dome"].fillna(0) == 0)).astype(int)
-        tg["extreme_wind"] = ((wind >= 25) & (tg["is_dome"].fillna(0) == 0)).astype(int)
-
-    if "temp" in tg.columns:
-        temp = pd.to_numeric(tg["temp"], errors="coerce").fillna(60)
-        tg["cold_game"]      = ((temp < 32) & (tg["is_dome"].fillna(0) == 0)).astype(int)
-        tg["very_cold_game"] = ((temp < 20) & (tg["is_dome"].fillna(0) == 0)).astype(int)
-
-    tg["week"]        = pd.to_numeric(tg["week"], errors="coerce").fillna(1)
     tg["season_half"] = (tg["week"] > 9).astype(int)
-    # 2021 schedule expansion: the regular season was 16 games / 17 weeks
-    # (256 league games) through 2020 and is 17 games / 18 weeks (272)
-    # since 2021. Normalize "season progress" by the era's own final REG
-    # week so week_norm means the same thing in every training season.
     from data_loader import regular_season_weeks
-    _reg_weeks = tg["season"].map(regular_season_weeks).astype(float)
-    tg["week_norm"]   = tg["week"] / _reg_weeks
+    tg["week_norm"] = tg["week"] / tg["season"].map(regular_season_weeks).astype(float)
 
-    dow = pd.to_numeric(tg["day_of_week"], errors="coerce").fillna(6)
-    tg["is_sunday"]   = (dow == 6).astype(int)
-    tg["is_thursday"] = (dow == 3).astype(int)
-    tg["is_monday"]   = (dow == 0).astype(int)
-    tg["is_saturday"] = (dow == 5).astype(int)
+    dow = tg["day_of_week"]
+    tg["is_sunday"], tg["is_thursday"] = (dow == 6).astype(int), (dow == 3).astype(int)
+    tg["is_monday"], tg["is_saturday"] = (dow == 0).astype(int), (dow == 5).astype(int)
 
-    # ── Season scoring trend ──────────────────────────────────────────────
-    # NFL total scoring has trended up ~1 pt/season since 2015.
-    # LEAK FIX: the previous version used the CURRENT season's average —
-    # including the game's own total and future games. Now each season uses
-    # the PREVIOUS season's completed-game average (1-season-lagged era signal).
-    if "team_score" in tg.columns and "opp_score" in tg.columns:
-        completed = tg[tg["team_score"].notna()]
-        per_season_avg = (
-            completed.groupby(["game_id", "season"])
-            .agg(game_total=("team_score", "sum"))
-            .reset_index()
-            .groupby("season")["game_total"]
-            .mean()
-            .sort_index()
-        )
-        prior_season_avg = per_season_avg.shift(1)   # season s ← average of s-1
-        tg["season_avg_total"] = tg["season"].map(prior_season_avg)
-        tg["scoring_era_adj"]  = tg["season_avg_total"].fillna(45.5) - 45.5
-    else:
-        tg["scoring_era_adj"] = 0.0
+    # Scoring environment: previous season's average game total.
+    home_rows = hist[(hist["is_home"] == 1) & hist["team_score"].notna()]
+    season_total = (home_rows["team_score"] + home_rows["opp_score"]).groupby(home_rows["season"]).mean()
+    tg["season_avg_total"] = tg["season"].map({s + 1: v for s, v in season_total.items()})
+    tg["scoring_era_adj"] = tg["season_avg_total"] - 45.5
 
-    # ── Rolling Home Field Advantage (FiveThirtyEight methodology) ────────
-    # FiveThirtyEight (2021): switched from fixed HFA to rolling 10-season average.
-    # Research: HFA declined from ~2.8pts (pre-2015) to ~1.5pts (2024).
-    # Implementation: compute actual HFA per season from completed games,
-    # then use exponentially weighted rolling average as a feature.
+    # League HFA: exponentially weighted mean of earlier seasons (2020 excluded).
+    hfa = _hfa_by_season(hist).drop(index=settings.COVID_SEASON, errors="ignore")
 
-    hfa_by_season = {}
-    if "team_score" in tg.columns and "is_home" in tg.columns:
-        completed = tg[tg["team_score"].notna()].copy()
-        if len(completed) > 0:
-            home_games = completed[completed["is_home"] == 1]
-            away_games = completed[completed["is_home"] == 0]
+    def _rolling_hfa(season, decay=0.7):
+        past = hfa[hfa.index < season]
+        if past.empty:
+            return 2.0
+        w = decay ** np.arange(len(past) - 1, -1, -1)
+        return float(np.sum(w * past.values) / np.sum(w))
 
-            # HFA = average home score minus average away score, by season
-            h_avg = home_games.groupby("season")["team_score"].mean()
-            a_avg = away_games.groupby("season")["team_score"].mean()
+    tg["rolling_hfa"] = tg["season"].map({s: _rolling_hfa(s) for s in tg["season"].unique()})
 
-            seasons_with_both = h_avg.index.intersection(a_avg.index)
-            for s in sorted(seasons_with_both):
-                # Exclude 2020 COVID outlier from HFA calculation
-                if s != 2020:
-                    hfa_by_season[s] = float(h_avg[s] - a_avg[s])
-
-    # Exponentially weighted rolling average across seasons
-    # Weight decay: more recent seasons weighted more
-    def _rolling_hfa(season: int, hfa_dict: dict, decay: float = 0.7) -> float:
-        """EW average of past HFA values, decaying by `decay` per year."""
-        past = [(s, v) for s, v in hfa_dict.items() if s < season and s != 2020]
-        if not past:
-            return 2.0   # league average default
-        past.sort(key=lambda x: x[0])
-        total_w, total_v = 0.0, 0.0
-        for i, (_, v) in enumerate(past):
-            w = decay ** (len(past) - 1 - i)
-            total_w += w
-            total_v += w * v
-        return total_v / max(total_w, 1e-9)
-
-    tg["rolling_hfa"] = tg["season"].apply(
-        lambda s: _rolling_hfa(s, hfa_by_season)
-    )
-
-    # Per-team HFA — some teams (KC, SEA) consistently higher than league average
-    # LEAK FIX: previously computed over ALL completed games (incl. the current
-    # season and games after the row being featurised). Now each (team, season)
-    # uses only seasons STRICTLY BEFORE it (expanding prior mean, 2020 excluded).
-    if "team" in tg.columns and "is_home" in tg.columns and "team_score" in tg.columns:
-        completed = tg[tg["team_score"].notna() & (tg["season"] != 2020)].copy()
-        if len(completed) > 20:
-            per_ts = (
-                completed.groupby(["team", "season", "is_home"])["team_score"]
-                .mean().unstack("is_home")
-            )
-            if 1 in per_ts.columns and 0 in per_ts.columns:
-                per_ts = per_ts.reset_index()
-                per_ts["_hfa"] = per_ts[1] - per_ts[0]
-                per_ts = per_ts.dropna(subset=["_hfa"]).sort_values(["team", "season"])
-                g      = per_ts.groupby("team", sort=False)
-                cnt    = g.cumcount().astype(float)
-                csum   = g["_hfa"].cumsum() - per_ts["_hfa"]     # prior-only sum
-                per_ts["_hfa_prior"] = np.where(cnt > 0, csum / cnt.replace(0, np.nan), np.nan)
-                hfa_lookup = per_ts.set_index(["team", "season"])["_hfa_prior"]
-                idx = pd.MultiIndex.from_arrays([tg["team"], tg["season"]])
-                tg["team_specific_hfa"] = hfa_lookup.reindex(idx).values
-                tg["team_specific_hfa"] = tg["team_specific_hfa"].fillna(tg["rolling_hfa"])
-            else:
-                tg["team_specific_hfa"] = tg["rolling_hfa"]
-        else:
-            tg["team_specific_hfa"] = tg["rolling_hfa"]
-    else:
-        tg["team_specific_hfa"] = 2.0
-
-    # Dynamic season HFA (replaces the hardcoded season_hfa dict)
-    tg["season_hfa"] = tg["season"].apply(
-        lambda s: _rolling_hfa(s, hfa_by_season)
-    )
-
+    # Team-specific HFA: mean over the franchise's earlier seasons (2020 out).
+    done = hist[hist["team_score"].notna() & ~hist["neutral"]
+                & (hist["season"] != settings.COVID_SEASON)]
+    per_ts = done.groupby(["team", "season", "is_home"])["team_score"].mean().unstack("is_home")
+    team_hfa = (per_ts[1] - per_ts[0]).dropna().rename("hfa").reset_index().sort_values(["team", "season"])
+    g = team_hfa.groupby("team")
+    team_hfa["prior"] = (g["hfa"].cumsum() - team_hfa["hfa"]) / g.cumcount().replace(0, np.nan)
+    lookup = team_hfa.set_index(["team", "season"])["prior"]
+    idx = pd.MultiIndex.from_arrays([tg["franchise"], tg["season"]])
+    tg["team_specific_hfa"] = lookup.reindex(idx).values
+    tg["team_specific_hfa"] = tg["team_specific_hfa"].fillna(tg["rolling_hfa"])
     return tg
 
 
@@ -1758,224 +919,71 @@ def _add_contextual(tg: pd.DataFrame) -> pd.DataFrame:
 #  PIVOT: ONE ROW PER GAME
 # ══════════════════════════════════════════════════════════════════════════════
 
+_SHARED_GAME_COLS = [
+    "season", "week", "game_type", "game_date", "spread_line", "total_line",
+    "is_dome", "is_primetime", "is_international", "is_division_game",
+    "is_sunday", "is_thursday", "is_monday", "is_saturday",
+    "season_avg_total", "scoring_era_adj", "rolling_hfa", "week_norm", "season_half",
+    "wepa_available", "coverage_available", "ngs_available",
+]
+
+
 def _pivot_to_game(tg: pd.DataFrame) -> pd.DataFrame:
-    """Pivot team-game table to one row per game with home_ and away_ prefixed columns."""
+    """One row per game: per-team columns get home_/away_ prefixes."""
+    skip = set(_SHARED_GAME_COLS) | {"game_id", "is_home", "team", "opponent",
+                                     "franchise", "day_of_week"}
+    team_cols = [c for c in tg.columns if c not in skip]
+    home = tg[tg["is_home"] == 1]
+    away = tg[tg["is_home"] == 0]
+    game_df = (home[["game_id"] + team_cols].add_prefix("home_")
+               .rename(columns={"home_game_id": "game_id"})
+               .merge(away[["game_id"] + team_cols].add_prefix("away_")
+                      .rename(columns={"away_game_id": "game_id"}), on="game_id"))
+    game_df = game_df.merge(
+        home[["game_id", "team", "franchise"] + _SHARED_GAME_COLS].rename(
+            columns={"team": "home_team", "franchise": "home_franchise"}), on="game_id")
+    game_df = game_df.merge(
+        away[["game_id", "team", "franchise"]].rename(
+            columns={"team": "away_team", "franchise": "away_franchise"}), on="game_id")
 
-    # shared_cols = game-level cols that appear ONCE (not per-team)
-    # game_id is excluded here because it's already the merge key from add_prefix/rename
-    shared_cols = [c for c in [
-        "season","week","game_type","game_date",
-        "spread_line","total_line","temp","wind","humidity",
-        "is_dome","is_primetime","is_international","is_division_game",
-        "high_wind","extreme_wind","cold_game","very_cold_game",
-        "is_sunday","is_thursday","is_monday","is_saturday",
-        "ref_home_win_rate","ref_total_tendency","game_type_weight",
-        # Opening market data — shared per game (same for both teams)
-        "opening_total","book_total_hist",
-        "opening_spread",         # pre-public-money spread estimate
-        # Season context
-        "season_avg_total","scoring_era_adj",
-        "rolling_hfa","season_hfa",
-        # Data availability flags
-        "wepa_available","coverage_available","ngs_available",
-    ] if c in tg.columns]
+    game_df["rest_diff"] = game_df["home_rest_days"] - game_df["away_rest_days"]
+    game_df["elo_gap"] = game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]
+    # Elo-implied home margin (25 Elo ≈ 1 point) minus the Vegas home margin.
+    game_df["elo_vs_spread"] = game_df["elo_gap"] / 25.0 - game_df["spread_line"]
+    _add_gap(game_df, "home_off_cpoe_r8", "away_off_cpoe_r8", "cpoe_gap_r8")
+    _add_gap(game_df, "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
+             "coverage_complexity_gap")
+    for sfx in ("r4", "r8", "r16"):
+        _add_gap(game_df, f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
+                 f"turnover_diff_gap_{sfx}")
 
-    skip = set(shared_cols) | {
-        "game_id","is_home","team","opponent","game_date",
-        "day_of_week","referee","prev_game_date",
-    }
+    # Offense-vs-defense matchup gaps; offensive EPA is the more stable signal
+    # (nfelo), so it is weighted sqrt(w) and defense 1/sqrt(w).
+    off_scale = float(np.sqrt(settings.OFF_EPA_WEIGHT))
+    for side, opp in (("home", "away"), ("away", "home")):
+        for off_col, def_col, name in (
+            ("off_epa_per_play_r8", "def_epa_per_play_r8", f"{side}_off_vs_{opp}_def_epa_r8"),
+            ("off_pass_epa_r8", "def_pass_epa_r8", f"{side}_pass_vs_{opp}_def_r8"),
+            ("off_rush_epa_r8", "def_rush_epa_r8", f"{side}_rush_vs_{opp}_def_r8"),
+            ("off_wepa_per_play_r8", "def_epa_per_play_r8", f"{side}_wepa_vs_{opp}_def_r8"),
+        ):
+            a, b = f"{side}_{off_col}", f"{opp}_{def_col}"
+            if a in game_df.columns and b in game_df.columns:
+                game_df[name] = game_df[a].fillna(0) * off_scale - game_df[b].fillna(0) / off_scale
 
-    team_stat_cols = [c for c in tg.columns if c not in skip]
-
-    home = tg[tg["is_home"] == 1][["game_id"] + team_stat_cols].copy()
-    away = tg[tg["is_home"] == 0][["game_id"] + team_stat_cols].copy()
-
-    home = home.add_prefix("home_").rename(columns={"home_game_id": "game_id"})
-    away = away.add_prefix("away_").rename(columns={"away_game_id": "game_id"})
-
-    game_df = home.merge(away, on="game_id", how="inner")
-
-    # Merge shared columns — use game_id only as key, not as a column in shared
-    shared = tg[tg["is_home"] == 1][["game_id"] + shared_cols].copy()
-    # Drop duplicate game_id rows (shouldn't exist, but safeguard)
-    shared = shared.drop_duplicates(subset=["game_id"])
-    game_df = game_df.merge(shared, on="game_id", how="left")
-
-    # Rest differential
-    if "home_rest_days" in game_df.columns and "away_rest_days" in game_df.columns:
-        game_df["rest_diff"] = game_df["home_rest_days"] - game_df["away_rest_days"]
-
-    # Elo gap
-    if "home_elo_pre_game" in game_df.columns and "away_elo_pre_game" in game_df.columns:
-        game_df["elo_gap"] = game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]
-
-    # CPOE gap
-    if "home_off_cpoe_r8" in game_df.columns and "away_off_cpoe_r8" in game_df.columns:
-        game_df["cpoe_gap_r8"] = game_df["home_off_cpoe_r8"] - game_df["away_off_cpoe_r8"]
-
-    # ── Load research-backed weights from Bayesian optimizer ──────────────
-    from bayesian_optimizer import load_weights as _lw
-    _opt = _lw()
-    OFF_EPA_W  = float(np.clip(_opt.get("off_epa_weight",  1.6), 1.0, 2.5))
-    TO_W       = float(np.clip(_opt.get("turnover_weight", 0.6), 0.2, 1.0))
-
-    # ── EPA matchup gaps (ASYMMETRIC: offense trusted more than defense) ───
-    # nfelo WEPA research: offensive EPA is ~1.6× more predictive of future
-    # performance than defensive EPA.
-    # Implementation: gap = off_col * sqrt(w) - def_col * (1/sqrt(w))
-    # Using sqrt keeps the units interpretable and avoids extreme scaling.
-    # When w=1.0 this is exactly the standard symmetric gap.
-    off_scale = float(np.sqrt(OFF_EPA_W))   # ~1.265 at w=1.6
-    def_scale = 1.0 / off_scale             # ~0.791 at w=1.6
-
-    def _add_asymmetric_epa_gap(df, off_col, def_col, name):
-        if off_col in df.columns and def_col in df.columns:
-            df[name] = df[off_col].fillna(0) * off_scale - df[def_col].fillna(0) * def_scale
-
-    _add_asymmetric_epa_gap(game_df,
-        "home_off_epa_per_play_r8", "away_def_epa_per_play_r8",
-        "home_off_vs_away_def_epa_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "home_off_pass_epa_r8",     "away_def_pass_epa_r8",
-        "home_pass_vs_away_def_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "home_off_rush_epa_r8",     "away_def_rush_epa_r8",
-        "home_rush_vs_away_def_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "away_off_epa_per_play_r8", "home_def_epa_per_play_r8",
-        "away_off_vs_home_def_epa_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "away_off_pass_epa_r8",     "home_def_pass_epa_r8",
-        "away_pass_vs_home_def_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "away_off_rush_epa_r8",     "home_def_rush_epa_r8",
-        "away_rush_vs_home_def_r8")
-
-    # WEPA matchup gaps (uses WEPA offense vs raw def — already captures the weighting)
-    _add_asymmetric_epa_gap(game_df,
-        "home_off_wepa_per_play_r8", "away_def_epa_per_play_r8",
-        "home_wepa_vs_away_def_r8")
-    _add_asymmetric_epa_gap(game_df,
-        "away_off_wepa_per_play_r8", "home_def_epa_per_play_r8",
-        "away_wepa_vs_home_def_r8")
-
-    # ── Turnover gaps: blended (skill-adjusted vs raw) ─────────────────────
-    # Harvard research: 54% of turnovers are luck.
-    # Blend = TO_W × skill-adjusted + (1−TO_W) × raw
-    # At TO_W=0.6: 60% weight on luck-corrected signal, 40% on raw observed
-    # When to_skill_adj is unavailable (NaN), falls back to raw.
-
-    def _add_turnover_blend_gap(df, skill_h, skill_a, raw_h, raw_a, name):
-        """Blended turnover gap: favours luck-adjusted signal by TO_W."""
-        sh = skill_h in df.columns
-        sa = skill_a in df.columns
-        rh = raw_h   in df.columns
-        ra = raw_a   in df.columns
-
-        if sh and sa:
-            skill_gap = df[skill_h].fillna(df.get(raw_h, 0)) \
-                      - df[skill_a].fillna(df.get(raw_a, 0))
-        else:
-            skill_gap = None
-
-        if rh and ra:
-            raw_gap = df[raw_h].fillna(0) - df[raw_a].fillna(0)
-        else:
-            raw_gap = None
-
-        if skill_gap is not None and raw_gap is not None:
-            df[name] = TO_W * skill_gap + (1 - TO_W) * raw_gap
-        elif skill_gap is not None:
-            df[name] = skill_gap
-        elif raw_gap is not None:
-            df[name] = raw_gap
-
-    for sfx in ["r4", "r8", "r16"]:
-        _add_turnover_blend_gap(
-            game_df,
-            f"home_to_skill_adj_{sfx}", f"away_to_skill_adj_{sfx}",
-            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
-            f"turnover_gap_blended_{sfx}",
-        )
-        # Keep raw gap too — gives model both signals
-        _add_gap(game_df,
-            f"home_turnover_diff_{sfx}", f"away_turnover_diff_{sfx}",
-            f"turnover_diff_gap_{sfx}")
-
-    # ── Coverage complexity gap ────────────────────────────────────────────
-    _add_gap(game_df,
-        "home_def_coverage_complexity_r8", "away_def_coverage_complexity_r8",
-        "coverage_complexity_gap")
-
-    # ── Turnover luck gap (keep as separate signal) ────────────────────────
-    _add_gap(game_df,
-        "home_turnover_luck_r8", "away_turnover_luck_r8",
-        "turnover_luck_gap_r8")
-
-    # ── Market divergence features ────────────────────────────────────────
-    # These measure how much the model DISAGREES with the opening market.
-    # Large divergences are the core of any betting edge signal.
-    # Note: these are computed AFTER targets to avoid leakage — opening spread
-    # is a PRE-game public signal, not derived from outcomes.
-    if "opening_spread" in game_df.columns:
-        # Model predicted margin vs opening market spread
-        # Positive = model more optimistic about home than opening spread
-        if "home_elo_pre_game" in game_df.columns and "away_elo_pre_game" in game_df.columns:
-            elo_implied = (game_df["home_elo_pre_game"] - game_df["away_elo_pre_game"]) / 25.0
-            game_df["elo_vs_opening_spread"] = elo_implied - (-game_df["opening_spread"].fillna(0))
-
-    if "opening_total" in game_df.columns:
-        # Season scoring context vs opening total
-        if "scoring_era_adj" in game_df.columns:
-            game_df["era_adj_vs_opening_total"] = game_df["scoring_era_adj"]
-
-    # Market-implied win probability gap (home vs away)
-    _add_gap(game_df, "home_market_win_prob_vigfree", "away_market_win_prob_vigfree",
-             "market_win_prob_gap")
-
-    # Availability flags → game-level (home team's flag applies)
-    for flag in ["wepa_available", "coverage_available", "ngs_available"]:
-        home_flag = f"home_{flag}"
-        if home_flag in game_df.columns:
-            game_df[flag] = game_df[home_flag]
-
-    # Target columns — use merged score columns directly
-    for side, target in [("home","target_home_score"),("away","target_away_score")]:
-        score_col = f"{side}_team_score"
-        if score_col in game_df.columns:
-            game_df[target] = pd.to_numeric(game_df[score_col], errors="coerce")
-        else:
-            game_df[target] = np.nan
-
-    if "target_home_score" in game_df.columns and "target_away_score" in game_df.columns:
-        game_df["target_total"]  = game_df["target_home_score"] + game_df["target_away_score"]
-        game_df["target_spread"] = game_df["target_home_score"] - game_df["target_away_score"]
-
-    return game_df.sort_values(["season","week","game_date"]).reset_index(drop=True)
+    game_df["target_home_score"] = pd.to_numeric(game_df["home_team_score"], errors="coerce")
+    game_df["target_away_score"] = pd.to_numeric(game_df["away_team_score"], errors="coerce")
+    game_df["target_total"]  = game_df["target_home_score"] + game_df["target_away_score"]
+    game_df["target_spread"] = game_df["target_home_score"] - game_df["target_away_score"]
+    return game_df.sort_values(["season", "week", "game_date", "game_id"]).reset_index(drop=True)
 
 
-def _add_gap(df: pd.DataFrame, col_a: str, col_b: str, name: str):
+def _add_gap(df: pd.DataFrame, col_a: str, col_b: str, name: str) -> None:
     if col_a in df.columns and col_b in df.columns:
         df[name] = df[col_a] - df[col_b]
-
-
-def save_feature_dictionary(game_df: pd.DataFrame) -> None:
-    import csv
-    feat_cols = get_feature_columns(game_df)
-    with open(PROCESSED_DIR / "feature_dictionary.csv", "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["feature_name","dtype","null_pct","mean","std"])
-        for col in feat_cols:
-            s = game_df[col]
-            w.writerow([col, str(s.dtype),
-                        f"{s.isna().mean():.3f}",
-                        f"{s.mean():.4f}" if pd.api.types.is_numeric_dtype(s) else "",
-                        f"{s.std():.4f}"  if pd.api.types.is_numeric_dtype(s) else ""])
-    logger.info("Feature dictionary saved.")
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     gf = build_all_features()
-    feat_cols = get_feature_columns(gf)
-    print(f"Games: {len(gf)} | Features: {len(feat_cols)}")
+    print(f"Games: {len(gf)} | Features: {len(get_feature_columns(gf))}")

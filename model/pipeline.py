@@ -1,319 +1,130 @@
 """
-pipeline.py — NFL Score Predictor: Main Orchestration Script
+pipeline.py — entry point.
 
-Modes:
-  full          — fetch data → engineer features → train → predict
-  predict_only  — skip training, regenerate predictions from saved model
-  backtest      — run historical backtesting (requires extended season data)
-  optimize      — Bayesian weight optimisation (run pre-season)
+  --mode full          fetch data → features → reconcile the live record →
+                       train → predict → publish to docs/assets/
+  --mode predict_only  same, but reuse the saved model (trains if missing)
+  --mode backtest      train on the 4 seasons before --backtest-season and
+                       score that season (writes a fragment for the CI merge)
 """
 
 import argparse
 import json
 import logging
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-
-# Ensure data dir exists before setting up log handler
-(ROOT / "data").mkdir(parents=True, exist_ok=True)
-(ROOT / "model" / "saved").mkdir(parents=True, exist_ok=True)
-(ROOT / "data" / "predictions" / "archive").mkdir(parents=True, exist_ok=True)
-
 sys.path.insert(0, str(ROOT / "model"))
+(ROOT / "data").mkdir(parents=True, exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)-8s  %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-    handlers=[
-        logging.StreamHandler(sys.stdout),
-        logging.FileHandler(ROOT / "data" / "pipeline.log", mode="a"),
-    ],
+    handlers=[logging.StreamHandler(sys.stdout),
+              logging.FileHandler(ROOT / "data" / "pipeline.log", mode="a")],
 )
-log = logging.getLogger(__name__)
+log = logging.getLogger("pipeline")
 
-# Single source of truth for the season — computed from the clock in
-# data_loader (no more hand-edited season constants scattered across files).
-from data_loader import CURRENT_SEASON
+from data_loader import CURRENT_SEASON  # noqa: E402
 
-DATA_DIR  = ROOT / "data"
-MODEL_DIR = ROOT / "model" / "saved"
-PRED_DIR  = DATA_DIR / "predictions"
+PRED_DIR = ROOT / "data" / "predictions"
+PUBLISHED = ["predictions_latest.json", "performance.json", "backtest_results.json"]
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  SHARED: build feature matrix
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _build_features(force_data: bool = False):
-    """Fetch data + engineer features. Returns game_df."""
-    log.info("Fetching NFL data …")
+def _build_features(force_data: bool = False, seasons=None):
     from data_loader import load_all
-    load_all(force_refresh=force_data)
-
-    log.info("Engineering features …")
     from feature_engineering import build_all_features
-    game_df = build_all_features()
-
-    log.info("Building H2H features …")
     from feature_h2h import build_h2h_features
-    game_df = build_h2h_features(game_df)
+    log.info("Fetching NFL data …")
+    load_all(force_refresh=force_data, seasons=seasons)
+    log.info("Engineering features …")
+    return build_h2h_features(build_all_features(seasons=seasons))
 
-    return game_df
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  MODE: FULL
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _train_models(game_df):
-    """Train the full ensemble and persist artifacts. Shared by full mode and
-    the predict_only fallback."""
-    log.info("Loading season weights …")
-    from bayesian_optimizer import load_weights
-    weights = load_weights()
-    log.info("  Weights: %s", weights)
-
-    log.info("Training ensemble …")
+def _train(game_df):
     from feature_engineering import get_feature_columns
     from train import train_all
-    feature_cols = get_feature_columns(game_df)
-    metrics = train_all(game_df, feature_cols, weights, CURRENT_SEASON)
-    log.info("  Training metrics: %s", metrics)
-    return metrics
+    log.info("Training ensemble …")
+    return train_all(game_df, get_feature_columns(game_df), current_season=CURRENT_SEASON)
 
 
-def _reconcile_performance(game_df):
-    """Match the previously published predictions against games completed
-    since, and refresh performance.json — BEFORE the file is overwritten."""
+def _reconcile(game_df):
+    """Score the previously published predictions BEFORE they are replaced."""
+    from evaluate import update_performance_from_latest
     try:
-        from evaluate import update_performance_from_latest
         update_performance_from_latest(game_df)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 — bookkeeping must not block predictions
         log.warning("Performance reconciliation failed (non-fatal): %s", e)
 
 
-def run_full(args):
-    log.info("=" * 60)
-    log.info("FULL PIPELINE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
-    log.info("=" * 60)
-
-    game_df = _build_features(force_data=getattr(args, "force_data", False))
-
-    _reconcile_performance(game_df)
-    _train_models(game_df)
-
-    log.info("Generating predictions …")
-    from train import load_models
+def _predict_and_publish(game_df, models):
     from predict import generate_predictions
-    models   = load_models()
-    preds_df = generate_predictions(game_df, models, CURRENT_SEASON, save=True)
-    log.info("  Generated %d predictions", len(preds_df))
+    preds = generate_predictions(game_df, models, CURRENT_SEASON, save=True)
+    log.info("  Generated %d predictions", len(preds))
+    docs = ROOT / "docs" / "assets"
+    docs.mkdir(parents=True, exist_ok=True)
+    for name in PUBLISHED:
+        if (PRED_DIR / name).exists():
+            shutil.copy2(PRED_DIR / name, docs / name)
 
-    _copy_to_docs()
-    _write_status("success")
+
+def run_full(args):
+    log.info("FULL PIPELINE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+    game_df = _build_features(force_data=args.force_data)
+    _reconcile(game_df)
+    _train(game_df)
+    from train import load_models
+    _predict_and_publish(game_df, load_models())
     log.info("FULL PIPELINE COMPLETE")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MODE: PREDICT ONLY
-# ══════════════════════════════════════════════════════════════════════════════
-
 def run_predict_only(args):
-    log.info("PREDICT-ONLY MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
-
-    game_df = _build_features(force_data=False)
-
-    _reconcile_performance(game_df)
-
+    log.info("PREDICT-ONLY  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+    from feature_engineering import get_feature_columns
     from train import load_models
-    from predict import generate_predictions
+    game_df = _build_features()
+    _reconcile(game_df)
     try:
         models = load_models()
+        if models["feature_cols"] != get_feature_columns(game_df):
+            raise FileNotFoundError("saved model was trained on a different feature set")
     except FileNotFoundError as e:
-        # CRASH FIX: model artifacts are gitignored, so a clean CI checkout
-        # has none — this previously killed the Thursday workflow every week.
-        # Fall back to training (the workflow-level cache makes this rare).
-        log.warning("Saved model artifacts unavailable (%s) — "
-                    "falling back to full training.", e)
-        _train_models(game_df)
+        log.warning("Saved model unusable (%s) — training instead.", e)
+        _train(game_df)
         models = load_models()
+    _predict_and_publish(game_df, models)
 
-    preds_df = generate_predictions(game_df, models, CURRENT_SEASON, save=True)
-    log.info("  Generated %d predictions", len(preds_df))
-
-    _copy_to_docs()
-    _write_status("success")
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  MODE: OPTIMIZE
-# ══════════════════════════════════════════════════════════════════════════════
-
-def run_optimize(args):
-    log.info("BAYESIAN OPTIMISATION MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
-
-    game_df = _build_features(force_data=True)
-
-    from feature_engineering import get_feature_columns
-    feature_cols = get_feature_columns(game_df)
-
-    labeled = game_df[game_df["target_home_score"].notna()].copy()
-    all_seasons = sorted(labeled["season"].unique())
-
-    if len(all_seasons) < 2:
-        log.warning("Not enough seasons for optimisation — using default weights.")
-        from bayesian_optimizer import DEFAULT_WEIGHTS, save_weights
-        save_weights(DEFAULT_WEIGHTS)
-        _write_status("success")
-        return
-
-    val_season    = all_seasons[-1]
-    train_seasons = all_seasons[:-1]
-    df_train = labeled[labeled["season"].isin(train_seasons)].copy()
-    df_val   = labeled[labeled["season"] == val_season].copy()
-
-    log.info("  Train seasons: %s  (n=%d)", train_seasons, len(df_train))
-    log.info("  Val season:    %s  (n=%d)", val_season, len(df_val))
-
-    if len(df_val) < 20:
-        log.warning("Validation set too small (%d games) — using default weights.", len(df_val))
-        from bayesian_optimizer import DEFAULT_WEIGHTS, save_weights
-        save_weights(DEFAULT_WEIGHTS)
-        _write_status("success")
-        return
-
-    from bayesian_optimizer import run_bayesian_optimization, save_weights
-    best = run_bayesian_optimization(df_train, df_val, feature_cols, n_trials=60)
-    save_weights(best)
-    log.info("Optimal weights saved: %s", best)
-    _write_status("success")
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  MODE: BACKTEST
-# ══════════════════════════════════════════════════════════════════════════════
 
 def run_backtest(args):
-    only = getattr(args, "backtest_season", None)
-    log.info("BACKTEST MODE%s  —  %s",
-             f" (season {only})" if only else "",
-             datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
-
-    game_df = _build_features(force_data=False)
-
-    from bayesian_optimizer import load_weights
-    from evaluate import run_backtests
-    weights = load_weights()
-    results = run_backtests(game_df, weights, only_season=only)
-
-    if only:
-        # CI matrix mode: one season per job, written as a fragment;
-        # scripts/merge_backtests.py combines the fragments afterwards.
-        frag_dir = PRED_DIR / "backtest_fragments"
-        frag_dir.mkdir(parents=True, exist_ok=True)
-        out = frag_dir / f"backtest_{only}.json"
+    from evaluate import run_backtest as backtest
+    seasons = [args.backtest_season] if args.backtest_season else [CURRENT_SEASON - 2, CURRENT_SEASON - 1]
+    results = {}
+    for s in seasons:
+        log.info("BACKTEST %d  —  %s", s, datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+        game_df = _build_features(seasons=list(range(s - 4, s + 1)))
+        results[str(s)] = backtest(game_df, s)
+    if args.backtest_season:
+        out = PRED_DIR / "backtest_fragments" / f"backtest_{args.backtest_season}.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
     else:
         out = PRED_DIR / "backtest_results.json"
-
-    with open(out, "w") as f:
-        json.dump(results, f, indent=2, default=str)
+    out.write_text(json.dumps(results, indent=2, default=str))
     log.info("Backtest results → %s", out)
 
-    for season, r in results.items():
-        log.info("  Season %s: MAE total=%.2f | ATS=%.1f%% | OU=%.1f%%",
-                 season,
-                 r.get("mae_total", 0),
-                 r.get("ats_pct", 0) * 100,
-                 r.get("ou_pct", 0) * 100)
-
-    if not only:
-        _copy_to_docs()
-    _write_status("success")
-
-
-def run_analyze_seasons(args):
-    log.info("PER-SEASON ANALYSIS MODE  —  %s", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
-
-    game_df = _build_features(force_data=False)
-
-    from season_analysis import run_season_analysis
-    results = run_season_analysis(game_df)
-
-    log.info("Season analysis complete: %d seasons analysed", results.get("n_seasons", 0))
-    trends = results.get("trends", {})
-    interp = trends.get("interpretation", {})
-    log.info("  Total scoring: %s | Home advantage: %s | Model difficulty: %s",
-             interp.get("total_scoring", "?"),
-             interp.get("home_advantage", "?"),
-             interp.get("model_difficulty", "?"))
-
-    _copy_to_docs()
-    _write_status("success")
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  HELPERS
-# ══════════════════════════════════════════════════════════════════════════════
-
-def _copy_to_docs():
-    """Copy prediction outputs to docs/assets/ for GitHub Pages."""
-    docs_assets = ROOT / "docs" / "assets"
-    docs_assets.mkdir(parents=True, exist_ok=True)
-    for fname in ["predictions_latest.json", "performance.json",
-                  "backtest_results.json", "season_analysis.json"]:
-        src = PRED_DIR / fname
-        if src.exists():
-            import shutil
-            shutil.copy2(src, docs_assets / fname)
-            log.info("  Copied %s → docs/assets/", fname)
-
-
-def _write_status(status: str):
-    with open(DATA_DIR / "pipeline_status.json", "w") as f:
-        json.dump({"status": status,
-                   "timestamp": datetime.now(timezone.utc).isoformat()}, f)
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  ENTRY POINT
-# ══════════════════════════════════════════════════════════════════════════════
 
 def main():
-    parser = argparse.ArgumentParser(description="NFL Score Predictor Pipeline")
-    parser.add_argument(
-        "--mode",
-        choices=["full", "predict_only", "backtest", "optimize", "analyze_seasons"],
-        default="full",
-        help="Pipeline mode",
-    )
-    parser.add_argument(
-        "--force-data",
-        action="store_true",
-        default=False,
-        help="Force re-download of live data (frozen closed-season data is "
-             "never re-downloaded — regenerate it with scripts/freeze_data.py)",
-    )
-    parser.add_argument(
-        "--backtest-season",
-        type=int,
-        default=None,
-        help="Backtest only this test season and write a fragment JSON "
-             "(used by the CI matrix for parallel backtesting)",
-    )
-    args = parser.parse_args()
-
-    dispatch = {
-        "full":             run_full,
-        "predict_only":     run_predict_only,
-        "backtest":         run_backtest,
-        "optimize":         run_optimize,
-        "analyze_seasons":  run_analyze_seasons,
-    }
-    dispatch[args.mode](args)
+    ap = argparse.ArgumentParser(description="NFL score predictor")
+    ap.add_argument("--mode", choices=["full", "predict_only", "backtest"], default="full")
+    ap.add_argument("--force-data", action="store_true",
+                    help="re-download live data (frozen closed-season data is never re-downloaded)")
+    ap.add_argument("--backtest-season", type=int, default=None,
+                    help="backtest only this season and write a fragment for the CI merge")
+    args = ap.parse_args()
+    {"full": run_full, "predict_only": run_predict_only, "backtest": run_backtest}[args.mode](args)
 
 
 if __name__ == "__main__":

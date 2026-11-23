@@ -10,16 +10,14 @@ This script downloads everything for CLOSED seasons exactly once and commits
 it to the repo, so normal pipeline runs read closed-season data from disk
 with ZERO network access.
 
-WHAT IT STORES (data/frozen/):
-  - per-season tables for every closed season in the model window
-    (player stats, rosters, snap counts, injuries, depth charts, FTN,
-    PFR advanced stats) under the same keys data_loader uses;
-  - full-history "static" tables (NGS, draft, combine, officials, lines,
-    team descriptors, contracts, players, id map, schedule snapshot);
+WHAT IT STORES (data/frozen/) — only what the model reads:
+  - per-season weekly player stats and weekly rosters for every closed season;
+  - full-history Next Gen Stats files and a schedule snapshot (offline
+    fallbacks, and the walk-forward's only data source);
   - pbp_agg_{season}.parquet — the per-season TEAM-GAME AGGREGATE of raw
     play-by-play, built with feature_engineering._aggregate_pbp_core (the
     exact function the live pipeline uses). Raw PBP itself is ~25 MB/season
-    and is deliberately NOT committed; the aggregate is ~0.2 MB/season.
+    and is deliberately NOT committed; the aggregate is ~0.15 MB/season.
 
 WHEN TO RUN: once now (offseason), then once a year after the Super Bowl
 (the freeze_data workflow has a yearly cron). A season is considered CLOSED
@@ -45,9 +43,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-7s %(m
                     datefmt="%H:%M:%S")
 log = logging.getLogger("freeze")
 
-from data_loader import (  # noqa: E402
-    BASE, RAW_GH, CURRENT_SEASON, ALL_SEASONS, _fetch,
-)
+from data_loader import BASE, CURRENT_SEASON, SCHEDULE_URLS, _fetch  # noqa: E402
 
 FROZEN = ROOT / "data" / "frozen"
 FROZEN.mkdir(parents=True, exist_ok=True)
@@ -66,44 +62,20 @@ WARN_TOTAL_MB = 300
 
 # (key template, [url templates in fallback order], format, first_season)
 # first_season = the first year the source exists at nflverse; earlier
-# seasons are skipped WITHOUT counting as failures (era-dependent sources:
-# snap counts 2012+, injuries 2009+, PFR advstats 2018+, FTN 2022+, …).
+# seasons are skipped without counting as failures.
 PER_SEASON = [
     ("player_stats_weekly_{}",
      [f"{BASE}/stats_player/stats_player_week_{{0}}.parquet",
       f"{BASE}/player_stats/player_stats_{{0}}.parquet"], "parquet", 1999),
-    ("player_stats_season_{}",
-     [f"{BASE}/stats_player/stats_player_reg_{{0}}.parquet",
-      f"{BASE}/player_stats/player_stats_season_{{0}}.parquet"], "parquet", 1999),
-    ("rosters_{}",        [f"{BASE}/rosters/roster_{{0}}.parquet"], "parquet", 1999),
     ("rosters_weekly_{}", [f"{BASE}/weekly_rosters/roster_weekly_{{0}}.parquet"], "parquet", 2002),
-    ("snap_counts_{}",    [f"{BASE}/snap_counts/snap_counts_{{0}}.parquet"], "parquet", 2012),
-    ("injuries_{}",       [f"{BASE}/injuries/injuries_{{0}}.parquet"], "parquet", 2009),
-    ("depth_charts_{}",   [f"{BASE}/depth_charts/depth_charts_{{0}}.parquet"], "parquet", 2001),
-    ("ftn_charting_{}",   [f"{BASE}/ftn_charting/ftn_charting_{{0}}.parquet"], "parquet", 2022),
-    ("pfr_pass_{}",       [f"{BASE}/pfr_advstats/advstats_week_pass_{{0}}.parquet"], "parquet", 2018),
-    ("pfr_rush_{}",       [f"{BASE}/pfr_advstats/advstats_week_rush_{{0}}.parquet"], "parquet", 2018),
-    ("pfr_rec_{}",        [f"{BASE}/pfr_advstats/advstats_week_rec_{{0}}.parquet"], "parquet", 2018),
-    ("pfr_def_{}",        [f"{BASE}/pfr_advstats/advstats_week_def_{{0}}.parquet"], "parquet", 2018),
 ]
 
-# (key, url, format) — full-history files, frozen as offline fallbacks
+# (key, url or [urls], format) — full-history files
 STATIC = [
-    ("ngs_passing",   f"{BASE}/nextgen_stats/ngs_passing.parquet",  "parquet"),
-    ("ngs_rushing",   f"{BASE}/nextgen_stats/ngs_rushing.parquet",  "parquet"),
-    ("ngs_receiving", f"{BASE}/nextgen_stats/ngs_receiving.parquet","parquet"),
-    ("draft_picks",   f"{BASE}/draft_picks/draft_picks.parquet",    "parquet"),
-    ("draft_values",  f"{RAW_GH}/nflverse/nfldata/master/data/draft_values.csv", "csv"),
-    ("combine",       f"{BASE}/combine/combine.parquet",            "parquet"),
-    ("win_totals",    f"{RAW_GH}/nflverse/nfldata/master/data/win_totals.csv", "csv"),
-    ("game_lines",    "https://raw.githubusercontent.com/mrcaseb/nfl-data/master/data/nfl_lines_odds.csv.gz", "csv"),
-    ("scoring_lines", f"{RAW_GH}/nflverse/nfldata/master/data/sc_lines.csv", "csv"),
-    ("officials",     f"{RAW_GH}/nflverse/nfldata/master/data/officials.csv", "csv"),
-    ("team_desc",     f"{RAW_GH}/nflverse/nflfastR-data/master/teams_colors_logos.csv", "csv"),
-    ("id_map",        f"{RAW_GH}/dynastyprocess/data/master/files/db_playerids.csv", "csv"),
-    ("players",       f"{BASE}/players/players.parquet",            "parquet"),
-    ("contracts",     f"{BASE}/contracts/historical_contracts.parquet", "parquet"),
-    ("schedules",     "http://www.habitatring.com/games.csv",       "csv"),
+    ("ngs_passing",   f"{BASE}/nextgen_stats/ngs_passing.parquet",   "parquet"),
+    ("ngs_rushing",   f"{BASE}/nextgen_stats/ngs_rushing.parquet",   "parquet"),
+    ("ngs_receiving", f"{BASE}/nextgen_stats/ngs_receiving.parquet", "parquet"),
+    ("schedules",     SCHEDULE_URLS,                                 "csv"),
 ]
 
 
@@ -180,12 +152,15 @@ def main() -> None:
         manifest_files[key] = len(agg)
 
     # ── 4. manifest + size report ───────────────────────────────────────────
+    import pyarrow.parquet as pq
     total_mb = sum(p.stat().st_size for p in FROZEN.glob("*.parquet")) / 1e6
     manifest = {
         "generated_at":   datetime.now(timezone.utc).isoformat(),
         "current_season": CURRENT_SEASON,
         "frozen_seasons": CLOSED_SEASONS,
         "total_mb":       round(total_mb, 2),
+        "files":          {p.stem: pq.ParquetFile(p).metadata.num_rows
+                           for p in sorted(FROZEN.glob("*.parquet"))},
         "updated_files":  manifest_files,
         "failures":       failures,
     }
