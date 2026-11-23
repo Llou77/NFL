@@ -1,50 +1,29 @@
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-.Python
 *.egg-info/
-dist/
-build/
 .env
 .venv/
 venv/
 
-# Data files (large — not committed to repo)
-data/raw/*.parquet
-data/processed/*.parquet
+# Local caches and scratch (data/frozen/ IS committed — see scripts/freeze_data.py)
+data/raw/
+data/processed/
 data/pipeline.log
-# NOTE: data/frozen/ IS committed — sealed closed-season data + per-season
-# PBP aggregates (see scripts/freeze_data.py). Do not ignore it.
-
-# CI scratch
+data/predictions/backtest_fragments/
+data/predictions/walkforward/
 run_console.log
 merge_console.log
-data/predictions/backtest_fragments/
 
-# Model artifacts (large — not committed unless small)
-model/saved/*.pt
-model/saved/*.pkl
-model/saved/*.json
-model/saved/*.txt
-# But DO commit version.txt and optimal_weights.json
+# Model artifacts: CI keeps them in the Actions cache; only the version is committed
+model/saved/*
 !model/saved/version.txt
-!model/saved/optimal_weights.json
 
-# Predictions ARE committed (they're the site's data source)
-!data/predictions/predictions_latest.json
-!data/predictions/performance.json
-!data/predictions/backtest_results.json
-
-# IDEs
+# Editors / OS / notebooks
 .idea/
 .vscode/
 *.swp
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Jupyter
 .ipynb_checkpoints/
 *.ipynb
