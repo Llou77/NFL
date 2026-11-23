@@ -1,84 +1,92 @@
-# NFL Eredmény-előrejelző — 2026-os szezon
+# NFL Eredmény-előrejelző
 
 **🏈 Élő oldal:** [llou77.github.io/NFL](https://llou77.github.io/NFL) · **English version:** [README.md](README.md)
 
-Gépi tanulási modell, amely minden NFL-meccs végeredményét megjósolja a kezdőrúgás előtt. A két csapat becsült pontszámából automatikusan levezeti a várható győztest és a különbséget, a Vegas-i összpontszám-vonalhoz (over/under) képesti eltérést, és egy megbízhatósági besorolást. Minden automatikusan fut GitHub Actions-ön, és a GitHub Pages oldalra publikál.
+Gépi tanulási modell, amely minden NFL-meccs végeredményét megjósolja a kezdőrúgás előtt. A két becsült pontszámból levezeti a győztest, a különbséget és az összpontszámot, összeveti őket a Vegas-i vonallal, és ha a modell és a vonal legalább 3 ponttal eltér, ezt jelzi (lean). Minden GitHub Actions-ön fut, és a GitHub Pages oldalra publikál.
 
-Minden lentebb használt kifejezés definiálva van a [Fogalomtárban](#fogalomtár). Ha csak két részt olvasol el: [Hogyan zajlik egy futás](#hogyan-zajlik-egy-futás-lépésről-lépésre) és [Mennyire pontos?](#mennyire-pontos).
+A kifejezések a [Fogalomtárban](#fogalomtár) vannak definiálva.
 
 ---
 
 ## Mennyire pontos?
 
-**Őszinte helyzetjelentés (2026. július): a korábban publikált pontossági számok érvénytelenek voltak, visszavontuk őket.**
+**A modell nem verte meg a Vegas-i vonalat.** Statisztikai projektként kezeld, ne fogadási eszközként.
 
-Egy belső audit több *adatszivárgási* csatornát talált — a modell tanításkor látta annak a meccsnek a statisztikáit, amelyet épp megjósolni próbált (a meccs saját box score-ja, meccs utáni Elo-értékek, azonos heti tracking-adatok). Ez teljesen megmagyarázta a hihetetlenül erős régi számokat. A szivárgások le vannak zárva (feature-allowlist, kétfázisú Elo, késleltetett gördülő statisztikák, becsületes out-of-fold stacking, és a backtest pontosan az éles predikciós kódutat futtatja).
+| | Különbség (spread) hibája | Összpontszám hibája | Spread-mérleg, minden meccs | Edge-meccsek (3+ pont) |
+|---|---|---|---|---|
+| **Élő 2026, 1–10. hét** (v1.1 modell, az audit előtt) | 11,11 pont — Vegas 9,62 | 11,22 — Vegas 10,51 | 67–80 (45,6%) | 43–53 (44,8%), ROI −14,5% |
+| **Kitartott 2025, a régi modell ahogy élesben futott** (v1.1) | 10,53 — Vegas 9,67 | 11,05 — Vegas 10,42 | 50,5% | 48,3% (176 meccs) |
+| **Kitartott 2025, v2.0 modell** (tanítás 2022–24) | **9,74** — Vegas 9,67 | **10,46** — Vegas 10,42 | 51,9% | 50,0% (12 meccs) |
+| **2026, 7–11. hét, v2.0 modell** (tanítás okt. 15. előtti meccseken) | **9,28** — Vegas 9,10 | **10,15** — Vegas 10,20 | — | 2 meccs |
 
-Reális elvárások, amelyeket minden új backtest-futás ellenőriz:
+A több szezonos számok (2013 óta minden szezon, mindegyik csak az előtte lévő négy szezonon tanítva) az oldal [walk-forward lapján](https://llou77.github.io/NFL/walkforward.html) vannak.
 
-| Metrika | Őszinte elvárás | Kontextus |
-|---|---|---|
-| Átlagos hiba a különbségre (MAE) | ~10–11 pont | Az elméleti maximum NFL-ben ~9,5–10; a Vegas-i záróvonalak ~10,2–10,5-öt hoznak |
-| Edge ATS találati arány | 50–54% | -110-es szorzónál 52,4% a nullszaldó; ami tartósan efölött van, az valódi előny |
-| ROI / CLV | élőben követve | A fix tétes ROI és a záróvonal-érték elsőrangú backtest-metrikák |
+A **2026. novemberi audit** ([WORKLOG.md](WORKLOG.md)) megtalálta, miért volt rosszabb az élő teljesítmény annál, amit a backtestek ígértek, és kijavította:
 
-> **A fogadásról:** az oldal *edge jelzéseket* mutat — meccseket, ahol a modell érdemben mást gondol, mint a Vegas-i vonal. Ezek nem fogadási tanácsok. Hogy van-e valódi előny, azt csak egy teljes szezonnyi élő, időbélyegzett predikció dönti el.
+- **A jóslatokat ×1,8-del széthúztuk**, hogy szórásuk a tényleges eredményekéhez igazodjon. A jó jóslat szükségszerűen szűkebb, mint a kimenetel (kimenetel = jel + szerencse); a széthúzás önmagában ~0,4 pont különbség-hibát okozott, és tömegesen gyártott hamis „edge”-eket.
+- **34 feature minden történelmi meccsnél létezett, a közelgő meccseknél viszont mindig hiányzott:** a kezdő QB és a Next Gen Stats gördülő formája (a meccs hetére kapcsolva, amihez lejátszás előtt nincs adat), a meccsnapi időjárás és a bírói csapat (a meccs után publikálják). A backtest látta őket, az éles jóslat soha.
+- **Az egymás elleni (H2H) feature-ök minden meccsen konstansok voltak** (a szükséges csapatoszlopok korábban kiestek a pipeline-ból), és több feature halott vagy hibás volt: preseason win total (a forrás 2020-ban véget ért), „nyitóvonal” és piaci adatok (a forrás 2021-ben véget ért — a jelenlegi vonal másolatai voltak), draft-osztály minősége (mindig 0), QB-váltás flag (csak 59%-ban helyes), dome-flag (8 csapatnál rossz).
+- **A Bayes-optimalizáló zajt hangolt:** 26 nested walk-forward foldon a 8 hangolt súly egyike sem volt megkülönböztethető a keresési tartományon vett egyenletes véletlentől. Törölve; a súlyok fix konstansok.
+
+A v2.0 modell csak olyan feature-öket használ, amelyek a múltbeli meccsekre és a következő meccsre is léteznek, nincs variancia-széthúzás, és a végső blender látja a Vegas által implikált pontszámot, amint a vonal publikus. Out-of-fold illesztve ez a blender ≈1,0–1,1 súlyt ad a piacnak — vagyis **a modell lényegében a piacot követi kis korrekciókkal**, ami egy kimutatott előny nélküli modelltől a becsületes viselkedés; 3+ pontos „edge”-et a meccsek ~4%-ánál jelez ~65% helyett. Élő mérlege a 2026-os 12. héttől indul, a v1.1-től külön követve (`performance.json → by_model_version`). Hogy van-e valódi előnye, azt csak egy teljes szezonnyi élő, időbélyegzett predikció dönti el — az időbélyeg a `predictions_latest.json` git-története.
+
+> **A fogadásról:** a leanek nem fogadási tanácsok. Standard −110-es szorzónál 52,4% kell a nullszaldóhoz; egy szezon találati aránya több százalékpontnyi zajt hordoz.
 
 ---
 
-## Hogyan zajlik egy futás, lépésről lépésre
+## Hogyan zajlik egy futás
 
-Egy teljes pipeline-futás (`model/pipeline.py --mode full`) sorrendben ezt csinálja:
+`model/pipeline.py --mode full` (minden kedden), sorrendben:
 
-1. **Adatbetöltés** (`data_loader.py`). A *lezárt* szezonok adatai (minden, ami a folyó szezon előtt volt) a repóba commitolt **befagyasztott rétegből** (`data/frozen/`) jönnek — nulla hálózati hozzáférés, semmi nem tud eltörni. Csak az *élő* adatok töltődnek le: a menetrend (közelgő meccsek + végeredmények), a fogadási vonalak, és szezon közben az aktuális szezon statfájljai.
-2. **Play-by-play aggregálás** (`feature_engineering._aggregate_pbp`). Minden meccs minden játékát egy csapat-meccs sorba sűrítjük (támadó/védekező hatékonyság, tempó, labdavesztések, red zone arányok, …). Lezárt szezonokra ez előre ki van számolva a repóban (`data/frozen/pbp_agg_*.parquet`); csak az aktuális szezon meccsei aggregálódnak frissen.
-3. **Feature-építés** (`feature_engineering.build_all_features`). A csapat-meccs sorok kiegészülnek gördülő formaablakokkal (utolsó 4/8/16 meccs, mindig **késleltetve** — egy meccs sosem írhatja le önmagát), Elo-értékekkel (kétfázisú frissítés: mindkét csapat szigorúan meccs *előtti* értéket kap), QB-formával, sérülésekkel, bírói tendenciákkal (csak korábbi meccsekből), Next Gen Stats adatokkal (késleltetve), pihenőnapokkal, a menetrendből jövő időjárással, utazási/primetime kontextussal és előző szezonos priorokkal. Ezután a sorok **meccsenként egy sorrá** fordulnak (hazai vs vendég). Egy szigorú **allowlist** dönti el, mely ~370 oszlopot láthatja a modell — ami a meccs saját kimenetelét szivárogtathatná, az kiesik és logolódik.
-4. **Egymás elleni (H2H) feature-ök** (`feature_h2h.py`). A menetrendtábla történelmi *eredményeiből* számolódnak (sosem play-by-play-ből), a párosítás típusától függő visszatekintéssel és keretfolytonossági csillapítással.
-5. **Teljesítmény-egyeztetés** (`evaluate.update_performance_from_latest`). Mielőtt bármi felülíródna, a korábban publikált predikciókat összeveti az azóta lejátszott meccsekkel, és frissíti a `performance.json`-t (az oldal élő bizonyítványát).
-6. **Ensemble-tanítás** (`train.py`). Lásd [Modell-architektúra](#modell-architektúra). Minden artifact a `model/saved/`-be kerül.
-7. **Predikciógenerálás** (`predict.py`). A közelgő meccsek pontosan ugyanazon az `ensemble_predict()` útvonalon mennek át, mint a backtestben (nincs train/serve eltérés), kalibrálva, megbízhatósági besorolással és edge-jelzésekkel, eredmény: `data/predictions/predictions_latest.json`.
-8. **Publikálás**. A kimenetek a `docs/assets/`-be másolódnak, ezt szolgálja ki a GitHub Pages.
+1. **Adatbetöltés** (`data_loader.py`). A lezárt szezonok a commitolt **befagyasztott rétegből** (`data/frozen/`) jönnek, hálózat nélkül. Csak a menetrend, a folyó szezon és a Next Gen Stats fájlok töltődnek le.
+2. **Play-by-play aggregálás** (`feature_engineering._aggregate_pbp`): csapatonként és meccsenként egy sor (hatékonyság, sikerarány, harmadik kísérletek, red zone, labdavesztések, tempó, …). A lezárt szezonok előre aggregálva: `data/frozen/pbp_agg_*.parquet`.
+3. **Feature-építés** (`feature_engineering.build_all_features`): gördülő forma a csapat utolsó 4/8/16 lejátszott meccséből, kezdő-QB forma, Next Gen Stats forma, Elo (1999 óta minden meccsből), QB-/edzőváltás, keretfolytonosság, pihenőnapok, naptár, hazai pálya előny, a Vegas-i spread és total; meccsenként egy sorrá fordítva. Egy **allowlist** dönti el, mely ~330 oszlopot láthatja a modell.
+4. **Egymás elleni (H2H) feature-ök** (`feature_h2h.py`) a korábbi találkozók végeredményeiből.
+5. **Élő mérleg frissítése** (`evaluate.update_performance_from_latest`): a legutóbb publikált jóslatok összevetése az azóta lejátszott meccsekkel, a `performance.json`-ba — mielőtt bármi felülíródna.
+6. **Tanítás** (`train.py`) — lásd [Modell-architektúra](#modell-architektúra).
+7. **Jóslás** (`predict.py`) minden hátralévő meccsre az `ensemble_predict()` függvénnyel, amit a backtest is használ; megbízhatósági besorolás és leanek.
+8. **Publikálás**: a JSON-fájlok a `docs/assets/`-be másolódnak, ezt szolgálja ki a GitHub Pages.
 
-A **backtest** (`--mode backtest`) különálló: minden tesztszezonhoz újratanítja a teljes ensemble-t a megelőző szezonokon, megjósolja a kihagyott szezont, és MAE / ATS / over-under / ROI / CLV számokat ad. Az **optimalizáló** (`--mode optimize`) szintén különálló, szezon előtti lépés: az Optuna a minta-súly paramétereket hangolja (mennyit számítson az egyes tanítószezonok és meccstípusok). A 2026-07-es walk-forward stabilitás-vizsgálat óta az eredeti 8-ból 2 a fold-ok mediánjára van rögzítve (w_oldest, wt_sb — hangolásuk zajkergetés volt), 2 pedig ±15%-os sávra szűkítve (w_recent, w_current — ezekben az adat folyton egyetért); a `WF_UNCONSTRAINED=1` visszaadja a teljes keresést.
+A szerda esti futás (`--mode predict_only`) a keddi modellel, friss vonalakkal jósol újra a csütörtöki meccs előtt. A `--mode backtest --backtest-season S` az S előtti 4 szezonon tanít és S-t pontozza; a `model/walkforward.py` ugyanezt teszi 2013 óta minden szezonra, kizárólag a befagyasztott adatból.
+
+### Feature-szabályok
+
+Egy oszlop csak akkor lehet feature, ha (1) kezdőrúgás előtt ismert, és (2) **a heti futáskor a közelgő meccsekre is elérhető**. A gördülő statisztikák a csapat teljes meccs-idővonalán készülnek: egy meccs értéke a csapat utolsó N *lejátszott* meccsének átlaga, így a jövő heti meccs pontosan azt az ablakot kapja, amit egy történelmi meccs a tanításkor. A meccsnapi időjárás, a bírói beosztás és a végleges sérülés-státuszok a 2. szabályon elbuknak (a keddi/szerdai futás után jelennek meg), ezért nincsenek használva; a jövő heti kezdő irányító viszont *benne van* a menetrendben, és használjuk.
 
 ---
 
 ## Modell-architektúra
 
-Háromrétegű *stacked ensemble* — több modell, amelyek kimenetét összekeverjük:
-
 ```
-1. réteg:  Ridge regresszió  +  XGBoost  +  LightGBM     (három független pontszám-előrejelző)
-2. réteg:  PyTorch neurális háló (két fej: hazai pontszám, vendég pontszám)
-3. réteg:  Ridge meta-learner — a négy predikció optimális keveréke (valódi out-of-fold adaton tanítva)
-           → variancia-kalibráció → végső becsült pontszám
+1. réteg:  Ridge  +  XGBoost  +  LightGBM          hazai és vendég pontszámra külön-külön
+2. réteg:  PyTorch háló két kimenettel            (hazai, vendég pontszám)
+3. réteg:  Ridge meta-learner a négy jóslaton (+ a Vegas által implikált pontszámon,
+           ha a vonal publikus), valódi out-of-fold adaton illesztve
 ```
 
-- **Előfeldolgozás:** a fa-alapú modellek (XGBoost, LightGBM) nyers feature-öket kapnak, a hiányzó értékek megmaradnak — natívan kezelik a NaN-t. A Ridge és a neurális háló medián-imputált, standardizált adatot kap. A megfigyelés nélküli (csupa üres) oszlopok megmaradnak (Ridge/NN-nek nullával töltve, fáknak NaN-ként), így a mátrix szélessége sosem változik tanítás és predikció között.
-- **Becsületes stacking:** a meta-learner out-of-fold (OOF) predikciókon tanul, ahol minden 1. rétegbeli modell — a neurális háló is — *foldonként újra van tanítva*, tehát a keverő sosem lát olyan modellt, amely a saját tanítóadatát jósolja.
-- **Kalibráció:** a meta-learner a becsült különbségeket az átlag felé húzza; egy adatvezérelt variancia-szorzó ([1, 3] közé vágva) állítja vissza a reális szórást.
-- **Tanítóablak:** az utolsó 4 lezárt szezon + a folyó szezon, szezon közben hetente újratanítva. A szezon- és meccstípus-súlyok a Bayes-optimalizálóból jönnek. A szezonév az órából számolódik (`data_loader.get_current_season`), soha nem kézzel írt konstans.
+- A fák nyers feature-öket kapnak hiányzó értékekkel; a Ridge és a háló medián-imputált, standardizált adatot.
+- A meta-learner out-of-fold jóslatokon tanul: minden 1–2. rétegbeli modell minden időrendi foldon újratanul. Két blender készül: az egyik a Vegas által implikált hazai/vendég pontszámot ((total ± spread) / 2) is látja — ezt használjuk, amint a vonal publikus —, a másik nem, a távolabbi meccsekre. Hogy mennyire bízzon a piacban, azt az adat dönti el; az illesztett súly minden tanításkor logolódik.
+- Nincs variancia-kalibráció (lásd fent). Minden tanítás után logolódik az out-of-fold hiba.
+- Tanítóablak: az utolsó 4 lezárt szezon + a folyó szezon, szezonban hetente újratanítva. Mintasúlyok: 1,2 (folyó szezon), 1,0, 0,8, 0,6 (legrégebbi); rájátszás 0,6–0,75×; 2020 lesúlyozva (nézők nélkül). Minden konstans a `model/settings.py`-ban.
 
 ---
 
 ## Automatizálás — a workflow-k
 
-Minden automatizálás a `.github/workflows/`-ban él. Minden nehéz lépés **külön, bőven 20 perc alatti job**, az Actions felületről egyenként újrafuttatható. Minden lépés publikus logot commitol a `data/logs/*_last.txt` alá, így az eredmény Actions-hozzáférés nélkül is ellenőrizhető.
-
-| Workflow | Mikor fut | Mit csinál |
+| Workflow | Mikor | Mit csinál |
 |---|---|---|
-| `weekly_update.yml` | kedd 10:00 UTC (cron) | Teljes futás (fenti 1–8. lépés). Az **offszezon-őr** ~30 mp alatt kilép, ha nincs NFL-meccs a [-3, +10] napos ablakban. |
-| `thursday_update.yml` | szerda 22:00 UTC (cron) | Csak-predikció frissítés a csütörtöki meccs előtt, cache-elt modell-artifactokkal (cache-hiánynál tanítással). Ugyanaz az őr. |
-| `full_pipeline.yml` | `.full-trigger` fájlt érintő push, vagy kézi | Lépcsős lánc: optimalizálás → tanítás+predikció → **párhuzamos szezononkénti backtestek** → összefésülés és publikálás. |
-| `optimize_run.yml` | `.opt-trigger` push, vagy kézi | Csak az 1. lépcső: Bayes-súlyoptimalizálás (~8–10 perc). |
-| `train_run.yml` | `.train-trigger` push, vagy kézi | Csak a 2. lépcső: tanítás + predikció (~8–12 perc). |
-| `backtest_run.yml` | `.backtest-trigger` push, vagy kézi | Csak a 3. lépcső: backtest-mátrix (szezononként egy párhuzamos job) + összefésülés. |
-| `freeze_data.yml` | `.freeze-trigger` push, kézi, vagy évente ápr. 1. | Újraépíti a `data/frozen/`-t — az összes lezárt szezon adatát egyszer letölti és commitolja (a `FREEZE_FROM` évig vissza, alapból 2009). |
-| `walkforward.yml` | `.walkforward-trigger` push, vagy kézi | Mély walk-forward szimuláció: (tesztszezon 2013–2025 × ablak 3/4) párokra egy-egy párhuzamos job, foldonkénti nested hangolással; összesített eredmény + súly-drift ábra a [docs/walkforward.html](https://llou77.github.io/NFL/walkforward.html) oldalon. |
+| `weekly_update.yml` | kedd 10:23 UTC | Teljes futás. Offszezonban ~30 mp alatt kilép (nincs meccs a [−3, +10] napos ablakban). |
+| `thursday_update.yml` | szerda 21:41 UTC | Csak-jóslás a csütörtöki meccs előtt a keddi modellel (ha hiányzik, újratanít). |
+| `full_pipeline.yml` | kézi, vagy `.full-trigger`-t érintő push | Tanítás + jóslás → az utolsó két lezárt szezon párhuzamos backtestje → összefésülés. |
+| `train_run.yml` | kézi, vagy `.train-trigger` | Csak tanítás + jóslás. |
+| `backtest_run.yml` | kézi, vagy `.backtest-trigger` | Csak a backtest-mátrix + összefésülés. |
+| `walkforward.yml` | kézi, vagy `.walkforward-trigger` | 2013 óta kitartott szezononként egy job (4 szezonos ablak) + összesítés és ábra a `docs/walkforward.html`-hez. |
+| `freeze_data.yml` | évente ápr. 1., kézi, vagy `.freeze-trigger` | Újrapecsételi a `data/frozen/`-t az épp lezárult szezonnal. |
 | `pre_season_train.yml` | augusztus első keddje | Elindítja a `full_pipeline.yml`-t az új szezonra. |
-| `season_analysis.yml` | kézi | Szezononkénti nehézség/trend elemzés az oldalhoz. |
 
-Bármely push-triggeres workflow indítása az Actions felület nélkül:
+Az ütemezett időpontok szándékosan nem egész órára esnek: a GitHub az egész órás ütemezett futásokat terhelésnél késlelteti (vagy eldobja) — a régi 10:00-s idősáv egész szezonban 6–9 órát késett. Minden lépés commitolja a konzol végét a `data/logs/*_last.txt` alá, a push pedig a `scripts/push_with_retry.sh`-n keresztül megy, ami pirosra állítja a jobot, ha a push nem sikerül.
+
+Push-trigger példa az Actions felület nélkül:
 
 ```bash
 date > .full-trigger && git add .full-trigger && git commit -m "run full pipeline" && git push
@@ -88,13 +96,11 @@ date > .full-trigger && git add .full-trigger && git commit -m "run full pipelin
 
 ## A befagyasztott adatréteg
 
-Két szezon között — és minden lezárt szezonra — a történelmi statisztikák soha többé nem változnak. Ezért a `scripts/freeze_data.py` **egyszer** letölti és a `data/frozen/`-be commitolja őket:
+A lezárt szezonok soha nem változnak, ezért a `scripts/freeze_data.py` egyszer letölti és a `data/frozen/`-be commitolja őket (~24 MB):
 
-- szezononkénti stat-táblák (játékos-statisztikák, keretek, snap countok, sérülések, depth chartok, FTN charting, PFR advanced statok) minden lezárt szezonra;
-- teljes történetű referenciatáblák (Next Gen Stats, draft, combine, bírók, fogadási vonalak, csapat/játékos azonosítók) offline tartalékként;
-- `pbp_agg_{szezon}.parquet` — a nyers play-by-play szezononkénti csapat-meccs aggregátuma, *ugyanazzal a függvénnyel* előállítva, amit az éles pipeline használ. A nyers play-by-play (~25 MB/szezon) szándékosan **nincs** commitolva; az aggregátum ~100× kisebb, és a pipeline-nak pontosan ennyi kell.
-
-A normál futásoknak így csak a menetrendhez, a fogadási vonalakhoz és az aktuális szezon fájljaihoz kell hálózat. Ha az nflverse átnevez vagy töröl egy történelmi fájlt (2025-ben megtörtént), semmi nem törik el. A fagyasztást évente egyszer, a Super Bowl után kell újrafuttatni — az április 1-jei cron ezt automatikusan megteszi.
+- heti játékos-statisztikák és heti keretek minden lezárt szezonra 2009 óta;
+- teljes történetű Next Gen Stats fájlok és egy menetrend-pillanatkép;
+- `pbp_agg_{szezon}.parquet`, a play-by-play szezononkénti csapat-meccs aggregátuma, ugyanazzal a függvénnyel, amit az éles út használ (a nyers play-by-play ~25 MB/szezon, nincs commitolva).
 
 ---
 
@@ -102,86 +108,68 @@ A normál futásoknak így csak a menetrendhez, a fogadási vonalakhoz és az ak
 
 ```
 model/
-  pipeline.py            belépési pont — módok: full / predict_only / backtest / optimize / analyze_seasons
-  data_loader.py         minden adat letöltése + cache; frozen-first betöltés; szezon-konstansok
-  feature_engineering.py PBP-aggregálás + minden feature-építés + az allowlist
-  feature_h2h.py         egymás elleni feature-ök történelmi eredményekből
-  train.py               a 3 rétegű ensemble tanítása + artifact mentés/betöltés
-  predict.py             az egyetlen közös predikciós útvonal (éles + backtest)
-  evaluate.py            backtestek, ATS/ROI/CLV metrikák, élő teljesítmény-egyeztetés
-  bayesian_optimizer.py  Optuna-keresés a minta-súlyokon (stabilitás-korlátokkal)
-  confidence.py          megbízhatósági besorolás (modell-egyetértés / adatteljesség / H2H minta)
-  season_analysis.py     szezononkénti nehézség-elemzés
-  player_ratings.py      KIKAPCSOLVA az időbeli eltolás átdolgozásáig (szivárgásveszély)
-  walkforward.py         egy walk-forward fold: nested hangolás → tanítás → kihagyott szezon pontozása
+  pipeline.py            belépési pont — módok: full / predict_only / backtest
+  settings.py            minden fix modellkonstans (súlyok, Elo, küszöbök, verzió)
+  data_loader.py         táblák letöltése + cache; frozen-first betöltés
+  feature_engineering.py play-by-play aggregálás, minden feature, az allowlist
+  feature_h2h.py         egymás elleni feature-ök a korábbi találkozókból
+  train.py               ensemble-tanítás + mentés/betöltés
+  predict.py             az egyetlen jóslási útvonal (éles, backtest, walk-forward)
+  evaluate.py            backtest-metrikák és az élő mérleg
+  confidence.py          megbízhatósági pontszám (modell-egyetértés / teljesség / H2H)
+  walkforward.py         egy walk-forward fold a befagyasztott adatból
 scripts/
-  freeze_data.py         a data/frozen/ felépítése (CI-ban fut, évente)
-  season_guard.py        offszezon-őr — "run"/"skip" az ütemezett workflow-knak
+  freeze_data.py         a data/frozen/ felépítése
+  season_guard.py        offszezon-őr az ütemezett workflow-knak
   merge_backtests.py     a szezononkénti backtest-töredékek összefésülése
-  merge_walkforward.py   walk-forward foldok összesítése; súly-drift ábra
+  merge_walkforward.py   walk-forward foldok összesítése; ábra
+  push_with_retry.sh     bot-push rebase-zel és újrapróbálással
 data/
-  frozen/                commitolt, lepecsételt történelmi adat (lásd fent)
-  raw/, processed/       gitignore-olt munkacache-ek
-  predictions/           commitolt modellkimenetek (az oldal adatforrása)
-  logs/                  commitolt utolsó-futás logok minden workflow-lépcsőhöz
-docs/                    GitHub Pages oldal (index.html + assets/*.json)
+  frozen/                commitolt történelmi adat (fent)
+  predictions/           publikált kimenetek (az oldal adatforrása)
+  logs/                  minden workflow-lépés utolsó konzol-logja
+docs/                    GitHub Pages oldal (index.html, walkforward.html, assets/)
 ```
 
 ---
 
 ## Fogalomtár
 
-**Fogadási / NFL-kifejezések**
+**Fogadási kifejezések**
 
-- **Spread (pontkülönbség-vonal):** a fogadóiroda hendikepje az esélyesnek. A -3,5-ös spread azt jelenti, hogy az esélyestől 3,5 pontnál nagyobb győzelmet várnak.
-- **ATS (against the spread):** egy csapat "fedez" (cover), ha a spreadnél jobban teljesít. *Edge ATS találati arány* = milyen gyakran bizonyult igaznak, amikor a modell a spreaddel szemben foglalt állást.
-- **Over/Under (total):** a fogadóiroda vonala a két csapat összpontszámára; arra lehet fogadni, hogy a valós összeg e fölé vagy ez alá esik.
-- **-110-es szorzó:** standard amerikai árazás — 110-et teszel, hogy 100-at nyerj. Már a nullszaldóhoz 52,4%-os találati arány kell.
-- **Záróvonal (closing line):** az utolsó fogadási vonal a kezdés előtt — a piac leginformáltabb ára.
-- **CLV (closing line value):** mennyivel volt jobb a vonal, amelyen a modell "lépett", mint a záróvonal. A tartósan pozitív CLV a hosszú távú fogadási profit legerősebb ismert előrejelzője.
-- **ROI (fix tétes):** egységnyi tétre jutó profit, ha minden edge-jelzésre azonos tétet tennénk -110-en.
-- **Moneyline:** egyszerűen a győztes megtippelése (spread nélkül).
+- **Spread / spread_line:** a fogadóiroda várt különbsége. Ebben a repóban mindig hazai szemszögű, és **pozitív, ha a hazai csapat az esélyes** (nflverse-konvenció); a hazai csapat fedez, ha hazai − vendég > spread.
+- **ATS (against the spread):** a modell azt az oldalt „választja”, amelyet a becsült különbsége a vonalhoz képest kedvez — minden meccsen. Push = nincs döntés.
+- **Over/Under (total):** a fogadóiroda vonala az összpontszámra; a modell minden meccsen over-t vagy under-t választ.
+- **Edge-meccs / lean:** a modell és a vonal legalább **3 ponttal** eltér. LOW/WEAK megbízhatóságnál az oldal elrejti.
+- **−110-es szorzó:** 110-et teszel, hogy 100-at nyerj; 52,4% a nullszaldó. **ROI** = egységnyi tétre jutó profit, fix 1 egységes téttel az edge-meccseken.
 
 **Adat-kifejezések**
 
-- **PBP (play-by-play):** minden meccs minden játéka egy-egy sor, ~370 oszloppal (forrás: nflverse/nflfastR).
-- **EPA (expected points added):** mennyivel mozdította el egyetlen játék a csapat várható pontszámát — az NFL-analitika standard hatékonysági "valutája".
-- **WEPA (súlyozott EPA):** EPA, ahol a játékok aszerint kapnak súlyt, mennyire *jelzik előre* a jövőbeli teljesítményt (a lefutott meccsvégi játékok lefelé, a normál passzok felfelé súlyozva, az nfelo kutatása alapján).
-- **Success rate:** a pozitív EPA-jú játékok aránya.
-- **NGS (Next Gen Stats):** NFL tracking-adatok (elkapó-elválás, passzidő, …). Egy héttel késleltetve használjuk.
-- **PFR / FTN:** Pro Football Reference advanced statisztikák; FTN kézi charting-adatok.
-- **Snap count / depth chart:** ki hány játékban volt ténylegesen pályán, és hol áll a keretben — a sérülés/folytonosság feature-ök bemenetei.
-- **Befagyasztott réteg:** a lezárt szezonok commitolt `data/frozen/` pillanatképe (soha nem töltődik le újra).
+- **PBP (play-by-play):** minden játék egy sor (nflverse / nflfastR). **EPA:** egy játék által hozzáadott várható pont. **WEPA:** EPA, a játékok előrejelző értéke szerint súlyozva (meccsvégi „szemétidő” le, normál passzok fel; nfelo nyomán). **Success rate:** a pozitív EPA-jú játékok aránya.
+- **NGS (Next Gen Stats):** NFL tracking-adatok (passzidő, elválás, várható feletti futóyard).
+- **Befagyasztott réteg:** a lezárt szezonok commitolt `data/frozen/` pillanatképe.
 
 **Modellezési kifejezések**
 
-- **Feature:** egy bemeneti oszlop, amit a modell lát (pl. "a hazai csapat támadó EPA/játék értéke az utolsó 8 meccsén").
-- **Allowlist:** azoknak a feature-névmintáknak a kifejezett listája, amelyeket a modell *láthat*. Ami nincs rajta, kiesik — a biztonságos fordítottja annak, mint tiltólistázni az ismert szivárgókat.
-- **Adatszivárgás (data leakage):** bármely út, amelyen a megjósolandó meccs saját kimenetelének információja eléri a modellt tanításkor vagy predikciókor. A szivárgás felfújja a tesztpontosságot és tönkreteszi az éleset.
-- **Késleltetett / gördülő ablak (r4/r8/r16):** az előző 4/8/16 meccs átlagai, egy meccsel eltolva, hogy az aktuális meccs sose szerepeljen a saját feature-eiben.
-- **Elo:** meccsről meccsre frissülő erősorrend-érték az eredményből és a különbségből. Kétfázisú frissítés = előbb mindkét csapat *meccs előtti* értéke rögzül, csak utána frissül bármelyik.
-- **Imputálás:** a hiányzó értékek pótlása (itt mediánnal) azoknak a modelleknek, amelyek nem kezelik a NaN-t (Ridge, NN). A fák valódi NaN-t kapnak helyette.
-- **Ensemble / stacking / meta-learner:** több modell egymástól függetlenül jósol; egy kis záró modell (a meta-learner) megtanulja kimeneteik legjobb keverékét.
-- **OOF (out-of-fold):** olyan predikció, amelyet a modell általa nem látott adatra ad, keresztvalidációval előállítva — az egyetlen becsületes bemenet egy meta-learner tanításához.
-- **TimeSeriesSplit:** keresztvalidáció, amely mindig a múlton tanít és a jövőn validál (nincs keverés) — ahogy a modellt a valóságban is használjuk.
-- **Backtest:** a múlt szimulálása — tanítás csak az X szezon előtti adatokon, X szezon megjóslása, összevetés a tényekkel.
-- **Bayes-optimalizálás (Optuna):** irányított keresés, amely ígéretes paraméter-kombinációkat javasol ahelyett, hogy mindet kipróbálná. Itt a minta-súlyokat hangolja tanító/validációs szezonfelosztáson — 6 keresett (ebből 2 stabilitás-szűkített sávban), 2 a walk-forward vizsgálat által rögzített.
-- **Minta-súlyok:** mennyit számít egy-egy tanítómeccs (a frissebb szezonok többet; a rájátszás-meccstípusok másképp).
-- **Variancia-kalibráció:** a becsült különbségek átskálázása, hogy szórásuk a valóságéhoz igazodjon (a kevert modellek az átlag felé húznak).
-- **MAE (átlagos abszolút hiba):** az átlagos tévedés nagysága, pontban.
-- **Megbízhatósági besorolás (High/Medium/Low/Weak):** *nem* győzelmi valószínűség — azt méri, mennyire bízik a modell a saját predikciójában: al-modellek egyetértése (55%), bemeneti adatok teljessége (30%), H2H mintanagyság (15%).
-- **Edge-jelzés:** csak akkor jelenik meg, ha a megbízhatóság legalább Medium **és** a modell 3+ ponttal tér el a Vegas-i vonaltól.
+- **Feature / allowlist:** bemeneti oszlop; csak az allowlistán szereplő jut el a modellhez.
+- **Adatszivárgás:** bármely út, amelyen a megjósolandó meccs saját kimenetele eléri a modellt. **Train/serve eltérés:** olyan feature, amely jósláskor másképp néz ki (itt: hiányzik), mint tanításkor.
+- **Gördülő ablak (r4/r8/r16):** a csapat előző 4/8/16 lejátszott meccsének átlaga.
+- **Elo:** meccsről meccsre frissülő erősség-érték; mindkét csapat meccs előtti értéke rögzül, mielőtt bármelyik frissülne.
+- **OOF (out-of-fold):** olyan adaton adott jóslat, amelyen a modell nem tanult; ezen illeszkedik a meta-learner.
+- **Backtest / walk-forward:** tanítás csak az X előtti szezonokon, X megjóslása, összevetés a tényekkel (a walk-forward ezt 2013 óta minden szezonra megismétli).
+- **MAE:** átlagos abszolút hiba pontban. **Különbség-hiba** = a hazai − vendég MAE-je.
+- **Megbízhatóság (HIGH/MEDIUM/LOW/WEAK):** nem győzelmi valószínűség — al-modellek egyetértése (55%), adatteljesség (30%), H2H minta (15%).
 
 ---
 
 ## Adatforrások
 
-Mind ingyenes és nyilvános: [nflverse](https://github.com/nflverse) release-fájlok (play-by-play, játékos-statok, keretek, snap countok, sérülések, depth chartok, FTN, PFR, Next Gen Stats, játékosok, szerződések, draft, combine), [Lee Sharpe / nfldata](https://github.com/nflverse/nfldata) (meccsek és menetrend stadion/időjárás mezőkkel, win totalok, bírók, scoring line-ok), [mrcaseb/nfl-data](https://github.com/mrcaseb/nfl-data) (történelmi fogadási vonalak), [DynastyProcess](https://github.com/dynastyprocess/data) (játékos-azonosító térkép).
+Mind ingyenes és nyilvános: [nflverse](https://github.com/nflverse) release-fájlok (play-by-play, heti játékos-statok, heti keretek, Next Gen Stats) és az [nflverse/nfldata](https://github.com/nflverse/nfldata) meccsfájl (eredmények, Vegas-i vonalak, tető, kezdő irányítók, vezetőedzők).
 
 ## Technológia
 
-Python · pandas · scikit-learn · XGBoost · LightGBM · PyTorch · Optuna · GitHub Actions · GitHub Pages
+Python · pandas · scikit-learn · XGBoost · LightGBM · PyTorch · GitHub Actions · GitHub Pages
 
 ---
 
-*Készítette: [@llou77](https://github.com/llou77) · A predikciók a szezon alatt minden kedden (és szerda este) automatikusan frissülnek.*
+*Készítette: [@llou77](https://github.com/llou77) · A jóslatok a szezon alatt minden kedden és szerda este frissülnek.*

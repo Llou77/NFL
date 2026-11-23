@@ -447,7 +447,6 @@
     <button class="nb" onclick="showPage('performance',this)">Performance</button>
     <button class="nb" onclick="showPage('methodology',this)">Methodology</button>
     <a href="walkforward.html" class="nb" style="text-decoration:none;display:flex;align-items:center">Walk-Forward ↗</a>
-    <a href="insights.html" class="nb" style="text-decoration:none;display:flex;align-items:center">Model Insights ↗</a>
   </nav>
   <div class="hstat">
     <div><span class="pulse"></span><span id="uStatus">Loading…</span></div>
@@ -466,7 +465,7 @@
     <div style="position:relative;z-index:1">
       <div style="font-family:'Catamaran',sans-serif;font-weight:800;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.6rem">NFL Score Predictor</div>
       <h1>2026 Predictions</h1>
-      <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em">Updated every Tuesday — predictions for all 272 regular season games</div>
+      <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.08em">Updated every Tuesday and before Thursday Night Football — predictions for every remaining game</div>
     </div>
     <p>Machine learning ensemble trained on the last four completed seasons plus the season in progress. Every game scored, spreads and totals derived automatically.</p>
   </div>
@@ -479,7 +478,7 @@
   <div class="divider"></div>
 
   <div class="content">
-    <div class="disc"><strong>Important —</strong> This is a statistical model for informational and entertainment purposes only. It is not financial or betting advice. Edge signals are shown only for predictions with MEDIUM or higher confidence.</div>
+    <div class="disc"><strong>Important —</strong> This is a statistical model for informational and entertainment purposes only. It is not financial or betting advice. A lean (“edge”) is shown only when the model and the Vegas line differ by at least 3 points and confidence is MEDIUM or higher. Through week 10 of 2026 the model was less accurate than the Vegas line itself — see Performance.</div>
     <div class="controls">
       <div class="wsel" id="wsel"></div>
       <div class="fgroup">
@@ -504,22 +503,22 @@
   <div class="divider"></div>
   <div class="content">
     <div class="bt-exp">
-      <strong>Spread direction accuracy</strong> measures whether the model's predicted margin lands on the same side of the Vegas spread as the actual result. This is inflated because our predicted spreads correlate with the real outcome — it does not mean the model wins 90% of bets.<br>
-      <strong>Betting edge signal</strong> only counts games where our model <em>disagreed</em> with the Vegas line by more than 3 points. This is the metric that matters for betting. At 52.4% you break even with standard odds. Above 55% consistently is meaningful.
+      <strong>The bar to clear is the Vegas line.</strong> Every error figure is shown next to the error of simply using the betting line as the prediction; a model that cannot beat it has no edge.<br>
+      <strong>Spread record (all games)</strong> — the model “picks” the side its predicted margin favours against the line, in every game. <strong>Edge games</strong> — only games where model and line differ by 3+ points (the leans shown on the Predictions page). At standard −110 odds 52.4% breaks even; over one season the noise is roughly ±3 percentage points, so single-season hit rates prove little.
     </div>
     <div class="data-grid" id="btCards"><div class="lstate"><div class="spin"></div></div></div>
     <div class="chart-duo">
-      <div class="chart-wrap"><div class="chart-label">Average score error by season</div><canvas id="btMae" height="160"></canvas></div>
-      <div class="chart-wrap"><div class="chart-label">Betting edge hit rate — games where model disagreed with Vegas (%)</div><canvas id="btAts" height="160"></canvas></div>
+      <div class="chart-wrap"><div class="chart-label">Margin (spread) error by season — model vs. Vegas line</div><canvas id="btMae" height="160"></canvas></div>
+      <div class="chart-wrap"><div class="chart-label">Edge-game hit rate against the spread (%) — 52.4% breaks even</div><canvas id="btAts" height="160"></canvas></div>
     </div>
     <div class="chart-wrap"><div class="chart-label">Average prediction error by game type</div><canvas id="btType" height="90"></canvas></div>
 
-    <div class="sh2" style="margin-top:2.5rem"><h2>Deep validation — walk-forward simulation</h2><span>13 test seasons (2013–2025) × two window lengths; every fold tuned only on its own past · <a href="walkforward.html" style="color:var(--g4)">full results ↗</a></span></div>
+    <div class="sh2" style="margin-top:2.5rem"><h2>Deep validation — walk-forward simulation</h2><span>one held-out season per fold (2013 onward), each trained only on the 4 seasons before it · <a href="walkforward.html" style="color:var(--g4)">full results ↗</a></span></div>
     <div class="bt-exp">
-      <strong>Walk-forward</strong> slides the training window across history: train on the seasons before X, tune on pre-X data only, predict season X, repeat until today. Seasons touched by the 2020 no-fans COVID year are reported separately because home-field advantage collapsed that season.
+      <strong>Walk-forward</strong> slides the training window across history: train on the four seasons before X, predict season X, repeat until today, and compare every season with the Vegas line. Seasons touched by the 2020 no-fans season are flagged because home-field advantage collapsed that year.
     </div>
     <div class="data-grid" id="wfCards"><div class="lstate"><div class="spin"></div></div></div>
-    <div class="chart-wrap"><div class="chart-label">Tuned-weight drift &amp; per-season accuracy (regenerated on every walk-forward run)</div><img src="assets/walkforward_weights.png" alt="walk-forward chart" style="width:100%" onerror="this.parentNode.style.display='none'"></div>
+    <div class="chart-wrap"><div class="chart-label">Model vs. Vegas error and spread hit rate per held-out season (regenerated on every walk-forward run)</div><img src="assets/walkforward_chart.png" alt="walk-forward chart" style="width:100%" onerror="this.parentNode.style.display='none'"></div>
   </div>
 </div>
 
@@ -533,9 +532,13 @@
   <div class="divider"></div>
   <div class="content">
     <div class="kpi-strip" id="perfKpis"><div class="lstate" style="color:var(--g2)"><div class="spin" style="border-top-color:#fff"></div></div></div>
-    <div class="chart-wrap" style="margin-bottom:.75rem"><div class="chart-label">Average prediction error by week of the season</div><canvas id="maeWk" height="90"></canvas></div>
+    <div class="chart-wrap" style="margin-bottom:.75rem"><div class="chart-label">Margin (spread) error by week — model vs. Vegas line</div><canvas id="maeWk" height="90"></canvas></div>
+    <div class="chart-duo">
+      <div class="chart-wrap"><div class="chart-label">By confidence tier — a useful confidence score would show lower error for HIGH</div><div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Tier</th><th>Games</th><th>Margin error</th><th>Total error</th><th>Spread record %</th></tr></thead><tbody id="tierBody"></tbody></table></div></div>
+      <div class="chart-wrap"><div class="chart-label">By model version — v1.1 = before the November 2026 audit</div><div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Version</th><th>Games</th><th>Margin error (Vegas)</th><th>Spread record</th><th>Edge games</th></tr></thead><tbody id="verBody"></tbody></table></div></div>
+    </div>
     <div class="chart-wrap"><div class="chart-label">Recent results</div>
-      <div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Week</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Total score error</th><th>Beat the spread?</th><th>Over/Under correct?</th><th>Confidence</th></tr></thead><tbody id="perfBody"></tbody></table></div>
+      <div style="overflow-x:auto"><table class="ptbl"><thead><tr><th>Week</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Total score error</th><th>Spread pick</th><th>Total pick</th><th>Confidence</th></tr></thead><tbody id="perfBody"></tbody></table></div>
     </div>
   </div>
 </div>
@@ -556,8 +559,8 @@
           <p>How the model is run, what data it trains on, and how it updates automatically.</p>
         </div>
         <div class="msec-body">
-          <p>Every Tuesday during the NFL season, a GitHub Actions pipeline retrains a stacked ensemble on a rolling window of the <strong>last four completed seasons plus the season in progress</strong> (~1,100 labeled games) and publishes predictions for every upcoming game. Historical data for finished seasons is sealed into the repository once a year (the "frozen layer"), so weekly runs only download current-season files.</p>
-          <p>The model predicts a final score for both teams. Spread, total, and moneyline signals are derived from these two numbers. Season sample weights are auto-optimised each pre-season via Bayesian search (Optuna). The pipeline knows the 2021 schedule expansion (16 games/17 weeks → 17 games/18 weeks), so season-progress features mean the same thing in every era.</p>
+          <p>Every Tuesday during the NFL season, a GitHub Actions pipeline retrains a stacked ensemble on a rolling window of the <strong>last four completed seasons plus the season in progress</strong> (~1,100–1,300 labeled games) and publishes predictions for every remaining game; a Wednesday-night refresh re-predicts with the latest lines before Thursday Night Football. Historical data for finished seasons is sealed into the repository once a year (the "frozen layer"), so weekly runs only download current-season files.</p>
+          <p>The model predicts a final score for both teams; the winner, margin and total come from these two numbers. Recent seasons count more in training (fixed weights: 1.2 for the current season down to 0.6 for the oldest). A feature is only used if it is known before kickoff <em>and</em> available when the weekly job runs — game-day weather, referee crews and final injury statuses fail the second test and are not used. The pipeline knows the 2021 schedule expansion (16 games/17 weeks → 17 games/18 weeks), so season-progress features mean the same thing in every era.</p>
         </div>
       </div>
 
@@ -572,33 +575,35 @@
             <div class="ml"><div class="ll">Layer 1B</div><div class="lt">XGBoost</div><div class="ld">500 decision trees optimised for minimum absolute error. Captures complex, non-linear patterns.</div></div>
             <div class="ml"><div class="ll">Layer 1C</div><div class="lt">LightGBM</div><div class="ld">A fast gradient boosting variant that grows trees leaf-by-leaf for higher accuracy.</div></div>
             <div class="ml"><div class="ll">Layer 2</div><div class="lt">Neural Network</div><div class="ld">Deep neural network with separate output branches for home and away scores. Simultaneously optimises score accuracy, margin, and combined total.</div></div>
-            <div class="ml"><div class="ll">Layer 3</div><div class="lt">Meta-Learner</div><div class="ld">A final blending layer that learns the optimal mix of all sub-model outputs, trained on held-out data to prevent overfitting.</div></div>
+            <div class="ml"><div class="ll">Layer 3</div><div class="lt">Meta-Learner</div><div class="ld">Blends the four sub-models — plus the Vegas-implied score once the line is published — using out-of-fold predictions, so the data decides how far to trust the market. It currently gives the market a weight of about 1: the model mostly follows Vegas and adds small corrections.</div></div>
           </div>
         </div>
       </div>
 
       <div class="msec">
-        <div class="msec-head"><h2>Features (~370)</h2><p>The statistics and signals the model is allowed to see — a strict allowlist drops anything that could leak a game's own outcome.</p></div>
+        <div class="msec-head"><h2>Features (~330)</h2><p>The statistics and signals the model is allowed to see — a strict allowlist drops anything that could leak a game's own outcome or that is missing for upcoming games.</p></div>
         <div class="msec-body">
           <h3>Rolling statistics — computed over the last 4, 8, and 16 games</h3>
-          <div><span class="ftag" title="Expected Points Added per offensive play — measures how much each play improves scoring chances">Offensive efficiency (EPA/play)</span><span class="ftag" title="Expected Points Added allowed per defensive play">Defensive efficiency (EPA/play)</span><span class="ftag">Play success rate</span><span class="ftag" title="Expected Points Added per pass play">Passing efficiency</span><span class="ftag" title="Expected Points Added per run play">Rushing efficiency</span><span class="ftag" title="Completion Percentage Over Expected — how much better/worse the QB completes passes than the average QB would in the same situations">QB accuracy over expected</span><span class="ftag">Air yards per attempt</span><span class="ftag">3rd down conversion rate</span><span class="ftag">Red zone touchdown rate</span><span class="ftag">Turnover differential</span><span class="ftag">Sack rate allowed</span><span class="ftag">Field goal %</span><span class="ftag">Recent score differential</span><span class="ftag">Recent win rate</span></div>
+          <div><span class="ftag" title="Expected Points Added per offensive play — measures how much each play improves scoring chances">Offensive efficiency (EPA/play)</span><span class="ftag" title="Expected Points Added allowed per defensive play">Defensive efficiency (EPA/play)</span><span class="ftag">Play success rate</span><span class="ftag" title="Expected Points Added per pass play">Passing efficiency</span><span class="ftag" title="Expected Points Added per run play">Rushing efficiency</span><span class="ftag" title="Completion Percentage Over Expected — how much better/worse the QB completes passes than the average QB would in the same situations">QB accuracy over expected</span><span class="ftag">Air yards per attempt</span><span class="ftag">3rd down conversion rate</span><span class="ftag">Red zone touchdown rate</span><span class="ftag">Turnover differential</span><span class="ftag">Sack rate allowed</span><span class="ftag">Field goal %</span><span class="ftag">Recent score differential</span><span class="ftag">Recent win rate</span><span class="ftag" title="Passing EPA per attempt and PACR of each week's starting quarterback">Starting-QB form</span><span class="ftag" title="NFL tracking data: time to throw, separation, rushing yards over expected — last 4 games">Next Gen Stats form</span></div>
           <h3>Head-to-head matchup advantages</h3>
-          <p>Offensive EPA of Team A minus defensive EPA allowed by Team B — for passing, rushing, 3rd down, and red zone. Directly quantifies strength mismatch in each phase.</p>
+          <p>Offensive EPA of Team A minus defensive EPA allowed by Team B — overall, passing and rushing (offense weighted more, as it is the more stable signal).</p>
+          <h3>Head-to-head history</h3>
+          <p>Margin, win rate, total and cover rate in earlier meetings (division rivals: current + last 3 seasons; conference: 6; cross-conference: 10), damped when the rosters have turned over.</p>
           <h3>Contextual</h3>
-          <div><span class="ftag">Home/Away</span><span class="ftag">Rest days</span><span class="ftag">Rest day differential</span><span class="ftag">Coming off a bye week</span><span class="ftag">Short week (Thursday game)</span><span class="ftag">Temperature</span><span class="ftag">Wind speed</span><span class="ftag">Dome</span><span class="ftag">Primetime</span><span class="ftag">International</span><span class="ftag">Division rivalry game</span><span class="ftag">Referee tendencies</span></div>
-          <h3>Off-season and preseason signals</h3>
-          <div><span class="ftag">Power rating (Elo)</span><span class="ftag" title="How much our internal power rating disagrees with the Vegas line">Power rating vs. Vegas disagreement</span><span class="ftag" title="The Vegas over/under win total set before the season begins — a powerful pre-season team quality signal">Vegas preseason win total</span><span class="ftag" title="Fraction of key players retained from the previous season">Roster continuity year-over-year</span><span class="ftag" title="Cumulative career value of a team's draft picks">Recent draft class quality</span></div>
+          <div><span class="ftag">Home/Away</span><span class="ftag">Rest days</span><span class="ftag">Rest day differential</span><span class="ftag">Coming off a bye week</span><span class="ftag">Short week (Thursday game)</span><span class="ftag" title="From the game's roof (dome or closed retractable roof)">Indoors</span><span class="ftag">Night game</span><span class="ftag">International</span><span class="ftag">Division rivalry game</span><span class="ftag">Vegas spread &amp; total</span><span class="ftag">Home-field advantage (league &amp; team)</span><span class="ftag">Scoring environment (last season)</span></div>
+          <h3>Team strength and continuity</h3>
+          <div><span class="ftag">Power rating (Elo)</span><span class="ftag" title="How much our internal power rating disagrees with the Vegas line">Power rating vs. Vegas disagreement</span><span class="ftag" title="Share of last season's final active roster on this season's week-1 roster">Roster continuity year-over-year</span><span class="ftag" title="This game's starting QB is not last season's main starter; share of recent games he started">Starting-QB change</span><span class="ftag">Head-coach change</span></div>
         </div>
       </div>
 
       <div class="msec">
         <div class="msec-head"><h2>Confidence Score</h2><p>Measures how much the model trusts its own prediction — not the probability of winning.</p></div>
         <div class="msec-body">
-          <p>Every prediction carries a 0–100% score measuring model agreement and data completeness. Edge signals are suppressed for low-confidence games.</p>
+          <p>Every prediction carries a 0–100% score built from the three components below. Leans are hidden for LOW and WEAK games. Whether HIGH really beats LOW is tracked live on the Performance page — so far it does not.</p>
           <div class="mlayers">
             <div class="ml"><div class="ll">55% weight</div><div class="lt">Sub-model agreement</div><div class="ld">How closely all four sub-models agree on the prediction. Large disagreements lower the score.</div></div>
-            <div class="ml"><div class="ll">30% weight</div><div class="lt">Data completeness</div><div class="ld">How much of the expected input data was available. Quarterback and injury data are weighted more heavily.</div></div>
-            <div class="ml"><div class="ll">15% weight</div><div class="lt">Head-to-head sample size</div><div class="ld">How many historical meetings are available between these two teams. Division rivals meet often so score near 100%.</div></div>
+            <div class="ml"><div class="ll">30% weight</div><div class="lt">Data completeness</div><div class="ld">How much of the model's input data is present for the game; the most important inputs count double.</div></div>
+            <div class="ml"><div class="ll">15% weight</div><div class="lt">Head-to-head sample size</div><div class="ld">How many earlier meetings back the head-to-head features. Division rivals meet twice a year, so they score highest.</div></div>
           </div>
         </div>
       </div>
@@ -606,9 +611,9 @@
       <div class="msec">
         <div class="msec-head"><h2>Data Sources</h2><p>All free and public.</p></div>
         <div class="msec-body">
-          <div><span class="ftag">nflverse release files</span><span class="ftag" title="Play-by-play data from every game">Play-by-play data (nflfastR)</span><span class="ftag">Next Gen Stats (NFL tracking data)</span><span class="ftag" title="Pro Football Reference advanced statistics">Advanced stats (Pro Football Reference)</span><span class="ftag" title="FTN Data manual charting — pass routes, coverage types, blocking assignments">Manual charting data (FTN)</span><span class="ftag" title="Lee Sharpe / nfldata games file — includes stadium, roof and game-day weather fields">Schedules &amp; weather (nfldata)</span><span class="ftag" title="mrcaseb/nfl-data historical betting line archive">Historical betting lines</span></div>
+          <div><span class="ftag">nflverse release files</span><span class="ftag" title="Play-by-play data from every game">Play-by-play data (nflfastR)</span><span class="ftag">Next Gen Stats (NFL tracking data)</span><span class="ftag" title="nflverse/nfldata games file — scores, Vegas lines, roof, starting quarterbacks, head coaches">Schedule, lines &amp; starters (nfldata)</span><span class="ftag">Weekly player stats &amp; rosters</span></div>
           <h3>Training window and data freshness</h3>
-          <p>The last four completed seasons plus the season in progress (~1,100 labeled games). Each completed game enters the window and the oldest season exits. Playoff games weighted at ~0.4–0.7×. Season weights optimised each pre-season by Bayesian search; closed-season data comes from the committed frozen layer, so a renamed or deleted upstream file can never break a run.</p>
+          <p>The last four completed seasons plus the season in progress (~1,100–1,300 labeled games). Each completed game enters the window and the oldest season exits. Playoff games weighted 0.6–0.75×. Closed-season data comes from the committed frozen layer, so a renamed or deleted upstream file can never break a run.</p>
         </div>
       </div>
 
@@ -654,12 +659,15 @@ const FEAT={
   h2h_win_rate:'Home win rate in past head-to-head meetings',
   home_qb_changed:'Home team changed starting quarterback',
   away_qb_changed:'Away team changed starting quarterback',
-  home_vegas_preseason_wins:'Home team Vegas preseason win total',
-  away_vegas_preseason_wins:'Away team Vegas preseason win total',
+  home_qb_start_share:'Home QB started share of last 8 games',
+  away_qb_start_share:'Away QB started share of last 8 games',
+  home_qb_epa_per_att_r8:'Home starting-QB EPA per attempt (last 8)',
+  away_qb_epa_per_att_r8:'Away starting-QB EPA per attempt (last 8)',
+  elo_vs_spread:'Power rating vs. Vegas line (points)',
+  h2h_n_games:'Earlier meetings used',
   home_roster_continuity:'Home team roster continuity vs. last season',
   away_roster_continuity:'Away team roster continuity vs. last season',
   is_division_game:'Division rivalry game',
-  rest_diff:'Rest days advantage',
   home_rest_days:'Home team rest days',
   away_rest_days:'Away team rest days',
 };
@@ -706,20 +714,24 @@ async function loadBacktest(){const d=await fj(['assets/backtest_results.json','
 async function loadWalkforward(){const d=await fj(['assets/walkforward_results.json','https://raw.githubusercontent.com/llou77/NFL/main/docs/assets/walkforward_results.json']);if(d)wfD=d;renderWalkforward()}
 
 /* ══ WALK-FORWARD SUMMARY ════════════════════════════════════ */
+const pct1=x=>x!=null?(100*x).toFixed(1)+'%':'—';
+const pm=x=>x!=null?'±'+x:'—';
+const num2=x=>x!=null?x.toFixed(2):'—';
 function renderWalkforward(){
   const el=document.getElementById('wfCards');if(!el)return;
   const s=wfD._summary;
   if(!s){el.innerHTML='<div class="empty">Walk-forward results not published yet — run the Walk-Forward Simulation workflow.</div>';return}
   el.innerHTML=Object.entries(s).filter(([k])=>k.startsWith('window_')).map(([k,v])=>{
-    const pct=x=>x!=null?(100*x).toFixed(1)+'%':'—';
+    const beat=v.mean_mae_spread!=null&&v.mean_vegas_mae_spread!=null&&v.mean_mae_spread<v.mean_vegas_mae_spread;
     return `<div class="d-card">
       <div class="d-season">${k.replace('window_','')}-season window</div>
-      <div class="d-sub">${v.n_folds} held-out test seasons · nested tuning</div>
-      <div class="d-row"><span class="lbl">Average margin error</span><span class="val">±${v.mean_mae_spread!=null?v.mean_mae_spread.toFixed(2):'—'} pts</span></div>
-      <div class="d-row"><span class="lbl">Spread pick rate</span><span class="val">${pct(v.mean_ats_pct)}</span></div>
-      <div class="d-row"><span class="lbl">&nbsp;&nbsp;— excluding COVID seasons</span><span class="val dim">${pct(v.mean_ats_pct_excl_covid)}</span></div>
-      <div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Edge hit rate (excl. COVID)</span><span class="val ${v.mean_edge_ats_pct_excl_covid>0.524?'good':'warn'}">${pct(v.mean_edge_ats_pct_excl_covid)}</span></div>
-      <div class="d-row"><span class="lbl">Flat-stake ROI on edge games</span><span class="val ${v.mean_edge_roi>0?'good':'warn'}">${v.mean_edge_roi!=null?(v.mean_edge_roi>0?'+':'')+(100*v.mean_edge_roi).toFixed(1)+'%':'—'}</span></div>
+      <div class="d-sub">${v.n_folds} held-out seasons (${v.seasons?v.seasons[0]+'–'+v.seasons[v.seasons.length-1]:''})</div>
+      <div class="d-row"><span class="lbl">Margin error — model</span><span class="val ${beat?'good':'warn'}">±${num2(v.mean_mae_spread)} pts</span></div>
+      <div class="d-row"><span class="lbl">Margin error — Vegas line</span><span class="val dim">±${num2(v.mean_vegas_mae_spread)} pts</span></div>
+      <div class="d-row"><span class="lbl">Seasons where the model beat Vegas</span><span class="val">${v.folds_beating_vegas_spread??'—'} of ${v.n_folds}</span></div>
+      <div class="d-row"><span class="lbl">Spread record, all games</span><span class="val">${pct1(v.mean_ats_pct)}</span></div>
+      <div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Edge games (3+ pts), pooled</span><span class="val ${v.pooled_edge_ats_pct>0.524?'good':'warn'}">${pct1(v.pooled_edge_ats_pct)} — n=${v.pooled_edge_n??'—'}</span></div>
+      <div class="d-row"><span class="lbl">Flat-stake ROI on edge games</span><span class="val ${v.pooled_edge_roi_flat_110>0?'good':'warn'}">${v.pooled_edge_roi_flat_110!=null?(v.pooled_edge_roi_flat_110>0?'+':'')+(100*v.pooled_edge_roi_flat_110).toFixed(1)+'%':'—'}</span></div>
     </div>`;
   }).join('');
 }
@@ -749,7 +761,7 @@ function toggleEdge(b){edgeOnly=!edgeOnly;b.classList.toggle('on',edgeOnly);b.te
 /* ══ RENDER GAMES ════════════════════════════════════════════ */
 function renderGames(){
   let gs=showAll?allP:allP.filter(g=>g.week===curWeek);
-  if(edgeOnly)gs=gs.filter(g=>(g.spread_lean&&!['PUSH','SUPPRESSED',''].includes(g.spread_lean))||(g.total_lean&&!['PUSH','SUPPRESSED',''].includes(g.total_lean)));
+  if(edgeOnly)gs=gs.filter(g=>isLean(g.spread_lean)||isLean(g.total_lean));
   const el=document.getElementById('gGrid');
   if(!gs.length){el.innerHTML='<div class="empty">No games match the current filter.</div>';return}
   gs=[...gs].sort((a,b)=>new Date(a.game_date)-new Date(b.game_date));
@@ -762,6 +774,7 @@ function renderGames(){
   });
 }
 
+function isLean(v){return !!v&&!['NONE','PUSH','SUPPRESSED',''].includes(v)}
 function gt(g){let h=g.home_team||'',a=g.away_team||'';if((!h||!a)&&g.game_id){const p=g.game_id.split('_');if(p.length>=4){a=a||p[2];h=h||p[3]}}return{h,a}}
 
 function cHtml(g,idx){
@@ -771,16 +784,14 @@ function cHtml(g,idx){
   const done=g.actual_home_score!=null;
   const dateStr=g.game_date?new Date(g.game_date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}):'';
   let pills='';
-  if(g.total_lean&&!['PUSH','SUPPRESSED',''].includes(g.total_lean)){const c=g.total_lean==='OVER'?'ov':'un';const d=g.total_edge!=null?(g.total_edge>0?'+':'')+g.total_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.total_lean==='OVER'?'Total OVER':'Total UNDER'} ${d}</span>`}
-  if(g.spread_lean&&!['PUSH','SUPPRESSED',''].includes(g.spread_lean)){const c=g.spread_lean==='HOME'?'hm':'aw';const d=g.spread_edge!=null?(g.spread_edge>0?'+':'')+g.spread_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.spread_lean==='HOME'?'Home value':'Away value'} ${d}</span>`}
+  if(isLean(g.total_lean)){const c=g.total_lean==='OVER'?'ov':'un';const d=g.total_edge!=null?(g.total_edge>0?'+':'')+g.total_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.total_lean==='OVER'?'Total OVER':'Total UNDER'} ${d}</span>`}
+  if(isLean(g.spread_lean)){const c=g.spread_lean==='HOME'?'hm':'aw';const d=g.spread_edge!=null?(g.spread_edge>0?'+':'')+g.spread_edge.toFixed(1):'';pills+=`<span class="pill ${c}">${g.spread_lean==='HOME'?'Home value':'Away value'} ${d}</span>`}
   if(g.spread_lean==='SUPPRESSED'||g.total_lean==='SUPPRESSED')pills+=`<span class="pill sp">⚠ insufficient data</span>`;
   const ctx=[];
-  if(g.is_dome)ctx.push('<span title="Played in a dome (indoor stadium)">🏟</span>');
-  else if(g.wind>=15)ctx.push(`<span title="${g.wind}mph">💨</span>`);
-  else if(g.temp!=null&&g.temp<=32)ctx.push(`<span title="${g.temp}°F">❄</span>`);
-  if(g.is_primetime)ctx.push('<span title="Primetime game (MNF / SNF / TNF)">🌙</span>');
+  if(g.is_dome)ctx.push('<span title="Indoors (dome or closed roof)">🏟</span>');
+  if(g.is_primetime)ctx.push('<span title="Night game (kickoff 7pm ET or later)">🌙</span>');
   if(g.is_international)ctx.push('<span title="International game">🌍</span>');
-  if(g.is_division_game)ctx.push('<span title="Division rivalry game game">⚔</span>');
+  if(g.is_division_game)ctx.push('<span title="Division rivalry game">⚔</span>');
   let actual='';
   if(done){const e=Math.abs((g.predicted_home_score+g.predicted_away_score)-(g.actual_home_score+g.actual_away_score));actual=`<div class="actual ${e<=7?'hit':'miss'}">Actual: ${g.actual_home_score}–${g.actual_away_score} (±${e})</div>`}
   return `<div class="gc${done?' done':''}" id="gc${idx}">
@@ -802,13 +813,14 @@ function cHtml(g,idx){
 
 function dHtml(g,h,a){
   const bd=g.confidence_breakdown||{};
-  const cr=[['Sub-model agreement',bd.model_agreement,'#2d6a3f'],['Data completeness',bd.feature_completeness,'#1e4d7a'],['Head-to-head sample size',bd.h2h_data_quality,'#7a5e18'],['Injury report freshness',bd.injury_data_freshness,'#8b3030']];
+  const cr=[['Sub-model agreement',bd.model_agreement,'#2d6a3f'],['Data completeness',bd.feature_completeness,'#1e4d7a'],['Head-to-head sample size',bd.h2h_data_quality,'#7a5e18']];
   const cHtml=cr.map(([l,v,c])=>{const p=v!=null?Math.round(v*100):0;return`<div class="drow"><span class="dlbl">${l}</span><span class="dval">${p}%</span></div><div class="cbar"><div class="cbf" style="width:${p}%;background:${c}"></div></div>`}).join('');
   // spread_line is HOME-oriented (positive = home favored). Show both
   // numbers in familiar sportsbook style: "HOME -3.5" / "AWAY -2.0".
   const fmtSpr=v=>v==null?null:(v>0?`${h} −${Math.abs(v).toFixed(1)}`:v<0?`${a} −${Math.abs(v).toFixed(1)}`:'Pick’em');
-  const sd=[g.ci_home?`<div class="drow"><span class="dlbl">${h} range</span><span class="dval">${g.ci_home[0]}–${g.ci_home[1]} pts</span></div>`:'',g.ci_away?`<div class="drow"><span class="dlbl">${a} range</span><span class="dval">${g.ci_away[0]}–${g.ci_away[1]} pts</span></div>`:'',`<div class="drow"><span class="dlbl">Model line</span><span class="dval">${fmtSpr(g.predicted_spread)||'—'}</span></div>`,g.book_spread!=null?`<div class="drow"><span class="dlbl">Vegas line</span><span class="dval">${fmtSpr(g.book_spread)}</span></div>`:'',g.spread_edge!=null?`<div class="drow"><span class="dlbl" title="Model margin minus Vegas line — positive favors the home side">Spread edge</span><span class="dval">${g.spread_edge>0?'+':''}${(+g.spread_edge).toFixed(1)}</span></div>`:'',g.total_edge!=null?`<div class="drow"><span class="dlbl">Total edge</span><span class="dval ${g.total_edge<-1?'pos':g.total_edge>1?'neg':''}">${g.total_edge>0?'+':''}${g.total_edge}</span></div>`:''  ].join('');
-  const fh=Object.entries(g.top_features||{}).filter(([k,v])=>typeof v==='number'&&!['spread_edge','total_edge','is_dome','high_wind','cold_game'].includes(k)).slice(0,6).map(([k,v])=>`<div class="drow"><span class="dlbl">${fl(k)}</span><span class="dval ${v>0.01?'pos':v<-0.01?'neg':''}">${Math.abs(v)>10?v.toFixed(0):v.toFixed(3)}</span></div>`).join('');
+  const rh=g.range_home||g.ci_home,ra=g.range_away||g.ci_away;
+  const sd=[rh?`<div class="drow"><span class="dlbl" title="Lowest to highest of the four sub-models">${h} sub-model range</span><span class="dval">${rh[0]}–${rh[1]} pts</span></div>`:'',ra?`<div class="drow"><span class="dlbl" title="Lowest to highest of the four sub-models">${a} sub-model range</span><span class="dval">${ra[0]}–${ra[1]} pts</span></div>`:'',`<div class="drow"><span class="dlbl">Model line</span><span class="dval">${fmtSpr(g.predicted_spread)||'—'}</span></div>`,g.book_spread!=null?`<div class="drow"><span class="dlbl">Vegas line</span><span class="dval">${fmtSpr(g.book_spread)}</span></div>`:'',g.spread_edge!=null?`<div class="drow"><span class="dlbl" title="Model margin minus Vegas line — positive favors the home side">Spread edge</span><span class="dval">${g.spread_edge>0?'+':''}${(+g.spread_edge).toFixed(1)}</span></div>`:'',g.total_edge!=null?`<div class="drow"><span class="dlbl">Total edge</span><span class="dval ${g.total_edge<-1?'pos':g.total_edge>1?'neg':''}">${g.total_edge>0?'+':''}${g.total_edge}</span></div>`:''  ].join('');
+  const fh=Object.entries(g.top_features||{}).filter(([k,v])=>typeof v==='number').slice(0,6).map(([k,v])=>`<div class="drow"><span class="dlbl">${fl(k)}</span><span class="dval ${v>0.01?'pos':v<-0.01?'neg':''}">${Math.abs(v)>10?v.toFixed(0):v.toFixed(3)}</span></div>`).join('');
   return `<div class="dgrid"><div class="dsec"><h5>Confidence</h5>${cHtml}</div><div class="dsec"><h5>Score breakdown</h5>${sd}</div><div class="dsec"><h5>Key model signals</h5>${fh}</div></div>`;
 }
 
@@ -828,58 +840,69 @@ function mkC(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(doc
 
 /* ══ BACKTEST ════════════════════════════════════════════════ */
 function renderBacktest(){
-  if(!Object.keys(btD).length){document.getElementById('btCards').innerHTML='<div class="empty">No backtest data yet.</div>';return}
-  const seas=Object.keys(btD).sort((a,b)=>+b-+a);
+  const seas=Object.keys(btD).filter(k=>btD[k]&&btD[k].vegas_mae_spread!=null).sort((a,b)=>+b-+a);
+  if(!seas.length){document.getElementById('btCards').innerHTML='<div class="empty">No backtest data yet — run the Backtest workflow.</div>';return}
   document.getElementById('btCards').innerHTML=seas.map(s=>{
     const r=btD[s];
-    const sr=r.pred_spread_std&&r.actual_spread_std?(r.pred_spread_std/r.actual_spread_std*100).toFixed(0):null;
-    const he=r.edge_ats_wins!=null;
+    const beat=r.mae_spread<r.vegas_mae_spread, beatT=r.mae_total<r.vegas_mae_total;
     return `<div class="d-card">
-      <div class="d-season">${s}</div><div class="d-sub">Trained on seasons ${r.train_seasons?.join(', ')||'?'} — tested on ${s}</div>
-      <div class="d-row"><span class="lbl">Total games tested</span><span class="val">${r.n_games}</span></div>
-      <div class="d-row"><span class="lbl">Average score error</span><span class="val ${r.mae_total<8?'good':'warn'}">±${r.mae_total.toFixed(1)} pts</span></div>
-      <div class="d-row"><span class="lbl">Average margin error</span><span class="val ${r.mae_spread<5?'good':'warn'}">±${r.mae_spread.toFixed(1)} pts</span></div>
-      ${sr?`<div class="d-row"><span class="lbl" title="How spread out our predicted margins are vs. actual game margins. 90%+ means the model is not collapsing all games to the same score">Predicted margin spread</span><span class="val ${sr>80?'good':'warn'}">${sr}% of actual</span></div>`:''}
-      <div class="d-row" style="border-top:1px solid var(--w3);margin-top:4px;padding-top:8px"><span class="lbl" style="color:var(--g2);font-style:italic" title="Did the model land on the correct side of the spread? Inflated by spread correlation — not a direct betting metric.">Spread direction (not a bet signal)</span><span class="val dim">${(r.ats_pct*100).toFixed(1)}%</span></div>
-      ${he?`<div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Betting edge signal (3pt+ gap)</span><span class="val ${r.edge_ats_pct>0.55?'good':'warn'}">${(r.edge_ats_pct*100).toFixed(1)}% — n=${r.edge_ats_n_games}</span></div>`:''}
-      <div class="d-row"><span class="lbl">Over/Under prediction rate</span><span class="val ${r.ou_pct>0.55?'good':'warn'}">${(r.ou_pct*100).toFixed(1)}% (${r.ou_wins}–${r.ou_losses})</span></div>
-      <div class="d-row"><span class="lbl" title="How much of the actual score variation is explained by the model. 1.0 = perfect, 0.0 = no better than guessing the average">Predictive fit (R²)</span><span class="val ${r.r2_total>0.5?'good':'warn'}">${r.r2_total.toFixed(3)}</span></div>
+      <div class="d-season">${s}</div><div class="d-sub">Trained on ${r.train_seasons?.join(', ')||'?'} · ${r.model_version||''}</div>
+      <div class="d-row"><span class="lbl">Games tested</span><span class="val">${r.n_games}</span></div>
+      <div class="d-row"><span class="lbl">Margin error — model / Vegas</span><span class="val ${beat?'good':'warn'}">±${r.mae_spread.toFixed(2)} / ±${r.vegas_mae_spread.toFixed(2)}</span></div>
+      <div class="d-row"><span class="lbl">Total error — model / Vegas</span><span class="val ${beatT?'good':'warn'}">±${r.mae_total.toFixed(2)} / ±${r.vegas_mae_total.toFixed(2)}</span></div>
+      <div class="d-row"><span class="lbl">Spread record, all games</span><span class="val">${r.ats_wins}–${r.ats_losses} (${pct1(r.ats_pct)})</span></div>
+      <div class="d-row"><span class="lbl" style="font-weight:700;color:var(--g4)">Edge games (3+ pts)</span><span class="val ${r.edge_ats_pct>0.524?'good':'warn'}">${r.edge_ats_wins}–${r.edge_ats_losses} (${pct1(r.edge_ats_pct)})</span></div>
+      <div class="d-row"><span class="lbl">Flat-stake ROI on edge games</span><span class="val ${r.edge_roi_flat_110>0?'good':'warn'}">${r.edge_roi_flat_110!=null?(r.edge_roi_flat_110>0?'+':'')+(100*r.edge_roi_flat_110).toFixed(1)+'%':'—'}</span></div>
+      <div class="d-row"><span class="lbl">Over/Under record, all games</span><span class="val">${r.ou_wins}–${r.ou_losses} (${pct1(r.ou_pct)})</span></div>
+      <div class="d-row"><span class="lbl" title="Spread of predicted margins vs. the Vegas lines. Good predictions are NOT as spread out as actual results (those include luck).">Predicted margin spread (std)</span><span class="val dim">${r.pred_spread_std} pts (Vegas ${r.vegas_spread_std})</span></div>
     </div>`;
   }).join('');
-
-  const mv=seas.map(s=>btD[s].mae_total);
-  mkC('btMae',{type:'bar',data:{labels:seas,datasets:[{data:mv,backgroundColor:mv.map(v=>v<8?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:mv.map(v=>v<8?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,title:{display:true,text:'Error (points)',color:'#9a9a96'}}}}});
-
-  const es=seas.filter(s=>btD[s].edge_ats_pct!=null);
-  const ev=es.map(s=>+(btD[s].edge_ats_pct*100).toFixed(1));
-  if(es.length)mkC('btAts',{type:'bar',data:{labels:es,datasets:[{data:ev,backgroundColor:ev.map(v=>v>55?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:ev.map(v=>v>55?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:40,max:70,title:{display:true,text:'Hit rate (%)',color:'#9a9a96'}}}}});
-
+  const asc=[...seas].reverse();
+  mkC('btMae',{type:'bar',data:{labels:asc,datasets:[
+    {label:'Model',data:asc.map(s=>btD[s].mae_spread),backgroundColor:'rgba(30,77,122,.25)',borderColor:'#1e4d7a',borderWidth:1},
+    {label:'Vegas line',data:asc.map(s=>btD[s].vegas_mae_spread),backgroundColor:'rgba(122,94,24,.2)',borderColor:'#7a5e18',borderWidth:1}]},
+    options:{...CO,plugins:{legend:{display:true}},scales:{...CO.scales,y:{...CO.scales.y,min:8,title:{display:true,text:'Error (points)',color:'#9a9a96'}}}}});
+  const ev=asc.map(s=>btD[s].edge_ats_pct!=null?+(btD[s].edge_ats_pct*100).toFixed(1):null);
+  mkC('btAts',{type:'bar',data:{labels:asc,datasets:[{data:ev,backgroundColor:ev.map(v=>v>52.4?'rgba(45,106,63,.2)':'rgba(122,94,24,.2)'),borderColor:ev.map(v=>v>52.4?'#2d6a3f':'#7a5e18'),borderWidth:1}]},options:{...CO,scales:{...CO.scales,y:{...CO.scales.y,min:30,max:70,title:{display:true,text:'Hit rate (%)',color:'#9a9a96'}}}}});
   const byT=btD[seas[0]]?.by_game_type||{};
   const tks=Object.keys(byT);
   const tL={REG:'Regular Season',WC:'Wild Card',DIV:'Divisional',CON:'Conf. Champ.',SB:'Super Bowl'};
-  if(tks.length)mkC('btType',{type:'bar',data:{labels:tks.map(k=>tL[k]||k),datasets:[{data:tks.map(k=>byT[k].mae_total),backgroundColor:'rgba(30,77,122,.18)',borderColor:'#1e4d7a',borderWidth:1}]},options:{indexAxis:'y',...CO,scales:{x:{...CO.scales.x,title:{display:true,text:'Score error (pts)',color:'#9a9a96'}},y:{...CO.scales.y,grid:{display:false}}}}});
+  if(tks.length)mkC('btType',{type:'bar',data:{labels:tks.map(k=>tL[k]||k),datasets:[{data:tks.map(k=>byT[k].mae_total),backgroundColor:'rgba(30,77,122,.18)',borderColor:'#1e4d7a',borderWidth:1}]},options:{indexAxis:'y',...CO,scales:{x:{...CO.scales.x,title:{display:true,text:'Total-score error (pts)',color:'#9a9a96'}},y:{...CO.scales.y,grid:{display:false}}}}});
 }
 
 /* ══ PERFORMANCE ═════════════════════════════════════════════ */
 function renderPerf(){
-  const s=perfD.summary||{},g=perfD.games||[];
+  const s=perfD.summary||{},g=perfD.games||[],bv=perfD.by_model_version||{};
+  const vs=(m,v)=>m!=null?`±${m} pts`+(v!=null?` <span style="opacity:.6;font-size:.7em">Vegas ±${v}</span>`:''):'—';
   document.getElementById('perfKpis').innerHTML=[
-    {l:'Average score error (pts)',v:s.mae_total?'±'+s.mae_total+' pts':'—',sub:'Average points off per game (total score)'},
-    {l:'Average margin-of-victory error (pts)',v:s.mae_spread?'±'+s.mae_spread+' pts':'—',sub:'Mean absolute error'},
-    {l:'Spread pick record',v:s.ats_record||'—',sub:`${Math.round((s.ats_pct||0)*100)}% hit rate`},
-    {l:'Over/Under record',v:s.ou_record||'—',sub:`${Math.round((s.ou_pct||0)*100)}% hit rate`},
+    {l:'Margin (spread) error',v:vs(s.mae_spread,s.vegas_mae_spread),sub:'model vs. just using the Vegas line'},
+    {l:'Total-score error',v:vs(s.mae_total,s.vegas_mae_total),sub:'model vs. the Vegas over/under'},
+    {l:'Spread record, all games',v:s.ats_record||'—',sub:`${pct1(s.ats_pct)} — 52.4% breaks even`},
+    {l:'Edge games (3+ pts)',v:s.edge_record||'—',sub:`${pct1(s.edge_pct)} · ROI ${s.edge_roi_flat_110!=null?(100*s.edge_roi_flat_110).toFixed(1)+'%':'—'}`},
+    {l:'Over/Under record, all games',v:s.ou_record||'—',sub:`${pct1(s.ou_pct)} hit rate`},
     {l:'Games tracked',v:s.n_games||'0',sub:'completed games this season'},
   ].map(c=>`<div class="kpi"><div class="kpi-lbl">${c.l}</div><div class="kpi-val">${c.v}</div><div class="kpi-sub">${c.sub}</div></div>`).join('');
 
-  const mw={};for(const x of g){mw[x.week]=mw[x.week]||[];mw[x.week].push(Math.abs(x.error_total))}
-  const wk=Object.keys(mw).sort((a,b)=>+a-+b);
-  mkC('maeWk',{type:'line',data:{labels:wk.map(w=>'Wk '+w),datasets:[{data:wk.map(w=>(mw[w].reduce((a,b)=>a+b,0)/mw[w].length).toFixed(2)),borderColor:'#2a2a28',backgroundColor:'rgba(0,0,0,.05)',tension:.4,pointRadius:3,fill:true,pointBackgroundColor:'#2a2a28'}]},options:CO});
+  const mw={},vw={};
+  for(const x of g){(mw[x.week]=mw[x.week]||[]).push(Math.abs(x.error_spread));if(x.book_spread!=null)(vw[x.week]=vw[x.week]||[]).push(Math.abs(x.book_spread-(x.actual_home-x.actual_away)))}
+  const wk=Object.keys(mw).sort((a,b)=>+a-+b), avg=a=>a&&a.length?+(a.reduce((p,q)=>p+q,0)/a.length).toFixed(2):null;
+  mkC('maeWk',{type:'line',data:{labels:wk.map(w=>'Wk '+w),datasets:[
+    {label:'Model',data:wk.map(w=>avg(mw[w])),borderColor:'#2a2a28',tension:.3,pointRadius:3},
+    {label:'Vegas line',data:wk.map(w=>avg(vw[w])),borderColor:'#7a5e18',borderDash:[4,4],tension:.3,pointRadius:2}]},
+    options:{...CO,plugins:{legend:{display:true}}}});
+
+  const tiers=s.confidence_breakdown||{};
+  document.getElementById('tierBody').innerHTML=['HIGH','MEDIUM','LOW','WEAK'].filter(t=>tiers[t]).map(t=>{const r=tiers[t];
+    return `<tr><td>${t}</td><td>${r.n}</td><td>${pm(r.mae_spread)}</td><td>${pm(r.mae_total)}</td><td>${pct1(r.ats_pct)}</td></tr>`}).join('')||'<tr><td colspan="5">—</td></tr>';
+  document.getElementById('verBody').innerHTML=Object.entries(bv).map(([v,r])=>
+    `<tr><td>${v}</td><td>${r.n_games}</td><td>${pm(r.mae_spread)} (${pm(r.vegas_mae_spread)})</td><td>${r.ats_record} (${pct1(r.ats_pct)})</td><td>${r.edge_record} (${pct1(r.edge_pct)})</td></tr>`).join('')||'<tr><td colspan="5">—</td></tr>';
 
   document.getElementById('perfBody').innerHTML=[...g].reverse().slice(0,30).map(x=>{
     const ac=x.ats_result==='WIN'?'pos':x.ats_result==='LOSS'?'neg':'';
     const oc=x.ou_result==='WIN'?'pos':x.ou_result==='LOSS'?'neg':'';
     const ec=Math.abs(x.error_total)<=7?'pos':'neg';
-    return `<tr><td>Week ${x.week}</td><td>${x.away_team||'?'} @ ${x.home_team||'?'}</td><td>${x.predicted_home}–${x.predicted_away}</td><td>${x.actual_home}–${x.actual_away}</td><td class="${ec}">${x.error_total>0?'+':''}${x.error_total}</td><td class="${ac}">${{WIN:'✓ Beat',LOSS:'✗ Missed',PUSH:'Push'}[x.ats_result]||x.ats_result||'—'}</td><td class="${oc}">${{WIN:'✓ Correct',LOSS:'✗ Wrong',PUSH:'Push'}[x.ou_result]||x.ou_result||'—'}</td><td><span class="cbadge ${x.confidence_label}" style="font-size:.65rem;padding:2px 6px">${{HIGH:"High",MEDIUM:"Medium",LOW:"Low",WEAK:"Insufficient data"}[x.confidence_label]||x.confidence_label}</span></td></tr>`;
+    const lab={WIN:'✓ Won',LOSS:'✗ Lost',PUSH:'Push'};
+    return `<tr><td>Week ${x.week}</td><td>${x.away_team||'?'} @ ${x.home_team||'?'}</td><td>${x.predicted_home}–${x.predicted_away}</td><td>${x.actual_home}–${x.actual_away}</td><td class="${ec}">${x.error_total>0?'+':''}${x.error_total}</td><td class="${ac}">${lab[x.ats_result]||'—'}${x.edge_game?' ★':''}</td><td class="${oc}">${lab[x.ou_result]||'—'}</td><td><span class="cbadge ${x.confidence_label}" style="font-size:.65rem;padding:2px 6px">${{HIGH:"High",MEDIUM:"Medium",LOW:"Low",WEAK:"Insufficient data"}[x.confidence_label]||x.confidence_label}</span></td></tr>`;
   }).join('');
 }
 
