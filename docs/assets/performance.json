@@ -3801,6 +3801,31 @@
       "edge_game": false
     },
     {
+      "game_id": "2026_11_CIN_WAS",
+      "week": 11,
+      "game_type": "REG",
+      "home_team": "WAS",
+      "away_team": "CIN",
+      "predicted_home": 24,
+      "predicted_away": 32,
+      "actual_home": 22,
+      "actual_away": 20,
+      "book_spread": -6.0,
+      "book_total": 54.5,
+      "confidence_label": "HIGH",
+      "confidence_score": 0.8665,
+      "model_version": "v2.0-20261123",
+      "error_home": 2,
+      "error_away": 12,
+      "error_spread": -10,
+      "error_total": 14,
+      "ats_result": "LOSS",
+      "ou_result": "LOSS",
+      "spread_edge": -2.0,
+      "total_edge": 1.5,
+      "edge_game": false
+    },
+    {
       "game_id": "2026_11_IND_HOU",
       "week": 11,
       "game_type": "REG",
@@ -4052,26 +4077,26 @@
     }
   ],
   "summary": {
-    "n_games": 162,
-    "mae_home": 7.648,
-    "mae_away": 8.247,
-    "mae_spread": 10.907,
-    "mae_total": 11.352,
-    "vegas_mae_spread": 9.475,
-    "vegas_mae_total": 10.586,
-    "ats_record": "75-83",
-    "ats_pct": 0.4747,
-    "ou_record": "79-83",
-    "ou_pct": 0.4877,
+    "n_games": 163,
+    "mae_home": 7.613,
+    "mae_away": 8.27,
+    "mae_spread": 10.902,
+    "mae_total": 11.368,
+    "vegas_mae_spread": 9.466,
+    "vegas_mae_total": 10.598,
+    "ats_record": "75-84",
+    "ats_pct": 0.4717,
+    "ou_record": "79-84",
+    "ou_pct": 0.4847,
     "edge_record": "48-56",
     "edge_pct": 0.4615,
     "edge_roi_flat_110": -0.1189,
     "confidence_breakdown": {
       "HIGH": {
-        "n": 12,
-        "mae_spread": 8.583,
-        "mae_total": 10.75,
-        "ats_pct": 0.4545
+        "n": 13,
+        "mae_spread": 8.692,
+        "mae_total": 11.0,
+        "ats_pct": 0.4167
       },
       "MEDIUM": {
         "n": 144,
@@ -4123,11 +4148,35 @@
           "ats_pct": 0.5
         }
       }
+    },
+    "v2.0-20261123": {
+      "n_games": 1,
+      "mae_home": 2.0,
+      "mae_away": 12.0,
+      "mae_spread": 10.0,
+      "mae_total": 14.0,
+      "vegas_mae_spread": 8.0,
+      "vegas_mae_total": 12.5,
+      "ats_record": "0-1",
+      "ats_pct": 0.0,
+      "ou_record": "0-1",
+      "ou_pct": 0.0,
+      "edge_record": "0-0",
+      "edge_pct": null,
+      "edge_roi_flat_110": null,
+      "confidence_breakdown": {
+        "HIGH": {
+          "n": 1,
+          "mae_spread": 10.0,
+          "mae_total": 14.0,
+          "ats_pct": 0.0
+        }
+      }
     }
   },
   "definitions": {
     "edge_threshold_pts": 3.0,
     "ats_ou": "model side vs the line at publication time, every game"
   },
-  "updated_at": "2026-11-23T22:00:25.879529+00:00"
+  "updated_at": "2026-11-24T20:43:42.583132+00:00"
 }

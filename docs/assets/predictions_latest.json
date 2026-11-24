@@ -1,64 +1,9 @@
 {
-  "generated_at": "2026-11-23T22:02:26.983011+00:00",
-  "model_version": "v2.0-20261123",
+  "generated_at": "2026-11-24T20:46:55.634404+00:00",
+  "model_version": "v2.0-20261124",
   "season": 2026,
-  "n_games": 110,
+  "n_games": 109,
   "predictions": [
-    {
-      "game_id": "2026_11_CIN_WAS",
-      "season": 2026,
-      "week": 11,
-      "game_type": "REG",
-      "game_date": "2026-11-23",
-      "home_team": "WAS",
-      "away_team": "CIN",
-      "predicted_home_score": 24,
-      "predicted_away_score": 32,
-      "predicted_total": 56,
-      "predicted_spread": -8,
-      "range_home": [
-        16,
-        25
-      ],
-      "range_away": [
-        26,
-        32
-      ],
-      "confidence_score": 0.8665,
-      "confidence_label": "HIGH",
-      "confidence_breakdown": {
-        "model_agreement": 0.8391,
-        "feature_completeness": 1.0,
-        "h2h_data_quality": 0.7
-      },
-      "book_spread": -6.0,
-      "book_total": 54.5,
-      "spread_edge": -2.0,
-      "total_edge": 1.5,
-      "spread_lean": "NONE",
-      "total_lean": "NONE",
-      "is_dome": 0,
-      "is_primetime": 1,
-      "is_international": 0,
-      "is_division_game": 0,
-      "top_features": {
-        "elo_gap": -307.93,
-        "elo_vs_spread": -6.32,
-        "home_off_epa_per_play_r8": -0.03,
-        "away_off_epa_per_play_r8": 0.17,
-        "home_def_epa_per_play_r8": 0.03,
-        "away_def_epa_per_play_r8": 0.03,
-        "home_qb_epa_per_att_r8": -0.03,
-        "away_qb_epa_per_att_r8": 0.33,
-        "home_qb_start_share": 0.88,
-        "away_qb_start_share": 1.0,
-        "rest_diff": 3.0,
-        "h2h_avg_margin": 5.56,
-        "h2h_n_games": 3.0
-      },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
-    },
     {
       "game_id": "2026_12_GB_LA",
       "season": 2026,
@@ -67,29 +12,29 @@
       "game_date": "2026-11-25",
       "home_team": "LA",
       "away_team": "GB",
-      "predicted_home_score": 25,
+      "predicted_home_score": 24,
       "predicted_away_score": 21,
-      "predicted_total": 46,
-      "predicted_spread": 4,
+      "predicted_total": 45,
+      "predicted_spread": 3,
       "range_home": [
-        15,
-        26
+        18,
+        27
       ],
       "range_away": [
-        17,
-        22
+        20,
+        23
       ],
-      "confidence_score": 0.8213,
+      "confidence_score": 0.8669,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7192,
+        "model_agreement": 0.8021,
         "feature_completeness": 0.9692,
         "h2h_data_quality": 0.9
       },
       "book_spread": 2.5,
       "book_total": 44.5,
-      "spread_edge": 1.5,
-      "total_edge": 1.5,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -111,8 +56,8 @@
         "h2h_avg_margin": -10.9,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_CHI_DET",
@@ -128,16 +73,16 @@
       "predicted_spread": -2,
       "range_home": [
         23,
-        29
+        33
       ],
       "range_away": [
-        20,
+        23,
         31
       ],
-      "confidence_score": 0.8719,
+      "confidence_score": 0.8466,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8077,
+        "model_agreement": 0.7619,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.8507
       },
@@ -166,8 +111,8 @@
         "h2h_avg_margin": 7.65,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_KC_BUF",
@@ -177,29 +122,29 @@
       "game_date": "2026-11-26",
       "home_team": "BUF",
       "away_team": "KC",
-      "predicted_home_score": 28,
-      "predicted_away_score": 23,
-      "predicted_total": 51,
-      "predicted_spread": 5,
+      "predicted_home_score": 26,
+      "predicted_away_score": 22,
+      "predicted_total": 48,
+      "predicted_spread": 4,
       "range_home": [
         24,
-        33
+        32
       ],
       "range_away": [
-        13,
+        12,
         24
       ],
-      "confidence_score": 0.7978,
+      "confidence_score": 0.7888,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6826,
+        "model_agreement": 0.6663,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.816
       },
       "book_spread": 3.0,
-      "book_total": 49.5,
-      "spread_edge": 2.0,
-      "total_edge": 1.5,
+      "book_total": 47.5,
+      "spread_edge": 1.0,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -221,8 +166,8 @@
         "h2h_avg_margin": 1.47,
         "h2h_n_games": 10.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_PHI_DAL",
@@ -233,28 +178,28 @@
       "home_team": "DAL",
       "away_team": "PHI",
       "predicted_home_score": 29,
-      "predicted_away_score": 20,
-      "predicted_total": 49,
-      "predicted_spread": 9,
+      "predicted_away_score": 19,
+      "predicted_total": 48,
+      "predicted_spread": 10,
       "range_home": [
-        24,
+        22,
         33
       ],
       "range_away": [
-        16,
+        15,
         26
       ],
-      "confidence_score": 0.8193,
+      "confidence_score": 0.7892,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6933,
+        "model_agreement": 0.6386,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.9201
       },
       "book_spread": 8.5,
       "book_total": 47.5,
-      "spread_edge": 0.5,
-      "total_edge": 1.5,
+      "spread_edge": 1.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -276,8 +221,8 @@
         "h2h_avg_margin": -2.57,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_DEN_PIT",
@@ -287,29 +232,29 @@
       "game_date": "2026-11-27",
       "home_team": "PIT",
       "away_team": "DEN",
-      "predicted_home_score": 18,
+      "predicted_home_score": 19,
       "predicted_away_score": 21,
-      "predicted_total": 39,
-      "predicted_spread": -3,
+      "predicted_total": 40,
+      "predicted_spread": -2,
       "range_home": [
         11,
-        22
+        24
       ],
       "range_away": [
         20,
-        26
+        28
       ],
-      "confidence_score": 0.7817,
+      "confidence_score": 0.7533,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6848,
+        "model_agreement": 0.6333,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.7
       },
       "book_spread": -3.0,
       "book_total": 38.5,
-      "spread_edge": 0.0,
-      "total_edge": 0.5,
+      "spread_edge": 1.0,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -331,8 +276,8 @@
         "h2h_avg_margin": 6.76,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_ATL_MIN",
@@ -342,29 +287,29 @@
       "game_date": "2026-11-29",
       "home_team": "MIN",
       "away_team": "ATL",
-      "predicted_home_score": 26,
+      "predicted_home_score": 25,
       "predicted_away_score": 17,
-      "predicted_total": 43,
-      "predicted_spread": 9,
+      "predicted_total": 42,
+      "predicted_spread": 8,
       "range_home": [
-        21,
+        20,
         26
       ],
       "range_away": [
-        15,
-        26
+        17,
+        27
       ],
-      "confidence_score": 0.8058,
+      "confidence_score": 0.7935,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7492,
+        "model_agreement": 0.7269,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.625
       },
       "book_spread": 7.0,
       "book_total": 42.5,
-      "spread_edge": 2.0,
-      "total_edge": 0.5,
+      "spread_edge": 1.0,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -386,8 +331,8 @@
         "h2h_avg_margin": -1.58,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_BAL_HOU",
@@ -397,29 +342,29 @@
       "game_date": "2026-11-29",
       "home_team": "HOU",
       "away_team": "BAL",
-      "predicted_home_score": 29,
+      "predicted_home_score": 28,
       "predicted_away_score": 20,
-      "predicted_total": 49,
-      "predicted_spread": 9,
+      "predicted_total": 48,
+      "predicted_spread": 8,
       "range_home": [
-        27,
-        31
+        26,
+        30
       ],
       "range_away": [
         19,
         26
       ],
-      "confidence_score": 0.8988,
+      "confidence_score": 0.8653,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8672,
+        "model_agreement": 0.8062,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.8125
       },
       "book_spread": 6.5,
-      "book_total": 46.5,
-      "spread_edge": 2.5,
-      "total_edge": 2.5,
+      "book_total": 47.5,
+      "spread_edge": 1.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -441,8 +386,8 @@
         "h2h_avg_margin": -6.74,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_LV_CLE",
@@ -452,28 +397,28 @@
       "game_date": "2026-11-29",
       "home_team": "CLE",
       "away_team": "LV",
-      "predicted_home_score": 24,
-      "predicted_away_score": 19,
+      "predicted_home_score": 25,
+      "predicted_away_score": 18,
       "predicted_total": 43,
-      "predicted_spread": 5,
+      "predicted_spread": 7,
       "range_home": [
         23,
         28
       ],
       "range_away": [
-        10,
+        13,
         22
       ],
-      "confidence_score": 0.7631,
+      "confidence_score": 0.7894,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6791,
+        "model_agreement": 0.7269,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.5972
       },
       "book_spread": 4.5,
       "book_total": 41.5,
-      "spread_edge": 0.5,
+      "spread_edge": 2.5,
       "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
@@ -496,8 +441,8 @@
         "h2h_avg_margin": 0.62,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_NE_LAC",
@@ -507,29 +452,29 @@
       "game_date": "2026-11-29",
       "home_team": "LAC",
       "away_team": "NE",
-      "predicted_home_score": 19,
+      "predicted_home_score": 18,
       "predicted_away_score": 16,
-      "predicted_total": 35,
-      "predicted_spread": 3,
+      "predicted_total": 34,
+      "predicted_spread": 2,
       "range_home": [
-        16,
+        13,
         21
       ],
       "range_away": [
         16,
-        21
+        22
       ],
-      "confidence_score": 0.8831,
+      "confidence_score": 0.8412,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8556,
+        "model_agreement": 0.7794,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.75
       },
       "book_spread": 1.5,
       "book_total": 35.5,
-      "spread_edge": 1.5,
-      "total_edge": -0.5,
+      "spread_edge": 0.5,
+      "total_edge": -1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -551,8 +496,8 @@
         "h2h_avg_margin": -1.49,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_NO_CIN",
@@ -562,29 +507,29 @@
       "game_date": "2026-11-29",
       "home_team": "CIN",
       "away_team": "NO",
-      "predicted_home_score": 33,
-      "predicted_away_score": 21,
-      "predicted_total": 54,
+      "predicted_home_score": 32,
+      "predicted_away_score": 20,
+      "predicted_total": 52,
       "predicted_spread": 12,
       "range_home": [
-        30,
-        37
+        27,
+        39
       ],
       "range_away": [
-        17,
+        16,
         22
       ],
-      "confidence_score": 0.7676,
-      "confidence_label": "HIGH",
+      "confidence_score": 0.7318,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7956,
+        "model_agreement": 0.7306,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.2
       },
       "book_spread": 10.0,
-      "book_total": 51.5,
+      "book_total": 50.5,
       "spread_edge": 2.0,
-      "total_edge": 2.5,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -592,13 +537,13 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": 347.7,
-        "elo_vs_spread": 3.91,
-        "home_off_epa_per_play_r8": 0.17,
+        "elo_gap": 316.11,
+        "elo_vs_spread": 2.64,
+        "home_off_epa_per_play_r8": 0.18,
         "away_off_epa_per_play_r8": -0.08,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.06,
         "away_def_epa_per_play_r8": 0.01,
-        "home_qb_epa_per_att_r8": 0.33,
+        "home_qb_epa_per_att_r8": 0.35,
         "away_qb_epa_per_att_r8": -0.03,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 1.0,
@@ -606,8 +551,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_NYG_IND",
@@ -618,28 +563,28 @@
       "home_team": "IND",
       "away_team": "NYG",
       "predicted_home_score": 17,
-      "predicted_away_score": 25,
-      "predicted_total": 42,
-      "predicted_spread": -8,
+      "predicted_away_score": 24,
+      "predicted_total": 41,
+      "predicted_spread": -7,
       "range_home": [
-        16,
+        17,
         25
       ],
       "range_away": [
-        22,
+        21,
         26
       ],
-      "confidence_score": 0.8073,
+      "confidence_score": 0.8072,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.793,
+        "model_agreement": 0.7929,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.474
       },
       "book_spread": -6.5,
       "book_total": 41.5,
-      "spread_edge": -1.5,
-      "total_edge": 0.5,
+      "spread_edge": -0.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -661,8 +606,8 @@
         "h2h_avg_margin": -9.2,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_NYJ_MIA",
@@ -672,29 +617,29 @@
       "game_date": "2026-11-29",
       "home_team": "MIA",
       "away_team": "NYJ",
-      "predicted_home_score": 20,
-      "predicted_away_score": 22,
-      "predicted_total": 42,
+      "predicted_home_score": 19,
+      "predicted_away_score": 21,
+      "predicted_total": 40,
       "predicted_spread": -2,
       "range_home": [
         16,
-        23
-      ],
-      "range_away": [
-        20,
         24
       ],
-      "confidence_score": 0.8301,
+      "range_away": [
+        19,
+        26
+      ],
+      "confidence_score": 0.8144,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7981,
+        "model_agreement": 0.7695,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.6076
       },
       "book_spread": -3.5,
       "book_total": 40.5,
       "spread_edge": 1.5,
-      "total_edge": 1.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -716,8 +661,8 @@
         "h2h_avg_margin": 6.05,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_SEA_SF",
@@ -727,29 +672,29 @@
       "game_date": "2026-11-29",
       "home_team": "SF",
       "away_team": "SEA",
-      "predicted_home_score": 26,
+      "predicted_home_score": 25,
       "predicted_away_score": 22,
-      "predicted_total": 48,
-      "predicted_spread": 4,
+      "predicted_total": 47,
+      "predicted_spread": 3,
       "range_home": [
-        19,
+        18,
         28
       ],
       "range_away": [
-        15,
+        17,
         23
       ],
-      "confidence_score": 0.8636,
+      "confidence_score": 0.867,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7519,
+        "model_agreement": 0.7582,
         "feature_completeness": 1.0,
         "h2h_data_quality": 1.0
       },
       "book_spread": 3.0,
       "book_total": 46.5,
-      "spread_edge": 1.0,
-      "total_edge": 1.5,
+      "spread_edge": 0.0,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -771,8 +716,8 @@
         "h2h_avg_margin": -3.35,
         "h2h_n_games": 8.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_TEN_JAX",
@@ -782,29 +727,29 @@
       "game_date": "2026-11-29",
       "home_team": "JAX",
       "away_team": "TEN",
-      "predicted_home_score": 34,
-      "predicted_away_score": 16,
-      "predicted_total": 50,
+      "predicted_home_score": 33,
+      "predicted_away_score": 15,
+      "predicted_total": 48,
       "predicted_spread": 18,
       "range_home": [
-        31,
-        34
+        29,
+        33
       ],
       "range_away": [
-        15,
+        14,
         23
       ],
-      "confidence_score": 0.9405,
+      "confidence_score": 0.8963,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.9041,
+        "model_agreement": 0.8237,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.9549
       },
       "book_spread": 14.5,
       "book_total": 47.5,
       "spread_edge": 3.5,
-      "total_edge": 2.5,
+      "total_edge": 0.5,
       "spread_lean": "HOME",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -826,8 +771,8 @@
         "h2h_avg_margin": 15.05,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_WAS_ARI",
@@ -838,28 +783,28 @@
       "home_team": "ARI",
       "away_team": "WAS",
       "predicted_home_score": 17,
-      "predicted_away_score": 24,
-      "predicted_total": 41,
-      "predicted_spread": -7,
+      "predicted_away_score": 25,
+      "predicted_total": 42,
+      "predicted_spread": -8,
       "range_home": [
         15,
-        21
+        20
       ],
       "range_away": [
-        22,
+        19,
         33
       ],
-      "confidence_score": 0.7696,
+      "confidence_score": 0.746,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7046,
+        "model_agreement": 0.6617,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.5469
       },
-      "book_spread": -7.0,
-      "book_total": 40.5,
-      "spread_edge": 0.0,
-      "total_edge": 0.5,
+      "book_spread": -7.5,
+      "book_total": 42.5,
+      "spread_edge": -0.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -867,22 +812,22 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": -92.18,
-        "elo_vs_spread": 3.31,
+        "elo_gap": -123.77,
+        "elo_vs_spread": 2.55,
         "home_off_epa_per_play_r8": -0.12,
         "away_off_epa_per_play_r8": -0.03,
         "home_def_epa_per_play_r8": 0.09,
-        "away_def_epa_per_play_r8": 0.03,
-        "home_qb_epa_per_att_r8": -0.12,
-        "away_qb_epa_per_att_r8": -0.03,
+        "away_def_epa_per_play_r8": 0.02,
+        "home_qb_epa_per_att_r8": -0.25,
+        "away_qb_epa_per_att_r8": -0.02,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 0.88,
         "rest_diff": 1.0,
         "h2h_avg_margin": -6.11,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_12_CAR_TB",
@@ -897,17 +842,17 @@
       "predicted_total": 44,
       "predicted_spread": 4,
       "range_home": [
-        19,
+        17,
         24
       ],
       "range_away": [
-        18,
+        19,
         27
       ],
-      "confidence_score": 0.8916,
+      "confidence_score": 0.8598,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8293,
+        "model_agreement": 0.7715,
         "feature_completeness": 1.0,
         "h2h_data_quality": 0.9028
       },
@@ -936,8 +881,8 @@
         "h2h_avg_margin": 11.28,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_KC_LA",
@@ -947,29 +892,29 @@
       "game_date": "2026-12-03",
       "home_team": "LA",
       "away_team": "KC",
-      "predicted_home_score": 27,
-      "predicted_away_score": 21,
-      "predicted_total": 48,
-      "predicted_spread": 6,
+      "predicted_home_score": 25,
+      "predicted_away_score": 22,
+      "predicted_total": 47,
+      "predicted_spread": 3,
       "range_home": [
-        20,
-        27
+        17,
+        26
       ],
       "range_away": [
-        15,
-        23
+        17,
+        25
       ],
-      "confidence_score": 0.7365,
+      "confidence_score": 0.6979,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7633,
-        "feature_completeness": 0.9555,
+        "model_agreement": 0.6858,
+        "feature_completeness": 0.9692,
         "h2h_data_quality": 0.2
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 1.5,
+      "book_total": 46.5,
+      "spread_edge": 1.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -978,6 +923,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 17.75,
+        "elo_vs_spread": -0.79,
         "home_off_epa_per_play_r8": 0.07,
         "away_off_epa_per_play_r8": 0.12,
         "home_def_epa_per_play_r8": -0.13,
@@ -990,8 +936,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_BUF_NE",
@@ -1001,29 +947,29 @@
       "game_date": "2026-12-06",
       "home_team": "NE",
       "away_team": "BUF",
-      "predicted_home_score": 17,
-      "predicted_away_score": 25,
-      "predicted_total": 42,
-      "predicted_spread": -8,
+      "predicted_home_score": 15,
+      "predicted_away_score": 29,
+      "predicted_total": 44,
+      "predicted_spread": -14,
       "range_home": [
-        8,
-        22
+        10,
+        17
       ],
       "range_away": [
-        16,
-        26
+        23,
+        30
       ],
-      "confidence_score": 0.748,
+      "confidence_score": 0.8571,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.5995,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7903,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.816
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -13.5,
+      "book_total": 44.5,
+      "spread_edge": -0.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1032,6 +978,7 @@
       "is_division_game": 1,
       "top_features": {
         "elo_gap": -286.73,
+        "elo_vs_spread": 2.03,
         "home_off_epa_per_play_r8": 0.03,
         "away_off_epa_per_play_r8": 0.1,
         "home_def_epa_per_play_r8": 0.1,
@@ -1044,8 +991,8 @@
         "h2h_avg_margin": 0.59,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_CAR_MIN",
@@ -1055,29 +1002,29 @@
       "game_date": "2026-12-06",
       "home_team": "MIN",
       "away_team": "CAR",
-      "predicted_home_score": 20,
-      "predicted_away_score": 22,
-      "predicted_total": 42,
-      "predicted_spread": -2,
+      "predicted_home_score": 25,
+      "predicted_away_score": 19,
+      "predicted_total": 44,
+      "predicted_spread": 6,
       "range_home": [
-        17,
-        24
+        21,
+        25
       ],
       "range_away": [
         19,
         27
       ],
-      "confidence_score": 0.8129,
+      "confidence_score": 0.8497,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7644,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.8238,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.6441
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 4.5,
+      "book_total": 42.5,
+      "spread_edge": 1.5,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -1086,6 +1033,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 185.44,
+        "elo_vs_spread": 2.92,
         "home_off_epa_per_play_r8": -0.14,
         "away_off_epa_per_play_r8": -0.01,
         "home_def_epa_per_play_r8": -0.08,
@@ -1098,8 +1046,8 @@
         "h2h_avg_margin": 4.92,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_CIN_CLE",
@@ -1109,29 +1057,29 @@
       "game_date": "2026-12-06",
       "home_team": "CLE",
       "away_team": "CIN",
-      "predicted_home_score": 21,
-      "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_home_score": 22,
+      "predicted_away_score": 27,
+      "predicted_total": 49,
+      "predicted_spread": -5,
       "range_home": [
-        13,
-        24
+        14,
+        23
       ],
       "range_away": [
         19,
-        27
+        28
       ],
-      "confidence_score": 0.8226,
+      "confidence_score": 0.8498,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6848,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7269,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 1.0
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -5.5,
+      "book_total": 48.5,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1139,21 +1087,22 @@
       "is_international": 0,
       "is_division_game": 1,
       "top_features": {
-        "elo_gap": -247.21,
+        "elo_gap": -215.62,
+        "elo_vs_spread": -3.12,
         "home_off_epa_per_play_r8": -0.05,
-        "away_off_epa_per_play_r8": 0.17,
+        "away_off_epa_per_play_r8": 0.18,
         "home_def_epa_per_play_r8": -0.04,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.06,
         "home_qb_epa_per_att_r8": -0.02,
-        "away_qb_epa_per_att_r8": 0.33,
+        "away_qb_epa_per_att_r8": 0.35,
         "home_qb_start_share": 0.88,
         "away_qb_start_share": 1.0,
         "rest_diff": 0.0,
         "h2h_avg_margin": -3.77,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_DET_ATL",
@@ -1163,29 +1112,29 @@
       "game_date": "2026-12-06",
       "home_team": "ATL",
       "away_team": "DET",
-      "predicted_home_score": 21,
-      "predicted_away_score": 25,
-      "predicted_total": 46,
+      "predicted_home_score": 23,
+      "predicted_away_score": 27,
+      "predicted_total": 50,
       "predicted_spread": -4,
       "range_home": [
-        16,
+        18,
         25
       ],
       "range_away": [
-        23,
-        28
+        25,
+        30
       ],
-      "confidence_score": 0.7905,
+      "confidence_score": 0.8244,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7567,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.811,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.5226
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -3.5,
+      "book_total": 49.5,
+      "spread_edge": -0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -1194,6 +1143,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": -331.93,
+        "elo_vs_spread": -9.78,
         "home_off_epa_per_play_r8": -0.01,
         "away_off_epa_per_play_r8": 0.12,
         "home_def_epa_per_play_r8": 0.04,
@@ -1206,8 +1156,8 @@
         "h2h_avg_margin": -3.24,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_GB_NO",
@@ -1218,28 +1168,28 @@
       "home_team": "NO",
       "away_team": "GB",
       "predicted_home_score": 20,
-      "predicted_away_score": 22,
-      "predicted_total": 42,
-      "predicted_spread": -2,
+      "predicted_away_score": 26,
+      "predicted_total": 46,
+      "predicted_spread": -6,
       "range_home": [
-        18,
-        29
+        17,
+        27
       ],
       "range_away": [
-        20,
-        34
+        23,
+        33
       ],
-      "confidence_score": 0.6921,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.7532,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.5462,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.6498,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.6389
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -5.5,
+      "book_total": 45.5,
+      "spread_edge": -0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -1248,6 +1198,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": -195.74,
+        "elo_vs_spread": -2.33,
         "home_off_epa_per_play_r8": -0.08,
         "away_off_epa_per_play_r8": 0.04,
         "home_def_epa_per_play_r8": 0.01,
@@ -1260,8 +1211,8 @@
         "h2h_avg_margin": -3.3,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_HOU_PIT",
@@ -1271,29 +1222,29 @@
       "game_date": "2026-12-06",
       "home_team": "PIT",
       "away_team": "HOU",
-      "predicted_home_score": 20,
+      "predicted_home_score": 21,
       "predicted_away_score": 23,
-      "predicted_total": 43,
-      "predicted_spread": -3,
+      "predicted_total": 44,
+      "predicted_spread": -2,
       "range_home": [
-        14,
-        25
+        16,
+        22
       ],
       "range_away": [
-        15,
-        23
+        22,
+        30
       ],
-      "confidence_score": 0.7573,
+      "confidence_score": 0.8176,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6665,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7688,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.6319
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -2.5,
+      "book_total": 44.5,
+      "spread_edge": 0.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1302,6 +1253,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 18.69,
+        "elo_vs_spread": 3.25,
         "home_off_epa_per_play_r8": 0.04,
         "away_off_epa_per_play_r8": 0.07,
         "home_def_epa_per_play_r8": 0.01,
@@ -1314,8 +1266,8 @@
         "h2h_avg_margin": -13.7,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_JAX_CHI",
@@ -1325,29 +1277,29 @@
       "game_date": "2026-12-06",
       "home_team": "CHI",
       "away_team": "JAX",
-      "predicted_home_score": 24,
-      "predicted_away_score": 23,
-      "predicted_total": 47,
-      "predicted_spread": 1,
+      "predicted_home_score": 28,
+      "predicted_away_score": 24,
+      "predicted_total": 52,
+      "predicted_spread": 4,
       "range_home": [
-        21,
-        29
+        23,
+        32
       ],
       "range_away": [
-        18,
-        28
+        20,
+        27
       ],
-      "confidence_score": 0.7978,
+      "confidence_score": 0.8058,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7216,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7287,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.7
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 2.5,
+      "book_total": 50.5,
+      "spread_edge": 1.5,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1356,6 +1308,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 57.37,
+        "elo_vs_spread": -0.21,
         "home_off_epa_per_play_r8": -0.03,
         "away_off_epa_per_play_r8": 0.12,
         "home_def_epa_per_play_r8": -0.07,
@@ -1368,8 +1321,8 @@
         "h2h_avg_margin": 14.96,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_LAC_TB",
@@ -1379,29 +1332,29 @@
       "game_date": "2026-12-06",
       "home_team": "TB",
       "away_team": "LAC",
-      "predicted_home_score": 24,
-      "predicted_away_score": 19,
-      "predicted_total": 43,
-      "predicted_spread": 5,
+      "predicted_home_score": 23,
+      "predicted_away_score": 17,
+      "predicted_total": 40,
+      "predicted_spread": 6,
       "range_home": [
         17,
         26
       ],
       "range_away": [
-        17,
-        25
+        15,
+        23
       ],
-      "confidence_score": 0.7799,
+      "confidence_score": 0.7842,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7076,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7081,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.6319
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 5.5,
+      "book_total": 40.5,
+      "spread_edge": 0.5,
+      "total_edge": -0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1410,6 +1363,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 193.36,
+        "elo_vs_spread": 2.23,
         "home_off_epa_per_play_r8": -0.05,
         "away_off_epa_per_play_r8": -0.13,
         "home_def_epa_per_play_r8": -0.11,
@@ -1422,8 +1376,8 @@
         "h2h_avg_margin": 11.87,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_MIA_DEN",
@@ -1434,28 +1388,28 @@
       "home_team": "DEN",
       "away_team": "MIA",
       "predicted_home_score": 28,
-      "predicted_away_score": 17,
-      "predicted_total": 45,
-      "predicted_spread": 11,
+      "predicted_away_score": 11,
+      "predicted_total": 39,
+      "predicted_spread": 17,
       "range_home": [
-        25,
-        34
+        27,
+        35
       ],
       "range_away": [
-        15,
-        22
+        10,
+        17
       ],
-      "confidence_score": 0.7242,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.7442,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7242,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7532,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.2
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 14.5,
+      "book_total": 38.5,
+      "spread_edge": 2.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1464,6 +1418,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 457.49,
+        "elo_vs_spread": 3.8,
         "home_off_epa_per_play_r8": 0.02,
         "away_off_epa_per_play_r8": -0.09,
         "home_def_epa_per_play_r8": -0.01,
@@ -1476,8 +1431,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_PHI_ARI",
@@ -1487,29 +1442,29 @@
       "game_date": "2026-12-06",
       "home_team": "ARI",
       "away_team": "PHI",
-      "predicted_home_score": 20,
-      "predicted_away_score": 20,
-      "predicted_total": 40,
+      "predicted_home_score": 19,
+      "predicted_away_score": 19,
+      "predicted_total": 38,
       "predicted_spread": 0,
       "range_home": [
-        18,
-        23
+        17,
+        21
       ],
       "range_away": [
-        12,
-        23
+        10,
+        21
       ],
-      "confidence_score": 0.7793,
+      "confidence_score": 0.7943,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7131,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7367,
+        "feature_completeness": 0.9932,
         "h2h_data_quality": 0.6076
       },
       "book_spread": null,
-      "book_total": null,
+      "book_total": 36.5,
       "spread_edge": null,
-      "total_edge": null,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 1,
@@ -1522,7 +1477,7 @@
         "away_off_epa_per_play_r8": -0.15,
         "home_def_epa_per_play_r8": 0.09,
         "away_def_epa_per_play_r8": 0.03,
-        "home_qb_epa_per_att_r8": -0.12,
+        "home_qb_epa_per_att_r8": -0.25,
         "away_qb_epa_per_att_r8": -0.21,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 0.25,
@@ -1530,8 +1485,8 @@
         "h2h_avg_margin": 2.2,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_SF_NYG",
@@ -1541,29 +1496,29 @@
       "game_date": "2026-12-06",
       "home_team": "NYG",
       "away_team": "SF",
-      "predicted_home_score": 20,
-      "predicted_away_score": 25,
-      "predicted_total": 45,
+      "predicted_home_score": 22,
+      "predicted_away_score": 27,
+      "predicted_total": 49,
       "predicted_spread": -5,
       "range_home": [
-        17,
-        26
+        20,
+        23
       ],
       "range_away": [
         24,
-        28
+        30
       ],
-      "confidence_score": 0.8087,
+      "confidence_score": 0.8593,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7899,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.8744,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.5226
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -5.5,
+      "book_total": 47.5,
+      "spread_edge": 0.5,
+      "total_edge": 1.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1572,6 +1527,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": -282.62,
+        "elo_vs_spread": -5.8,
         "home_off_epa_per_play_r8": -0.02,
         "away_off_epa_per_play_r8": 0.19,
         "home_def_epa_per_play_r8": -0.06,
@@ -1584,8 +1540,8 @@
         "h2h_avg_margin": -13.06,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_WAS_TEN",
@@ -1596,28 +1552,28 @@
       "home_team": "TEN",
       "away_team": "WAS",
       "predicted_home_score": 22,
-      "predicted_away_score": 23,
-      "predicted_total": 45,
-      "predicted_spread": -1,
+      "predicted_away_score": 25,
+      "predicted_total": 47,
+      "predicted_spread": -3,
       "range_home": [
-        20,
-        25
+        18,
+        24
       ],
       "range_away": [
-        22,
-        32
+        25,
+        33
       ],
-      "confidence_score": 0.7803,
+      "confidence_score": 0.795,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7383,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7576,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.5226
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": -3.5,
+      "book_total": 46.5,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1625,21 +1581,22 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": -197.11,
+        "elo_gap": -228.7,
+        "elo_vs_spread": -5.65,
         "home_off_epa_per_play_r8": -0.07,
         "away_off_epa_per_play_r8": -0.03,
         "home_def_epa_per_play_r8": 0.12,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.02,
         "home_qb_epa_per_att_r8": -0.05,
-        "away_qb_epa_per_att_r8": -0.03,
+        "away_qb_epa_per_att_r8": -0.02,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 0.88,
         "rest_diff": 0.0,
         "h2h_avg_margin": -3.7,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_13_DAL_SEA",
@@ -1649,29 +1606,29 @@
       "game_date": "2026-12-07",
       "home_team": "SEA",
       "away_team": "DAL",
-      "predicted_home_score": 23,
+      "predicted_home_score": 29,
       "predicted_away_score": 23,
-      "predicted_total": 46,
-      "predicted_spread": 0,
+      "predicted_total": 52,
+      "predicted_spread": 6,
       "range_home": [
-        16,
-        27
+        19,
+        30
       ],
       "range_away": [
-        18,
+        22,
         26
       ],
-      "confidence_score": 0.7171,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.7696,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7113,
-        "feature_completeness": 0.9863,
+        "model_agreement": 0.7992,
+        "feature_completeness": 1.0,
         "h2h_data_quality": 0.2
       },
-      "book_spread": null,
-      "book_total": null,
-      "spread_edge": null,
-      "total_edge": null,
+      "book_spread": 5.5,
+      "book_total": 51.5,
+      "spread_edge": 0.5,
+      "total_edge": 0.5,
       "spread_lean": "NONE",
       "total_lean": "NONE",
       "is_dome": 0,
@@ -1680,6 +1637,7 @@
       "is_division_game": 0,
       "top_features": {
         "elo_gap": 259.16,
+        "elo_vs_spread": 4.87,
         "home_off_epa_per_play_r8": -0.05,
         "away_off_epa_per_play_r8": 0.11,
         "home_def_epa_per_play_r8": -0.07,
@@ -1692,8 +1650,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_MIN_NE",
@@ -1703,22 +1661,22 @@
       "game_date": "2026-12-10",
       "home_team": "NE",
       "away_team": "MIN",
-      "predicted_home_score": 18,
+      "predicted_home_score": 21,
       "predicted_away_score": 18,
-      "predicted_total": 36,
-      "predicted_spread": 0,
+      "predicted_total": 39,
+      "predicted_spread": 3,
       "range_home": [
-        13,
-        22
+        16,
+        24
       ],
       "range_away": [
-        16,
+        15,
         19
       ],
-      "confidence_score": 0.7756,
+      "confidence_score": 0.7785,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8177,
+        "model_agreement": 0.8229,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -1746,8 +1704,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_ATL_CLE",
@@ -1757,22 +1715,22 @@
       "game_date": "2026-12-13",
       "home_team": "CLE",
       "away_team": "ATL",
-      "predicted_home_score": 22,
+      "predicted_home_score": 24,
       "predicted_away_score": 22,
-      "predicted_total": 44,
-      "predicted_spread": 0,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "range_home": [
-        20,
+        18,
         26
       ],
       "range_away": [
         20,
-        24
+        25
       ],
-      "confidence_score": 0.7824,
+      "confidence_score": 0.7694,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8301,
+        "model_agreement": 0.8064,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -1800,8 +1758,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_BUF_GB",
@@ -1812,21 +1770,21 @@
       "home_team": "GB",
       "away_team": "BUF",
       "predicted_home_score": 18,
-      "predicted_away_score": 26,
-      "predicted_total": 44,
-      "predicted_spread": -8,
+      "predicted_away_score": 24,
+      "predicted_total": 42,
+      "predicted_spread": -6,
       "range_home": [
         15,
         25
       ],
       "range_away": [
         22,
-        27
+        29
       ],
-      "confidence_score": 0.7315,
+      "confidence_score": 0.7196,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7375,
+        "model_agreement": 0.7159,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -1854,8 +1812,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_CHI_MIA",
@@ -1865,22 +1823,22 @@
       "game_date": "2026-12-13",
       "home_team": "MIA",
       "away_team": "CHI",
-      "predicted_home_score": 23,
-      "predicted_away_score": 24,
-      "predicted_total": 47,
-      "predicted_spread": -1,
+      "predicted_home_score": 22,
+      "predicted_away_score": 22,
+      "predicted_total": 44,
+      "predicted_spread": 0,
       "range_home": [
         17,
-        25
+        26
       ],
       "range_away": [
-        21,
-        25
+        19,
+        28
       ],
-      "confidence_score": 0.7596,
-      "confidence_label": "HIGH",
+      "confidence_score": 0.7153,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7886,
+        "model_agreement": 0.708,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -1908,8 +1866,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_DEN_NYJ",
@@ -1919,22 +1877,22 @@
       "game_date": "2026-12-13",
       "home_team": "NYJ",
       "away_team": "DEN",
-      "predicted_home_score": 21,
-      "predicted_away_score": 22,
-      "predicted_total": 43,
-      "predicted_spread": -1,
+      "predicted_home_score": 24,
+      "predicted_away_score": 23,
+      "predicted_total": 47,
+      "predicted_spread": 1,
       "range_home": [
-        17,
-        24
+        22,
+        25
       ],
       "range_away": [
-        21,
-        23
+        18,
+        24
       ],
-      "confidence_score": 0.9002,
+      "confidence_score": 0.9098,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8288,
+        "model_agreement": 0.8462,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9896
       },
@@ -1962,8 +1920,8 @@
         "h2h_avg_margin": -2.21,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_HOU_WAS",
@@ -1973,22 +1931,22 @@
       "game_date": "2026-12-13",
       "home_team": "WAS",
       "away_team": "HOU",
-      "predicted_home_score": 20,
+      "predicted_home_score": 23,
       "predicted_away_score": 22,
-      "predicted_total": 42,
-      "predicted_spread": -2,
+      "predicted_total": 45,
+      "predicted_spread": 1,
       "range_home": [
-        18,
+        21,
         24
       ],
       "range_away": [
-        21,
-        31
+        20,
+        27
       ],
-      "confidence_score": 0.728,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.7976,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7312,
+        "model_agreement": 0.8577,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2003,12 +1961,12 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": -118.26,
+        "elo_gap": -86.67,
         "home_off_epa_per_play_r8": -0.03,
         "away_off_epa_per_play_r8": 0.07,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.02,
         "away_def_epa_per_play_r8": -0.05,
-        "home_qb_epa_per_att_r8": -0.03,
+        "home_qb_epa_per_att_r8": -0.02,
         "away_qb_epa_per_att_r8": 0.2,
         "home_qb_start_share": 0.88,
         "away_qb_start_share": 1.0,
@@ -2016,8 +1974,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_IND_PHI",
@@ -2028,21 +1986,21 @@
       "home_team": "PHI",
       "away_team": "IND",
       "predicted_home_score": 19,
-      "predicted_away_score": 19,
-      "predicted_total": 38,
-      "predicted_spread": 0,
+      "predicted_away_score": 17,
+      "predicted_total": 36,
+      "predicted_spread": 2,
       "range_home": [
-        11,
+        15,
         23
       ],
       "range_away": [
-        16,
+        14,
         23
       ],
-      "confidence_score": 0.6802,
+      "confidence_score": 0.713,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6442,
+        "model_agreement": 0.7039,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2070,8 +2028,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_KC_CIN",
@@ -2081,22 +2039,22 @@
       "game_date": "2026-12-13",
       "home_team": "CIN",
       "away_team": "KC",
-      "predicted_home_score": 25,
-      "predicted_away_score": 22,
+      "predicted_home_score": 24,
+      "predicted_away_score": 23,
       "predicted_total": 47,
-      "predicted_spread": 3,
+      "predicted_spread": 1,
       "range_home": [
-        23,
-        29
+        20,
+        28
       ],
       "range_away": [
-        19,
+        15,
         24
       ],
-      "confidence_score": 0.8981,
+      "confidence_score": 0.8306,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8298,
+        "model_agreement": 0.707,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9722
       },
@@ -2111,12 +2069,12 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": 82.05,
-        "home_off_epa_per_play_r8": 0.17,
+        "elo_gap": 50.46,
+        "home_off_epa_per_play_r8": 0.18,
         "away_off_epa_per_play_r8": 0.12,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.06,
         "away_def_epa_per_play_r8": -0.09,
-        "home_qb_epa_per_att_r8": 0.33,
+        "home_qb_epa_per_att_r8": 0.35,
         "away_qb_epa_per_att_r8": 0.21,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 1.0,
@@ -2124,8 +2082,8 @@
         "h2h_avg_margin": -1.17,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_LAC_LV",
@@ -2135,22 +2093,22 @@
       "game_date": "2026-12-13",
       "home_team": "LV",
       "away_team": "LAC",
-      "predicted_home_score": 22,
-      "predicted_away_score": 22,
-      "predicted_total": 44,
+      "predicted_home_score": 23,
+      "predicted_away_score": 23,
+      "predicted_total": 46,
       "predicted_spread": 0,
       "range_home": [
-        20,
-        26
-      ],
-      "range_away": [
         19,
         24
       ],
-      "confidence_score": 0.8601,
+      "range_away": [
+        17,
+        25
+      ],
+      "confidence_score": 0.8512,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8128,
+        "model_agreement": 0.7966,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7812
       },
@@ -2178,8 +2136,8 @@
         "h2h_avg_margin": -1.56,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_LA_SF",
@@ -2190,21 +2148,21 @@
       "home_team": "SF",
       "away_team": "LA",
       "predicted_home_score": 24,
-      "predicted_away_score": 22,
-      "predicted_total": 46,
-      "predicted_spread": 2,
+      "predicted_away_score": 24,
+      "predicted_total": 48,
+      "predicted_spread": 0,
       "range_home": [
-        22,
-        29
+        20,
+        28
       ],
       "range_away": [
-        19,
+        22,
         25
       ],
-      "confidence_score": 0.8639,
+      "confidence_score": 0.8824,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7768,
+        "model_agreement": 0.8104,
         "feature_completeness": 0.9555,
         "h2h_data_quality": 1.0
       },
@@ -2232,8 +2190,8 @@
         "h2h_avg_margin": 1.15,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_NO_CAR",
@@ -2243,22 +2201,22 @@
       "game_date": "2026-12-13",
       "home_team": "CAR",
       "away_team": "NO",
-      "predicted_home_score": 22,
-      "predicted_away_score": 23,
-      "predicted_total": 45,
+      "predicted_home_score": 21,
+      "predicted_away_score": 22,
+      "predicted_total": 43,
       "predicted_spread": -1,
       "range_home": [
-        19,
+        18,
         31
       ],
       "range_away": [
-        21,
+        20,
         26
       ],
-      "confidence_score": 0.8149,
+      "confidence_score": 0.7803,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7164,
+        "model_agreement": 0.6534,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -2286,8 +2244,8 @@
         "h2h_avg_margin": -6.83,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_NYG_SEA",
@@ -2297,22 +2255,22 @@
       "game_date": "2026-12-13",
       "home_team": "SEA",
       "away_team": "NYG",
-      "predicted_home_score": 23,
-      "predicted_away_score": 19,
-      "predicted_total": 42,
-      "predicted_spread": 4,
+      "predicted_home_score": 25,
+      "predicted_away_score": 20,
+      "predicted_total": 45,
+      "predicted_spread": 5,
       "range_home": [
-        21,
+        23,
         32
       ],
       "range_away": [
-        12,
+        16,
         20
       ],
-      "confidence_score": 0.7702,
+      "confidence_score": 0.8422,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6617,
+        "model_agreement": 0.7925,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7361
       },
@@ -2340,8 +2298,8 @@
         "h2h_avg_margin": 4.62,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_TB_BAL",
@@ -2351,22 +2309,22 @@
       "game_date": "2026-12-13",
       "home_team": "BAL",
       "away_team": "TB",
-      "predicted_home_score": 18,
-      "predicted_away_score": 20,
-      "predicted_total": 38,
-      "predicted_spread": -2,
+      "predicted_home_score": 20,
+      "predicted_away_score": 21,
+      "predicted_total": 41,
+      "predicted_spread": -1,
       "range_home": [
-        16,
-        22
+        14,
+        23
       ],
       "range_away": [
-        16,
-        22
+        15,
+        24
       ],
-      "confidence_score": 0.842,
+      "confidence_score": 0.7852,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.814,
+        "model_agreement": 0.7106,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6562
       },
@@ -2394,8 +2352,8 @@
         "h2h_avg_margin": 7.29,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_TEN_DET",
@@ -2405,22 +2363,22 @@
       "game_date": "2026-12-13",
       "home_team": "DET",
       "away_team": "TEN",
-      "predicted_home_score": 29,
-      "predicted_away_score": 19,
-      "predicted_total": 48,
+      "predicted_home_score": 30,
+      "predicted_away_score": 20,
+      "predicted_total": 50,
       "predicted_spread": 10,
       "range_home": [
-        25,
-        39
+        28,
+        37
       ],
       "range_away": [
         16,
-        20
+        22
       ],
-      "confidence_score": 0.7564,
+      "confidence_score": 0.7772,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6914,
+        "model_agreement": 0.7292,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5347
       },
@@ -2448,8 +2406,8 @@
         "h2h_avg_margin": 5.63,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_14_PIT_JAX",
@@ -2460,21 +2418,21 @@
       "home_team": "JAX",
       "away_team": "PIT",
       "predicted_home_score": 27,
-      "predicted_away_score": 22,
-      "predicted_total": 49,
-      "predicted_spread": 5,
+      "predicted_away_score": 21,
+      "predicted_total": 48,
+      "predicted_spread": 6,
       "range_home": [
         24,
-        32
+        34
       ],
       "range_away": [
         19,
         27
       ],
-      "confidence_score": 0.7333,
+      "confidence_score": 0.7143,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7407,
+        "model_agreement": 0.7062,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2502,8 +2460,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_SF_LAC",
@@ -2513,22 +2471,22 @@
       "game_date": "2026-12-17",
       "home_team": "LAC",
       "away_team": "SF",
-      "predicted_home_score": 19,
-      "predicted_away_score": 25,
-      "predicted_total": 44,
-      "predicted_spread": -6,
+      "predicted_home_score": 21,
+      "predicted_away_score": 26,
+      "predicted_total": 47,
+      "predicted_spread": -5,
       "range_home": [
-        16,
-        25
+        15,
+        24
       ],
       "range_away": [
-        23,
-        30
+        24,
+        29
       ],
-      "confidence_score": 0.7304,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.756,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7354,
+        "model_agreement": 0.7819,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2556,8 +2514,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_CHI_BUF",
@@ -2567,22 +2525,22 @@
       "game_date": "2026-12-19",
       "home_team": "BUF",
       "away_team": "CHI",
-      "predicted_home_score": 26,
-      "predicted_away_score": 20,
+      "predicted_home_score": 25,
+      "predicted_away_score": 21,
       "predicted_total": 46,
-      "predicted_spread": 6,
+      "predicted_spread": 4,
       "range_home": [
         22,
         29
       ],
       "range_away": [
         10,
-        21
+        23
       ],
-      "confidence_score": 0.6864,
+      "confidence_score": 0.6809,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6555,
+        "model_agreement": 0.6455,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2610,8 +2568,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_SEA_PHI",
@@ -2626,17 +2584,17 @@
       "predicted_total": 38,
       "predicted_spread": -4,
       "range_home": [
-        12,
-        21
+        14,
+        22
       ],
       "range_away": [
-        18,
+        19,
         24
       ],
-      "confidence_score": 0.7444,
+      "confidence_score": 0.7577,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7609,
+        "model_agreement": 0.7851,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -2664,8 +2622,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_ATL_WAS",
@@ -2675,22 +2633,22 @@
       "game_date": "2026-12-20",
       "home_team": "WAS",
       "away_team": "ATL",
-      "predicted_home_score": 23,
+      "predicted_home_score": 25,
       "predicted_away_score": 21,
-      "predicted_total": 44,
-      "predicted_spread": 2,
+      "predicted_total": 46,
+      "predicted_spread": 4,
       "range_home": [
-        20,
-        26
+        23,
+        27
       ],
       "range_away": [
         19,
-        25
+        28
       ],
-      "confidence_score": 0.8381,
+      "confidence_score": 0.8277,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8068,
+        "model_agreement": 0.7879,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6563
       },
@@ -2705,12 +2663,12 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": 31.89,
+        "elo_gap": 63.49,
         "home_off_epa_per_play_r8": -0.03,
         "away_off_epa_per_play_r8": -0.01,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.02,
         "away_def_epa_per_play_r8": 0.04,
-        "home_qb_epa_per_att_r8": -0.03,
+        "home_qb_epa_per_att_r8": -0.02,
         "away_qb_epa_per_att_r8": -0.04,
         "home_qb_start_share": 0.88,
         "away_qb_start_share": 1.0,
@@ -2718,8 +2676,8 @@
         "h2h_avg_margin": 1.95,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_BAL_PIT",
@@ -2730,21 +2688,21 @@
       "home_team": "PIT",
       "away_team": "BAL",
       "predicted_home_score": 22,
-      "predicted_away_score": 19,
-      "predicted_total": 41,
-      "predicted_spread": 3,
+      "predicted_away_score": 20,
+      "predicted_total": 42,
+      "predicted_spread": 2,
       "range_home": [
-        13,
+        18,
         26
       ],
       "range_away": [
-        15,
-        22
+        18,
+        23
       ],
-      "confidence_score": 0.7838,
+      "confidence_score": 0.868,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6219,
+        "model_agreement": 0.775,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9722
       },
@@ -2772,8 +2730,8 @@
         "h2h_avg_margin": -1.6,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_CIN_CAR",
@@ -2783,22 +2741,22 @@
       "game_date": "2026-12-20",
       "home_team": "CAR",
       "away_team": "CIN",
-      "predicted_home_score": 21,
-      "predicted_away_score": 25,
-      "predicted_total": 46,
+      "predicted_home_score": 22,
+      "predicted_away_score": 26,
+      "predicted_total": 48,
       "predicted_spread": -4,
       "range_home": [
-        16,
+        14,
         25
       ],
       "range_away": [
-        23,
-        30
+        18,
+        27
       ],
-      "confidence_score": 0.8176,
+      "confidence_score": 0.7616,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7577,
+        "model_agreement": 0.6557,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7
       },
@@ -2813,21 +2771,21 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": -264.51,
+        "elo_gap": -232.91,
         "home_off_epa_per_play_r8": -0.01,
-        "away_off_epa_per_play_r8": 0.17,
+        "away_off_epa_per_play_r8": 0.18,
         "home_def_epa_per_play_r8": 0.01,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.06,
         "home_qb_epa_per_att_r8": -0.04,
-        "away_qb_epa_per_att_r8": 0.33,
+        "away_qb_epa_per_att_r8": 0.35,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 1.0,
         "rest_diff": 0.0,
         "h2h_avg_margin": -7.94,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_CLE_NYG",
@@ -2837,22 +2795,22 @@
       "game_date": "2026-12-20",
       "home_team": "NYG",
       "away_team": "CLE",
-      "predicted_home_score": 22,
-      "predicted_away_score": 19,
-      "predicted_total": 41,
-      "predicted_spread": 3,
+      "predicted_home_score": 24,
+      "predicted_away_score": 18,
+      "predicted_total": 42,
+      "predicted_spread": 6,
       "range_home": [
-        18,
-        34
+        21,
+        32
       ],
       "range_away": [
         16,
         25
       ],
-      "confidence_score": 0.6887,
+      "confidence_score": 0.7304,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5749,
+        "model_agreement": 0.6509,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5104
       },
@@ -2880,8 +2838,8 @@
         "h2h_avg_margin": 1.21,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_DAL_LA",
@@ -2891,22 +2849,22 @@
       "game_date": "2026-12-20",
       "home_team": "LA",
       "away_team": "DAL",
-      "predicted_home_score": 27,
-      "predicted_away_score": 22,
-      "predicted_total": 49,
-      "predicted_spread": 5,
+      "predicted_home_score": 25,
+      "predicted_away_score": 23,
+      "predicted_total": 48,
+      "predicted_spread": 2,
       "range_home": [
-        21,
-        30
+        17,
+        26
       ],
       "range_away": [
         20,
-        24
+        26
       ],
-      "confidence_score": 0.8264,
+      "confidence_score": 0.8034,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7905,
+        "model_agreement": 0.7487,
         "feature_completeness": 0.9555,
         "h2h_data_quality": 0.7
       },
@@ -2934,8 +2892,8 @@
         "h2h_avg_margin": -11.96,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_DEN_LV",
@@ -2945,22 +2903,22 @@
       "game_date": "2026-12-20",
       "home_team": "LV",
       "away_team": "DEN",
-      "predicted_home_score": 19,
-      "predicted_away_score": 24,
-      "predicted_total": 43,
-      "predicted_spread": -5,
+      "predicted_home_score": 21,
+      "predicted_away_score": 25,
+      "predicted_total": 46,
+      "predicted_spread": -4,
       "range_home": [
         14,
         25
       ],
       "range_away": [
-        19,
+        18,
         26
       ],
-      "confidence_score": 0.8275,
+      "confidence_score": 0.8039,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6938,
+        "model_agreement": 0.6509,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 1.0
       },
@@ -2988,8 +2946,8 @@
         "h2h_avg_margin": -6.61,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_DET_MIN",
@@ -2999,22 +2957,22 @@
       "game_date": "2026-12-20",
       "home_team": "MIN",
       "away_team": "DET",
-      "predicted_home_score": 22,
-      "predicted_away_score": 24,
-      "predicted_total": 46,
+      "predicted_home_score": 21,
+      "predicted_away_score": 23,
+      "predicted_total": 44,
       "predicted_spread": -2,
       "range_home": [
-        19,
-        24
+        18,
+        25
       ],
       "range_away": [
-        16,
+        20,
         27
       ],
-      "confidence_score": 0.8319,
+      "confidence_score": 0.8651,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7284,
+        "model_agreement": 0.7888,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9028
       },
@@ -3042,8 +3000,8 @@
         "h2h_avg_margin": -2.49,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_IND_TEN",
@@ -3053,22 +3011,22 @@
       "game_date": "2026-12-20",
       "home_team": "TEN",
       "away_team": "IND",
-      "predicted_home_score": 23,
-      "predicted_away_score": 19,
-      "predicted_total": 42,
+      "predicted_home_score": 22,
+      "predicted_away_score": 18,
+      "predicted_total": 40,
       "predicted_spread": 4,
       "range_home": [
-        18,
+        20,
         24
       ],
       "range_away": [
-        16,
+        15,
         23
       ],
-      "confidence_score": 0.8243,
+      "confidence_score": 0.8382,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7713,
+        "model_agreement": 0.7966,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6944
       },
@@ -3096,8 +3054,8 @@
         "h2h_avg_margin": -6.13,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_JAX_HOU",
@@ -3107,22 +3065,22 @@
       "game_date": "2026-12-20",
       "home_team": "HOU",
       "away_team": "JAX",
-      "predicted_home_score": 22,
-      "predicted_away_score": 24,
-      "predicted_total": 46,
-      "predicted_spread": -2,
+      "predicted_home_score": 24,
+      "predicted_away_score": 23,
+      "predicted_total": 47,
+      "predicted_spread": 1,
       "range_home": [
-        19,
+        20,
         26
       ],
       "range_away": [
-        23,
-        33
+        21,
+        26
       ],
-      "confidence_score": 0.8254,
+      "confidence_score": 0.8876,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6899,
+        "model_agreement": 0.803,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 1.0
       },
@@ -3150,8 +3108,8 @@
         "h2h_avg_margin": 3.14,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_MIA_GB",
@@ -3161,22 +3119,22 @@
       "game_date": "2026-12-20",
       "home_team": "GB",
       "away_team": "MIA",
-      "predicted_home_score": 22,
-      "predicted_away_score": 19,
-      "predicted_total": 41,
+      "predicted_home_score": 23,
+      "predicted_away_score": 20,
+      "predicted_total": 43,
       "predicted_spread": 3,
       "range_home": [
-        19,
-        32
+        21,
+        28
       ],
       "range_away": [
-        17,
+        18,
         23
       ],
-      "confidence_score": 0.7451,
+      "confidence_score": 0.7975,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6808,
+        "model_agreement": 0.7761,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.4983
       },
@@ -3204,8 +3162,8 @@
         "h2h_avg_margin": 8.82,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_NO_TB",
@@ -3215,22 +3173,22 @@
       "game_date": "2026-12-20",
       "home_team": "TB",
       "away_team": "NO",
-      "predicted_home_score": 21,
-      "predicted_away_score": 20,
+      "predicted_home_score": 22,
+      "predicted_away_score": 19,
       "predicted_total": 41,
-      "predicted_spread": 1,
+      "predicted_spread": 3,
       "range_home": [
-        18,
+        19,
         32
       ],
       "range_away": [
-        18,
+        17,
         23
       ],
-      "confidence_score": 0.8079,
+      "confidence_score": 0.7903,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7037,
+        "model_agreement": 0.6717,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -3258,8 +3216,8 @@
         "h2h_avg_margin": 7.23,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_NYJ_ARI",
@@ -3269,22 +3227,22 @@
       "game_date": "2026-12-20",
       "home_team": "ARI",
       "away_team": "NYJ",
-      "predicted_home_score": 21,
-      "predicted_away_score": 23,
-      "predicted_total": 44,
-      "predicted_spread": -2,
+      "predicted_home_score": 22,
+      "predicted_away_score": 21,
+      "predicted_total": 43,
+      "predicted_spread": 1,
       "range_home": [
         19,
         25
       ],
       "range_away": [
-        18,
+        19,
         24
       ],
-      "confidence_score": 0.7998,
+      "confidence_score": 0.8227,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7869,
+        "model_agreement": 0.8286,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.474
       },
@@ -3304,7 +3262,7 @@
         "away_off_epa_per_play_r8": -0.01,
         "home_def_epa_per_play_r8": 0.09,
         "away_def_epa_per_play_r8": 0.09,
-        "home_qb_epa_per_att_r8": -0.12,
+        "home_qb_epa_per_att_r8": -0.25,
         "away_qb_epa_per_att_r8": 0.02,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 1.0,
@@ -3312,8 +3270,8 @@
         "h2h_avg_margin": 15.81,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_15_NE_KC",
@@ -3323,22 +3281,22 @@
       "game_date": "2026-12-21",
       "home_team": "KC",
       "away_team": "NE",
-      "predicted_home_score": 26,
-      "predicted_away_score": 17,
+      "predicted_home_score": 25,
+      "predicted_away_score": 18,
       "predicted_total": 43,
-      "predicted_spread": 9,
+      "predicted_spread": 7,
       "range_home": [
-        16,
-        30
+        13,
+        27
       ],
       "range_away": [
-        8,
+        11,
         21
       ],
-      "confidence_score": 0.6209,
+      "confidence_score": 0.6425,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.5363,
+        "model_agreement": 0.5756,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3366,8 +3324,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_HOU_PHI",
@@ -3378,21 +3336,21 @@
       "home_team": "PHI",
       "away_team": "HOU",
       "predicted_home_score": 19,
-      "predicted_away_score": 23,
-      "predicted_total": 42,
-      "predicted_spread": -4,
+      "predicted_away_score": 22,
+      "predicted_total": 41,
+      "predicted_spread": -3,
       "range_home": [
         16,
-        23
+        22
       ],
       "range_away": [
-        19,
-        27
+        20,
+        26
       ],
-      "confidence_score": 0.749,
+      "confidence_score": 0.7558,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7692,
+        "model_agreement": 0.7816,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3420,8 +3378,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_BUF_DEN",
@@ -3431,22 +3389,22 @@
       "game_date": "2026-12-25",
       "home_team": "DEN",
       "away_team": "BUF",
-      "predicted_home_score": 24,
-      "predicted_away_score": 24,
-      "predicted_total": 48,
+      "predicted_home_score": 23,
+      "predicted_away_score": 23,
+      "predicted_total": 46,
       "predicted_spread": 0,
       "range_home": [
         21,
         27
       ],
       "range_away": [
-        22,
+        19,
         26
       ],
-      "confidence_score": 0.8739,
+      "confidence_score": 0.8338,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8328,
+        "model_agreement": 0.7599,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8
       },
@@ -3474,8 +3432,8 @@
         "h2h_avg_margin": -10.7,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_GB_CHI",
@@ -3485,22 +3443,22 @@
       "game_date": "2026-12-25",
       "home_team": "CHI",
       "away_team": "GB",
-      "predicted_home_score": 24,
-      "predicted_away_score": 21,
-      "predicted_total": 45,
+      "predicted_home_score": 25,
+      "predicted_away_score": 22,
+      "predicted_total": 47,
       "predicted_spread": 3,
       "range_home": [
-        17,
-        29
+        22,
+        27
       ],
       "range_away": [
-        20,
-        23
+        21,
+        27
       ],
-      "confidence_score": 0.8346,
+      "confidence_score": 0.8743,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7522,
+        "model_agreement": 0.8243,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -3528,8 +3486,8 @@
         "h2h_avg_margin": -4.9,
         "h2h_n_games": 8.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_LA_SEA",
@@ -3539,22 +3497,22 @@
       "game_date": "2026-12-25",
       "home_team": "SEA",
       "away_team": "LA",
-      "predicted_home_score": 24,
-      "predicted_away_score": 24,
-      "predicted_total": 48,
+      "predicted_home_score": 23,
+      "predicted_away_score": 23,
+      "predicted_total": 46,
       "predicted_spread": 0,
       "range_home": [
         17,
         26
       ],
       "range_away": [
-        17,
-        26
+        22,
+        25
       ],
-      "confidence_score": 0.8105,
+      "confidence_score": 0.8742,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6797,
+        "model_agreement": 0.7956,
         "feature_completeness": 0.9555,
         "h2h_data_quality": 1.0
       },
@@ -3582,8 +3540,8 @@
         "h2h_avg_margin": -0.88,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_ARI_NO",
@@ -3593,22 +3551,22 @@
       "game_date": "2026-12-27",
       "home_team": "NO",
       "away_team": "ARI",
-      "predicted_home_score": 21,
+      "predicted_home_score": 23,
       "predicted_away_score": 19,
-      "predicted_total": 40,
-      "predicted_spread": 2,
+      "predicted_total": 42,
+      "predicted_spread": 4,
       "range_home": [
-        19,
-        30
+        21,
+        28
       ],
       "range_away": [
         17,
         20
       ],
-      "confidence_score": 0.736,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.777,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7457,
+        "model_agreement": 0.8202,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3629,15 +3587,15 @@
         "home_def_epa_per_play_r8": 0.01,
         "away_def_epa_per_play_r8": 0.09,
         "home_qb_epa_per_att_r8": -0.03,
-        "away_qb_epa_per_att_r8": -0.12,
+        "away_qb_epa_per_att_r8": -0.25,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 0.25,
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_CAR_PIT",
@@ -3647,22 +3605,22 @@
       "game_date": "2026-12-27",
       "home_team": "PIT",
       "away_team": "CAR",
-      "predicted_home_score": 21,
+      "predicted_home_score": 22,
       "predicted_away_score": 21,
-      "predicted_total": 42,
-      "predicted_spread": 0,
+      "predicted_total": 43,
+      "predicted_spread": 1,
       "range_home": [
         14,
         26
       ],
       "range_away": [
         20,
-        26
+        30
       ],
-      "confidence_score": 0.7011,
+      "confidence_score": 0.6742,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6821,
+        "model_agreement": 0.6334,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3690,8 +3648,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_CIN_IND",
@@ -3702,21 +3660,21 @@
       "home_team": "IND",
       "away_team": "CIN",
       "predicted_home_score": 19,
-      "predicted_away_score": 25,
-      "predicted_total": 44,
-      "predicted_spread": -6,
+      "predicted_away_score": 24,
+      "predicted_total": 43,
+      "predicted_spread": -5,
       "range_home": [
-        13,
-        23
+        17,
+        20
       ],
       "range_away": [
-        24,
-        26
+        22,
+        29
       ],
-      "confidence_score": 0.7754,
+      "confidence_score": 0.784,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8172,
+        "model_agreement": 0.8329,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3731,21 +3689,21 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": -408.35,
+        "elo_gap": -376.76,
         "home_off_epa_per_play_r8": -0.16,
-        "away_off_epa_per_play_r8": 0.17,
+        "away_off_epa_per_play_r8": 0.18,
         "home_def_epa_per_play_r8": -0.01,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.06,
         "home_qb_epa_per_att_r8": -0.27,
-        "away_qb_epa_per_att_r8": 0.33,
+        "away_qb_epa_per_att_r8": 0.35,
         "home_qb_start_share": 0.0,
         "away_qb_start_share": 1.0,
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_CLE_BAL",
@@ -3755,22 +3713,22 @@
       "game_date": "2026-12-27",
       "home_team": "BAL",
       "away_team": "CLE",
-      "predicted_home_score": 20,
-      "predicted_away_score": 21,
-      "predicted_total": 41,
-      "predicted_spread": -1,
+      "predicted_home_score": 22,
+      "predicted_away_score": 20,
+      "predicted_total": 42,
+      "predicted_spread": 2,
       "range_home": [
+        19,
+        29
+      ],
+      "range_away": [
         17,
         28
       ],
-      "range_away": [
-        19,
-        28
-      ],
-      "confidence_score": 0.7883,
+      "confidence_score": 0.8004,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6491,
+        "model_agreement": 0.6711,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9028
       },
@@ -3798,8 +3756,8 @@
         "h2h_avg_margin": 8.36,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_JAX_DAL",
@@ -3809,22 +3767,22 @@
       "game_date": "2026-12-27",
       "home_team": "DAL",
       "away_team": "JAX",
-      "predicted_home_score": 25,
-      "predicted_away_score": 23,
+      "predicted_home_score": 24,
+      "predicted_away_score": 24,
       "predicted_total": 48,
-      "predicted_spread": 2,
+      "predicted_spread": 0,
       "range_home": [
         20,
-        28
+        26
       ],
       "range_away": [
-        21,
-        25
+        23,
+        27
       ],
-      "confidence_score": 0.7764,
+      "confidence_score": 0.7994,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8191,
+        "model_agreement": 0.8609,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -3852,8 +3810,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_LAC_MIA",
@@ -3864,21 +3822,21 @@
       "home_team": "MIA",
       "away_team": "LAC",
       "predicted_home_score": 23,
-      "predicted_away_score": 22,
-      "predicted_total": 45,
-      "predicted_spread": 1,
+      "predicted_away_score": 21,
+      "predicted_total": 44,
+      "predicted_spread": 2,
       "range_home": [
-        20,
-        26
+        18,
+        28
       ],
       "range_away": [
-        20,
-        24
+        18,
+        25
       ],
-      "confidence_score": 0.8516,
+      "confidence_score": 0.7792,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8474,
+        "model_agreement": 0.7159,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5972
       },
@@ -3906,8 +3864,8 @@
         "h2h_avg_margin": 0.09,
         "h2h_n_games": 4.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_NE_NYJ",
@@ -3917,22 +3875,22 @@
       "game_date": "2026-12-27",
       "home_team": "NYJ",
       "away_team": "NE",
-      "predicted_home_score": 23,
+      "predicted_home_score": 25,
       "predicted_away_score": 23,
-      "predicted_total": 46,
-      "predicted_spread": 0,
+      "predicted_total": 48,
+      "predicted_spread": 2,
       "range_home": [
         20,
-        26
+        28
       ],
       "range_away": [
         21,
         25
       ],
-      "confidence_score": 0.8641,
+      "confidence_score": 0.8376,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8438,
+        "model_agreement": 0.7955,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6944
       },
@@ -3960,8 +3918,8 @@
         "h2h_avg_margin": -4.46,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_SF_KC",
@@ -3972,21 +3930,21 @@
       "home_team": "KC",
       "away_team": "SF",
       "predicted_home_score": 26,
-      "predicted_away_score": 22,
-      "predicted_total": 48,
-      "predicted_spread": 4,
+      "predicted_away_score": 23,
+      "predicted_total": 49,
+      "predicted_spread": 3,
       "range_home": [
-        19,
-        29
+        20,
+        28
       ],
       "range_away": [
-        19,
-        25
+        22,
+        26
       ],
-      "confidence_score": 0.8172,
+      "confidence_score": 0.8477,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7476,
+        "model_agreement": 0.803,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7344
       },
@@ -4014,8 +3972,8 @@
         "h2h_avg_margin": 8.87,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_TB_ATL",
@@ -4025,22 +3983,22 @@
       "game_date": "2026-12-27",
       "home_team": "ATL",
       "away_team": "TB",
-      "predicted_home_score": 20,
-      "predicted_away_score": 21,
-      "predicted_total": 41,
-      "predicted_spread": -1,
+      "predicted_home_score": 21,
+      "predicted_away_score": 19,
+      "predicted_total": 40,
+      "predicted_spread": 2,
       "range_home": [
-        17,
+        13,
         27
       ],
       "range_away": [
-        16,
-        23
+        12,
+        21
       ],
-      "confidence_score": 0.8068,
-      "confidence_label": "HIGH",
+      "confidence_score": 0.7315,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7206,
+        "model_agreement": 0.5836,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7639
       },
@@ -4068,8 +4026,8 @@
         "h2h_avg_margin": -1.89,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_TEN_LV",
@@ -4079,22 +4037,22 @@
       "game_date": "2026-12-27",
       "home_team": "LV",
       "away_team": "TEN",
-      "predicted_home_score": 22,
-      "predicted_away_score": 24,
-      "predicted_total": 46,
-      "predicted_spread": -2,
+      "predicted_home_score": 25,
+      "predicted_away_score": 23,
+      "predicted_total": 48,
+      "predicted_spread": 2,
       "range_home": [
-        18,
+        22,
         28
       ],
       "range_away": [
-        18,
-        28
+        17,
+        27
       ],
-      "confidence_score": 0.6793,
+      "confidence_score": 0.7323,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6426,
+        "model_agreement": 0.7389,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -4122,8 +4080,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_WAS_MIN",
@@ -4133,22 +4091,22 @@
       "game_date": "2026-12-27",
       "home_team": "MIN",
       "away_team": "WAS",
-      "predicted_home_score": 21,
-      "predicted_away_score": 21,
+      "predicted_home_score": 22,
+      "predicted_away_score": 20,
       "predicted_total": 42,
-      "predicted_spread": 0,
+      "predicted_spread": 2,
       "range_home": [
-        18,
-        28
+        20,
+        29
       ],
       "range_away": [
         18,
-        27
+        26
       ],
-      "confidence_score": 0.6895,
+      "confidence_score": 0.7106,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6612,
+        "model_agreement": 0.6995,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -4163,21 +4121,21 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": 228.86,
+        "elo_gap": 197.27,
         "home_off_epa_per_play_r8": -0.14,
         "away_off_epa_per_play_r8": -0.03,
         "home_def_epa_per_play_r8": -0.08,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.02,
         "home_qb_epa_per_att_r8": -0.1,
-        "away_qb_epa_per_att_r8": -0.03,
+        "away_qb_epa_per_att_r8": -0.02,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 0.88,
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_16_NYG_DET",
@@ -4187,22 +4145,22 @@
       "game_date": "2026-12-28",
       "home_team": "DET",
       "away_team": "NYG",
-      "predicted_home_score": 27,
+      "predicted_home_score": 28,
       "predicted_away_score": 19,
-      "predicted_total": 46,
-      "predicted_spread": 8,
+      "predicted_total": 47,
+      "predicted_spread": 9,
       "range_home": [
-        24,
+        27,
         33
       ],
       "range_away": [
         13,
-        20
+        21
       ],
-      "confidence_score": 0.7376,
+      "confidence_score": 0.7397,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7486,
+        "model_agreement": 0.7524,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -4230,8 +4188,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_BAL_CIN",
@@ -4242,21 +4200,21 @@
       "home_team": "CIN",
       "away_team": "BAL",
       "predicted_home_score": 28,
-      "predicted_away_score": 20,
-      "predicted_total": 48,
-      "predicted_spread": 8,
+      "predicted_away_score": 18,
+      "predicted_total": 46,
+      "predicted_spread": 10,
       "range_home": [
-        17,
+        22,
         32
       ],
       "range_away": [
-        8,
-        23
+        12,
+        21
       ],
-      "confidence_score": 0.7196,
-      "confidence_label": "MEDIUM",
+      "confidence_score": 0.8105,
+      "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.4976,
+        "model_agreement": 0.6629,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 1.0
       },
@@ -4271,12 +4229,12 @@
       "is_international": 0,
       "is_division_game": 1,
       "top_features": {
-        "elo_gap": 331.31,
-        "home_off_epa_per_play_r8": 0.17,
+        "elo_gap": 299.72,
+        "home_off_epa_per_play_r8": 0.18,
         "away_off_epa_per_play_r8": -0.08,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.06,
         "away_def_epa_per_play_r8": 0.02,
-        "home_qb_epa_per_att_r8": 0.33,
+        "home_qb_epa_per_att_r8": 0.35,
         "away_qb_epa_per_att_r8": -0.03,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 0.12,
@@ -4284,8 +4242,8 @@
         "h2h_avg_margin": 0.98,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_BUF_MIA",
@@ -4295,22 +4253,22 @@
       "game_date": "2027-01-03",
       "home_team": "MIA",
       "away_team": "BUF",
-      "predicted_home_score": 21,
-      "predicted_away_score": 25,
-      "predicted_total": 46,
-      "predicted_spread": -4,
+      "predicted_home_score": 18,
+      "predicted_away_score": 24,
+      "predicted_total": 42,
+      "predicted_spread": -6,
       "range_home": [
-        14,
-        24
+        12,
+        23
       ],
       "range_away": [
-        23,
-        27
+        17,
+        30
       ],
-      "confidence_score": 0.8213,
-      "confidence_label": "HIGH",
+      "confidence_score": 0.7282,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.7565,
+        "model_agreement": 0.5871,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7292
       },
@@ -4338,8 +4296,8 @@
         "h2h_avg_margin": -5.92,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_DEN_NE",
@@ -4349,22 +4307,22 @@
       "game_date": "2027-01-03",
       "home_team": "NE",
       "away_team": "DEN",
-      "predicted_home_score": 18,
+      "predicted_home_score": 21,
       "predicted_away_score": 21,
-      "predicted_total": 39,
-      "predicted_spread": -3,
+      "predicted_total": 42,
+      "predicted_spread": 0,
       "range_home": [
-        11,
+        12,
         24
       ],
       "range_away": [
-        15,
+        12,
         22
       ],
-      "confidence_score": 0.7612,
+      "confidence_score": 0.742,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.655,
+        "model_agreement": 0.6201,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7
       },
@@ -4392,8 +4350,8 @@
         "h2h_avg_margin": 0.44,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_DET_CHI",
@@ -4403,22 +4361,22 @@
       "game_date": "2027-01-03",
       "home_team": "CHI",
       "away_team": "DET",
-      "predicted_home_score": 24,
-      "predicted_away_score": 24,
-      "predicted_total": 48,
+      "predicted_home_score": 23,
+      "predicted_away_score": 23,
+      "predicted_total": 46,
       "predicted_spread": 0,
       "range_home": [
-        22,
+        20,
         27
       ],
       "range_away": [
         20,
-        26
+        28
       ],
-      "confidence_score": 0.8791,
+      "confidence_score": 0.8517,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8284,
+        "model_agreement": 0.7785,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8507
       },
@@ -4446,8 +4404,8 @@
         "h2h_avg_margin": -7.65,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_IND_CLE",
@@ -4457,22 +4415,22 @@
       "game_date": "2027-01-03",
       "home_team": "CLE",
       "away_team": "IND",
-      "predicted_home_score": 21,
-      "predicted_away_score": 18,
-      "predicted_total": 39,
-      "predicted_spread": 3,
+      "predicted_home_score": 23,
+      "predicted_away_score": 17,
+      "predicted_total": 40,
+      "predicted_spread": 6,
       "range_home": [
-        19,
+        17,
         25
       ],
       "range_away": [
         15,
-        21
+        22
       ],
-      "confidence_score": 0.766,
-      "confidence_label": "HIGH",
+      "confidence_score": 0.7384,
+      "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.8002,
+        "model_agreement": 0.7501,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -4500,8 +4458,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_KC_LAC",
@@ -4511,22 +4469,22 @@
       "game_date": "2027-01-03",
       "home_team": "LAC",
       "away_team": "KC",
-      "predicted_home_score": 19,
+      "predicted_home_score": 21,
       "predicted_away_score": 24,
-      "predicted_total": 43,
-      "predicted_spread": -5,
+      "predicted_total": 45,
+      "predicted_spread": -3,
       "range_home": [
-        17,
+        19,
         23
       ],
       "range_away": [
-        21,
-        25
+        20,
+        26
       ],
-      "confidence_score": 0.8759,
+      "confidence_score": 0.8853,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8274,
+        "model_agreement": 0.8443,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -4554,8 +4512,8 @@
         "h2h_avg_margin": -3.62,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_LA_TB",
@@ -4565,22 +4523,22 @@
       "game_date": "2027-01-03",
       "home_team": "TB",
       "away_team": "LA",
-      "predicted_home_score": 22,
-      "predicted_away_score": 23,
-      "predicted_total": 45,
-      "predicted_spread": -1,
+      "predicted_home_score": 20,
+      "predicted_away_score": 24,
+      "predicted_total": 44,
+      "predicted_spread": -4,
       "range_home": [
-        15,
-        27
+        17,
+        26
       ],
       "range_away": [
         22,
         30
       ],
-      "confidence_score": 0.7827,
+      "confidence_score": 0.8191,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6564,
+        "model_agreement": 0.7226,
         "feature_completeness": 0.9555,
         "h2h_data_quality": 0.9
       },
@@ -4608,8 +4566,8 @@
         "h2h_avg_margin": -9.15,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_LV_ARI",
@@ -4619,22 +4577,22 @@
       "game_date": "2027-01-03",
       "home_team": "ARI",
       "away_team": "LV",
-      "predicted_home_score": 22,
-      "predicted_away_score": 23,
-      "predicted_total": 45,
-      "predicted_spread": -1,
+      "predicted_home_score": 24,
+      "predicted_away_score": 22,
+      "predicted_total": 46,
+      "predicted_spread": 2,
       "range_home": [
-        19,
-        25
+        21,
+        28
       ],
       "range_away": [
         13,
-        25
+        27
       ],
-      "confidence_score": 0.6962,
+      "confidence_score": 0.676,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6733,
+        "model_agreement": 0.6366,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -4654,7 +4612,7 @@
         "away_off_epa_per_play_r8": -0.03,
         "home_def_epa_per_play_r8": 0.09,
         "away_def_epa_per_play_r8": 0.16,
-        "home_qb_epa_per_att_r8": -0.12,
+        "home_qb_epa_per_att_r8": -0.25,
         "away_qb_epa_per_att_r8": 0.1,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 0.25,
@@ -4662,8 +4620,8 @@
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_MIN_NYJ",
@@ -4673,22 +4631,22 @@
       "game_date": "2027-01-03",
       "home_team": "NYJ",
       "away_team": "MIN",
-      "predicted_home_score": 20,
-      "predicted_away_score": 21,
-      "predicted_total": 41,
-      "predicted_spread": -1,
+      "predicted_home_score": 23,
+      "predicted_away_score": 20,
+      "predicted_total": 43,
+      "predicted_spread": 3,
       "range_home": [
-        16,
-        23
+        21,
+        28
       ],
       "range_away": [
-        19,
-        22
+        18,
+        29
       ],
-      "confidence_score": 0.8421,
+      "confidence_score": 0.7502,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.844,
+        "model_agreement": 0.6769,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5469
       },
@@ -4716,8 +4674,8 @@
         "h2h_avg_margin": -7.54,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_NO_ATL",
@@ -4737,12 +4695,12 @@
       ],
       "range_away": [
         16,
-        25
+        24
       ],
-      "confidence_score": 0.7506,
+      "confidence_score": 0.7582,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6374,
+        "model_agreement": 0.6512,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6944
       },
@@ -4770,8 +4728,8 @@
         "h2h_avg_margin": 3.17,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_NYG_DAL",
@@ -4781,22 +4739,22 @@
       "game_date": "2027-01-03",
       "home_team": "DAL",
       "away_team": "NYG",
-      "predicted_home_score": 26,
+      "predicted_home_score": 27,
       "predicted_away_score": 20,
-      "predicted_total": 46,
-      "predicted_spread": 6,
+      "predicted_total": 47,
+      "predicted_spread": 7,
       "range_home": [
         24,
         33
       ],
       "range_away": [
-        19,
+        18,
         25
       ],
-      "confidence_score": 0.8014,
+      "confidence_score": 0.8054,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7202,
+        "model_agreement": 0.7275,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7292
       },
@@ -4824,8 +4782,8 @@
         "h2h_avg_margin": 2.84,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_PHI_SF",
@@ -4841,16 +4799,16 @@
       "predicted_spread": 12,
       "range_home": [
         24,
-        32
+        31
       ],
       "range_away": [
-        7,
+        11,
         18
       ],
-      "confidence_score": 0.7833,
+      "confidence_score": 0.8505,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.656,
+        "model_agreement": 0.7783,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8438
       },
@@ -4878,8 +4836,8 @@
         "h2h_avg_margin": 1.76,
         "h2h_n_games": 5.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_PIT_TEN",
@@ -4889,22 +4847,22 @@
       "game_date": "2027-01-03",
       "home_team": "TEN",
       "away_team": "PIT",
-      "predicted_home_score": 21,
+      "predicted_home_score": 23,
       "predicted_away_score": 24,
-      "predicted_total": 45,
-      "predicted_spread": -3,
+      "predicted_total": 47,
+      "predicted_spread": -1,
       "range_home": [
-        18,
+        20,
         28
       ],
       "range_away": [
-        21,
+        22,
         32
       ],
-      "confidence_score": 0.7447,
+      "confidence_score": 0.7788,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6602,
+        "model_agreement": 0.7223,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5712
       },
@@ -4932,8 +4890,8 @@
         "h2h_avg_margin": -3.57,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_SEA_CAR",
@@ -4949,16 +4907,16 @@
       "predicted_spread": -3,
       "range_home": [
         17,
-        24
+        25
       ],
       "range_away": [
         21,
-        31
+        27
       ],
-      "confidence_score": 0.7988,
+      "confidence_score": 0.8336,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7235,
+        "model_agreement": 0.7867,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7
       },
@@ -4986,8 +4944,8 @@
         "h2h_avg_margin": -8.13,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_WAS_JAX",
@@ -4997,22 +4955,22 @@
       "game_date": "2027-01-03",
       "home_team": "JAX",
       "away_team": "WAS",
-      "predicted_home_score": 28,
-      "predicted_away_score": 20,
+      "predicted_home_score": 27,
+      "predicted_away_score": 21,
       "predicted_total": 48,
-      "predicted_spread": 8,
+      "predicted_spread": 6,
       "range_home": [
-        24,
-        32
+        23,
+        31
       ],
       "range_away": [
         19,
-        29
+        27
       ],
-      "confidence_score": 0.6998,
+      "confidence_score": 0.7201,
       "confidence_label": "MEDIUM",
       "confidence_breakdown": {
-        "model_agreement": 0.6799,
+        "model_agreement": 0.7167,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.2
       },
@@ -5027,21 +4985,21 @@
       "is_international": 0,
       "is_division_game": 0,
       "top_features": {
-        "elo_gap": 273.24,
+        "elo_gap": 241.65,
         "home_off_epa_per_play_r8": 0.12,
         "away_off_epa_per_play_r8": -0.03,
         "home_def_epa_per_play_r8": -0.12,
-        "away_def_epa_per_play_r8": 0.03,
+        "away_def_epa_per_play_r8": 0.02,
         "home_qb_epa_per_att_r8": 0.26,
-        "away_qb_epa_per_att_r8": -0.03,
+        "away_qb_epa_per_att_r8": -0.02,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 0.88,
         "rest_diff": 0.0,
         "h2h_avg_margin": 0.0,
         "h2h_n_games": 2.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_17_HOU_GB",
@@ -5051,22 +5009,22 @@
       "game_date": "2027-01-04",
       "home_team": "GB",
       "away_team": "HOU",
-      "predicted_home_score": 23,
+      "predicted_home_score": 22,
       "predicted_away_score": 22,
-      "predicted_total": 45,
-      "predicted_spread": 1,
+      "predicted_total": 44,
+      "predicted_spread": 0,
       "range_home": [
-        21,
-        25
+        17,
+        23
       ],
       "range_away": [
-        20,
+        19,
         27
       ],
-      "confidence_score": 0.8407,
+      "confidence_score": 0.8042,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8314,
+        "model_agreement": 0.7651,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.5833
       },
@@ -5094,8 +5052,8 @@
         "h2h_avg_margin": 6.67,
         "h2h_n_games": 3.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_ATL_CAR",
@@ -5148,8 +5106,8 @@
         "h2h_avg_margin": 7.37,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_CHI_MIN",
@@ -5160,21 +5118,21 @@
       "home_team": "MIN",
       "away_team": "CHI",
       "predicted_home_score": 23,
-      "predicted_away_score": 23,
-      "predicted_total": 46,
-      "predicted_spread": 0,
+      "predicted_away_score": 22,
+      "predicted_total": 45,
+      "predicted_spread": 1,
       "range_home": [
-        20,
-        24
+        21,
+        26
       ],
       "range_away": [
-        16,
-        24
+        18,
+        23
       ],
-      "confidence_score": 0.8717,
+      "confidence_score": 0.8846,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8054,
+        "model_agreement": 0.8289,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8854
       },
@@ -5202,8 +5160,8 @@
         "h2h_avg_margin": 4.01,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_CLE_CIN",
@@ -5214,21 +5172,21 @@
       "home_team": "CIN",
       "away_team": "CLE",
       "predicted_home_score": 28,
-      "predicted_away_score": 18,
-      "predicted_total": 46,
-      "predicted_spread": 10,
+      "predicted_away_score": 17,
+      "predicted_total": 45,
+      "predicted_spread": 11,
       "range_home": [
-        24,
-        37
+        25,
+        38
       ],
       "range_away": [
-        16,
-        25
+        15,
+        26
       ],
-      "confidence_score": 0.7886,
+      "confidence_score": 0.744,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6232,
+        "model_agreement": 0.5421,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 1.0
       },
@@ -5243,12 +5201,12 @@
       "is_international": 0,
       "is_division_game": 1,
       "top_features": {
-        "elo_gap": 247.21,
-        "home_off_epa_per_play_r8": 0.17,
+        "elo_gap": 215.62,
+        "home_off_epa_per_play_r8": 0.18,
         "away_off_epa_per_play_r8": -0.05,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.06,
         "away_def_epa_per_play_r8": -0.04,
-        "home_qb_epa_per_att_r8": 0.33,
+        "home_qb_epa_per_att_r8": 0.35,
         "away_qb_epa_per_att_r8": -0.02,
         "home_qb_start_share": 1.0,
         "away_qb_start_share": 0.88,
@@ -5256,8 +5214,8 @@
         "h2h_avg_margin": 3.77,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_DAL_WAS",
@@ -5267,10 +5225,10 @@
       "game_date": "2027-01-10",
       "home_team": "WAS",
       "away_team": "DAL",
-      "predicted_home_score": 23,
-      "predicted_away_score": 23,
-      "predicted_total": 46,
-      "predicted_spread": 0,
+      "predicted_home_score": 25,
+      "predicted_away_score": 22,
+      "predicted_total": 47,
+      "predicted_spread": 3,
       "range_home": [
         20,
         27
@@ -5279,10 +5237,10 @@
         20,
         25
       ],
-      "confidence_score": 0.8668,
+      "confidence_score": 0.8636,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8108,
+        "model_agreement": 0.8048,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -5297,12 +5255,12 @@
       "is_international": 0,
       "is_division_game": 1,
       "top_features": {
-        "elo_gap": -45.73,
+        "elo_gap": -14.14,
         "home_off_epa_per_play_r8": -0.03,
         "away_off_epa_per_play_r8": 0.11,
-        "home_def_epa_per_play_r8": 0.03,
+        "home_def_epa_per_play_r8": 0.02,
         "away_def_epa_per_play_r8": 0.09,
-        "home_qb_epa_per_att_r8": -0.03,
+        "home_qb_epa_per_att_r8": -0.02,
         "away_qb_epa_per_att_r8": 0.18,
         "home_qb_start_share": 0.88,
         "away_qb_start_share": 1.0,
@@ -5310,8 +5268,8 @@
         "h2h_avg_margin": -12.25,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_DET_GB",
@@ -5326,17 +5284,17 @@
       "predicted_total": 45,
       "predicted_spread": -5,
       "range_home": [
-        17,
-        23
+        16,
+        26
       ],
       "range_away": [
         24,
-        27
+        29
       ],
-      "confidence_score": 0.9045,
+      "confidence_score": 0.8405,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8745,
+        "model_agreement": 0.7582,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8507
       },
@@ -5364,8 +5322,8 @@
         "h2h_avg_margin": 0.66,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_JAX_IND",
@@ -5375,22 +5333,22 @@
       "game_date": "2027-01-10",
       "home_team": "IND",
       "away_team": "JAX",
-      "predicted_home_score": 18,
+      "predicted_home_score": 20,
       "predicted_away_score": 24,
-      "predicted_total": 42,
-      "predicted_spread": -6,
+      "predicted_total": 44,
+      "predicted_spread": -4,
       "range_home": [
-        15,
+        16,
         24
       ],
       "range_away": [
-        23,
-        26
+        22,
+        29
       ],
-      "confidence_score": 0.8684,
+      "confidence_score": 0.8588,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.771,
+        "model_agreement": 0.7535,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9896
       },
@@ -5418,8 +5376,8 @@
         "h2h_avg_margin": -13.7,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_LAC_DEN",
@@ -5429,22 +5387,22 @@
       "game_date": "2027-01-10",
       "home_team": "DEN",
       "away_team": "LAC",
-      "predicted_home_score": 28,
-      "predicted_away_score": 19,
-      "predicted_total": 47,
+      "predicted_home_score": 27,
+      "predicted_away_score": 18,
+      "predicted_total": 45,
       "predicted_spread": 9,
       "range_home": [
-        26,
-        33
+        23,
+        32
       ],
       "range_away": [
-        17,
-        23
+        16,
+        21
       ],
-      "confidence_score": 0.8657,
+      "confidence_score": 0.8663,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7633,
+        "model_agreement": 0.7644,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 1.0
       },
@@ -5472,8 +5430,8 @@
         "h2h_avg_margin": 4.17,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_LV_KC",
@@ -5483,22 +5441,22 @@
       "game_date": "2027-01-10",
       "home_team": "KC",
       "away_team": "LV",
-      "predicted_home_score": 28,
+      "predicted_home_score": 29,
       "predicted_away_score": 18,
-      "predicted_total": 46,
-      "predicted_spread": 10,
+      "predicted_total": 47,
+      "predicted_spread": 11,
       "range_home": [
-        25,
-        32
+        28,
+        37
       ],
       "range_away": [
-        11,
-        19
+        12,
+        20
       ],
-      "confidence_score": 0.8161,
+      "confidence_score": 0.7909,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7516,
+        "model_agreement": 0.706,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7118
       },
@@ -5526,8 +5484,8 @@
         "h2h_avg_margin": 4.91,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_MIA_NE",
@@ -5537,22 +5495,22 @@
       "game_date": "2027-01-10",
       "home_team": "NE",
       "away_team": "MIA",
-      "predicted_home_score": 18,
-      "predicted_away_score": 18,
-      "predicted_total": 36,
-      "predicted_spread": 0,
+      "predicted_home_score": 21,
+      "predicted_away_score": 17,
+      "predicted_total": 38,
+      "predicted_spread": 4,
       "range_home": [
-        15,
-        24
+        19,
+        23
       ],
       "range_away": [
-        10,
-        19
+        11,
+        18
       ],
-      "confidence_score": 0.7816,
+      "confidence_score": 0.8525,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6984,
+        "model_agreement": 0.8274,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.6771
       },
@@ -5580,8 +5538,8 @@
         "h2h_avg_margin": 1.34,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_NYJ_BUF",
@@ -5591,22 +5549,22 @@
       "game_date": "2027-01-10",
       "home_team": "BUF",
       "away_team": "NYJ",
-      "predicted_home_score": 25,
+      "predicted_home_score": 26,
       "predicted_away_score": 18,
-      "predicted_total": 43,
-      "predicted_spread": 7,
+      "predicted_total": 44,
+      "predicted_spread": 8,
       "range_home": [
         23,
         31
       ],
       "range_away": [
         10,
-        20
+        19
       ],
-      "confidence_score": 0.7998,
+      "confidence_score": 0.803,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7127,
+        "model_agreement": 0.7185,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7465
       },
@@ -5634,8 +5592,8 @@
         "h2h_avg_margin": 13.62,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_PHI_NYG",
@@ -5646,21 +5604,21 @@
       "home_team": "NYG",
       "away_team": "PHI",
       "predicted_home_score": 21,
-      "predicted_away_score": 17,
-      "predicted_total": 38,
-      "predicted_spread": 4,
+      "predicted_away_score": 16,
+      "predicted_total": 37,
+      "predicted_spread": 5,
       "range_home": [
         18,
         29
       ],
       "range_away": [
-        8,
-        20
+        10,
+        19
       ],
-      "confidence_score": 0.7524,
+      "confidence_score": 0.7888,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6076,
+        "model_agreement": 0.6736,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.816
       },
@@ -5688,8 +5646,8 @@
         "h2h_avg_margin": -1.45,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_PIT_BAL",
@@ -5699,22 +5657,22 @@
       "game_date": "2027-01-10",
       "home_team": "BAL",
       "away_team": "PIT",
-      "predicted_home_score": 19,
+      "predicted_home_score": 20,
       "predicted_away_score": 23,
-      "predicted_total": 42,
-      "predicted_spread": -4,
+      "predicted_total": 43,
+      "predicted_spread": -3,
       "range_home": [
-        16,
+        17,
         29
       ],
       "range_away": [
-        18,
-        28
+        21,
+        29
       ],
-      "confidence_score": 0.7754,
+      "confidence_score": 0.8134,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.6067,
+        "model_agreement": 0.6758,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.9722
       },
@@ -5742,8 +5700,8 @@
         "h2h_avg_margin": 1.6,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_SEA_LA",
@@ -5753,22 +5711,22 @@
       "game_date": "2027-01-10",
       "home_team": "LA",
       "away_team": "SEA",
-      "predicted_home_score": 25,
+      "predicted_home_score": 24,
       "predicted_away_score": 19,
-      "predicted_total": 44,
-      "predicted_spread": 6,
+      "predicted_total": 43,
+      "predicted_spread": 5,
       "range_home": [
-        21,
-        27
+        19,
+        26
       ],
       "range_away": [
-        16,
-        21
+        14,
+        22
       ],
-      "confidence_score": 0.8873,
+      "confidence_score": 0.8538,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8194,
+        "model_agreement": 0.7585,
         "feature_completeness": 0.9555,
         "h2h_data_quality": 1.0
       },
@@ -5796,8 +5754,8 @@
         "h2h_avg_margin": 0.88,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_SF_ARI",
@@ -5807,22 +5765,22 @@
       "game_date": "2027-01-10",
       "home_team": "ARI",
       "away_team": "SF",
-      "predicted_home_score": 20,
-      "predicted_away_score": 25,
-      "predicted_total": 45,
+      "predicted_home_score": 22,
+      "predicted_away_score": 27,
+      "predicted_total": 49,
       "predicted_spread": -5,
       "range_home": [
-        16,
+        17,
         25
       ],
       "range_away": [
-        24,
-        30
+        25,
+        31
       ],
-      "confidence_score": 0.8231,
+      "confidence_score": 0.823,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.7408,
+        "model_agreement": 0.7407,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7986
       },
@@ -5842,7 +5800,7 @@
         "away_off_epa_per_play_r8": 0.19,
         "home_def_epa_per_play_r8": 0.09,
         "away_def_epa_per_play_r8": -0.04,
-        "home_qb_epa_per_att_r8": -0.12,
+        "home_qb_epa_per_att_r8": -0.25,
         "away_qb_epa_per_att_r8": 0.34,
         "home_qb_start_share": 0.25,
         "away_qb_start_share": 1.0,
@@ -5850,8 +5808,8 @@
         "h2h_avg_margin": -3.96,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_TB_NO",
@@ -5861,22 +5819,22 @@
       "game_date": "2027-01-10",
       "home_team": "NO",
       "away_team": "TB",
-      "predicted_home_score": 19,
-      "predicted_away_score": 20,
-      "predicted_total": 39,
-      "predicted_spread": -1,
+      "predicted_home_score": 22,
+      "predicted_away_score": 19,
+      "predicted_total": 41,
+      "predicted_spread": 3,
       "range_home": [
-        17,
+        19,
         28
       ],
       "range_away": [
-        14,
+        17,
         23
       ],
-      "confidence_score": 0.785,
+      "confidence_score": 0.8405,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.662,
+        "model_agreement": 0.763,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.8333
       },
@@ -5904,8 +5862,8 @@
         "h2h_avg_margin": -7.23,
         "h2h_n_games": 6.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     },
     {
       "game_id": "2026_18_TEN_HOU",
@@ -5915,22 +5873,22 @@
       "game_date": "2027-01-10",
       "home_team": "HOU",
       "away_team": "TEN",
-      "predicted_home_score": 27,
-      "predicted_away_score": 21,
-      "predicted_total": 48,
+      "predicted_home_score": 26,
+      "predicted_away_score": 20,
+      "predicted_total": 46,
       "predicted_spread": 6,
       "range_home": [
         22,
-        31
+        30
       ],
       "range_away": [
-        20,
+        18,
         23
       ],
-      "confidence_score": 0.8504,
+      "confidence_score": 0.8315,
       "confidence_label": "HIGH",
       "confidence_breakdown": {
-        "model_agreement": 0.8045,
+        "model_agreement": 0.7702,
         "feature_completeness": 0.9863,
         "h2h_data_quality": 0.7465
       },
@@ -5958,8 +5916,8 @@
         "h2h_avg_margin": 9.59,
         "h2h_n_games": 7.0
       },
-      "model_version": "v2.0-20261123",
-      "generated_at": "2026-11-23T22:02:26.983011+00:00"
+      "model_version": "v2.0-20261124",
+      "generated_at": "2026-11-24T20:46:55.634404+00:00"
     }
   ]
 }
